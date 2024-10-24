@@ -1,0 +1,90 @@
+@use "fonts" as *;
+@use "colors" as *;
+
+#__nuxt,
+#__layout {
+  width: 100%;
+  height: 100%;
+}
+
+html {
+  @include ui-typo-15;
+  box-sizing: border-box;
+  color: $ui-color-black;
+  font-family: $ui-ff-default;
+  background: #FAFAFA;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+input {
+  @include ui-typo-15;
+}
+
+button {
+  @include ui-typo-15;
+  color: $ui-color-black;
+}
+
+a {
+  color: $ui-color-blue;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+h1 {
+  @include ui-typo-h1;
+}
+
+h2 {
+  @include ui-typo-h2;
+}
+
+h3,
+h4 {
+  @include ui-typo-h3;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+b,
+strong {
+  font-weight: $font-bold-weight;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+main {
+  flex: 1;
+}
+
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .3s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}

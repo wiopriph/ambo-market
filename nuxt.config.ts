@@ -1,4 +1,7 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import svgLoader from 'vite-svg-loader';
+import StylelintPlugin from 'vite-plugin-stylelint';
+
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
 
@@ -38,5 +41,27 @@ export default defineNuxtConfig({
     },
 
     vueI18n: './i18n.config.ts',
+  },
+
+  css: [
+    '~/assets/scss/global.scss',
+  ],
+
+  vite: {
+    plugins: [
+      StylelintPlugin(),
+      svgLoader({
+        svgo: false,
+      }),
+    ],
+
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern',
+          additionalData: '@use \'~/assets/scss/index.scss\' as *;',
+        },
+      },
+    },
   },
 });

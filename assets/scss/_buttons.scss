@@ -1,0 +1,117 @@
+@use "rounds" as *;
+@use "colors" as *;
+@use "shadows" as *;
+
+@mixin ui-button-master {
+  @include ui-round-ui-elements;
+  display: block;
+  height: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 12px 20px;
+  font: inherit;
+  text-align: center;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all .2s linear;
+  appearance: none;
+  user-select: none;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+@mixin ui-button-primary {
+  @include ui-button-master;
+  color: $ui-color-white;
+  background: $ui-color-blue;
+
+  &:hover {
+    background: $ui-color-blue-light;
+  }
+
+  &:active {
+    background: rgba($ui-color-blue-light, .6);
+    box-shadow: $button-box-shadow;
+  }
+
+  &:disabled {
+    background: rgba($ui-color-blue, .5);
+  }
+
+  &_isLoading {
+    background: $ui-color-blue;
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+@mixin ui-button-secondary {
+  @include ui-button-master;
+  color: $ui-color-black;
+  background: $ui-color-white;
+  border: 1px solid $ui-color-transparent;
+
+  &:hover {
+    background: $ui-color-transparent;
+  }
+
+  &:active {
+    background: $ui-color-transparent;
+    box-shadow: $button-box-shadow;
+  }
+
+  &:disabled {
+    background: rgba($ui-color-transparent, .5);
+  }
+
+  &_isLoading {
+    background: $ui-color-white;
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+@mixin ui-button-tertiary {
+  @include ui-button-master;
+  color: $ui-color-white;
+  background: $ui-color-add;
+
+  &:hover {
+    background: rgba($ui-color-add, .9);
+  }
+
+  &:active {
+    background: rgba($ui-color-add, .6);
+    box-shadow: $button-box-shadow;
+  }
+
+  &:disabled {
+    background: rgba($ui-color-add, .5);
+  }
+
+  &_isLoading {
+    background: $ui-color-add;
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+@mixin ui-button {
+  @include ui-round-ui-elements;
+  display: block;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  background: initial;
+  border: none;
+  cursor: pointer;
+  transition: all .2s linear;
+  appearance: none;
+  user-select: none;
+
+  &:disabled {
+    cursor: default;
+  }
+}

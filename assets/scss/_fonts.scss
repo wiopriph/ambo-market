@@ -1,0 +1,197 @@
+@use "media" as *;
+@use "colors" as *;
+
+$ui-ff-default: 'Arial Nova', sans-serif;
+$font-medium-weight: 500;
+$font-bold-weight: 700;
+
+@font-face {
+  font-family: 'Arial Nova';
+  src: url('~/assets/fonts/ArialNova.eot');
+  src: url('~/assets/fonts/ArialNova.eot?#iefix') format('embedded-opentype'),
+    url('~/assets/fonts/ArialNova.woff2') format('woff2'),
+    url('~/assets/fonts/ArialNova.woff') format('woff'),
+    url('~/assets/fonts/ArialNova.ttf') format('truetype');
+  font-display: swap;
+}
+
+// Text
+@mixin ui-typo-8 {
+  font-size: 8px;
+  line-height: 10px;
+}
+
+@mixin ui-typo-10 {
+  font-size: 10px;
+  line-height: 12px;
+}
+
+@mixin ui-typo-10-medium {
+  font-weight: $font-medium-weight;
+  font-size: 10px;
+  line-height: 12px;
+}
+
+@mixin ui-typo-12 {
+  font-size: 12px;
+  line-height: 14px;
+}
+
+@mixin ui-typo-12-medium {
+  font-weight: $font-medium-weight;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+@mixin ui-typo-14 {
+  font-size: 14px;
+  line-height: 16px;
+}
+
+@mixin ui-typo-14-bold {
+  font-weight: $font-bold-weight;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+@mixin ui-typo-15 {
+  font-size: 15px;
+  line-height: 18px;
+}
+
+@mixin ui-typo-15-medium {
+  font-weight: $font-medium-weight;
+  font-size: 15px;
+  line-height: 18px;
+}
+
+@mixin ui-typo-15-bold {
+  font-weight: $font-bold-weight;
+  font-size: 15px;
+  line-height: 18px;
+}
+
+@mixin ui-typo-16 {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+@mixin ui-typo-16-medium {
+  font-weight: $font-medium-weight;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+@mixin ui-typo-18 {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+@mixin ui-typo-18-bold {
+  font-weight: $font-bold-weight;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+@mixin ui-typo-20-bold {
+  font-weight: $font-bold-weight;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+@mixin ui-typo-24-medium {
+  font-weight: $font-medium-weight;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+@mixin ui-typo-24-bold {
+  font-weight: $font-bold-weight;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+@mixin ui-typo-32-medium {
+  font-weight: $font-medium-weight;
+  font-size: 32px;
+  line-height: 38px;
+}
+
+@mixin ui-typo-32-bold {
+  font-weight: $font-bold-weight;
+  font-size: 32px;
+  line-height: 38px;
+}
+
+@mixin ui-typo-36-medium {
+  font-weight: $font-medium-weight;
+  font-size: 36px;
+  line-height: 42px;
+}
+
+@mixin ui-typo-36-bold {
+  font-weight: $font-bold-weight;
+  font-size: 36px;
+  line-height: 42px;
+}
+
+@mixin ui-typo-48-medium {
+  font-weight: $font-medium-weight;
+  font-size: 48px;
+  line-height: 57px;
+}
+
+// Headers
+@mixin ui-typo-h1 {
+  @include exclude-md {
+    font-weight: $font-medium-weight;
+    font-size: 51px;
+    line-height: 62px;
+  }
+
+  @include md {
+    font-weight: $font-medium-weight;
+    font-size: 32px;
+    line-height: 38px;
+  }
+}
+
+@mixin ui-typo-h2 {
+  @include exclude-md {
+    font-weight: $font-medium-weight;
+    font-size: 48px;
+    line-height: 57px;
+  }
+
+  @include md {
+    font-weight: $font-medium-weight;
+    font-size: 32px;
+    line-height: 38px;
+  }
+}
+
+@mixin ui-typo-h3 {
+  @include exclude-md {
+    font-weight: $font-medium-weight;
+    font-size: 27px;
+    line-height: 34px;
+  }
+
+  @include md {
+    font-weight: $font-medium-weight;
+    font-size: 19px;
+    line-height: 24px;
+  }
+}
+
+// Screen readers
+@mixin ui-typo-screen-readers {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+}

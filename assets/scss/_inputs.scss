@@ -1,0 +1,149 @@
+@use "colors" as *;
+@use "rounds" as *;
+@use "fonts" as *;
+@use "z-index" as *;
+
+@mixin ui-input-root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin ui-input-label {
+  @include ui-typo-12;
+  position: relative;
+  z-index: $z-idx-over;
+  margin-bottom: 7px;
+}
+
+@mixin ui-input-master {
+  @include ui-round-inner-blocks;
+  @include ui-typo-15;
+  position: relative;
+  z-index: $z-idx-over;
+  order: 1;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  padding: 12px 14px;
+  overflow: hidden;
+  font: inherit;
+  font-weight: normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background: none;
+  transition: border-color .2s linear, color .2s linear;
+  appearance: none;
+
+  &:hover {
+    @include ui-input-state-hover;
+  }
+
+  &:focus {
+    @include ui-input-state-focus;
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    transition: background-color 5000s linear 0s, border-color .2s linear, color .2s linear;
+  }
+
+  &::placeholder {
+    color: $ui-color-text-light;
+    font-weight: 300;
+  }
+
+  & ~ .label {
+    @include ui-input-label;
+  }
+
+  & ~ .background {
+    @include ui-round-inner-blocks;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: $z-idx-main;
+    width: 100%;
+    height: 44px;
+    transition: background-color .2s linear;
+  }
+
+  &_required ~ .label {
+    @include ui-input-label-required;
+  }
+}
+
+@mixin ui-input-label-required {
+
+  &::after {
+    color: $ui-color-system-red;
+    content: '\00A0*';
+  }
+}
+
+@mixin ui-input-state-normal {
+  color: $ui-color-text-main;
+  border: 1px solid $ui-color-transparent;
+
+  & ~ .background {
+    background-color: $ui-color-white;
+  }
+
+  & ~ .label {
+    color: $ui-color-black;
+  }
+}
+
+@mixin ui-input-state-hover {
+  border: 1px solid $ui-color-transparent;
+}
+
+@mixin ui-input-state-focus {
+  color: $ui-color-text-main;
+  border: 1px solid $ui-color-blue;
+
+  & ~ .background {
+    background-color: $ui-color-white;
+  }
+}
+
+@mixin ui-input-state-disabled {
+  color: $ui-color-transparent;
+  border: 1px solid $ui-color-transparent;
+  cursor: not-allowed;
+
+  & ~ .background {
+    background-color: rgba($ui-color-transparent, .05);
+  }
+
+  & ~ .label {
+    color: $ui-color-transparent;
+  }
+}
+
+@mixin ui-input-state-error {
+  color: $ui-color-text-main;
+  border: 1px solid $ui-color-system-red;
+
+  &:not(:focus) {
+    border: 1px solid $ui-color-system-red;
+  }
+
+  & ~ .background {
+    background-color: $ui-color-white;
+  }
+
+  & ~ .label {
+    color: $ui-color-system-red;
+  }
+}
+
+@mixin ui-input-state-success {
+  border: 1px solid $ui-color-add;
+
+  &:not(:focus) {
+    border: 1px solid $ui-color-add;
+  }
+}
