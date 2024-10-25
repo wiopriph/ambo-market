@@ -19,19 +19,19 @@ useHead({
 <template>
   <div :class="$style.root">
     <div>
-      <button
-        type="button"
-        @click="setLocale('en')"
-      >
-        en
-      </button>
+      <UIButton
+        text="en"
+        type="primary"
 
-      <button
-        type="button"
+        @click="setLocale('en')"
+      />
+
+      <UIButton
+        type="secondary"
         @click="setLocale('pt')"
       >
         pt
-      </button>
+      </UIButton>
 
       <p v-text="t('seo.common.title')" />
     </div>
