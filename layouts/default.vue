@@ -1,6 +1,8 @@
 <template>
   <div :class="$style.page">
     <slot />
+
+    <Footer />
   </div>
 </template>
 

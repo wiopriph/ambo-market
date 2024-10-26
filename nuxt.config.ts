@@ -9,9 +9,7 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
-  modules: [
-    '@nuxtjs/i18n',
-  ],
+  modules: ['@nuxtjs/i18n', '@nuxtjs/device'],
 
   // https://i18n.nuxtjs.org/docs/getting-started/usage
   i18n: {
