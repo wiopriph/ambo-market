@@ -1,1 +1,7 @@
+User-agent: *
+
+Disallow: /auth
+Disallow: /product/create
+Disallow: /im
+Disallow: /im/*
 
