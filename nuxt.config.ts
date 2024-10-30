@@ -16,29 +16,28 @@ export default defineNuxtConfig({
     baseUrl: process.env.APP_BASE_URL,
     strategy: 'no_prefix',
     defaultLocale: 'pt',
-    langDir: './locales/',
 
     locales: [
       {
         code: 'en',
         language: 'en-US',
         name: 'English',
-        file: 'en.js',
+        shortName: 'Eng',
       },
       {
         code: 'pt',
         language: 'pt-BR',
         name: 'Português',
-        file: 'pt.js',
+        shortName: 'Pt',
       },
     ],
 
     detectBrowserLanguage: {
       useCookie: true,
-      cookieKey: 'i18n_redirected',
+      cookieKey: 'locale',
     },
 
-    vueI18n: './i18n.config.ts',
+    vueI18n: './i18n/index.ts',
   },
 
   css: [
