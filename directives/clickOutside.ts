@@ -31,7 +31,9 @@ function toggleEventListeners(action: 'add' | 'remove', event: string, eventHand
 
 const clickOutsideDirective = {
   mounted(el: HTMLElement, { value: handler }: { value: (event: Event, el: HTMLElement) => void }) {
-    if (typeof window === 'undefined') { return; } // Только на клиенте
+    if (typeof window === 'undefined') {
+      return;
+    } // Только на клиенте
 
     const eventHandler = (event: Event) => onClickOutside({ el, event, handler });
 

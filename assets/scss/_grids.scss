@@ -82,6 +82,7 @@ $ui-container-padding: 20px;
 }
 
 @mixin ui-col($size, $columns: $grid-cols-num) {
+
   & {
     flex: 0 0 math.percentage(math.div($size, $columns));
     max-width: math.percentage(math.div($size, $columns));

@@ -6,6 +6,7 @@ const props = withDefaults(defineProps<Props>(), {
   type: 'common',
 });
 
+
 const style = useCssModule();
 
 const rootClassNames = computed(() => ({

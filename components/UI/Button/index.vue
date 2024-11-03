@@ -8,12 +8,14 @@ const props = withDefaults(defineProps<Props>(), {
   text: '',
 });
 
+
 const style = useCssModule();
 
 const rootClassNames = computed(() => ({
   [style[props.type]]: true,
   [style[`${props.type}_isLoading`]]: props.isLoading,
 }));
+
 
 const animationType = (type: string) => {
   if (type === 'secondary') {
@@ -23,9 +25,7 @@ const animationType = (type: string) => {
   return 'common';
 };
 
-const emit = defineEmits([
-  'click',
-]);
+const emit = defineEmits(['click']);
 </script>
 
 <template>
