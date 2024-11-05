@@ -1,10 +1,5 @@
-import { PERIODS } from '~/constants/filters';
-
-
-interface DatePublished {
-  from: number | null;
-  to: number | null;
-}
+import { PERIODS } from '~/composables/usePosts/constants';
+import type { DatePublished } from '~/composables/usePosts/types';
 
 /**
  * Генерирует объект `datePublished` на основе выбранного периода.
@@ -12,7 +7,7 @@ interface DatePublished {
  * @param {keyof typeof PERIODS} period - Выбранный период (PERIODS.DAY, PERIODS.WEEK, и т. д.).
  * @returns {DatePublished} Объект `datePublished` с начальной и конечной датой в миллисекундах.
  */
-export default function generateDatePublished(period: keyof typeof PERIODS): DatePublished {
+export default function generateDatePublished(period: string): DatePublished {
   const now = new Date();
 
   const createDateFromNow = (daysAgo: number): number => {
