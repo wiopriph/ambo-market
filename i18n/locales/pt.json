@@ -12,10 +12,6 @@
       "title": "Ambo Market - Anúncios Classificados, Anúncios Privados Gratuitos",
       "description": "O Ambo Market oferece negócios acessíveis em carros usados e novos, apartamentos e outros imóveis, além de roupas e móveis novos ou usados. Compre ou venda com facilidade!"
     },
-    "cities": {
-      "title": "Todas as Cidades - Site de Classificados Grátis Ambo Market",
-      "description": "Descubra todas as cidades em Angola no site de classificados grátis Ambo Market. Escolha um quadro de classificados em sua cidade!"
-    },
     "city": {
       "title": "Ambo Market - Classificados em {city}, Anúncios Privados Gratuitos",
       "description": "O Ambo Market é um quadro de anúncios em {city} para anúncios privados gratuitos. Encontre anúncios recentes de pessoas vendendo e comprando produtos de todas as categorias em {city}. A maneira mais fácil de vender ou comprar coisas. Publique seu anúncio gratuitamente no Ambo."
