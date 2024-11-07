@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { CATEGORIES } from '~/constants/categories';
+import { usePost } from '~/composables/usePosts';
+
+
 const { t, setLocale } = useI18n();
 
 const title = computed(() => t('seo.index.title'));
@@ -14,11 +18,27 @@ useHead({
     { key: 'twitter:description', property: 'twitter:description', content: description },
   ],
 });
+
+const { cityId } = usePost();
+
+const categories = computed(() => CATEGORIES.map(category => ({
+  title: t(category.type),
+  img: category.img,
+  route: {
+    name: 'cityId-categoryId',
+    params: {
+      categoryId: category.type,
+      cityId: cityId.value,
+    },
+  },
+})));
 </script>
 
 <template>
   <div :class="$style.root">
     <div>
+      <CategoryList :list="categories" />
+
       <UIButton
         text="en"
         type="primary"
