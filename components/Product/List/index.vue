@@ -1,0 +1,66 @@
+<script setup lang="ts">
+import type { ListProps } from './types';
+
+
+const COUNT_OF_LIST = 10;
+
+const props = withDefaults(defineProps<ListProps>(), {
+  isLoading: false,
+  emptyTitle: '',
+  emptyText: '',
+});
+
+const hasList = computed(() => Array.isArray(props.list) && props.list.length);
+</script>
+
+<template>
+  <div v-if="isLoading">
+    <ul :class="$style.root">
+      <li
+        v-for="index in COUNT_OF_LIST"
+        :key="index"
+        :class="$style.card"
+      >
+        <ProductCardSkeleton />
+      </li>
+    </ul>
+  </div>
+
+  <div v-else-if="hasList">
+    <ul :class="$style.root">
+      <li
+        v-for="(product, index) in list"
+        :key="index"
+        :class="$style.card"
+      >
+        <ProductCard :product="product" />
+      </li>
+    </ul>
+  </div>
+
+  <ProductListEmpty
+    v-else
+    :customTitle="emptyTitle"
+    :customText="emptyText"
+  />
+</template>
+
+<style lang="scss" module>
+.root {
+  @include ui-row;
+}
+
+.card {
+  @include ui-col-ready;
+  @include ui-col-vertical-gutter;
+  @include ui-col(3);
+
+  @include md {
+    @include ui-col(4);
+  }
+
+  @include sm {
+    @include ui-col(6);
+  }
+}
+</style>

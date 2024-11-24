@@ -4,6 +4,21 @@ import StylelintPlugin from 'vite-plugin-stylelint';
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
+  ssr: true,
+
+  runtimeConfig: {
+    public: {
+      appBaseUrl: '',
+      firebase: {
+        apiKey: '',
+        authDomain: '',
+        projectId: '',
+        storageBucket: '',
+        messagingSenderId: undefined,
+        appId: '',
+      },
+    },
+  },
 
   devtools: {
     enabled: true,
@@ -13,7 +28,7 @@ export default defineNuxtConfig({
 
   // https://i18n.nuxtjs.org/docs/getting-started/usage
   i18n: {
-    baseUrl: process.env.APP_BASE_URL,
+    baseUrl: process.env.NUXT_PUBLIC_APP_BASE_URL,
     strategy: 'no_prefix',
     defaultLocale: 'pt',
 
@@ -60,5 +75,10 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+
+  routeRules: {
+    '/login': { ssr: false },
+    '/create': { ssr: false },
   },
 });

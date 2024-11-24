@@ -4,7 +4,7 @@ import IconFacebook from '~/assets/images/share/icon-facebook.svg?component';
 import IconMail from '~/assets/images/share/icon-mail.svg?component';
 import IconTwitter from '~/assets/images/share/icon-twitter.svg?component';
 import IconWhatsapp from '~/assets/images/share/icon-whatsapp.svg?component';
-
+// @todo: переименовать в ProductSharing
 
 const props = defineProps<SharePostProps>();
 
