@@ -6,9 +6,15 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint": "node ./node_modules/eslint/bin/eslint.js --format gitlab --ext .js,.vue,.ts --ignore-path .gitignore .",
+    "lintfix": "node ./node_modules/eslint/bin/eslint.js -c .eslintrc.js --fix --ext .js,.vue,.ts --ignore-path .gitignore .",
+    "stylelint": "node ./node_modules/stylelint/bin/stylelint.mjs \"**/*.{scss,vue}\"",
+    "stylelintfix": "node ./node_modules/stylelint/bin/stylelint.mjs \"**/*.{scss,vue}\" --fix"
   },
   "dependencies": {
+    "firebase": "11.0.1",
+    "firebase-admin": "13.0.0",
     "nuxt": "3.14.159",
     "vue": "3.5.12",
     "vue-router": "4.4.5"

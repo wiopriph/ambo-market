@@ -99,6 +99,27 @@ export function useUser() {
     }
   };
 
+  const { $fire } = useNuxtApp();
+
+  const subscribeToAuthState = () => {
+    $fire.auth.onAuthStateChanged(async (firebaseUser) => {
+      if (firebaseUser) {
+        try {
+          await fetchProfile();
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error('Error while fetching user profile:', error);
+        }
+      } else {
+        setCurrentUser(null);
+      }
+    });
+  };
+
+  watchEffect(() => {
+    subscribeToAuthState();
+  });
+
   return {
     currentUser,
     isLoggedIn,

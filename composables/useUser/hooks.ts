@@ -2,18 +2,13 @@ import type { ProfileUpdateData } from './types';
 
 
 export default function useUserApi() {
-  // const { $fire } = useNuxtApp();
+  const { $fire } = useNuxtApp();
 
   const GET_USER = async () => {
     try {
-      return await new Promise((resolve) => {
-        // eslint-disable-next-line no-console
-        console.log('GET_USER');
-        setTimeout(resolve, 1_000);
-      });
+      const response = await $fire.https('getUser');
 
-      // const response = await $fire.functions.httpsCallable('getUser')();
-      // return response.data;
+      return response?.data;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -23,14 +18,9 @@ export default function useUserApi() {
 
   const UPDATE_USER = async (params: ProfileUpdateData) => {
     try {
-      return await new Promise((resolve) => {
-        // eslint-disable-next-line no-console
-        console.log(params);
-        setTimeout(resolve, 1_000);
-      });
+      const response = await $fire.https('updateUser', params);
 
-      // const response = await $fire.functions.httpsCallable('updateUser')(params);
-      // return response.data;
+      return response?.data;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -40,14 +30,9 @@ export default function useUserApi() {
 
   const ADD_POST_TO_FAVORITE = async (postId: string) => {
     try {
-      return await new Promise((resolve) => {
-        // eslint-disable-next-line no-console
-        console.log(postId);
-        setTimeout(resolve, 1_000);
-      });
+      const response = await $fire.https('addPostToFavorite', { postId });
 
-      // const response = await $fire.functions.httpsCallable('addPostToFavorite')({ postId });
-      // return response.data?.favoritePosts || [];
+      return response?.data?.favoritePosts || [];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -57,14 +42,9 @@ export default function useUserApi() {
 
   const REMOVE_POST_FROM_FAVORITE = async (postId: string) => {
     try {
-      return await new Promise((resolve) => {
-        // eslint-disable-next-line no-console
-        console.log(postId);
-        setTimeout(resolve, 1_000);
-      });
+      const response = await $fire.https('removePostFromFavorite', { postId });
 
-      // const response = await $fire.functions.httpsCallable('removePostFromFavorite')({ postId });
-      // return response.data?.favoritePosts || [];
+      return response?.data?.favoritePosts || [];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // eslint-disable-next-line no-console
