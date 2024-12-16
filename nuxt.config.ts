@@ -81,4 +81,9 @@ export default defineNuxtConfig({
     '/login': { ssr: false },
     '/create': { ssr: false },
   },
+
+  plugins: [
+    '~/plugins/firebase.ts',
+    '~/plugins/auth.client.ts',
+  ],
 });
