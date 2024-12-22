@@ -1,4 +1,4 @@
-export interface Props {
+export interface InputProps {
   modelValue: string | number;
   name: string;
   type?: string;
@@ -7,5 +7,5 @@ export interface Props {
   isRequired?: boolean;
   isDisabled?: boolean;
   isSuccess?: boolean;
-  errors?: string[];
+  error?: string | null;
 }

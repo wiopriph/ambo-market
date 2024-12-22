@@ -1,18 +1,33 @@
 <script setup lang="ts">
+import { useField, useForm } from 'vee-validate';
+import { object, string } from 'yup';
 import { AUTH_STATES } from '~/constants/auth-states';
 
 
 const { t } = useI18n();
 
+const {
+  errors,
+  handleSubmit,
+} = useForm({
+  initialValues: {
+    email: '',
+    password: '',
+  },
+  validationSchema: object({
+    email: string()
+      .email(t('validation.email'))
+      .required(t('validation.required')),
+    password: string().required(t('validation.required')),
+  }),
+});
 
-const email = ref('');
-const password = ref('');
+const { value: email } = useField<string>('email');
+const { value: password } = useField<string>('password');
+
 
 const isLoading = ref(false);
-const backendErrors = ref([]);
-
-
-const errors = ref({});
+const backendErrors = ref('');
 
 
 const emit = defineEmits(['close', 'select']);
@@ -32,39 +47,37 @@ const goToAuthRecoveryModal = () => {
 
 const { $fire } = useNuxtApp();
 
-const authByEmail = async () => {
+const authByEmail = handleSubmit.withControlled(async () => {
   if (isLoading.value) {
     return;
   }
 
   isLoading.value = true;
-  backendErrors.value = [];
+  backendErrors.value = '';
 
   try {
     await $fire.auth.signIn(email.value, password.value);
     closeModal();
   } catch (error) {
-    backendErrors.value = [error?.message];
+    backendErrors.value = error?.message;
     isLoading.value = false;
   }
-};
+});
 </script>
 
 <i18n>
 {
   "en": {
-    "login_with_email": "Login with e-mail",
-    "username_and_email": "Username or e-mail",
+    "login": "Login",
+    "email": "E-mail",
     "password": "Password",
-    "forgot_password": "Forgot your password?",
-    "login": "Login"
+    "forgot_password": "Forgot your password?"
   },
   "pt": {
-    "login_with_email": "Login com e-mail",
-    "username_and_email": "Nome de usuário ou e-mail",
+    "login": "Login",
+    "email": "E-mail",
     "password": "Senha",
-    "forgot_password": "Esqueceu sua senha?",
-    "login": "Login"
+    "forgot_password": "Esqueceu sua senha?"
   }
 }
 </i18n>
@@ -77,7 +90,7 @@ const authByEmail = async () => {
   >
     <h2
       :class="$style.title"
-      v-text="t('login_with_email')"
+      v-text="t('login')"
     />
 
     <form
@@ -87,33 +100,31 @@ const authByEmail = async () => {
       <div :class="$style.inputWrapper">
         <UIInput
           v-model="email"
-          :label="t('username_and_email')"
-          :errors="errors.email"
+          :label="t('email')"
+          :error="errors.email"
           isRequired
           name="email"
-          placeholder="Alex Cortess"
           type="email"
         />
 
-        <UIErrors :errors="errors.email" />
+        <UIError :text="errors.email" />
       </div>
 
       <div :class="$style.inputWrapper">
         <UIInput
           v-model="password"
           :label="t('password')"
-          :errors="errors.password"
+          :error="errors.password"
           isRequired
-          placeholder="irfdLajfk1349"
           name="password"
           type="password"
         />
 
-        <UIErrors :errors="errors.password" />
+        <UIError :text="errors.password" />
       </div>
     </form>
 
-    <UIErrors :errors="backendErrors" />
+    <UIError :text="backendErrors" />
 
     <button
       :class="$style.recovery"

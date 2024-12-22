@@ -1,15 +1,30 @@
 <script setup lang="ts">
+import { useField, useForm } from 'vee-validate';
+import { object, string } from 'yup';
 import { AUTH_STATES } from '~/constants/auth-states';
 
 
 const { t } = useI18n();
 
-const email = ref('');
+const {
+  errors,
+  handleSubmit,
+} = useForm({
+  initialValues: {
+    email: '',
+  },
+  validationSchema: object({
+    email: string()
+      .email(t('validation.email'))
+      .required(t('validation.required')),
+  }),
+});
+
+const { value: email } = useField<string>('email');
+
 
 const isLoading = ref(false);
-const backendErrors = ref([]);
-
-const errors = ref({});
+const backendErrors = ref('');
 
 
 const emit = defineEmits(['close', 'select']);
@@ -29,23 +44,23 @@ const goToSuccessModal = () => {
 
 const { $fire } = useNuxtApp();
 
-const resetPassword = async () => {
+const resetPassword = handleSubmit.withControlled(async () => {
   if (isLoading.value) {
     return;
   }
 
   isLoading.value = true;
-  backendErrors.value = [];
+  backendErrors.value = '';
 
   try {
     await $fire.auth.sendPasswordResetEmail(email.value);
 
     goToSuccessModal();
   } catch (error) {
-    backendErrors.value = [error?.message];
+    backendErrors.value = error?.message;
     isLoading.value = false;
   }
-};
+});
 </script>
 
 <i18n>
@@ -83,22 +98,19 @@ const resetPassword = async () => {
       :class="$style.list"
       @submit.prevent="resetPassword"
     >
-      <div>
-        <UIInput
-          v-model="email"
-          :errors="errors.email"
-          isRequired
-          name="email"
-          label="E-mail"
-          placeholder="E-mail"
-          type="email"
-        />
+      <UIInput
+        v-model="email"
+        :error="errors.email"
+        isRequired
+        label="E-mail"
+        name="email"
+        type="email"
+      />
 
-        <UIErrors :errors="errors.email" />
-      </div>
+      <UIError :text="errors.email" />
     </form>
 
-    <UIErrors :errors="backendErrors" />
+    <UIError :text="backendErrors" />
 
     <UIButton
       :text="t('reset_password')"

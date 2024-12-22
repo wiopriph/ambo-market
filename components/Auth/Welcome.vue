@@ -154,11 +154,12 @@ const authByGoogle = async () => {
 .button {
   @include ui-button-secondary;
 
+  height: 60px;
+
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  height: 60px;
 
   & + & {
     margin-top: 10px;

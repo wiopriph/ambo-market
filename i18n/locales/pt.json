@@ -1,4 +1,13 @@
 {
+  "validation": {
+    "required": "Este campo é obrigatório",
+    "email": "Formato de email incorreto",
+    "phone": "Formato incorreto do telefone",
+    "matchPassword": "As senhas não coincidem",
+    "passwordRequired": "A senha não pode estar vazia",
+    "passwordMinLength": "A senha é muito curta",
+    "passwordMaxLength": "A senha é muito longa"
+  },
   "seo": {
     "all_provinces": "todas as províncias",
     "free_price": "de graça",

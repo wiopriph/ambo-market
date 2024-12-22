@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Props } from './types';
+import type { InputProps } from './types';
 
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<InputProps>(), {
   type: 'text',
   isRequired: false,
   isDisabled: false,
@@ -21,7 +21,7 @@ const innerValue = computed({
   },
 });
 
-const hasError = computed(() => props.errors && props.errors.length > 0);
+const hasError = computed(() => !!props.error);
 
 const style = useCssModule();
 

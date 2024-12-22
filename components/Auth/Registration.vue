@@ -1,20 +1,50 @@
 <script setup lang="ts">
+import { useField, useForm } from 'vee-validate';
+import { object, string } from 'yup';
 import { AUTH_STATES } from '~/constants/auth-states';
 
 
 const { t } = useI18n();
 
-const email = ref('');
-const username = ref('');
-const password = ref('');
-const confirmPassword = ref('');
+const {
+  errors,
+  handleSubmit,
+} = useForm({
+  initialValues: {
+    email: '',
+    username: '',
+    password: '',
+    confirmPassword: '',
+  },
+  validationSchema: object({
+    email: string()
+      .email(t('validation.email'))
+      .required(t('validation.required')),
+    username: string().required(t('validation.required')),
+    password: string().required(t('validation.passwordRequired'))
+      .min(6, t('validation.passwordMinLength'))
+      .max(20, t('validation.passwordMaxLength')),
+    confirmPassword: string()
+      .required(t('validation.required'))
+      .when('password', {
+        is: () => !arePasswordsEqual.value,
+        then: schema => schema
+          .test('password-match', t('validation.matchPassword'), value => value === password.value),
+      }),
+  }),
+});
+
+const { value: email } = useField<string>('email');
+const { value: username } = useField<string>('username');
+const { value: password } = useField<string>('password');
+const { value: confirmPassword } = useField<string>('confirmPassword');
+
 
 const isLoading = ref(false);
-const backendErrors = ref([]);
-const errors = ref({});
+const backendErrors = ref('');
 
-// @todo: добавить валидацию, чтобы оба пароля совпадали
 const arePasswordsEqual = computed(() => !!password.value && (password.value === confirmPassword.value));
+
 
 const emit = defineEmits(['close', 'select']);
 
@@ -30,25 +60,26 @@ const goToSuccessModal = () => {
   emit('select', AUTH_STATES.REGISTRATION_SUCCESS);
 };
 
+
 const { $fire } = useNuxtApp();
 
-const signUp = async () => {
+const signUp = handleSubmit.withControlled(async () => {
   if (isLoading.value) {
     return;
   }
 
   isLoading.value = true;
-  backendErrors.value = [];
+  backendErrors.value = '';
 
   try {
     await $fire.auth.signUp(email.value, password.value, username.value);
 
     goToSuccessModal();
   } catch (error) {
-    backendErrors.value = [error?.message];
+    backendErrors.value = error?.message;
     isLoading.value = false;
   }
-};
+});
 </script>
 
 <i18n>
@@ -89,42 +120,39 @@ const signUp = async () => {
         <UIInput
           v-model="username"
           :label="t('username')"
-          :errors="errors.username"
+          :error="errors.username"
           isRequired
           name="name"
-          placeholder="Name"
           type="text"
         />
 
-        <UIErrors :errors="errors.username" />
+        <UIError :text="errors.username" />
       </div>
 
       <div :class="$style.inputWrapper">
         <UIInput
           v-model="email"
-          :errors="errors.email"
+          :error="errors.email"
           isRequired
           name="email"
           label="E-mail"
-          placeholder="info@example.com"
           type="email"
         />
 
-        <UIErrors :errors="errors.email" />
+        <UIError :text="errors.email" />
       </div>
 
       <div :class="$style.inputWrapper">
         <UIInput
           v-model="password"
           :label="t('password')"
-          :errors="errors.password"
+          :error="errors.password"
           isRequired
           name="password"
-          placeholder="*********"
           type="password"
         />
 
-        <UIErrors :errors="errors.password" />
+        <UIError :text="errors.password" />
       </div>
 
       <div :class="$style.inputWrapper">
@@ -132,18 +160,17 @@ const signUp = async () => {
           v-model="confirmPassword"
           :label="t('confirm_password')"
           :isSuccess="arePasswordsEqual"
-          :errors="errors.confirmPassword"
+          :error="errors.confirmPassword"
           isRequired
           name="confirmPassword"
-          placeholder="*********"
           type="password"
         />
 
-        <UIErrors :errors="errors.confirmPassword" />
+        <UIError :text="errors.confirmPassword" />
       </div>
     </form>
 
-    <UIErrors :errors="backendErrors" />
+    <UIError :text="backendErrors" />
 
     <UIButton
       :text="t('register')"

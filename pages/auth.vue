@@ -204,6 +204,7 @@ const createAccount = () => {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+
   margin-top: 30px;
 }
 
@@ -214,6 +215,7 @@ const createAccount = () => {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+
   height: 60px;
 
   & + & {

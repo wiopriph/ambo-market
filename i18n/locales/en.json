@@ -1,4 +1,13 @@
 {
+  "validation": {
+    "required": "The field is required",
+    "email": "Incorrect format of email",
+    "phone": "Incorrect format of phone",
+    "matchPassword": "Passwords do not match",
+    "passwordRequired": "Password cannot be empty",
+    "passwordMinLength": "Password is too short",
+    "passwordMaxLength": "Password is too long"
+  },
   "seo": {
     "all_provinces": "all provinces",
     "free_price": "for free",
