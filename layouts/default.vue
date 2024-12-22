@@ -1,5 +1,7 @@
 <template>
   <div :class="$style.page">
+    <HeaderRoot />
+
     <slot />
 
     <Footer />

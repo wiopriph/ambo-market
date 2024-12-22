@@ -42,3 +42,24 @@ export interface FetchPostsParams {
   page: number;
   limit: number;
 }
+
+export interface Post {
+  id: string;
+  createdAt: number;
+  images: string[];
+  price: number;
+  searchBy: string;
+  description: string;
+  location: Location;
+  isSafeDeal: boolean;
+  title: string;
+  userId: string;
+  categoryId: string;
+  status: string;
+}
+
+export interface PostsResponse {
+  posts: Post[];
+  resultsCount: number;
+  page: number;
+}

@@ -1,14 +1,12 @@
 import type { Filters, Location, InitializeFilters } from './types';
+import { DEFAULT_LOCATION, DEFAULT_FILTERS, MAX_POSTS_PER_PAGE } from './constants';
 import usePostApi from './hooks';
-import { DEFAULT_LOCATION, DEFAULT_FILTERS } from './constants';
 import generateDatePublished from '~/utils/generateDatePublished';
 import getObjectDifferences from '~/utils/getObjectDifferences';
 import { getCityIdByName } from '~/constants/cities';
 
 
-const MAX_POSTS_PER_PAGE = 10;
-
-export function usePost() {
+export function usePosts() {
   const { GET_POSTS } = usePostApi();
 
 
@@ -32,17 +30,14 @@ export function usePost() {
   const currentFilters = computed(() => getObjectDifferences(filters.value, DEFAULT_FILTERS));
   const isFindActive = computed(() => !!Object.keys(currentFilters.value).length || page.value > 1);
 
-
   const getFilter = <K extends keyof Filters>(name: K): Filters[K] => filters.value[name];
 
-  const initializeFilters = async (data: InitializeFilters) => {
+  const initializeFilters = (data: InitializeFilters) => {
     categoryId.value = data.categoryId;
     page.value = data.page || 1;
     filters.value = data.filters;
-
-
-    return await fetchPosts();
   };
+
 
   const page = useState<number>('page', () => 1);
   const categoryId = useState<string | string[] | null>('categoryId', () => null);
@@ -51,19 +46,11 @@ export function usePost() {
   const isLoading = useState<boolean>('isLoading', () => false);
 
 
-  const posts = useState('posts', () => []);
-  const postsCount = useState<number>('postsCount', () => 0);
-  const totalPages = computed(() => Math.ceil(postsCount.value / MAX_POSTS_PER_PAGE));
-
   const fetchPosts = async () => {
     isLoading.value = true;
 
     try {
-      await new Promise((resolve) => {
-        setTimeout(resolve, 1000);
-      });
-
-      const result = await GET_POSTS({
+      return await GET_POSTS({
         category: categoryId.value,
         location: {
           latitude: location.value.lat,
@@ -77,9 +64,6 @@ export function usePost() {
         page: page.value,
         limit: MAX_POSTS_PER_PAGE,
       });
-
-      posts.value = result?.posts;
-      postsCount.value = result?.resultsCount;
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Error while getting posts:', error);
@@ -106,9 +90,6 @@ export function usePost() {
 
     isLoading,
 
-    posts,
-    postsCount,
-    totalPages,
     fetchPosts,
   };
 }

@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { CATEGORIES } from '~/constants/categories';
-import { usePost } from '~/composables/usePosts';
+import { usePosts } from '~/composables/usePosts';
 
 
 const { t, setLocale } = useI18n();
 
 const title = computed(() => t('seo.index.title'));
 const description = computed(() => t('seo.index.description'));
+
+definePageMeta({
+  middleware: 'set-filters-middleware',
+});
 
 useHead({
   title,
@@ -19,7 +23,10 @@ useHead({
   ],
 });
 
-const { cityId } = usePost();
+const {
+  cityId,
+  fetchPosts,
+} = usePosts();
 
 const categories = computed(() => CATEGORIES.map(category => ({
   title: t(category.type),
@@ -32,17 +39,26 @@ const categories = computed(() => CATEGORIES.map(category => ({
     },
   },
 })));
+
+
+const route = useRoute();
+const { data: posts } = await useAsyncData('posts', () => fetchPosts(), {
+  watch: [() => route.query],
+});
 </script>
 
 <template>
   <div :class="$style.root">
+    <ProductList
+      :list="posts?.posts"
+    />
+
     <div>
       <CategoryList :list="categories" />
 
       <UIButton
         text="en"
         type="primary"
-
         @click="setLocale('en')"
       />
 
