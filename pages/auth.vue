@@ -2,12 +2,10 @@
 import IconFb from '~/assets/images/auth/socials/icon-fb.svg?component';
 import IconGoogle from '~/assets/images/auth/socials/icon-google.svg?component';
 import IconEmail from '~/assets/images/auth/socials/icon-email.svg?component';
+import { useUser } from '~/composables/useUser';
 import { AUTH_STATES } from '~/constants/auth-states';
 import type { AuthModalStateValue } from '~/constants/auth-states';
-import { useUser } from '~/composables/useUser';
 
-
-const route = useRoute();
 
 definePageMeta({
   middleware: defineNuxtRouteMiddleware(() => {
@@ -19,7 +17,9 @@ definePageMeta({
   }),
 });
 
+
 const { isLoggedIn } = useUser();
+const route = useRoute();
 
 watch(isLoggedIn, (state) => {
   if (state) {
@@ -30,9 +30,7 @@ watch(isLoggedIn, (state) => {
 });
 
 
-const { t } = useI18n();
 const isAuthModalVisible = ref(false);
-const backendErrors = ref([]);
 
 const showAuthModal = () => {
   isAuthModalVisible.value = true;
@@ -43,9 +41,12 @@ const hideAuthModal = () => {
 };
 
 
+const backendError = ref('');
+
 const clearError = () => {
-  backendErrors.value = [];
+  backendError.value = '';
 };
+
 
 const { $fire } = useNuxtApp();
 
@@ -55,7 +56,7 @@ const authByFb = async () => {
   try {
     await $fire.auth.signInWithFacebook();
   } catch (error) {
-    backendErrors.value = [error?.message];
+    backendError.value = error?.message;
   }
 };
 
@@ -65,7 +66,7 @@ const authByGoogle = async () => {
   try {
     await $fire.auth.signInWithGoogle();
   } catch (error) {
-    backendErrors.value = [error?.message];
+    backendError.value = error?.message;
   }
 };
 
@@ -87,9 +88,11 @@ const createAccount = () => {
 
   showAuthModal();
 };
+
+const { t } = useI18n();
 </script>
 
-<i18n>
+<i18n lang="json">
 {
   "en": {
     "welcome": "Welcome",
@@ -153,7 +156,7 @@ const createAccount = () => {
         <span v-text="t('continue_with_email')" />
       </button>
 
-      <UIErrors :errors="backendErrors" />
+      <UIError :text="backendError" />
 
       <button
         :class="$style.registration"

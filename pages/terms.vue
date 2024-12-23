@@ -23,6 +23,7 @@ const { t } = useI18n();
 .root {
   @include ui-simple-container;
   @include ui-typo-15;
+
   padding: 24px 20px;
 
   h1 {

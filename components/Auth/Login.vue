@@ -27,7 +27,7 @@ const { value: password } = useField<string>('password');
 
 
 const isLoading = ref(false);
-const backendErrors = ref('');
+const backendError = ref('');
 
 
 const emit = defineEmits(['close', 'select']);
@@ -53,13 +53,13 @@ const authByEmail = handleSubmit.withControlled(async () => {
   }
 
   isLoading.value = true;
-  backendErrors.value = '';
+  backendError.value = '';
 
   try {
     await $fire.auth.signIn(email.value, password.value);
     closeModal();
   } catch (error) {
-    backendErrors.value = error?.message;
+    backendError.value = error?.message;
     isLoading.value = false;
   }
 });
@@ -124,7 +124,7 @@ const authByEmail = handleSubmit.withControlled(async () => {
       </div>
     </form>
 
-    <UIError :text="backendErrors" />
+    <UIError :text="backendError" />
 
     <button
       :class="$style.recovery"

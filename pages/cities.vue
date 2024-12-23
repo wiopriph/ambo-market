@@ -2,6 +2,18 @@
 import { CITIES } from '~/constants/cities';
 
 
+const cities = computed(() => CITIES.map(city => ({
+  id: city.id,
+  name: city.name,
+  route: {
+    name: 'cityId',
+    params: {
+      cityId: city.id,
+    },
+  },
+})));
+
+
 const { t } = useI18n();
 
 const title = t('title');
@@ -17,17 +29,6 @@ useHead({
     { key: 'twitter:description', property: 'twitter:description', content: description },
   ],
 });
-
-const cities = computed(() => CITIES.map(city => ({
-  id: city.id,
-  name: city.name,
-  route: {
-    name: 'cityId',
-    params: {
-      cityId: city.id,
-    },
-  },
-})));
 </script>
 
 <i18n lang="json">

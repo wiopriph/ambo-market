@@ -2,7 +2,7 @@
 const { t } = useI18n();
 </script>
 
-<i18n>
+<i18n lang="json">
 {
   "en": {
     "about": "About"
@@ -23,6 +23,7 @@ const { t } = useI18n();
 .root {
   @include ui-simple-container;
   @include ui-typo-15;
+
   padding: 24px 20px;
 
   h1 {
@@ -31,6 +32,7 @@ const { t } = useI18n();
 
   h3 {
     @include ui-typo-24-medium;
+
     margin-top: 36px;
   }
 

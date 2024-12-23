@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Props } from './types';
+import type { InputTextAreaProps } from './types';
 
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<InputTextAreaProps>(), {
   label: '',
   name: 'text',
   placeholder: '',
@@ -19,7 +19,7 @@ const innerValue = computed({
   },
 });
 
-const hasError = computed(() => props.errors && props.errors.length > 0);
+const hasError = computed(() => !!props.error);
 
 
 const style = useCssModule();
@@ -75,6 +75,7 @@ $height: 100px;
 .input {
   @include ui-input-master();
   @include ui-input-state-normal();
+
   height: $height;
   resize: none;
 

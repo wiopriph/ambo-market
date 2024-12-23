@@ -1,9 +1,9 @@
-export interface Props {
+export interface InputTextAreaProps {
   modelValue: string;
   label?: string;
   name?: string;
   placeholder?: string;
   isRequired?: boolean;
   isDisabled?: boolean;
-  errors?: string[];
+  error?: string;
 }

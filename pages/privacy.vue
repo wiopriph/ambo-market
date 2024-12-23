@@ -3,8 +3,6 @@ import { PRIVACY_HTML } from '~/constants/privacy';
 
 
 const { t } = useI18n();
-
-const html = PRIVACY_HTML;
 </script>
 
 <i18n>
@@ -23,7 +21,7 @@ const html = PRIVACY_HTML;
     <h1 v-text="t('privacy_policy')" />
 
     <!-- eslint-disable vue/no-v-html -->
-    <div v-html="html" />
+    <div v-html="PRIVACY_HTML" />
     <!-- eslint-enable vue/no-v-html -->
   </div>
 </template>
@@ -31,6 +29,7 @@ const html = PRIVACY_HTML;
 <style lang="scss" module>
 .root {
   @include ui-simple-container;
+
   padding: 20px;
 
   h1 {
