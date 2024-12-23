@@ -159,7 +159,7 @@ const hideFilterModal = () => {
           :key="key"
           :class="$style.criterion"
         >
-          <FilterСriterion
+          <FilterCriterion
             :type="key"
             :value="value"
             @click="removeFilter"

@@ -1,9 +1,12 @@
+import type { PeriodsValues } from '~/constants/filters';
+
+
 export interface Filters {
   q: string;
   minPrice: number | string;
   maxPrice: number | string;
   safeTransaction: boolean;
-  period: string;
+  period: PeriodsValues;
 }
 
 export interface Location {

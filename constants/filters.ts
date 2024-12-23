@@ -1,3 +1,4 @@
+
 export const PERIODS = {
   DAY: 'day',
   WEEK: 'week',
@@ -11,3 +12,6 @@ export const DEFAULT_FILTERS = {
   safeTransaction: false,
   period: PERIODS.ALL,
 };
+
+export type PeriodsKeys = keyof typeof PERIODS;
+export type PeriodsValues = typeof PERIODS[PeriodsKeys];
