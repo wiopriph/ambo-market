@@ -35,12 +35,17 @@ const socialLinks = [
   // },
 ];
 
-const { t, locale, locales } = useI18n();
+const {
+  t,
+  locale,
+  locales,
+  setLocale,
+} = useI18n();
 
 const availableLocales = computed(() => locales.value.filter(({ code }) => code !== locale.value));
 
-const setLocale = (newLocale: string) => {
-  locale.value = newLocale;
+const setNewLocale = (newLocale: string) => {
+  setLocale(newLocale);
   // localize(newLocale);
 };
 
@@ -107,7 +112,7 @@ const goToCreatePage = () => {
               <button
                 type="button"
                 :class="$style.langButton"
-                @click="setLocale(code)"
+                @click="setNewLocale(code)"
                 v-text="name"
               />
             </li>
@@ -229,7 +234,7 @@ const goToCreatePage = () => {
               <button
                 :class="$style.langButton"
                 type="button"
-                @click="setLocale(code)"
+                @click="setNewLocale(code)"
                 v-text="name"
               />
             </li>
