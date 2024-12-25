@@ -20,7 +20,7 @@ const fetchChatUsers = async () => {
     // @todo: вынести в композбл
     const response = await $fire.https('getChatUsersForClosedPost', { postId: props.postId });
 
-    buyers.value = response?.data || [];
+    buyers.value = response as BuyerData[] || [];
 
     if (!buyers.value.length) {
       await selectBuyer(null);
@@ -39,7 +39,7 @@ const selectBuyer = async (buyerId: string | null) => {
     // @todo: вынести в композбл
     const response = await $fire.https('closePost', { postId: props.postId, buyerId });
 
-    post.value = response?.data?.post || null;
+    post.value = response?.post || null;
 
     isRated.value = true;
   } catch (error) {

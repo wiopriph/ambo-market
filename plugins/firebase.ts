@@ -33,10 +33,11 @@ export default defineNuxtPlugin(() => {
     provide: {
       fire: {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        https: (name: string, params?: Record<string, any>) => {
+        https: async (name: string, params?: Record<string, any>) => {
           const callable = httpsCallable(functions, name);
+          const response = await callable(params);
 
-          return callable(params);
+          return response.data;
         },
         auth: {
           signIn: (email: string, password: string) => signInWithEmailAndPassword(auth, email, password),

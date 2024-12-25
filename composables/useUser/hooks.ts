@@ -6,9 +6,7 @@ export default function useUserApi() {
 
   const GET_USER = async () => {
     try {
-      const response = await $fire.https('getUser');
-
-      return response?.data;
+      return await $fire.https('getUser');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -18,9 +16,7 @@ export default function useUserApi() {
 
   const UPDATE_USER = async (params: ProfileUpdateData) => {
     try {
-      const response = await $fire.https('updateUser', params);
-
-      return response?.data;
+      return await $fire.https('updateUser', params);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -32,7 +28,7 @@ export default function useUserApi() {
     try {
       const response = await $fire.https('addPostToFavorite', { postId });
 
-      return response?.data?.favoritePosts || [];
+      return response?.favoritePosts || [];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -44,7 +40,7 @@ export default function useUserApi() {
     try {
       const response = await $fire.https('removePostFromFavorite', { postId });
 
-      return response?.data?.favoritePosts || [];
+      return response?.favoritePosts || [];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // eslint-disable-next-line no-console
