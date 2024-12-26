@@ -174,8 +174,8 @@ const clearAllFilters = () => {
           />
 
           <UICheckbox
-            :checked="getFilter('safeTransaction')"
-            @change="changeSafeDeal"
+            :modelValue="getFilter('safeTransaction')"
+            @update:model-value="changeSafeDeal"
           />
         </div>
       </li>

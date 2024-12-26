@@ -14,13 +14,13 @@ const title = computed(() => t('seo.index.title'));
 const description = computed(() => t('seo.index.description'));
 
 useHead({
-  title,
+  title: title.value,
   meta: [
-    { key: 'og:title', property: 'og:title', content: title },
-    { key: 'twitter:title', property: 'twitter:title', content: title },
-    { key: 'description', name: 'description', content: description },
-    { key: 'og:description', property: 'og:description', content: description },
-    { key: 'twitter:description', property: 'twitter:description', content: description },
+    { key: 'og:title', property: 'og:title', content: title.value },
+    { key: 'twitter:title', property: 'twitter:title', content: title.value },
+    { key: 'description', name: 'description', content: description.value },
+    { key: 'og:description', property: 'og:description', content: description.value },
+    { key: 'twitter:description', property: 'twitter:description', content: description.value },
   ],
 });
 

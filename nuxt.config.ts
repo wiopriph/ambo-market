@@ -78,8 +78,8 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/login': { ssr: false },
-    '/create': { ssr: false },
+    '/auth': { ssr: false },
+    '/im': { ssr: false },
   },
 
   plugins: [

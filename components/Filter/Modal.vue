@@ -30,10 +30,6 @@ onMounted(() => {
   period.value = getFilter('period');
 });
 
-const changeSafeDeal = (value: boolean) => {
-  safeTransaction.value = value;
-};
-
 const updateFilters = () => {
   const filters = {
     ...currentFilters.value,
@@ -137,10 +133,7 @@ const clearAllFilters = () => {
                 v-text="t('safe_deal')"
               />
 
-              <UICheckbox
-                :checked="safeTransaction"
-                @change="changeSafeDeal"
-              />
+              <UICheckbox v-model="safeTransaction" />
             </div>
           </li>
         </ul>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { CardProps } from './types';
-import IconShield from '~/assets/images/product/icon-shield.svg?inline';
+import IconShield from '~/assets/images/product/icon-shield.svg?component';
 import formatAmount from '~/utils/formatAmount';
 import { getCityIdByName } from '~/constants/cities';
 import { POST_STATUSES } from '~/constants/post-statuses';

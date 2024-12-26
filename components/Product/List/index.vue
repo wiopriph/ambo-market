@@ -29,7 +29,7 @@ const hasList = computed(() => Array.isArray(props.list) && props.list.length);
   <div v-else-if="hasList">
     <ul :class="$style.root">
       <li
-        v-for="(product, index) in list"
+        v-for="(product, index) in props.list"
         :key="index"
         :class="$style.card"
       >

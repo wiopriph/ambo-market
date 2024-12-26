@@ -13,8 +13,8 @@ export interface User {
 }
 
 export interface ProfileUpdateData {
-  displayName: string;
-  image: string;
-  email: string;
-  phoneNumber: string;
+  displayName?: string;
+  image?: string;
+  email?: string;
+  phoneNumber?: string;
 }

@@ -40,8 +40,8 @@ const { value: password } = useField<string>('password');
 const { value: confirmPassword } = useField<string>('confirmPassword');
 
 
-const isLoading = ref(false);
-const backendErrors = ref('');
+const isLoading = ref<boolean>(false);
+const backendError = ref<string>('');
 
 const arePasswordsEqual = computed(() => !!password.value && (password.value === confirmPassword.value));
 
@@ -69,14 +69,14 @@ const signUp = handleSubmit.withControlled(async () => {
   }
 
   isLoading.value = true;
-  backendErrors.value = '';
+  backendError.value = '';
 
   try {
     await $fire.auth.signUp(email.value, password.value, username.value);
 
     goToSuccessModal();
   } catch (error) {
-    backendErrors.value = error?.message;
+    backendError.value = error?.message;
     isLoading.value = false;
   }
 });
@@ -114,7 +114,7 @@ const signUp = handleSubmit.withControlled(async () => {
 
     <form
       :class="$style.list"
-      @submit.prevent="authByEmail"
+      @submit.prevent="signUp"
     >
       <div :class="$style.inputWrapper">
         <UIInput
@@ -170,7 +170,7 @@ const signUp = handleSubmit.withControlled(async () => {
       </div>
     </form>
 
-    <UIError :text="backendErrors" />
+    <UIError :text="backendError" />
 
     <UIButton
       :text="t('register')"
