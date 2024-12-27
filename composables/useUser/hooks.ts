@@ -1,4 +1,4 @@
-import type { ProfileUpdateData } from './types';
+import type { FavoritePostsResponse, ProfileUpdateData, User } from './types';
 
 
 export default function useUserApi() {
@@ -6,7 +6,7 @@ export default function useUserApi() {
 
   const GET_USER = async () => {
     try {
-      return await $fire.https('getUser');
+      return await <Promise<User>>$fire.https('getUser');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -16,7 +16,7 @@ export default function useUserApi() {
 
   const UPDATE_USER = async (params: ProfileUpdateData) => {
     try {
-      return await $fire.https('updateUser', params);
+      return await <Promise<User>>$fire.https('updateUser', params);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -26,7 +26,7 @@ export default function useUserApi() {
 
   const ADD_POST_TO_FAVORITE = async (postId: string) => {
     try {
-      const response = await $fire.https('addPostToFavorite', { postId });
+      const response = await <Promise<FavoritePostsResponse>>$fire.https('addPostToFavorite', { postId });
 
       return response?.favoritePosts || [];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,7 +38,7 @@ export default function useUserApi() {
 
   const REMOVE_POST_FROM_FAVORITE = async (postId: string) => {
     try {
-      const response = await $fire.https('removePostFromFavorite', { postId });
+      const response = await <Promise<FavoritePostsResponse>>$fire.https('removePostFromFavorite', { postId });
 
       return response?.favoritePosts || [];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

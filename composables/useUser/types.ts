@@ -4,12 +4,12 @@ export interface User {
   emailVerified: boolean;
   name: string;
   email: string;
-  phone: string;
   photoURL: string;
   disabled: boolean;
-  rating: number;
-  activeChats: string[];
-  favoritePosts: string[];
+  rating?: number;
+  phone?: string;
+  activeChats?: string[];
+  favoritePosts?: string[];
 }
 
 export interface ProfileUpdateData {
@@ -17,4 +17,9 @@ export interface ProfileUpdateData {
   image?: string;
   email?: string;
   phoneNumber?: string;
+}
+
+export interface FavoritePostsResponse {
+  favoritePosts: string[];
+  success: boolean;
 }

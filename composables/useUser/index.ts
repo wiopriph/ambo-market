@@ -22,7 +22,7 @@ export function useUser() {
     try {
       const userInfo = await GET_USER();
 
-      setCurrentUser(userInfo as User);
+      setCurrentUser(userInfo || null);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Error while updating user info:', error);
@@ -34,7 +34,7 @@ export function useUser() {
     try {
       const userInfo = await UPDATE_USER(profileData);
 
-      setCurrentUser(userInfo as User);
+      setCurrentUser(userInfo || null);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Error while updating user info:', error);
@@ -75,7 +75,9 @@ export function useUser() {
     try {
       const updatedFavoritePosts = await ADD_POST_TO_FAVORITE(postId);
 
-      setFavoritePosts(updatedFavoritePosts);
+      if (updatedFavoritePosts) {
+        setFavoritePosts(updatedFavoritePosts);
+      }
     } catch (error) {
       togglePostInFavorite(postId);
       // eslint-disable-next-line no-console
@@ -90,7 +92,9 @@ export function useUser() {
     try {
       const updatedFavoritePosts = await REMOVE_POST_FROM_FAVORITE(postId);
 
-      setFavoritePosts(updatedFavoritePosts);
+      if (updatedFavoritePosts) {
+        setFavoritePosts(updatedFavoritePosts);
+      }
     } catch (error) {
       togglePostInFavorite(postId);
       // eslint-disable-next-line no-console
