@@ -80,6 +80,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/auth': { ssr: false },
     '/im': { ssr: false },
+    '/product/create': { ssr: false },
   },
 
   plugins: [

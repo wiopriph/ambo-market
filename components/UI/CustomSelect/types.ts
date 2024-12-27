@@ -11,5 +11,5 @@ export interface Props {
   isRequired?: boolean;
   placeholder?: string;
   isDisabled?: boolean;
-  errors?: string[];
+  error?: string;
 }

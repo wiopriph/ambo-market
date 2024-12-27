@@ -18,9 +18,9 @@ const emit = defineEmits([
   'blur',
 ]);
 
-const isFocused = ref(false);
-const isCustomSelectOpened = ref(false);
-const searchString = ref('');
+const isFocused = ref<boolean>(false);
+const isCustomSelectOpened = ref<boolean>(false);
+const searchString = ref<string>('');
 
 const innerValue = computed({
   get: () => props.modelValue,
@@ -62,6 +62,8 @@ const customSelectText = computed(() => {
   return selectedOption?.text || innerValue.value;
 });
 
+const hasError = computed(() => !!props.error);
+
 
 const style = useCssModule();
 
@@ -91,15 +93,12 @@ const customSelectClassNames = computed(() => ({
 }));
 
 
-const hasError = computed(() => props.errors && props.errors.length > 0);
-
-
-const getCustomOptionClassNames = value => ({
+const getCustomOptionClassNames = (value: string) => ({
   [style.optionButton]: true,
   [style.optionButton_selected]: value === innerValue.value,
 });
 
-const selectOption = (value) => {
+const selectOption = (value: string) => {
   searchString.value = '';
   innerValue.value = value;
   isCustomSelectOpened.value = false;

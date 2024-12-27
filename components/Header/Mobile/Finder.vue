@@ -191,11 +191,14 @@ const hideFilterModal = () => {
 .filterButton {
   @include ui-button-primary;
 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-left: 10px;
-  padding: 10px;
+  & {
+    margin-left: 10px;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 }
 
 .filterIcon {

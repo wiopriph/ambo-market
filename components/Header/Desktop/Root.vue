@@ -320,13 +320,15 @@ const {
 .categoriesButton {
   @include ui-button-primary;
 
-  height: 44px;
-  margin-right: 10px;
+  & {
+    height: 44px;
+    margin-right: 10px;
 
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .categoriesIcon {
@@ -355,13 +357,15 @@ const {
 .profileAvatar {
   @include ui-button;
 
-  height: 44px;
-  padding: 0;
+  & {
+    height: 44px;
+    padding: 0;
 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .categories {
