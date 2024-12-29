@@ -2,6 +2,23 @@
 import { CITIES } from '~/constants/cities';
 
 
+const { t } = useI18n();
+
+const title = computed(() => t('title'));
+const description = computed(() => t('description'));
+
+useHead({
+  title: title.value,
+  meta: [
+    { key: 'og:title', property: 'og:title', content: title.value },
+    { key: 'twitter:title', property: 'twitter:title', content: title.value },
+    { key: 'description', name: 'description', content: description.value },
+    { key: 'og:description', property: 'og:description', content: description.value },
+    { key: 'twitter:description', property: 'twitter:description', content: description.value },
+  ],
+});
+
+
 const cities = computed(() => CITIES.map(city => ({
   id: city.id,
   name: city.name,
@@ -12,23 +29,6 @@ const cities = computed(() => CITIES.map(city => ({
     },
   },
 })));
-
-
-const { t } = useI18n();
-
-const title = t('title');
-const description = t('description');
-
-useHead({
-  title,
-  meta: [
-    { key: 'og:title', property: 'og:title', content: title },
-    { key: 'twitter:title', property: 'twitter:title', content: title },
-    { key: 'description', name: 'description', content: description },
-    { key: 'og:description', property: 'og:description', content: description },
-    { key: 'twitter:description', property: 'twitter:description', content: description },
-  ],
-});
 </script>
 
 <i18n lang="json">
