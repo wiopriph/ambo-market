@@ -77,10 +77,10 @@ const jumpPrevValue = computed(() => Math.max(props.min, currentPage.value - 1))
 const jumpNextValue = computed(() => Math.min(props.max, currentPage.value + 1));
 
 
-const emit = defineEmits(['update:value']);
+const emit = defineEmits(['input']);
 
 const select = (pageNumber: number) => {
-  emit('update:value', pageNumber);
+  emit('input', pageNumber);
 };
 
 

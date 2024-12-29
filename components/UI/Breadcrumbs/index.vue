@@ -18,7 +18,7 @@ const breadcrumbsMicrodata = computed(() =>
       const resolvedRoute = router.resolve(item.to);
 
       if (resolvedRoute && resolvedRoute.href) {
-        crumb.item = `${config.appBaseUrl}${resolvedRoute.href}`;
+        crumb.item = `${config.public.appBaseUrl}${resolvedRoute.href}`;
       }
     }
 

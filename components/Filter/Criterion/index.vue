@@ -38,7 +38,7 @@ const displayText = computed(() => {
 const emit = defineEmits(['click']);
 
 const click = () => {
-  emit('click');
+  emit('click', props.type);
 };
 </script>
 

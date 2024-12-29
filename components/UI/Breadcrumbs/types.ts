@@ -1,6 +1,9 @@
+import type { RouteLocationRaw } from 'vue-router';
+
+
 interface BreadcrumbItem {
   title: string;
-  to?: string;
+  to?: RouteLocationRaw;
 }
 
 export interface Props {
