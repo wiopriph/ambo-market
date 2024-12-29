@@ -2,9 +2,9 @@ import { PERIODS, DEFAULT_FILTERS } from '~/composables/usePosts/constants';
 import { usePosts } from '~/composables/usePosts';
 
 
-const { initializeFilters } = usePosts();
-
 export default defineNuxtRouteMiddleware((to) => {
+  const { initializeFilters } = usePosts();
+
   const params = to.params;
   const query = to.query;
 
