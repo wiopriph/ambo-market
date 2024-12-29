@@ -13,18 +13,6 @@
     "free_price": "for free",
     "buy_in": "buy in {city}",
     "messages": "Messages",
-    "common": {
-      "title": "Ambo Market - Classified Ads, Free Private Listings",
-      "description": "Ambo Market offers affordable deals on used and new cars, apartments, and other real estate, as well as new or pre-owned clothing and furniture. Buy or sell with ease!"
-    },
-    "index": {
-      "title": "Ambo Market - Classified Ads, Free Private Listings",
-      "description": "Ambo Market offers affordable deals on used and new cars, apartments, and other real estate, as well as new or pre-owned clothing and furniture. Buy or sell with ease!"
-    },
-    "city": {
-      "title": "Ambo Market - {city} Classifieds, Free Private Listings",
-      "description": "Ambo Market is a classifieds board in {city} for free private listings. Find fresh ads from individuals selling and buying goods of all categories in {city}. The easiest way to sell or buy things. Post your ad for free on Ambo."
-    },
     "product": {
       "title": "{name} - {characteristics} - Ambo Market"
     },

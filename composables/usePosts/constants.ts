@@ -4,7 +4,7 @@ import type {
 } from './types';
 
 
-export const MAX_POSTS_PER_PAGE = 10;
+export const MAX_POSTS_PER_PAGE = 20;
 
 export const PERIODS = {
   DAY: 'day',

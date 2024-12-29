@@ -13,18 +13,6 @@
     "free_price": "de graça",
     "buy_in": "comprar em {city}",
     "messages": "Mensagens",
-    "common": {
-      "title": "Ambo Market - Anúncios Classificados, Anúncios Privados Gratuitos",
-      "description": "O Ambo Market oferece negócios acessíveis em carros usados e novos, apartamentos e outros imóveis, além de roupas e móveis novos ou usados. Compre ou venda com facilidade!"
-    },
-    "index": {
-      "title": "Ambo Market - Anúncios Classificados, Anúncios Privados Gratuitos",
-      "description": "O Ambo Market oferece negócios acessíveis em carros usados e novos, apartamentos e outros imóveis, além de roupas e móveis novos ou usados. Compre ou venda com facilidade!"
-    },
-    "city": {
-      "title": "Ambo Market - Classificados em {city}, Anúncios Privados Gratuitos",
-      "description": "O Ambo Market é um quadro de anúncios em {city} para anúncios privados gratuitos. Encontre anúncios recentes de pessoas vendendo e comprando produtos de todas as categorias em {city}. A maneira mais fácil de vender ou comprar coisas. Publique seu anúncio gratuitamente no Ambo."
-    },
     "product": {
       "title": "{name} - {characteristics}  - Ambo Market"
     },

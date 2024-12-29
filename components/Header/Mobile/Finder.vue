@@ -26,6 +26,7 @@ const {
   getFilter,
   currentFilters,
   cityId,
+  isPriorityCity,
   isFindActive,
 } = usePosts();
 
@@ -54,7 +55,7 @@ const find = () => {
     });
   }
 
-  if (cityId.value && cityId.value !== 'all') {
+  if (isPriorityCity.value) {
     return navigateTo({
       name: 'cityId',
       params: {

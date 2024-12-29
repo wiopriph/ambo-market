@@ -39,10 +39,13 @@ const {
 } = useUser();
 
 
-const { cityId } = usePosts();
+const {
+  cityId,
+  isPriorityCity,
+} = usePosts();
 
 const indexRoute = computed(() => {
-  if (cityId.value !== 'all') {
+  if (isPriorityCity.value) {
     return {
       name: 'cityId',
       params: {

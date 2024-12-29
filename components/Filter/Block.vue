@@ -31,7 +31,6 @@ const setFilter = (type: string, value: string | number | boolean) => {
 };
 
 
-// @todo: мб isFindActive вместо hasActiveFilters
 const hasActiveFilters = computed(() => !!Object.keys(currentFilters.value).length);
 
 const minPrice = computed({
@@ -113,16 +112,16 @@ const clearAllFilters = () => {
 </i18n>
 
 <template>
-  <div>
-    <div
+  <ul :class="$style.root">
+    <li
       v-if="hasActiveFilters"
-      :class="$style.clear"
+      :class="$style.block"
     >
       <ul :class="$style.criterionList">
         <li
           v-for="(value, key) in currentFilters"
           :key="key"
-          :class="$style.criterion"
+          :class="$style.criterionItem"
         >
           <FilterCriterion
             :type="key"
@@ -133,14 +132,14 @@ const clearAllFilters = () => {
       </ul>
 
       <button
-        :class="$style.clearButton"
+        :class="$style.criterionClearButton"
         type="button"
         @click="clearAllFilters"
         v-text="t('clear_all')"
       />
-    </div>
+    </li>
 
-    <div :class="$style.block">
+    <li :class="$style.block">
       <span
         :class="$style.title"
         v-text="t('price')"
@@ -163,25 +162,9 @@ const clearAllFilters = () => {
           type="number"
         />
       </div>
-    </div>
+    </li>
 
-    <ul v-if="false">
-      <li :class="$style.block">
-        <div :class="$style.check">
-          <span
-            :class="$style.title"
-            v-text="t('safe_deal')"
-          />
-
-          <UICheckbox
-            :modelValue="getFilter('safeTransaction')"
-            @update:model-value="changeSafeDeal"
-          />
-        </div>
-      </li>
-    </ul>
-
-    <div :class="$style.block">
+    <li :class="$style.block">
       <span
         :class="$style.title"
         v-text="t('period')"
@@ -200,13 +183,42 @@ const clearAllFilters = () => {
           />
         </li>
       </ul>
-    </div>
-  </div>
+    </li>
+
+    <li
+      v-if="false"
+      :class="$style.block"
+    >
+      <div :class="$style.check">
+        <span
+          :class="$style.title"
+          v-text="t('safe_deal')"
+        />
+
+        <UICheckbox
+          :modelValue="getFilter('safeTransaction')"
+          @update:model-value="changeSafeDeal"
+        />
+      </div>
+    </li>
+  </ul>
 </template>
 
 <style lang="scss" module>
 .root {
-  display: flex;
+  @include ui-round-content-blocks;
+
+  padding: 4px 20px;
+  background-color: $ui-color-white;
+  box-shadow: $box-shadow;
+}
+
+.block {
+  padding: 16px 0;
+
+  & + & {
+    border-top: 1px solid $ui-color-transparent;
+  }
 }
 
 .criterionList {
@@ -214,17 +226,13 @@ const clearAllFilters = () => {
   flex-wrap: wrap;
 }
 
-.criterion {
+.criterionItem {
   display: inline-flex;
   margin-right: 8px;
   margin-bottom: 8px;
 }
 
-.clear {
-  padding: 16px 0;
-}
-
-.clearButton {
+.criterionClearButton {
   margin-top: 10px;
   color: $ui-color-blue;
   background-color: initial;
@@ -234,11 +242,6 @@ const clearAllFilters = () => {
   &:hover {
     text-decoration: underline;
   }
-}
-
-.block {
-  padding: 16px 0;
-  border-top: 1px solid $ui-color-transparent;
 }
 
 .title {

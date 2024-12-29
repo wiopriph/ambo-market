@@ -99,8 +99,8 @@ const clearAllFilters = () => {
     @close="close"
   >
     <div :class="$style.root">
-      <div :class="$style.wrap">
-        <div :class="[$style.block, $style.firstBlock]">
+      <ul :class="$style.wrap">
+        <li :class="$style.block">
           <span
             :class="$style.title"
             v-text="t('price')"
@@ -123,22 +123,9 @@ const clearAllFilters = () => {
               type="number"
             />
           </div>
-        </div>
+        </li>
 
-        <ul v-if="false">
-          <li :class="$style.block">
-            <div :class="$style.check">
-              <span
-                :class="$style.title"
-                v-text="t('safe_deal')"
-              />
-
-              <UICheckbox v-model="safeTransaction" />
-            </div>
-          </li>
-        </ul>
-
-        <div :class="$style.block">
+        <li :class="$style.block">
           <span
             :class="$style.title"
             v-text="t('period')"
@@ -157,8 +144,22 @@ const clearAllFilters = () => {
               />
             </li>
           </ul>
-        </div>
-      </div>
+        </li>
+
+        <li
+          v-if="false"
+          :class="$style.block"
+        >
+          <div :class="$style.check">
+            <span
+              :class="$style.title"
+              v-text="t('safe_deal')"
+            />
+
+            <UICheckbox v-model="safeTransaction" />
+          </div>
+        </li>
+      </ul>
 
       <div :class="$style.bottom">
         <UIButton
@@ -187,17 +188,15 @@ const clearAllFilters = () => {
 
 .wrap {
   height: calc(100vh - 44px - 138px);
-  padding-bottom: 100px;
   overflow: auto scroll;
 }
 
 .block {
   padding: 20px 0;
-  border-top: 1px solid $ui-color-transparent;
-}
 
-.firstBlock {
-  border-top: none;
+  & + & {
+    border-top: 1px solid $ui-color-transparent;
+  }
 }
 
 .title {
@@ -241,7 +240,7 @@ const clearAllFilters = () => {
   left: 0;
   width: 100%;
   padding: 20px;
-  background-color: #FFFFFF;
+  background-color: $ui-color-white;
 }
 
 .button {

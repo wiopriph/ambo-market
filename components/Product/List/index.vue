@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { ListProps } from './types';
+import { MAX_POSTS_PER_PAGE } from '~/composables/usePosts/constants';
 
-
-const COUNT_OF_LIST = 10;
 
 const props = withDefaults(defineProps<ListProps>(), {
   isLoading: false,
@@ -17,7 +16,7 @@ const hasList = computed(() => Array.isArray(props.list) && props.list.length);
   <div v-if="isLoading">
     <ul :class="$style.root">
       <li
-        v-for="index in COUNT_OF_LIST"
+        v-for="index in MAX_POSTS_PER_PAGE"
         :key="index"
         :class="$style.card"
       >

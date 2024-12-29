@@ -142,7 +142,7 @@ const { t } = useI18n();
   flex-direction: row;
   align-items: center;
   width: 100%;
-  padding: 20px;
+  padding: 16px;
   background-color: #FAFAFA;
   border-radius: 0 0 4px 4px;
 

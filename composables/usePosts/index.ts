@@ -13,6 +13,7 @@ export function usePosts() {
   const location = useState<Location>('location', () => (DEFAULT_LOCATION as Location));
   const locationName = computed(() => location.value.displayName);
   const cityId = computed(() => getCityIdByName(location.value.city));
+  const isPriorityCity = computed(() => cityId.value !== 'all');
   const coords = computed(() => ({
     latitude: location.value.lat,
     longitude: location.value.lon,
@@ -75,9 +76,11 @@ export function usePosts() {
   return {
     location,
     locationName,
-    cityId,
     coords,
     setLocationInfo,
+
+    cityId,
+    isPriorityCity,
 
     filters,
     currentFilters,

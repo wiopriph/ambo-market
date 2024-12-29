@@ -95,9 +95,9 @@ const handleFileUpload = (event: Event) => {
   files.forEach((file) => {
     const reader = new FileReader();
 
-    reader.onload = (e) => {
+    reader.onload = (event_) => {
       images.value.push({
-        base64: e.target?.result as string,
+        base64: event_.target?.result as string,
         mimeType: file?.type,
       });
     };
@@ -173,7 +173,7 @@ const createPost = handleSubmit.withControlled(async () => {
   isLoading.value = true;
 
   try {
-    const post = await <Promise<{ id: string }>>$fire.https('createPost', {
+    const post = await $fire.https('createPost', {
       title: productName.value,
       description: description.value,
       price: +price.value,
@@ -185,7 +185,10 @@ const createPost = handleSubmit.withControlled(async () => {
 
     createdProduct.value = {
       title: productName.value,
-      route: { name: 'product-productId', params: { productId: post?.id }},
+      route: {
+        name: 'product-productId',
+        params: { productId: post?.id },
+      },
     };
 
     isLoading.value = false;
@@ -269,7 +272,7 @@ const createPost = handleSubmit.withControlled(async () => {
                 name="category"
               />
 
-              <UIError :text="errors.category"/>
+              <UIError :text="errors.category" />
             </div>
           </UILineDescription>
 
@@ -289,7 +292,7 @@ const createPost = handleSubmit.withControlled(async () => {
                 type="text"
               />
 
-              <UIError :text="errors.productName"/>
+              <UIError :text="errors.productName" />
             </div>
           </UILineDescription>
 
@@ -316,7 +319,7 @@ const createPost = handleSubmit.withControlled(async () => {
                 />
               </div>
 
-              <UIError :text="errors.price"/>
+              <UIError :text="errors.price" />
             </div>
           </UILineDescription>
 
@@ -335,7 +338,7 @@ const createPost = handleSubmit.withControlled(async () => {
                 name="text"
               />
 
-              <UIError :text="errors.description"/>
+              <UIError :text="errors.description" />
             </div>
           </UILineDescription>
 
@@ -374,14 +377,14 @@ const createPost = handleSubmit.withControlled(async () => {
                   :class="$style.imageItem"
                   @click="loadFile"
                 >
-                  <ProductUploadPhoto/>
+                  <ProductUploadPhoto />
                 </li>
               </ul>
 
               <div :class="$style.imagesNotice">
-                <p v-text="t('photos_notice.first')"/>
+                <p v-text="t('photos_notice.first')" />
 
-                <p v-text="t('photos_notice.second')"/>
+                <p v-text="t('photos_notice.second')" />
               </div>
             </div>
           </UILineDescription>
