@@ -28,7 +28,7 @@ const breadcrumbsMicrodata = computed(() =>
 
 if (!props.disableMicrodata) {
   useHead({
-    script: [
+    script: computed(() => [
       {
         type: 'application/ld+json',
         innerHTML: JSON.stringify({
@@ -37,7 +37,7 @@ if (!props.disableMicrodata) {
           itemListElement: breadcrumbsMicrodata.value,
         }),
       },
-    ],
+    ]),
   });
 }
 </script>

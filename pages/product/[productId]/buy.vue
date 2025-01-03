@@ -1,14 +1,14 @@
 <template>
   <div :class="$style.root">
-    <div>
-      <NuxtPage />
-    </div>
+    <UILoader />
   </div>
 </template>
 
 <style lang="scss" module>
 .root {
   @include ui-simple-container;
-  padding: 20px;
+
+  height: 100%;
+  padding: 24px 20px;
 }
 </style>

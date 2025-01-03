@@ -46,6 +46,8 @@ export default defineI18nConfig(() => ({
   fallbackLocale: 'pt',
   locale: 'pt',
   warnHtmlMessage: 'warn',
+  fallbackWarn: false,
+  missingWarn: false,
   messages: {
     en,
     pt,

@@ -80,5 +80,5 @@ export function getCityById(cityId: string): City | undefined {
 export function getCityIdByName(cityName: string): string {
   const cityInfo = cityMapByName.get(cityName);
 
-  return cityInfo ? cityInfo.id : 'all';
+  return cityInfo?.id || 'all';
 }

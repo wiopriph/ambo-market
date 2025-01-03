@@ -1,7 +1,7 @@
-export interface Props {
+export interface LineDescriptionProps {
   title?: string;
   description?: string;
-  position: 'start' | 'center' | 'end';
+  position?: 'start' | 'center' | 'end';
   hideTitle?: boolean;
   requiredTitle?: boolean;
   boldTitle?: boolean;

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Props } from './types';
+import type { LineDescriptionProps } from './types';
 
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<LineDescriptionProps>(), {
   title: '',
   description: '',
   position: 'start',

@@ -1,12 +1,33 @@
 <script setup lang="ts">
-const { t } = useI18n();
+const { t, locale, locales } = useI18n();
 
 const title = computed(() => t('title'));
 const description = computed(() => t('description'));
 
+
+const currentIso = computed(() => {
+  const currentLocale = locales.value.find(l => l.code === locale.value);
+
+  return currentLocale?.language ?? '';
+});
+
+
+const route = useRoute();
+const config = useRuntimeConfig();
+
+const currentPath = computed(() => `${config.public.appBaseUrl}${route.path}`);
+
 useHead({
   title: computed(() => title.value),
   meta: computed(() => [
+    { key: 'og:type', property: 'og:type', content: 'website' },
+    { key: 'og:url', property: 'og:url', content: currentPath.value },
+    { key: 'og:site_name', property: 'og:site_name', content: 'Ambo Market' },
+    { key: 'og:locale', property: 'og:locale', content: currentIso.value },
+
+    { key: 'og:image:width', property: 'og:image:width', content: '512' },
+    { key: 'og:image:height', property: 'og:image:height', content: '512' },
+
     { key: 'og:title', property: 'og:title', content: title.value },
     { key: 'twitter:title', property: 'twitter:title', content: title.value },
     { key: 'description', name: 'description', content: description.value },

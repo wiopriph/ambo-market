@@ -20,8 +20,8 @@ const title = computed(() => t('seo.user.title', { name: userName }));
 const description = computed(() => t('seo.user.description', { name: userName }));
 
 useHead({
-  title: title.value,
-  meta: [
+  title: computed(() => title.value),
+  meta: computed(() => [
     { key: 'description', name: 'description', content: description.value },
     { key: 'og:title', property: 'og:title', content: title.value },
     { key: 'og:description', property: 'og:description', content: description.value },
@@ -29,8 +29,8 @@ useHead({
     { key: 'twitter:title', property: 'twitter:title', content: title.value },
     { key: 'twitter:description', property: 'twitter:description', content: description.value },
     { key: 'twitter:image', property: 'twitter:image', content: userAvatar },
-  ],
-  script: [
+  ]),
+  script: computed(() => [
     {
       type: 'application/ld+json',
       innerHTML: JSON.stringify({
@@ -46,7 +46,7 @@ useHead({
         },
       }),
     },
-  ],
+  ]),
 });
 
 

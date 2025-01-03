@@ -24,7 +24,11 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
-  modules: ['@nuxtjs/i18n', '@nuxtjs/device'],
+  modules: [
+    '@nuxtjs/i18n',
+    '@nuxtjs/device',
+    'nuxt-swiper',
+  ],
 
   // https://i18n.nuxtjs.org/docs/getting-started/usage
   i18n: {

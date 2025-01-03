@@ -13,8 +13,7 @@ const isClosedPost = computed(() => props.product?.status === POST_STATUSES.CLOS
 const { t } = useI18n();
 
 const price = computed(() => {
-  const { price } = props.product;
-  const formattedPrice = formatAmount(price, 0);
+  const formattedPrice = formatAmount(props.product?.price, 0);
 
   if (formattedPrice) {
     return `${formattedPrice} AOA`;

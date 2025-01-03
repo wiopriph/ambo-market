@@ -10,7 +10,6 @@ const props = withDefaults(defineProps<Props>(), {
   title: '',
 });
 
-const isScrollLocked = ref(false);
 
 const rootStyles = computed(() => ({
   'max-width': isDesktopOrTablet ? props.maxWidth : 'auto',
@@ -30,6 +29,9 @@ const keyDownHandler = (event: KeyboardEvent) => {
   }
 };
 
+
+const isScrollLocked = ref(false);
+
 const lockScroll = () => {
   if (!isScrollLocked.value) {
     document.body.classList.add('scroll-locked');
@@ -45,7 +47,6 @@ const unlockScroll = () => {
     isScrollLocked.value = false;
   }
 };
-
 
 onMounted(lockScroll);
 onBeforeUnmount(unlockScroll);
