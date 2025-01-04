@@ -10,6 +10,8 @@ export function useUser() {
     REMOVE_POST_FROM_FAVORITE,
   } = useUserApi();
 
+  const isAuthChecking = useState<boolean>('isAuthChecking', () => false);
+
   const currentUser = useState<User | null>('currentUser', () => null);
   const isLoggedIn = computed(() => !!currentUser.value);
   const uid = computed(() => currentUser.value?.id ?? null);
@@ -104,13 +106,13 @@ export function useUser() {
   };
 
   return {
+    isAuthChecking,
     currentUser,
     isLoggedIn,
     uid,
     setCurrentUser,
     fetchProfile,
     updateProfile,
-
     isPostInFavorite,
     addPostToFavorite,
     removePostFromFavorite,

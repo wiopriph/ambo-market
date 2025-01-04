@@ -18,7 +18,11 @@ definePageMeta({
 });
 
 
-const { isLoggedIn } = useUser();
+const {
+  isLoggedIn,
+  isAuthChecking,
+} = useUser();
+
 const route = useRoute();
 
 watch(isLoggedIn, (state) => {
@@ -114,7 +118,12 @@ const { t } = useI18n();
 </i18n>
 
 <template>
-  <div :class="$style.root">
+  <UILoader v-if="isAuthChecking" />
+
+  <div
+    v-else
+    :class="$style.root"
+  >
     <h2
       :class="$style.title"
       v-text="t('welcome')"

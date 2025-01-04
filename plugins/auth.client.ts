@@ -4,9 +4,15 @@ import { useUser } from '~/composables/useUser';
 export default defineNuxtPlugin(() => {
   const { $fire } = useNuxtApp();
 
-  const { fetchProfile, setCurrentUser } = useUser();
+  const {
+    isAuthChecking,
+    fetchProfile,
+    setCurrentUser,
+  } = useUser();
 
   $fire.auth.onAuthStateChanged(async (user) => {
+    isAuthChecking.value = true;
+
     if (user) {
       try {
         await fetchProfile();
@@ -17,5 +23,7 @@ export default defineNuxtPlugin(() => {
     } else {
       setCurrentUser(null);
     }
+
+    isAuthChecking.value = false;
   });
 });

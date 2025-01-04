@@ -1,3 +1,9 @@
+<script setup lang="ts">
+definePageMeta({
+  middleware: 'auth',
+});
+</script>
+
 <template>
   <div :class="$style.root">
     <div>
@@ -9,6 +15,7 @@
 <style lang="scss" module>
 .root {
   @include ui-simple-container;
+
   padding: 20px;
 }
 </style>
