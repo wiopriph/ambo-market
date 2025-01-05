@@ -1,3 +1,6 @@
+// import type { User } from '~/composables/useUser/types';
+
+
 interface UserInfo {
   id: string;
   name: string;

@@ -13,7 +13,14 @@ import {
   sendPasswordResetEmail,
 } from 'firebase/auth';
 
-import { getFirestore } from 'firebase/firestore';
+import {
+  getFirestore,
+  collection,
+  doc,
+  updateDoc,
+  onSnapshot,
+} from 'firebase/firestore';
+
 import { getFunctions, httpsCallable } from 'firebase/functions';
 
 
@@ -65,7 +72,12 @@ export default defineNuxtPlugin(() => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           onAuthStateChanged: (callback: (user: any) => void) => onAuthStateChanged(auth, callback),
         },
-        firestore,
+        firestore: {
+          collection: (collectionPath: string) => collection(firestore, collectionPath),
+          doc: (collectionPath: string, docId: string) => doc(firestore, collectionPath, docId),
+          onSnapshot,
+          updateDoc,
+        },
       },
     },
   };
