@@ -6,7 +6,8 @@
     "matchPassword": "Passwords do not match",
     "passwordRequired": "Password cannot be empty",
     "passwordMinLength": "Password is too short",
-    "passwordMaxLength": "Password is too long"
+    "passwordMaxLength": "Password is too long",
+    "reviewMaxLength": "Review is too long"
   },
   "seo": {
     "all_provinces": "all provinces",

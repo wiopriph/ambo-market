@@ -6,7 +6,8 @@
     "matchPassword": "As senhas não coincidem",
     "passwordRequired": "A senha não pode estar vazia",
     "passwordMinLength": "A senha é muito curta",
-    "passwordMaxLength": "A senha é muito longa"
+    "passwordMaxLength": "A senha é muito longa",
+    "reviewMaxLength": "A revisão é muito longa"
   },
   "seo": {
     "all_provinces": "todas as províncias",

@@ -213,7 +213,7 @@ const { isDesktopOrTablet } = useDevice();
           </li>
 
           <li v-if="isBuyerReviewEnabled">
-            <LazyRatingChatButton
+            <RatingCreateButton
               :userId="user.id"
               :userName="user.name"
               :userPhoto="user.photoURL"
