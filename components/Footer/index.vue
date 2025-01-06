@@ -1,7 +1,4 @@
 <script setup lang="ts">
-// @todo: прикрутить localize для vee-validate
-// import { localize } from 'vee-validate';
-
 const { isMobileOrTablet } = useDevice();
 
 
@@ -46,7 +43,6 @@ const availableLocales = computed(() => locales.value.filter(({ code }) => code 
 
 const setNewLocale = (newLocale: string) => {
   setLocale(newLocale);
-  // localize(newLocale);
 };
 
 

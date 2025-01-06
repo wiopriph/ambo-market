@@ -3,7 +3,7 @@ import { useUser } from '~/composables/useUser';
 
 
 definePageMeta({
-  middleware: defineNuxtRouteMiddleware(async (to) => {
+  middleware: defineNuxtRouteMiddleware((to) => {
     const { isLoggedIn, uid } = useUser();
 
     if (isLoggedIn.value && uid.value) {

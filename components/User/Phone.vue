@@ -39,8 +39,8 @@ const savePhone = handleSubmit.withControlled(async () => {
 
   try {
     await updateProfile({ phoneNumber: `+${phone.value}` });
-  } catch (error: any) {
-    backendError.value = error.message;
+  } catch (error) {
+    backendError.value = error?.message;
   } finally {
     isLoading.value = false;
   }

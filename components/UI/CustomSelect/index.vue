@@ -253,7 +253,7 @@ const closeCustomSelect = () => {
   @include ui-input-state-normal();
   overflow: initial;
   color: $ui-color-text-light;
-  background: $ui-color-white url('~/assets/images/icon-carret.svg') no-repeat calc(100% - 15px) center;
+  background: $ui-color-white url('@/assets/images/icon-carret.svg') no-repeat calc(100% - 15px) center;
   cursor: pointer;
 
   &_error {

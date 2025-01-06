@@ -1,7 +1,7 @@
 import { useUser } from '~/composables/useUser';
 
 
-export default defineNuxtRouteMiddleware(async (to) => {
+export default defineNuxtRouteMiddleware((to) => {
   const { isLoggedIn } = useUser();
 
   if (!isLoggedIn.value) {

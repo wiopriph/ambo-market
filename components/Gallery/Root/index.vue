@@ -20,9 +20,9 @@ const slideCountInfo = computed(() => {
   return `${currentIndex} / ${totalImages}`;
 });
 
-const emit = defineEmits(['open-modal']);
+const emit = defineEmits(['openModal']);
 
-const openPopup = () => emit('open-modal', currentSlideIndex.value);
+const openPopup = () => emit('openModal', currentSlideIndex.value);
 
 const isOpenPost = computed(() => props.status === POST_STATUSES.OPEN);
 

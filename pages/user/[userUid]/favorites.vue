@@ -3,7 +3,7 @@ import { useUser } from '~/composables/useUser';
 
 
 definePageMeta({
-  middleware: defineNuxtRouteMiddleware(async (to) => {
+  middleware: defineNuxtRouteMiddleware((to) => {
     const { isLoggedIn, uid } = useUser();
 
     if (!isLoggedIn.value) {
@@ -23,7 +23,7 @@ definePageMeta({
 
 const { $fire } = useNuxtApp();
 
-const { data: posts } = await useAsyncData('favorites_posts', async () => $fire.https('getFavoritePosts'));
+const { data: posts } = await useAsyncData('favorites_posts', () => $fire.https('getFavoritePosts'));
 
 const { t } = useI18n();
 </script>

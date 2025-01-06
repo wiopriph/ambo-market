@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { RatingReviewsModalProps, RatingReviewsResponse, Review } from './types';
+import type { RatingReviewsModalProps, Review } from './types';
 import IconStar from '~/assets/images/icon-star.svg?component';
 
 
@@ -19,11 +19,12 @@ const isLoading = ref<boolean>(true);
 
 onMounted(async () => {
   try {
-    const response = <RatingReviewsResponse>await $fire.https('getReviews', { userId: props.userId });
+    const response = await $fire.https('getReviews', { userId: props.userId });
 
     rating.value = response?.rating;
     reviews.value = response?.reviews;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
   } finally {
     isLoading.value = false;

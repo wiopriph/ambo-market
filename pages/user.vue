@@ -7,7 +7,7 @@ const route = useRoute();
 
 const userId = route.params.userUid;
 
-const { data: user } = await useAsyncData('user', async () => $fire.https('getUserById', { userId }));
+const { data: user } = await useAsyncData('user', () => $fire.https('getUserById', { userId }));
 
 
 const { t } = useI18n();

@@ -24,6 +24,7 @@ const sendMessage = async () => {
       message.value = '';
       isMessageSending.value = false;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       isMessageSending.value = false;
     }
@@ -41,6 +42,7 @@ const getChatInfo = async (chatId: string) => {
     product.value = chat.post;
     user.value = chat.participant;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
     navigateTo({ name: 'im' });
   }
@@ -94,6 +96,7 @@ const markMessageAsRead = async (chatId: string, messageId: string) => {
 
     await $fire.firestore.updateDoc(messageDoc, { isRead: true });
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(`Error marking message as read: ${error}`);
   }
 };
@@ -117,7 +120,9 @@ const getChatRoom = async (chatId: string) => {
 
     isLoading.value = false;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
+
     navigateTo({ name: 'im' });
   }
 };

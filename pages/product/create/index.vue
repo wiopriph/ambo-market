@@ -17,7 +17,7 @@ watch(isLoggedIn, (state) => {
 });
 
 definePageMeta({
-  middleware: defineNuxtRouteMiddleware(async (to) => {
+  middleware: defineNuxtRouteMiddleware((to) => {
     const { isLoggedIn } = useUser();
 
     if (!isLoggedIn.value) {
@@ -119,7 +119,7 @@ type Location = {
   address: string;
 };
 
-const location = ref<Location | {}>({});
+const location = ref<Location>({});
 
 const hasLocation = computed(() => Object.keys(location.value).length > 0);
 

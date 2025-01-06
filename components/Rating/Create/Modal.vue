@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate';
-import { boolean, object, string } from 'yup';
+import { object, string } from 'yup';
 import type { RatingCreateProps } from './types';
 import IconStar from '~/assets/images/icon-star.svg?component';
 

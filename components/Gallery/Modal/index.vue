@@ -55,15 +55,15 @@ const formattedPrice = computed(() => {
 
 const emit = defineEmits([
   'close',
-  'close-post',
-  'show-number',
-  'create-chat-room',
+  'closePost',
+  'showNumber',
+  'createChatRoom',
 ]);
 
 const closeModal = () => emit('close');
-const closePost = () => emit('close-post');
-const showNumber = () => emit('show-number');
-const createChatRoom = () => emit('create-chat-room');
+const closePost = () => emit('closePost');
+const showNumber = () => emit('showNumber');
+const createChatRoom = () => emit('createChatRoom');
 
 
 const isScrollLocked = ref(false);
