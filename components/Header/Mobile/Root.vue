@@ -26,6 +26,16 @@ const menuList = computed(() => [
     route: { name: 'user-favorites' },
   },
   {
+    icon: 'IconDeals',
+    label: t('orders'),
+    route: {
+      name: 'order-history-status',
+      params: {
+        status: 'buy',
+      },
+    },
+  },
+  {
     icon: 'IconSettings',
     label: t('settings'),
     route: { name: 'user-settings' },

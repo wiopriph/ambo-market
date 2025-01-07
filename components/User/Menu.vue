@@ -2,9 +2,10 @@
 import IconAds from '~/assets/images/header/icon-ads.svg?component';
 import IconMail from '~/assets/images/header/icon-mail.svg?component';
 import IconHeart from '~/assets/images/header/icon-heart.svg?component';
+import IconDeals from '~/assets/images/header/icon-deals.svg?component';
 import IconSettings from '~/assets/images/header/icon-settings.svg?component';
 import { useUser } from '~/composables/useUser';
-// import IconDeals from '~/assets/images/header/icon-deals.svg?component';
+
 
 const { uid } = useUser();
 
@@ -33,6 +34,16 @@ const menuList = computed(() => [
       name: 'user-userUid-favorites',
       params: {
         userUid: uid.value,
+      },
+    },
+  },
+  {
+    icon: IconDeals,
+    label: t('orders'),
+    route: {
+      name: 'order-history-status',
+      params: {
+        status: 'buy',
       },
     },
   },

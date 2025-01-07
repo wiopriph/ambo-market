@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import IconLocation from '~/assets/images/header/icon-location.svg?component';
-// import IconDeals from '~/assets/images/header/icon-deals.svg?component';
+import IconDeals from '~/assets/images/header/icon-deals.svg?component';
 import IconMail from '~/assets/images/header/icon-mail.svg?component';
 import IconHeart from '~/assets/images/header/icon-heart.svg?component';
 import IconAds from '~/assets/images/header/icon-ads.svg?component';
@@ -11,16 +11,16 @@ import { usePosts } from '~/composables/usePosts';
 const { t } = useI18n();
 
 const links = computed(() => [
-  // {
-  //   icon: IconDeals,
-  //   text: t('orders'),
-  //   to: {
-  //     name: 'order-history-status',
-  //     params: {
-  //       status: 'buy',
-  //     },
-  //   },
-  // },
+  {
+    icon: IconDeals,
+    text: t('orders'),
+    to: {
+      name: 'order-history-status',
+      params: {
+        status: 'buy',
+      },
+    },
+  },
   {
     icon: IconHeart,
     text: t('favorites'),

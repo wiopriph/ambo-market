@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import type { UserInfoProps } from './types';
 import IconVerified from '~/assets/images/profile/icon-verified.svg?component';
 import IconUnverified from '~/assets/images/profile/icon-unverified.svg?component';
 import IconFB from '~/assets/images/icon-fb.svg?component';
 import IconStar from '~/assets/images/icon-star.svg?component';
-
-
-const { t, locale } = useI18n();
 
 
 const props = defineProps<UserInfoProps>();
@@ -35,6 +31,9 @@ const rating = computed(() => {
 
   return userRating;
 });
+
+
+const { t, locale } = useI18n();
 
 const formattedDate = computed(() => {
   const creationTime = props.user?.creationTime;

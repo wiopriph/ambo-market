@@ -408,7 +408,6 @@ const createPost = handleSubmit.withControlled(async () => {
           </UILineDescription>
 
           <UILineDescription
-            v-if="false"
             :title="t('safe_deal')"
             :class="$style.line"
             position="center"
