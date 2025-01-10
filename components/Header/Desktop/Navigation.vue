@@ -105,12 +105,10 @@ const hideMapModal = () => {
       </button>
     </div>
 
-    <transition name="fade">
-      <LazyGeolocationModal
-        v-if="isMapModalVisible"
-        @close="hideMapModal"
-      />
-    </transition>
+    <LazyGeolocationModal
+      v-if="isMapModalVisible"
+      @close="hideMapModal"
+    />
 
     <ul :class="$style.links">
       <li

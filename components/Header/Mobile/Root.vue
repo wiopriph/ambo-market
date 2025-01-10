@@ -192,12 +192,10 @@ const hideMapModal = () => {
       <IconProfile />
     </button>
 
-    <transition name="fade">
-      <LazyGeolocationModal
-        v-if="isMapModalVisible"
-        @close="hideMapModal"
-      />
-    </transition>
+    <LazyGeolocationModal
+      v-if="isMapModalVisible"
+      @close="hideMapModal"
+    />
 
     <transition name="fade">
       <LazyAuthModal

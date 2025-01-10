@@ -33,8 +33,8 @@ const innerValue = computed({
       :tabindex="tabindex"
       :class="$style.input"
       type="radio"
-      @blur="$emit('blur')"
-      @focus="$emit('focus')"
+      @blur="emit('blur')"
+      @focus="emit('focus')"
     >
 
     <span
