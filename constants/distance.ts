@@ -5,7 +5,7 @@ export const DISTANCE = [
   { value: '25000', label: '25 km' },
   { value: '50000', label: '50 km' },
   { value: '', label: '> 50 km' },
-] as const;
+];
 
 const distanceMap = new Map<string, string>(
   DISTANCE.map(({ value, label }) => [value, label]),

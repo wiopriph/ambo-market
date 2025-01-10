@@ -283,6 +283,14 @@ const { isDesktopOrTablet } = useDevice();
 <i18n lang="json">
 {
   "en": {
+    "contact_seller": "Contact seller",
+    "show_on_map": "Show on map",
+    "location": "Location",
+    "category": "Category",
+    "description": "Description",
+    "posted": "Posted",
+    "share": "Share",
+
     "electronics": {
       "withCity": {
         "title": "{title} for sale in {city} {'|'} Electronics {'|'} Ambo Market",
@@ -425,6 +433,14 @@ const { isDesktopOrTablet } = useDevice();
     }
   },
   "pt": {
+    "contact_seller": "Contatar vendedor",
+    "show_on_map": "Mostrar no mapa",
+    "location": "Localização",
+    "category": "Categoria",
+    "description": "Descrição",
+    "posted": "Postou",
+    "share": "Compartilhar",
+
     "electronics": {
       "withCity": {
         "title": "{title} comprar em {city} {'|'} Eletrônicos {'|'} Ambo Market",
@@ -747,15 +763,13 @@ const { isDesktopOrTablet } = useDevice();
         </div>
       </div>
 
-      <transition name="fade">
-        <LazyGeolocationPreviewModal
-          v-if="isMapModalVisible && postLocation"
-          :displayName="postLocation.displayName"
-          :latitude="postLocation.lat"
-          :longitude="postLocation.lon"
-          @close="hideMapModal"
-        />
-      </transition>
+      <LazyGeolocationPreviewModal
+        v-if="isMapModalVisible && postLocation"
+        :displayName="postLocation.displayName"
+        :latitude="postLocation.lat"
+        :longitude="postLocation.lon"
+        @close="hideMapModal"
+      />
 
       <transition name="fade">
         <LazyProductBuyersModal
