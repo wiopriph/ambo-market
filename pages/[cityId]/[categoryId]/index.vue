@@ -14,6 +14,7 @@ definePageMeta({
 
 const {
   cityId,
+  coords,
   locationName,
   isPriorityCity,
   page,
@@ -101,7 +102,7 @@ useHead({
 
 
 const { data: posts } = await useAsyncData('posts', () => fetchPosts(), {
-  watch: [() => [route.query, route.params]],
+  watch: [() => [coords, route.query, route.params]],
 });
 
 

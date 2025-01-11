@@ -1,6 +1,10 @@
 <script setup lang="ts">
-const { isMobileOrTablet } = useDevice();
-
+const {
+  t,
+  locale,
+  locales,
+  setLocale,
+} = useI18n();
 
 const companyLinks = computed(() => ([
   {
@@ -22,28 +26,12 @@ const socialLinks = [
     name: 'Instagram',
     url: 'https://www.instagram.com/ambo.market/',
   },
-  // {
-  //   name: 'Facebook',
-  //   url: 'https://www.facebook.com/',
-  // },
-  // {
-  //   name: 'Twitter',
-  //   url: 'https://twitter.com/',
-  // },
 ];
 
-const {
-  t,
-  locale,
-  locales,
-  setLocale,
-} = useI18n();
 
 const availableLocales = computed(() => locales.value.filter(({ code }) => code !== locale.value));
 
-const setNewLocale = (newLocale: string) => {
-  setLocale(newLocale);
-};
+const setNewLocale = (newLocale: string) => setLocale(newLocale);
 
 
 const route = useRoute();
@@ -54,9 +42,11 @@ const hasAdButton = typeof route.name === 'string' && ['index', 'cityId', 'cityI
 const goToCreatePage = () => {
   navigateTo({ name: 'product-create' });
 };
+
+const { isMobileOrTablet } = useDevice();
 </script>
 
-<i18n>
+<i18n lang="json">
 {
   "en": {
     "place_ad": "Place Your Ad",
@@ -161,7 +151,7 @@ const goToCreatePage = () => {
         :class="$style.wrap"
       >
         <div :class="$style.item">
-          <h3
+          <h2
             :class="$style.title"
             v-text="t('company')"
           />
@@ -180,7 +170,7 @@ const goToCreatePage = () => {
         </div>
 
         <div :class="$style.item">
-          <h3
+          <h2
             :class="$style.title"
             v-text="t('follow_us')"
           />
@@ -201,7 +191,7 @@ const goToCreatePage = () => {
         </div>
 
         <div :class="$style.item">
-          <h3
+          <h2
             :class="$style.title"
             v-text="t('support')"
           />
@@ -216,7 +206,7 @@ const goToCreatePage = () => {
         </div>
 
         <div :class="$style.item">
-          <h3
+          <h2
             :class="$style.title"
             v-text="t('languages')"
           />
@@ -240,7 +230,7 @@ const goToCreatePage = () => {
     </div>
 
     <div :class="[$style.container, $style.copyright]">
-      © 2024 Ambo.Market
+      © 2025 Ambo.Market
     </div>
   </footer>
 </template>

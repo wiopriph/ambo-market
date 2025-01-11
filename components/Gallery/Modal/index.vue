@@ -119,6 +119,7 @@ onBeforeUnmount(unlockScroll);
         <button
           :class="$style.exitButton"
           type="button"
+          aria-label="Close gallery"
           @click="closeModal"
         >
           <IconClose />
@@ -128,6 +129,7 @@ onBeforeUnmount(unlockScroll);
           v-show="hasPrevButton"
           :class="[$style.button, $style.buttonLeft]"
           type="button"
+          aria-label="Previous slide"
           @click="prevSlide"
         >
           <IconLeftButton />
@@ -137,6 +139,7 @@ onBeforeUnmount(unlockScroll);
           v-show="hasNextButton"
           :class="[$style.button, $style.buttonRight]"
           type="button"
+          aria-label="Next slide"
           @click="nextSlide"
         >
           <IconRightButton />

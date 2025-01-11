@@ -89,6 +89,7 @@ export default defineNuxtConfig({
   },
 
   plugins: [
+    '~/plugins/location.server.ts',
     '~/plugins/firebase.ts',
     '~/plugins/auth.client.ts',
   ],

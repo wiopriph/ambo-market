@@ -40,9 +40,8 @@ const rootClassNames = computed(() => ({
 
   width: 100%;
   height: 100px;
-
-  color: #BD8AA1;
-  background-color: rgba(#BD8AA1, 0.1);
+  color: rgba(#BD8AA1, .5);
+  border: rgba(#BD8AA1, .3) 1px solid;
 }
 
 .mobile {

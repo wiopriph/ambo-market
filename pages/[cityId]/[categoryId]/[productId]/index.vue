@@ -715,7 +715,7 @@ const { isDesktopOrTablet } = useDevice();
 
           <li :class="$style.descriptionItem">
             <UILineDescription :title="t('share')">
-              <ProductSharePost
+              <ProductSharingButtons
                 :title="post.title"
                 :link="route.fullPath"
               />

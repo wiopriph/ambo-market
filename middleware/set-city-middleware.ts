@@ -10,9 +10,7 @@ export default defineNuxtRouteMiddleware((to) => {
 
   const routeCityId = to.params.cityId as string;
 
-
   if (routeCityId !== cityId.value) {
-    // @todo: БАГ - перебивает при обновлении страницы сетап клиент - нужно переделать на куки
     const defaultCityInfo = getCityById(routeCityId);
 
     if (defaultCityInfo) {

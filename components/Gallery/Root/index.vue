@@ -78,6 +78,7 @@ const prevSlide = () => swiper.prev();
         v-show="hasPrevButton"
         :class="[$style.button, $style.buttonLeft]"
         type="button"
+        aria-label="Previous slide"
         @click="prevSlide"
       >
         <IconLeftButton :class="$style.buttonIcon" />
@@ -87,6 +88,7 @@ const prevSlide = () => swiper.prev();
         v-show="hasNextButton"
         :class="[$style.button, $style.buttonRight]"
         type="button"
+        aria-label="Next slide"
         @click="nextSlide"
       >
         <IconRightButton :class="$style.buttonIcon" />

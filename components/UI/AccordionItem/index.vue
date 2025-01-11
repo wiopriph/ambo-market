@@ -4,7 +4,7 @@ import IconArrowDown from '~/assets/images/icon-carret.svg?component';
 
 
 const props = withDefaults(defineProps<Props>(), {
-  titleTag: 'h3',
+  titleTag: 'h2',
   expanded: false,
   title: '',
 });
@@ -61,6 +61,7 @@ const rootClassNames = computed(() => ({
 
 .title {
   @include ui-typo-15-bold;
+
   width: calc(100% - 24px);
   padding-right: 20px;
   cursor: pointer;

@@ -72,6 +72,12 @@ const hasMobileUserInfo = computed(() => isMobileOrTablet && (route.name === 'us
         v-if="isCurrentUser"
         :class="$style.desktopMenu"
       />
+
+      <AD
+        v-else
+        :class="$style.ad"
+        type="vertical"
+      />
     </div>
 
     <div :class="$style.main">
@@ -105,7 +111,9 @@ const hasMobileUserInfo = computed(() => isMobileOrTablet && (route.name === 'us
 }
 
 .left {
-  max-width: 300px;
+  position: relative;
+  flex: 280px 0;
+  max-width: 280px;
   margin-right: 20px;
 
   @include md {
@@ -122,10 +130,17 @@ const hasMobileUserInfo = computed(() => isMobileOrTablet && (route.name === 'us
 }
 
 .main {
-  flex: 1;
+  flex: 1 1;
+  min-width: 0;
 
   @include md {
     margin-top: 20px;
   }
+}
+
+.ad {
+  position: sticky;
+  top: (64px + 10px);
+  margin-top: 20px;
 }
 </style>

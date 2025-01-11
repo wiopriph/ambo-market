@@ -252,7 +252,7 @@ const handleMapClick = ({ latlng }) => {
           <UITabs
             v-model="radius"
             :options="DISTANCE"
-            @input="updateRadius"
+            @update:model-value="updateRadius"
           />
         </div>
       </div>

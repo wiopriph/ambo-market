@@ -9,9 +9,14 @@ import { getCityIdByName } from '~/constants/cities';
 export function usePosts() {
   const { GET_POSTS } = usePostApi();
 
+  const locationCookie = useCookie<Location>('location', {
+    path: '/',
+    maxAge: 60 * 60 * 24 * 30,
+  });
 
   const location = useState<Location>('location', () => (DEFAULT_LOCATION as Location));
   const locationName = computed(() => location.value.displayName);
+
   const cityId = computed(() => getCityIdByName(location.value.city));
   const isPriorityCity = computed(() => cityId.value !== 'all');
   const coords = computed(() => ({
@@ -22,10 +27,8 @@ export function usePosts() {
 
   const setLocationInfo = (locationData: Location) => {
     location.value = locationData;
-
-    // cookies.set('location', locationData, { path: '/', maxAge: 60 * 60 * 24 * 30 });
+    locationCookie.value = locationData;
   };
-
 
   const filters = useState<Filters>('filters', () => (DEFAULT_FILTERS as Filters));
   const currentFilters = computed(() => getObjectDifferences(filters.value, DEFAULT_FILTERS));

@@ -1,29 +1,18 @@
 <script setup lang="ts">
-const { t, locale, locales } = useI18n();
+const head = useLocaleHead({
+  addSeoAttributes: true,
+  identifierAttribute: 'key',
+});
+
+const { t } = useI18n();
 
 const title = computed(() => t('title'));
 const description = computed(() => t('description'));
 
-
-const currentIso = computed(() => {
-  const currentLocale = locales.value.find(l => l.code === locale.value);
-
-  return currentLocale?.language ?? '';
-});
-
-
-const route = useRoute();
-const config = useRuntimeConfig();
-
-const currentPath = computed(() => `${config.public.appBaseUrl}${route.path}`);
-
 useHead({
-  title: computed(() => title.value),
   meta: computed(() => [
     { key: 'og:type', property: 'og:type', content: 'website' },
-    { key: 'og:url', property: 'og:url', content: currentPath.value },
     { key: 'og:site_name', property: 'og:site_name', content: 'Ambo Market' },
-    { key: 'og:locale', property: 'og:locale', content: currentIso.value },
 
     { key: 'og:image:width', property: 'og:image:width', content: '512' },
     { key: 'og:image:height', property: 'og:image:height', content: '512' },
@@ -52,11 +41,42 @@ useHead({
 
 <template>
   <div :class="$style.page">
-    <HeaderRoot />
+    <Html :lang="head.htmlAttrs.lang">
+      <Head>
+        <Title>
+          {{ title }}
+        </Title>
 
-    <slot />
+        <template
+          v-for="link in head.link"
+          :key="link.key"
+        >
+          <Link
+            :rel="link.rel"
+            :href="link.href"
+            :hreflang="link.hreflang"
+          />
+        </template>
 
-    <Footer />
+        <template
+          v-for="meta in head.meta"
+          :key="meta.key"
+        >
+          <Meta
+            :property="meta.property"
+            :content="meta.content"
+          />
+        </template>
+      </Head>
+
+      <Body>
+        <HeaderRoot />
+
+        <slot />
+
+        <Footer />
+      </Body>
+    </Html>
   </div>
 </template>
 
