@@ -29,6 +29,7 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
     '@nuxtjs/leaflet',
     'nuxt-swiper',
+    '@nuxt/image',
   ],
 
   // https://i18n.nuxtjs.org/docs/getting-started/usage

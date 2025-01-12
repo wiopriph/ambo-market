@@ -37,11 +37,11 @@ const lastMessage = computed(() => {
 <template>
   <div :class="classNames">
     <div :class="$style.photo">
-      <UIImage
-        :size="32"
-        :img="product.image"
-        :name="product.title"
+      <NuxtImg
+        :src="product.image"
+        :alt="product.title"
         :class="$style.productPhoto"
+        loading="lazy"
       />
 
       <div :class="$style.userPhoto">

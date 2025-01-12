@@ -71,10 +71,9 @@ const createOrder = () => {
   <div :class="$style.product">
     <div :class="$style.productInfo">
       <div :class="$style.photo">
-        <UIImage
-          :size="32"
-          :img="product.image"
-          :name="product.title"
+        <NuxtImg
+          :src="product.image"
+          :alt="product.title"
         />
       </div>
 

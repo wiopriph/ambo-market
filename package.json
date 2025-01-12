@@ -13,6 +13,7 @@
     "stylelintfix": "node ./node_modules/stylelint/bin/stylelint.mjs \"**/*.{scss,vue}\" --fix"
   },
   "dependencies": {
+    "@nuxt/image": "1.9.0",
     "@nuxtjs/leaflet": "1.2.6",
     "firebase": "11.1.0",
     "lodash": "4.17.21",

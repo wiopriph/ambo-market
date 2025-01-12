@@ -1,3 +1,3 @@
 export interface AuthWrapperProps {
-  hasBackButton: boolean;
+  hasBackButton?: boolean;
 }

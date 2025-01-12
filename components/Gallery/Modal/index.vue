@@ -172,11 +172,11 @@ onBeforeUnmount(unlockScroll);
                 v-for="(image, index) in images"
                 :key="index"
               >
-                <img
+                <NuxtImg
                   :src="image"
                   :alt="`image_${index}`"
                   :class="$style.image"
-                >
+                />
               </swiper-slide>
             </swiper-container>
           </div>

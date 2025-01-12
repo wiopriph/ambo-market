@@ -15,13 +15,14 @@ const props = defineProps<Props>();
       v-text="props.title"
     />
 
-    <img
+    <NuxtImg
       :src="props.img"
       :class="$style.icon"
       width="83"
       height="70"
+      quality="90"
       alt=""
-    >
+    />
   </NuxtLink>
 </template>
 

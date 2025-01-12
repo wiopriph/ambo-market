@@ -57,10 +57,9 @@ const goToOrder = () => {
   >
     <div :class="$style.main">
       <div :class="$style.productPhoto">
-        <UIImage
-          :size="100"
-          :img="post.image"
-          :name="post.title"
+        <NuxtImg
+          :src="post.image"
+          :alt="post.title"
         />
       </div>
 

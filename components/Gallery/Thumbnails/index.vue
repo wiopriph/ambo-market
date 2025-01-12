@@ -64,11 +64,11 @@ const setCurrentImage = (index: number) => emit('select', index);
         type="button"
         @click="setCurrentImage(index)"
       >
-        <img
+        <NuxtImg
           :src="image"
           :class="$style.thumbnailImage"
           :alt="`miniature_${index}`"
-        >
+        />
       </button>
     </nav>
   </div>

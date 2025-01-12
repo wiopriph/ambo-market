@@ -76,11 +76,11 @@ const link = computed(() => ({
         :class="$style.status"
       />
 
-      <UIImage
-        :size="100"
-        :img="previewImage"
-        :name="productTitle"
+      <NuxtImg
+        :src="previewImage"
+        :alt="productTitle"
         :class="$style.photo"
+        loading="lazy"
       />
     </div>
 

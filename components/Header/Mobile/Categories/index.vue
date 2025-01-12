@@ -67,11 +67,12 @@ const { t } = useI18n();
           @click="close"
         >
           <span :class="$style.iconWrap">
-            <img
+            <NuxtImg
               :src="category.img"
               :alt="category.title"
               :class="$style.icon"
-            >
+              quality="70"
+            />
           </span>
 
           <span v-text="category.title" />
