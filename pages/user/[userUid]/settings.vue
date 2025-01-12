@@ -140,14 +140,12 @@ function hideEditPhoneModal() {
             />
           </UserSettingsItem>
 
-          <transition name="fade">
-            <LazyUserSettingsEditProfileModal
-              v-if="isEditProfileModalVisible"
-              :name="currentUser.name"
-              :photoUrl="currentUser.photoURL"
-              @close="hideEditProfileModal"
-            />
-          </transition>
+          <LazyUserSettingsEditProfileModal
+            v-if="isEditProfileModalVisible"
+            :name="currentUser.name"
+            :photoUrl="currentUser.photoURL"
+            @close="hideEditProfileModal"
+          />
         </li>
 
         <li :class="$style.item">
@@ -160,13 +158,11 @@ function hideEditPhoneModal() {
             {{ currentUser.phone }}
           </UserSettingsItem>
 
-          <transition name="fade">
-            <LazyUserSettingsEditPhoneModal
-              v-if="isEditPhoneModalVisible"
-              :phone="currentUser.phone"
-              @close="hideEditPhoneModal"
-            />
-          </transition>
+          <LazyUserSettingsEditPhoneModal
+            v-if="isEditPhoneModalVisible"
+            :phone="currentUser.phone"
+            @close="hideEditPhoneModal"
+          />
         </li>
 
         <li :class="$style.item">

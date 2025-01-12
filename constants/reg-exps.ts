@@ -1,1 +1,1 @@
-export const PHONE_REG_EXP = /^(244)\d{9}$/;
+export const PHONE_REG_EXP = /^(\+?\d{3})\s?\d{3}\s?\d{3}\s?\d{3}$/;

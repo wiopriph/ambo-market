@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate';
 import { object, string } from 'yup';
+import { vMaska } from 'maska/vue';
 import { useUser } from '~/composables/useUser';
 import { PHONE_REG_EXP } from '~/constants/reg-exps';
 
@@ -38,7 +39,9 @@ const savePhone = handleSubmit.withControlled(async () => {
   backendError.value = '';
 
   try {
-    await updateProfile({ phoneNumber: `+${phone.value}` });
+    const formattedPhone = phone.value.replace(/\s+/g, '');
+
+    await updateProfile({ phoneNumber: formattedPhone });
   } catch (error) {
     backendError.value = error?.message;
   } finally {
@@ -79,7 +82,8 @@ const savePhone = handleSubmit.withControlled(async () => {
       <div>
         <UIInputPhone
           v-model="phone"
-          :placeholder="$t('phone_number')"
+          v-maska="'+244 ### ### ###'"
+          :placeholder="t('phone_number')"
           :error="errors.phone"
           name="phone"
         />
