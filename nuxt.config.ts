@@ -61,6 +61,10 @@ export default defineNuxtConfig({
     vueI18n: './i18n/index.ts',
   },
 
+  swiper: {
+    bundled: false,
+  },
+
   css: [
     '~/assets/scss/global.scss',
   ],
