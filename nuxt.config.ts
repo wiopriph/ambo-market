@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     '@nuxtjs/leaflet',
     'nuxt-swiper',
     '@nuxt/image',
+    'nuxt-gtag',
   ],
 
   // https://i18n.nuxtjs.org/docs/getting-started/usage
@@ -63,6 +64,11 @@ export default defineNuxtConfig({
 
   swiper: {
     bundled: false,
+  },
+
+  gtag: {
+    // NUXT_PUBLIC_GTAG_ID overwrites the `gtag.id` module option
+    enabled: process.env.NODE_ENV === 'production',
   },
 
   css: [
