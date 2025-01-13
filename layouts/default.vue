@@ -9,18 +9,24 @@ const { t } = useI18n();
 const title = computed(() => t('title'));
 const description = computed(() => t('description'));
 
+const config = useRuntimeConfig();
+
+const image = `${config.public.appBaseUrl}/images/background.png`;
+
 useHead({
   meta: computed(() => [
     { key: 'og:type', property: 'og:type', content: 'website' },
     { key: 'og:site_name', property: 'og:site_name', content: 'Ambo Market' },
-
+    { hid: 'og:image', property: 'og:image', content: image },
     { key: 'og:image:width', property: 'og:image:width', content: '512' },
     { key: 'og:image:height', property: 'og:image:height', content: '512' },
-
     { key: 'og:title', property: 'og:title', content: title.value },
-    { key: 'twitter:title', property: 'twitter:title', content: title.value },
-    { key: 'description', name: 'description', content: description.value },
     { key: 'og:description', property: 'og:description', content: description.value },
+
+    { key: 'description', name: 'description', content: description.value },
+
+    { hid: 'twitter:image', property: 'twitter:image', content: image },
+    { key: 'twitter:title', property: 'twitter:title', content: title.value },
     { key: 'twitter:description', property: 'twitter:description', content: description.value },
   ]),
 });

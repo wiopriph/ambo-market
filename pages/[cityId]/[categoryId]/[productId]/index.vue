@@ -107,9 +107,13 @@ useHead({
   title: computed(() => seo.value.title),
   meta: computed(() => [
     { key: 'og:title', property: 'og:title', content: seo.value.title },
-    { key: 'twitter:title', property: 'twitter:title', content: seo.value.title },
-    { key: 'description', name: 'description', content: seo.value.description },
     { key: 'og:description', property: 'og:description', content: seo.value.description },
+    { hid: 'og:image', property: 'og:image', content: seo.value.image },
+
+    { key: 'description', name: 'description', content: seo.value.description },
+
+    { hid: 'twitter:image', property: 'twitter:image', content: seo.value.image },
+    { key: 'twitter:title', property: 'twitter:title', content: seo.value.title },
     { key: 'twitter:description', property: 'twitter:description', content: seo.value.description },
   ]),
   script: computed(() => [{
