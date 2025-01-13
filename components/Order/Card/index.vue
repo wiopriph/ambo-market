@@ -56,10 +56,11 @@ const goToOrder = () => {
     rel="noopener noreferrer"
   >
     <div :class="$style.main">
-      <div :class="$style.productPhoto">
+      <div :class="$style.photo">
         <NuxtImg
           :src="post.image"
           :alt="post.title"
+          :class="$style.productPhoto"
         />
       </div>
 
@@ -132,7 +133,7 @@ const goToOrder = () => {
   }
 }
 
-.productPhoto {
+.photo {
   flex-shrink: 0;
   width: 100px;
   height: 100px;
@@ -144,6 +145,16 @@ const goToOrder = () => {
   @include exclude-md {
     margin-right: 20px;
   }
+}
+
+.productPhoto {
+  @include ui-round-ui-elements;
+
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  overflow: hidden;
+  background-color: #FAFAFA;
 }
 
 .productInfo {
