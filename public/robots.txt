@@ -5,3 +5,4 @@ Disallow: /product/create
 Disallow: /im
 Disallow: /im/*
 
+Sitemap: https://ambo.market/sitemap.xml

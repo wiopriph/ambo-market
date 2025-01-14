@@ -31,6 +31,8 @@ export default defineNuxtConfig({
     'nuxt-swiper',
     '@nuxt/image',
     'nuxt-gtag',
+    '@nuxtjs/sitemap',
+    'dayjs-nuxt',
   ],
 
   // https://i18n.nuxtjs.org/docs/getting-started/usage
@@ -69,6 +71,21 @@ export default defineNuxtConfig({
   gtag: {
     // NUXT_PUBLIC_GTAG_ID overwrites the `gtag.id` module option
     enabled: process.env.NODE_ENV === 'production',
+  },
+
+  dayjs: {
+    locales: ['en', 'pt'],
+    plugins: ['relativeTime'],
+    defaultLocale: 'pt',
+  },
+
+  sitemap: {
+    xsl: false,
+    excludeAppSources: true,
+    cacheMaxAgeSeconds: 3600,
+    sources: [
+      '/api/sitemap',
+    ],
   },
 
   css: [
