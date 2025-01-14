@@ -4,6 +4,7 @@ import IconVerified from '~/assets/images/profile/icon-verified.svg?component';
 import IconUnverified from '~/assets/images/profile/icon-unverified.svg?component';
 import IconFB from '~/assets/images/icon-fb.svg?component';
 import IconStar from '~/assets/images/icon-star.svg?component';
+import formatLocalizedDate from '~/utils/formatLocalizedDate';
 
 
 const props = defineProps<UserInfoProps>();
@@ -42,9 +43,7 @@ const formattedDate = computed(() => {
     return '';
   }
 
-  const date = new Date(creationTime);
-
-  return date.toLocaleDateString(locale.value, { day: '2-digit', month: 'short', year: 'numeric' });
+  return formatLocalizedDate(creationTime, locale.value);
 });
 
 const friendCount = computed(() => props.user?.friendCount || 0);
