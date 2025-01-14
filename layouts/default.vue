@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useUser } from '~/composables/useUser';
+
+
 const head = useLocaleHead({
   addSeoAttributes: true,
   identifierAttribute: 'key',
@@ -29,6 +32,34 @@ useHead({
     { key: 'twitter:title', property: 'twitter:title', content: title.value },
     { key: 'twitter:description', property: 'twitter:description', content: description.value },
   ]),
+});
+
+
+const { $fire } = useNuxtApp();
+
+const {
+  isAuthChecking,
+  fetchProfile,
+  setCurrentUser,
+} = useUser();
+
+onMounted(() => {
+  $fire.auth.onAuthStateChanged(async (user) => {
+    isAuthChecking.value = true;
+
+    if (user) {
+      try {
+        await fetchProfile();
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('Error while fetching user profile:', error);
+      }
+    } else {
+      setCurrentUser(null);
+    }
+
+    isAuthChecking.value = false;
+  });
 });
 </script>
 
