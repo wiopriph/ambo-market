@@ -74,6 +74,7 @@ const createOrder = () => {
         <NuxtImg
           :src="product.image"
           :alt="product.title"
+          :class="$style.productPhoto"
         />
       </div>
 
@@ -147,15 +148,20 @@ const createOrder = () => {
 }
 
 .photo {
-  @include ui-round-ui-elements;
-
   position: relative;
   display: block;
   flex-shrink: 0;
   width: 60px;
   height: 60px;
   margin-right: 10px;
-  overflow: hidden;
+}
+
+.productPhoto {
+  @include ui-round-ui-elements;
+
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .productDescription {
