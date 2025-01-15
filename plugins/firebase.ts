@@ -13,13 +13,6 @@ import {
   sendPasswordResetEmail,
 } from 'firebase/auth';
 
-import {
-  getFirestore,
-  collection,
-  doc,
-  updateDoc,
-  onSnapshot,
-} from 'firebase/firestore';
 
 import { getFunctions, httpsCallable } from 'firebase/functions';
 
@@ -30,7 +23,6 @@ export default defineNuxtPlugin(() => {
   const app = initializeApp(firebase);
 
   const auth = getAuth(app);
-  const firestore = getFirestore(app);
   const functions = getFunctions(app);
 
   const googleProvider = new GoogleAuthProvider();
@@ -72,12 +64,7 @@ export default defineNuxtPlugin(() => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           onAuthStateChanged: (callback: (user: any) => void) => onAuthStateChanged(auth, callback),
         },
-        firestore: {
-          collection: (collectionPath: string) => collection(firestore, collectionPath),
-          doc: (collectionPath: string, docId: string) => doc(firestore, collectionPath, docId),
-          onSnapshot,
-          updateDoc,
-        },
+        app,
       },
     },
   };

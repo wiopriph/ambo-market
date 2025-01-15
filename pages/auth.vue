@@ -175,13 +175,11 @@ const { t } = useI18n();
       />
     </div>
 
-    <transition name="fade">
-      <LazyAuthModal
-        v-if="isAuthModalVisible"
-        :state="currentState"
-        @close="hideAuthModal"
-      />
-    </transition>
+    <LazyAuthModal
+      v-if="isAuthModalVisible"
+      :state="currentState"
+      @close="hideAuthModal"
+    />
   </div>
 </template>
 

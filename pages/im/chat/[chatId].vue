@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import {
+  getFirestore,
+  collection,
+  doc,
+  updateDoc,
+  onSnapshot,
+} from 'firebase/firestore';
 import { useUser } from '~/composables/useUser';
 
 
@@ -9,7 +16,9 @@ definePageMeta({
 const message = ref<string>('');
 const isMessageSending = ref<boolean>(false);
 
+
 const { $fire } = useNuxtApp();
+const firestore = getFirestore($fire.app);
 
 const sendMessage = async () => {
   if (message.value) {
@@ -60,9 +69,9 @@ const scrollToLastMessage = () => {
 const messages = ref<Array<any>>([]);
 
 const getChatSubscription = (chatId: string) => {
-  const messagesCollection = $fire.firestore.collection(`chats/${chatId}/messages`);
+  const messagesCollection = collection(firestore, `chats/${chatId}/messages`);
 
-  return $fire.firestore.onSnapshot(messagesCollection, (snapshot) => {
+  return onSnapshot(messagesCollection, (snapshot) => {
     snapshot.docChanges().forEach(({ type, doc }) => {
       const messageData = {
         ...doc.data(),
@@ -92,9 +101,9 @@ const getChatSubscription = (chatId: string) => {
 
 const markMessageAsRead = async (chatId: string, messageId: string) => {
   try {
-    const messageDoc = $fire.firestore.doc(`chats/${chatId}/messages`, messageId);
+    const messageDoc = doc(firestore, `chats/${chatId}/messages`, messageId);
 
-    await $fire.firestore.updateDoc(messageDoc, { isRead: true });
+    await updateDoc(messageDoc, { isRead: true });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(`Error marking message as read: ${error}`);
