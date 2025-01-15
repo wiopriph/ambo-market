@@ -197,12 +197,10 @@ const hideMapModal = () => {
       @close="hideMapModal"
     />
 
-    <transition name="fade">
-      <LazyAuthModal
-        v-if="isAuthModalVisible"
-        @close="hideAuthModal"
-      />
-    </transition>
+    <LazyAuthModal
+      v-if="isAuthModalVisible"
+      @close="hideAuthModal"
+    />
 
     <transition name="fade">
       <LazyUIModal

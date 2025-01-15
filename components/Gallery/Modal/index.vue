@@ -176,6 +176,7 @@ onBeforeUnmount(unlockScroll);
                   :src="image"
                   :alt="`image_${index}`"
                   :class="$style.image"
+                  loading="lazy"
                 />
               </swiper-slide>
             </swiper-container>

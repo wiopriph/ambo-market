@@ -299,12 +299,10 @@ const {
       />
     </transition>
 
-    <transition name="fade">
-      <LazyAuthModal
-        v-if="isAuthModalVisible"
-        @close="hideAuthModal"
-      />
-    </transition>
+    <LazyAuthModal
+      v-if="isAuthModalVisible"
+      @close="hideAuthModal"
+    />
   </div>
 </template>
 
