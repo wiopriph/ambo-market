@@ -202,36 +202,32 @@ const hideMapModal = () => {
       @close="hideAuthModal"
     />
 
-    <transition name="fade">
-      <LazyUIModal
-        v-if="isCategoryModalVisible"
-        :title="t('categories')"
+    <LazyUIModal
+      v-if="isCategoryModalVisible"
+      :title="t('categories')"
+      @close="hideCategoryModal"
+    >
+      <HeaderMobileLocation
+        @click="showMapModal"
+      />
+
+      <HeaderMobileCategories
+        :list="categories"
+        :class="$style.categories"
         @close="hideCategoryModal"
-      >
-        <HeaderMobileLocation
-          @click="showMapModal"
-        />
+      />
+    </LazyUIModal>
 
-        <HeaderMobileCategories
-          :list="categories"
-          :class="$style.categories"
-          @close="hideCategoryModal"
-        />
-      </LazyUIModal>
-    </transition>
-
-    <transition name="fade">
-      <LazyUIModal
-        v-if="isMenuModalVisible"
-        :title="t('account')"
+    <LazyUIModal
+      v-if="isMenuModalVisible"
+      :title="t('account')"
+      @close="hideMenuModal"
+    >
+      <HeaderMobileMenu
+        :list="menuList"
         @close="hideMenuModal"
-      >
-        <HeaderMobileMenu
-          :list="menuList"
-          @close="hideMenuModal"
-        />
-      </LazyUIModal>
-    </transition>
+      />
+    </LazyUIModal>
   </div>
 </template>
 

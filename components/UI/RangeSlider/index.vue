@@ -63,6 +63,14 @@ const changeValues = () => {
   update();
 };
 
+const trackFillStyle = computed(() => {
+  const val = Number(sliderValue.value);
+  const min = Number(sliderMin.value);
+  const max = Number(sliderMax.value);
+  const percent = ((val - min) / (max - min)) * 100;
+
+  return `background: linear-gradient(to right, #4362CE ${percent}%, #EBEBEB ${percent}%);`;
+});
 
 const emit = defineEmits(['update:modelValue', 'change']);
 
@@ -120,7 +128,10 @@ onUnmounted(() => {
         v-text="sliderLabel"
       />
 
-      <div :class="$style.track" />
+      <div
+        :style="[trackFillStyle]"
+        :class="$style.track"
+      />
 
       <input
         ref="sliderRef"
