@@ -26,9 +26,6 @@ const openPopup = () => emit('openModal', currentSlideIndex.value);
 
 const isOpenPost = computed(() => props.status === POST_STATUSES.OPEN);
 
-const setBlurImageStyle = (url: string) => `background-image: url(${url});`;
-
-
 const containerRef = ref(null);
 const swiper = useSwiper(containerRef);
 
@@ -59,9 +56,11 @@ const prevSlide = () => swiper.prev();
             :key="index"
             @click="openPopup"
           >
-            <span
-              :style="setBlurImageStyle(image)"
+            <NuxtImg
+              :src="image"
+              :alt="`image_${index}_blurred`"
               :class="$style.blurredImage"
+              loading="lazy"
             />
 
             <NuxtImg
@@ -149,11 +148,12 @@ const prevSlide = () => swiper.prev();
   bottom: 0;
   left: 0;
   z-index: $z-idx-under;
+  width: 100%;
+  height: 100%;
   display: block;
-  background: no-repeat center;
-  background-size: cover;
-  opacity: .4;
+  object-fit: cover;
   filter: blur(13px);
+  opacity: .4;
 }
 
 .slide {
