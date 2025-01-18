@@ -120,4 +120,8 @@ export default defineNuxtConfig({
     '~/plugins/location.server.ts',
     '~/plugins/firebase.ts',
   ],
+
+  experimental: {
+    asyncContext: true,
+  },
 });
