@@ -1,7 +1,11 @@
-import { useDayjs } from '#dayjs';
+import { format, isSameDay, isThisYear } from 'date-fns';
+import { enUS, ptBR } from 'date-fns/locale';
 
 
-const dayjs = useDayjs();
+const locales = {
+  en: enUS,
+  pt: ptBR,
+};
 
 /**
  * Форматирует timestamp в строку с датой и временем в зависимости от локали.
@@ -18,21 +22,17 @@ const dayjs = useDayjs();
  * console.log(formattedDate); // "10:47 PM" (если сегодня) или "30 October 10:47 PM" (если в этом году) или "30 October 2021" (если в прошлом году)
  */
 export default function formatLocalizedDate(timestamp: number, locale: string): string {
-  dayjs.locale(locale);
+  const date = new Date(timestamp);
+  const today = new Date();
+  const selectedLocale = locales[locale as 'en' | 'pt'] || enUS;
 
-  const date = dayjs(timestamp);
-  const today = dayjs();
-  const thisYear = today.year();
-  const isToday = date.isSame(today, 'day');
-  const isThisYear = date.year() === thisYear;
-
-  if (isToday) {
-    return date.format('HH:mm');
+  if (isSameDay(date, today)) {
+    return format(date, 'HH:mm', { locale: selectedLocale });
   }
 
-  if (isThisYear) {
-    return date.format('DD MMMM HH:mm');
+  if (isThisYear(date)) {
+    return format(date, 'dd MMMM HH:mm', { locale: selectedLocale });
   }
 
-  return date.format('DD MMMM YYYY');
+  return format(date, 'dd MMMM yyyy', { locale: selectedLocale });
 }
