@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { OrderCardProps } from './types';
-import formatAmount from '~/utils/formatAmount';
+import formatCurrency from '~/utils/formatCurrency';
 import { useUser } from '~/composables/useUser';
 
 
@@ -26,7 +26,7 @@ const orderStatus = computed(() => {
   return props.order.messages.buyer;
 });
 
-const formattedPrice = computed(() => `${formatAmount(props.order.price, 0)} AOA`);
+const formattedPrice = computed(() => formatCurrency(props.order?.price));
 
 const orderLink = computed(() => ({
   name: 'order-orderId',

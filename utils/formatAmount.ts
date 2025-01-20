@@ -1,5 +1,5 @@
 /**
- * Функция для преобразования суммы к формату 2 000 000.00
+ * Преобразование числа к формату 2 000 000.00
  *
  * @param {number | string} value - число для преобразования
  * @param {number} digits - количество цифр после десятичной запятой
@@ -11,8 +11,12 @@ export default function(value: number | string, digits = 2, separator = '\xA0'):
     value = parseFloat(value);
   }
 
-  if (!value) {
+  if (value === 0) {
     return '0';
+  }
+
+  if (!value) {
+    return '';
   }
 
   const result = value.toFixed(digits).split('')

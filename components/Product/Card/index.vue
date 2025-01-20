@@ -1,25 +1,14 @@
 <script setup lang="ts">
 import type { CardProps } from './types';
 import IconShield from '~/assets/images/product/icon-shield.svg?component';
-import formatAmount from '~/utils/formatAmount';
+import formatCurrency from '~/utils/formatCurrency';
 import { getCityIdByName } from '~/constants/cities';
 import { POST_STATUSES } from '~/constants/post-statuses';
 
 
 const props = defineProps<CardProps>();
 
-const { t } = useI18n();
-
-const price = computed(() => {
-  const formattedPrice = formatAmount(props.product?.price || 0, 0);
-
-  if (formattedPrice) {
-    return `${formattedPrice} AOA`;
-  }
-
-  return t('free');
-});
-
+const formattedPrice = computed(() => formatCurrency(props.product?.price));
 const city = computed(() => props.product?.location?.displayName || '');
 const previewImage = computed(() => props.product?.images?.[0] || '');
 const productTitle = computed(() => props.product?.title || '\u00A0');
@@ -35,17 +24,6 @@ const link = computed(() => ({
   },
 }));
 </script>
-
-<i18n>
-{
-  "en": {
-    "free": "Free"
-  },
-  "pt": {
-    "free": "De graça"
-  }
-}
-</i18n>
 
 <template>
   <NuxtLink
@@ -88,7 +66,7 @@ const link = computed(() => ({
       <div :class="$style.favorite">
         <span
           :class="$style.price"
-          v-text="price"
+          v-text="formattedPrice"
         />
 
         <ProductFavoriteButton :postId="product.id" />

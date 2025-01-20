@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import IconLocation from '~/assets/images/header/icon-location.svg?component';
+import formatCurrency from '~/utils/formatCurrency';
 import formatAmount from '~/utils/formatAmount';
+import { CURRENCY } from '~/constants/currency';
 import { getCityIdByName } from '~/constants/cities';
 import { POST_STATUSES } from '~/constants/post-statuses';
 import type { ProductApiResponse, User } from '~/types/product';
@@ -76,7 +78,7 @@ const postLocation = computed(() => post.value?.location);
 const postCityId = computed(() => getCityIdByName(postLocation.value?.city ?? ''));
 const postCityName = computed(() => postLocation.value?.displayName);
 
-const formattedPrice = computed(() => post.value?.price ? `${formatAmount(`${post.value?.price}`, 0)} AOA` : '');
+const formattedPrice = computed(() => formatCurrency(`${post.value?.price}`));
 const formattedDate = computed(() => post.value?.createdAt ? formatLocalizedDate(post.value?.createdAt, locale.value) : '');
 
 const seo = computed(() => {
@@ -129,8 +131,8 @@ useHead({
 
       offers: {
         '@type': 'Offer',
-        price: post.value?.price,
-        priceCurrency: 'AOA',
+        price: formatAmount(post.value?.price || 0),
+        priceCurrency: CURRENCY,
         availability: 'https://schema.org/InStock',
         priceValidUntil: '2099-12-31T23:59:59Z',
         seller: {

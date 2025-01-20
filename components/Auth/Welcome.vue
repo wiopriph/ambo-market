@@ -22,10 +22,10 @@ const createAccount = () => {
 };
 
 
-const backendErrors = ref([]);
+const backendError = ref('');
 
 const clearError = () => {
-  backendErrors.value = [];
+  backendError.value = '';
 };
 
 
@@ -39,7 +39,7 @@ const authByFb = async () => {
 
     closeModal();
   } catch (error) {
-    backendErrors.value = [error?.message];
+    backendError.value = error?.message;
   }
 };
 
@@ -51,7 +51,7 @@ const authByGoogle = async () => {
 
     closeModal();
   } catch (error) {
-    backendErrors.value = [error?.message];
+    backendError.value = error?.message;
   }
 };
 </script>
@@ -120,7 +120,7 @@ const authByGoogle = async () => {
         <span v-text="t('continue_with_email')" />
       </button>
 
-      <UIErrors :errors="backendErrors" />
+      <UIError :text="backendError" />
 
       <button
         :class="$style.registration"

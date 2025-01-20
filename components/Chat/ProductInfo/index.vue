@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ChatProductInfoProps } from './types';
-import formatAmount from '~/utils/formatAmount';
+import formatCurrency from '~/utils/formatCurrency';
 import { getCityIdByName } from '~/constants/cities';
 import { POST_STATUSES } from '~/constants/post-statuses';
 
@@ -12,16 +12,7 @@ const isClosedPost = computed(() => props.product?.status === POST_STATUSES.CLOS
 
 const { t } = useI18n();
 
-const price = computed(() => {
-  const formattedPrice = formatAmount(props.product?.price, 0);
-
-  if (formattedPrice) {
-    return `${formattedPrice} AOA`;
-  }
-
-  return t('free');
-});
-
+const formattedPrice = computed(() => formatCurrency(props.product?.price));
 
 const linkToProduct = computed(() => ({
   name: 'cityId-categoryId-productId',
@@ -56,13 +47,11 @@ const createOrder = () => {
 {
   "en": {
     "call": "Call",
-    "buy": "Buy",
-    "free": "Free"
+    "buy": "Buy"
   },
   "pt": {
     "call": "Call",
-    "buy": "Buy",
-    "free": "De graça"
+    "buy": "Buy"
   }
 }
 </i18n>
@@ -95,7 +84,7 @@ const createOrder = () => {
         <span
           v-else
           :class="$style.productPrice"
-          v-text="price"
+          v-text="formattedPrice"
         />
       </div>
     </div>

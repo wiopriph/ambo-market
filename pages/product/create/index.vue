@@ -3,6 +3,7 @@ import { useField, useForm } from 'vee-validate';
 import { boolean, object, string } from 'yup';
 import { useUser } from '~/composables/useUser';
 import { CATEGORIES } from '~/constants/categories';
+import { CURRENCY } from '~/constants/currency';
 
 
 const {
@@ -315,7 +316,7 @@ const createPost = handleSubmit.withControlled(async () => {
 
                 <span
                   :class="$style.currency"
-                  v-text="'AOA'"
+                  v-text="CURRENCY"
                 />
               </div>
 

@@ -2,7 +2,7 @@ import { PERIODS } from '~/composables/usePosts/constants';
 import type { DatePublished } from '~/composables/usePosts/types';
 
 /**
- * Генерирует объект `datePublished` на основе выбранного периода.
+ * Генерация объекта `datePublished` на основе выбранного периода.
  *
  * @param {keyof typeof PERIODS} period - Выбранный период (PERIODS.DAY, PERIODS.WEEK, и т. д.).
  * @returns {DatePublished} Объект `datePublished` с начальной и конечной датой в миллисекундах.

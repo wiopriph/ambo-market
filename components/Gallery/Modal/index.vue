@@ -3,7 +3,7 @@ import type { GalleryModalProps } from './types';
 import IconClose from '~/assets/images/galley/icon-close.svg?component';
 import IconLeftButton from '~/assets/images/galley/icon-left-button.svg?component';
 import IconRightButton from '~/assets/images/galley/icon-right-button.svg?component';
-import formatAmount from '~/utils/formatAmount';
+import formatCurrency from '~/utils/formatCurrency';
 
 
 const props = defineProps<GalleryModalProps>();
@@ -42,15 +42,7 @@ const nextSlide = () => swiper.next();
 const prevSlide = () => swiper.prev();
 
 
-const formattedPrice = computed(() => {
-  const formattedPrice = formatAmount(props.post?.price, 0);
-
-  if (formattedPrice) {
-    return `${formattedPrice} AOA`;
-  }
-
-  return t('free');
-});
+const formattedPrice = computed(() => formatCurrency(props.post?.price));
 
 
 const emit = defineEmits([

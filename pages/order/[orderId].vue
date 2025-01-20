@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import formatAmount from '~/utils/formatAmount';
+import formatCurrency from '~/utils/formatCurrency';
 import { useUser } from '~/composables/useUser';
 import type { Point } from '~/components/Order/PointCard/types';
 
@@ -67,7 +67,7 @@ const isSeller = computed(() => uid.value === seller.id);
 const { t } = useI18n();
 
 const orderTitle = computed(() => t('title', { number: id }));
-const formattedPrice = computed(() => `${formatAmount(price, 0)} AOA`);
+const formattedPrice = computed(() => formatCurrency(price, 0));
 
 const productLink = computed(() => ({
   name: 'product-productId',
