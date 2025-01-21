@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import IconLocation from '~/assets/images/header/icon-location.svg?component';
 import formatCurrency from '~/utils/formatCurrency';
-import formatAmount from '~/utils/formatAmount';
 import { CURRENCY } from '~/constants/currency';
 import { getCityIdByName } from '~/constants/cities';
 import { POST_STATUSES } from '~/constants/post-statuses';
@@ -131,7 +130,7 @@ useHead({
 
       offers: {
         '@type': 'Offer',
-        price: formatAmount(post.value?.price || 0),
+        price: post.value?.price || 0,
         priceCurrency: CURRENCY,
         availability: 'https://schema.org/InStock',
         priceValidUntil: '2099-12-31T23:59:59Z',
