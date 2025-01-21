@@ -1,20 +1,36 @@
-import formatAmount from '~/utils/formatAmount';
 import { CURRENCY } from '~/constants/currency';
 
 /**
- * Преобразование цены к формату 2 000 000.00 + Currency
+ * Форматирование денежной суммы под локаль и валюту
  *
- * @param {number | string} value - число для преобразования
- * @param {number} digits - количество цифр после десятичной запятой
- * @param {string} separator - разделитель
- * @returns {string} - возвращает отформатированную строку 2 000 000.00 + Currency
+ * @param {number | string} value - число для форматирования
+ * @param {number} fractionDigits - количество знаков после запятой
+ * @param {'currency' | 'decimal'} style - decimal - без валютного знака
+ * @param {string} locale - локаль ('en-US', 'pt-PT', и т.д.)
+ * @returns {string | number} отформатированное значение или оригинал
  */
-export default function(value: number | string, digits = 0, separator = '\xA0'): string {
-  const amount = formatAmount(value, digits, separator);
+export default function(
+  value: string | number,
+  fractionDigits = 0,
+  style: 'currency' | 'decimal' = 'currency',
+  locale = 'pt-PT',
+): string | number {
+  const fraction: number = Number.isInteger(fractionDigits) && fractionDigits >= 0 ? fractionDigits : 2;
 
-  if (amount) {
-    return `${amount} ${CURRENCY}`;
+  const options: Intl.NumberFormatOptions = {
+    currency: CURRENCY,
+    minimumFractionDigits: fraction,
+    maximumFractionDigits: fraction,
+    style,
+  };
+
+  const numericValue = typeof value === 'string' ? parseFloat(value) : value;
+
+  if (isNaN(numericValue)) {
+    return value;
   }
 
-  return amount;
+  const numberFormat = new Intl.NumberFormat(locale, options);
+
+  return numberFormat.format(numericValue);
 }

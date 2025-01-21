@@ -67,7 +67,7 @@ const isSeller = computed(() => uid.value === seller.id);
 const { t } = useI18n();
 
 const orderTitle = computed(() => t('title', { number: id }));
-const formattedPrice = computed(() => formatCurrency(price, 0));
+const formattedPrice = computed(() => formatCurrency(price));
 
 const productLink = computed(() => ({
   name: 'product-productId',
