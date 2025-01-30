@@ -116,5 +116,10 @@ export default defineNuxtConfig({
 
   experimental: {
     asyncContext: true,
+    defaults: {
+      nuxtLink: {
+        prefetch: false,
+      },
+    },
   },
 });
