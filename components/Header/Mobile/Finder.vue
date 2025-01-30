@@ -39,7 +39,11 @@ onMounted(() => {
 const hasRemoveFiltersButton = computed(() => Object.keys(currentFilters.value).length > 2);
 
 const find = () => {
-  const { categoryId } = route.params;
+  const categoryId = route.params.categoryId;
+  const query = {
+    ...currentFilters.value,
+    q: searchString.value,
+  };
 
   if (categoryId) {
     return navigateTo({
@@ -48,10 +52,7 @@ const find = () => {
         cityId: cityId.value,
         categoryId,
       },
-      query: {
-        ...currentFilters.value,
-        q: searchString.value,
-      },
+      query,
     });
   }
 
@@ -61,19 +62,13 @@ const find = () => {
       params: {
         cityId: cityId.value,
       },
-      query: {
-        ...currentFilters.value,
-        q: searchString.value,
-      },
+      query,
     });
   }
 
   return navigateTo({
     name: 'index',
-    query: {
-      ...currentFilters.value,
-      q: searchString.value,
-    },
+    query,
   });
 };
 
@@ -107,7 +102,7 @@ const hideFilterModal = () => {
 };
 </script>
 
-<i18n>
+<i18n lang="json">
 {
   "en": {
     "search": "Search for anything",
@@ -132,12 +127,11 @@ const hideFilterModal = () => {
       />
 
       <button
-        v-if="isFindActive"
         :class="$style.filterButton"
         type="button"
         @click="showFilterModal"
       >
-        <IconFilter :class="$style.filterIcon" />
+        <IconFilter />
       </button>
     </div>
 
@@ -190,20 +184,16 @@ const hideFilterModal = () => {
 }
 
 .filterButton {
-  @include ui-button-primary;
+  @include ui-button-secondary;
 
   & {
-    margin-left: 10px;
+    margin-left: 5px;
     padding: 10px;
 
     display: flex;
     flex-direction: row;
     align-items: center;
   }
-}
-
-.filterIcon {
-  fill: #FFFFFF;
 }
 
 .criterionWrap {

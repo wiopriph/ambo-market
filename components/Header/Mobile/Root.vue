@@ -1,83 +1,12 @@
 <script setup lang="ts">
+import type { RouteLocationRaw } from '#vue-router';
 import IconLogo from '~/assets/images/icon-logo.svg?component';
 import IconHamburger from '~/assets/images/header/icon-hamburger.svg?component';
 import IconProfile from '~/assets/images/header/icon-profile.svg?component';
-import { usePosts } from '~/composables/usePosts';
 import { useUser } from '~/composables/useUser';
-import { CATEGORIES } from '~/constants/categories';
 
 
-const { t } = useI18n();
-
-const menuList = computed(() => [
-  {
-    icon: 'IconAds',
-    label: t('ads'),
-    route: { name: 'user-ads' },
-  },
-  {
-    icon: 'IconMail',
-    label: t('messages'),
-    route: { name: 'im' },
-  },
-  {
-    icon: 'IconHeart',
-    label: t('favorites'),
-    route: { name: 'user-favorites' },
-  },
-  {
-    icon: 'IconDeals',
-    label: t('orders'),
-    route: {
-      name: 'order-history-status',
-      params: {
-        status: 'buy',
-      },
-    },
-  },
-  {
-    icon: 'IconSettings',
-    label: t('settings'),
-    route: { name: 'user-settings' },
-  },
-]);
-
-
-const {
-  isLoggedIn,
-  currentUser,
-} = useUser();
-
-
-const {
-  cityId,
-  isPriorityCity,
-} = usePosts();
-
-const indexRoute = computed(() => {
-  if (isPriorityCity.value) {
-    return {
-      name: 'cityId',
-      params: {
-        cityId: cityId.value,
-      },
-    };
-  }
-
-  return { name: 'index' };
-});
-
-const categories = computed(() => CATEGORIES.map(category => ({
-  title: t(category.type),
-  img: category.img,
-  route: {
-    name: 'cityId-categoryId',
-    params: {
-      categoryId: category.type,
-      cityId: cityId.value,
-    },
-  },
-})));
+const indexRoute = inject<RouteLocationRaw>('indexRoute');
 
 
 const isAuthModalVisible = ref(false);
@@ -122,27 +51,26 @@ const showMapModal = () => {
 const hideMapModal = () => {
   isMapModalVisible.value = false;
 };
+
+
+const {
+  isLoggedIn,
+  currentUser,
+} = useUser();
+
+
+const { t } = useI18n();
 </script>
 
-<i18n>
+<i18n lang="json">
 {
   "en": {
     "main_page": "Main page",
-    "messages": "My messages",
-    "favorites": "Favorites",
-    "orders": "My orders",
-    "ads": "My ads",
-    "settings": "Settings",
     "account": "Account",
     "categories": "Categories"
   },
   "pt": {
     "main_page": "Página principal",
-    "messages": "Minhas mensagens",
-    "favorites": "Favoritos",
-    "orders": "Minhas ordens",
-    "ads": "Meus anúncios",
-    "settings": "Configurações",
     "account": "Conta",
     "categories": "Categorias"
   }
@@ -207,12 +135,9 @@ const hideMapModal = () => {
       :title="t('categories')"
       @close="hideCategoryModal"
     >
-      <HeaderMobileLocation
-        @click="showMapModal"
-      />
+      <LazyHeaderMobileLocation @click="showMapModal" />
 
-      <HeaderMobileCategories
-        :list="categories"
+      <LazyHeaderMobileCategories
         :class="$style.categories"
         @close="hideCategoryModal"
       />
@@ -223,8 +148,8 @@ const hideMapModal = () => {
       :title="t('account')"
       @close="hideMenuModal"
     >
-      <HeaderMobileMenu
-        :list="menuList"
+      <LazyHeaderMenu
+        :class="$style.menu"
         @close="hideMenuModal"
       />
     </LazyUIModal>
@@ -257,5 +182,10 @@ const hideMapModal = () => {
 
 .categories {
   height: calc(100% - 88px);
+}
+
+.menu {
+  width: 100%;
+  height: calc(100% - 44px);
 }
 </style>

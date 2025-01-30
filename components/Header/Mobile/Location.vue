@@ -16,12 +16,10 @@ const locationNameOrDefault = computed(() => locationName.value || t('everywhere
 
 const emit = defineEmits(['click']);
 
-const click = () => {
-  emit('click');
-};
+const click = () => emit('click');
 </script>
 
-<i18n>
+<i18n lang="json">
 {
   "en": {
     "location": "Location:",

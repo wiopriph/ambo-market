@@ -1,34 +1,23 @@
 <script setup lang="ts">
-import type { MobileCategoriesProps } from './types';
+import type { RouteLocationRaw } from '#vue-router';
 import IconCheckbox from '~/assets/images/icon-checkbox.svg?component';
-import { usePosts } from '~/composables/usePosts';
+import type { CategoryCard } from '~/components/Category/Card/types';
 
 
-const props = defineProps<MobileCategoriesProps>();
-
-
-const { cityId } = usePosts();
-
-const routeToCity = computed(() => ({
-  name: 'cityId',
-  params: {
-    cityId: cityId.value,
-  },
-}));
+const indexRoute = inject<RouteLocationRaw>('indexRoute');
+const categoryList = inject<ComputedRef<CategoryCard[]>>('categoryList');
 
 
 const emit = defineEmits(['close']);
 
-const close = () => {
-  setTimeout(() => {
-    emit('close');
-  }, 100);
-};
+const close = () => setTimeout(() => {
+  emit('close');
+}, 100);
 
 const { t } = useI18n();
 </script>
 
-<i18n>
+<i18n lang="json">
 {
   "en": {
     "all_categories": "All categories"
@@ -44,7 +33,7 @@ const { t } = useI18n();
     <ul :class="$style.list">
       <li :class="$style.item">
         <NuxtLink
-          :to="routeToCity"
+          :to="indexRoute"
           :class="$style.link"
           @click="close"
         >
@@ -56,28 +45,30 @@ const { t } = useI18n();
         </NuxtLink>
       </li>
 
-      <li
-        v-for="category in props.list"
-        :key="category.title"
-        :class="$style.item"
-      >
-        <NuxtLink
-          :to="category.route"
-          :class="$style.link"
-          @click="close"
+      <template v-if="categoryList">
+        <li
+          v-for="category in categoryList"
+          :key="category.title"
+          :class="$style.item"
         >
-          <span :class="$style.iconWrap">
-            <NuxtImg
-              :src="category.img"
-              :alt="category.title"
-              :class="$style.icon"
-              quality="70"
-            />
-          </span>
+          <NuxtLink
+            :to="category.route"
+            :class="$style.link"
+            @click="close"
+          >
+            <span :class="$style.iconWrap">
+              <NuxtImg
+                :src="category.img"
+                :alt="category.title"
+                :class="$style.icon"
+                quality="70"
+              />
+            </span>
 
-          <span v-text="category.title" />
-        </NuxtLink>
-      </li>
+            <span v-text="category.title" />
+          </NuxtLink>
+        </li>
+      </template>
     </ul>
   </div>
 </template>

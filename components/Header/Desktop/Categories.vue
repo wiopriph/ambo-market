@@ -1,21 +1,23 @@
 <script setup lang="ts">
-import type { DropdownCategoriesProps } from './types';
+import type { CategoryCard } from '~/components/Category/Card/types';
 
 
-const props = defineProps<DropdownCategoriesProps>();
+const categoryList = inject<ComputedRef<CategoryCard[]>>('categoryList');
+
 
 const emit = defineEmits(['close']);
 
-const close = () => {
-  emit('close');
-};
+const close = () => emit('close');
 </script>
 
 <template>
   <div :class="$style.root">
-    <ul :class="$style.list">
+    <ul
+      v-if="categoryList"
+      :class="$style.list"
+    >
       <li
-        v-for="category in props.list"
+        v-for="category in categoryList"
         :key="category.title"
         :class="$style.item"
       >

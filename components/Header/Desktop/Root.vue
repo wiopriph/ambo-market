@@ -1,46 +1,13 @@
 <script setup lang="ts">
+import type { RouteLocationRaw } from '#vue-router';
 import IconLogo from '~/assets/images/icon-logo.svg?component';
 import IconHamburger from '~/assets/images/header/icon-hamburger.svg?component';
 import IconClose from '~/assets/images/header/icon-close.svg?component';
 import { usePosts } from '~/composables/usePosts';
 import { useUser } from '~/composables/useUser';
-import { CATEGORIES } from '~/constants/categories';
 
 
-const { t } = useI18n();
-
-const menuList = computed(() => [
-  {
-    icon: 'IconAds',
-    label: t('ads'),
-    route: { name: 'user-ads' },
-  },
-  {
-    icon: 'IconMail',
-    label: t('messages'),
-    route: { name: 'im' },
-  },
-  {
-    icon: 'IconHeart',
-    label: t('favorites'),
-    route: { name: 'user-favorites' },
-  },
-  {
-    icon: 'IconDeals',
-    label: t('orders'),
-    route: {
-      name: 'order-history-status',
-      params: {
-        status: 'buy',
-      },
-    },
-  },
-  {
-    icon: 'IconSettings',
-    label: t('settings'),
-    route: { name: 'user-settings' },
-  },
-]);
+const indexRoute = inject<RouteLocationRaw>('indexRoute');
 
 
 const isMenuOpen = ref(false);
@@ -87,34 +54,11 @@ const searchPlaceholder = computed(() => {
 
 const {
   cityId,
+  isPriorityCity,
   currentFilters,
   getFilter,
 } = usePosts();
 
-const indexRoute = computed(() => {
-  if (cityId.value !== 'all') {
-    return {
-      name: 'cityId',
-      params: {
-        cityId: cityId.value,
-      },
-    };
-  }
-
-  return { name: 'index' };
-});
-
-const categories = computed(() => CATEGORIES.map(category => ({
-  title: t(category.type),
-  img: category.img,
-  route: {
-    name: 'cityId-categoryId',
-    params: {
-      categoryId: category.type,
-      cityId: cityId.value,
-    },
-  },
-})));
 
 const searchString = ref('');
 
@@ -124,7 +68,11 @@ onMounted(() => {
 
 
 const find = () => {
-  const { categoryId } = route.params;
+  const categoryId = route.params.categoryId;
+  const query = {
+    ...currentFilters.value,
+    q: searchString.value,
+  };
 
   if (categoryId) {
     return navigateTo({
@@ -133,32 +81,23 @@ const find = () => {
         cityId: cityId.value,
         categoryId,
       },
-      query: {
-        ...currentFilters.value,
-        q: searchString.value,
-      },
+      query,
     });
   }
 
-  if (cityId.value && cityId.value !== 'all') {
+  if (isPriorityCity.value) {
     return navigateTo({
       name: 'cityId',
       params: {
         cityId: cityId.value,
       },
-      query: {
-        ...currentFilters.value,
-        q: searchString.value,
-      },
+      query,
     });
   }
 
   return navigateTo({
     name: 'index',
-    query: {
-      ...currentFilters.value,
-      q: searchString.value,
-    },
+    query,
   });
 };
 
@@ -171,9 +110,11 @@ const {
   isLoggedIn,
   currentUser,
 } = useUser();
+
+const { t } = useI18n();
 </script>
 
-<i18n>
+<i18n lang="json">
 {
   "en": {
     "main_page": "Main page",
@@ -183,12 +124,7 @@ const {
     "place_ad": "Place Ad",
     "account": "Account",
     "categories": "Categories",
-    "sign_in": "Sign in",
-    "messages": "My messages",
-    "favorites": "Favorites",
-    "orders": "My orders",
-    "ads": "My ads",
-    "settings": "Settings"
+    "sign_in": "Sign in"
   },
   "pt": {
     "main_page": "Página principal",
@@ -198,12 +134,7 @@ const {
     "place_ad": "Coloque anúncio",
     "account": "Conta",
     "categories": "Categorias",
-    "sign_in": "Entrar",
-    "messages": "Minhas mensagens",
-    "favorites": "Favoritos",
-    "orders": "Minhas ordens",
-    "ads": "Meus anúncios",
-    "settings": "Configurações"
+    "sign_in": "Entrar"
   }
 }
 </i18n>
@@ -233,7 +164,7 @@ const {
         :class="$style.categoriesIcon"
       />
 
-      <span v-t="'categories'" />
+      <span v-text="t('categories')" />
     </button>
 
     <div :class="$style.findWrap">
@@ -282,21 +213,21 @@ const {
     />
 
     <transition name="fade">
-      <LazyHeaderDesktopDropdownCategories
+      <LazyHeaderDesktopCategories
         v-if="isCategoryOpen"
-        :list="categories"
         :class="$style.categories"
         @close="toggleCategory"
       />
     </transition>
 
     <transition name="fade">
-      <LazyHeaderDesktopDropdownMenu
+      <div
         v-if="isMenuOpen"
-        :list="menuList"
+        v-click-outside="closeMenu"
         :class="$style.menu"
-        @close="closeMenu"
-      />
+      >
+        <LazyHeaderMenu @close="closeMenu" />
+      </div>
     </transition>
 
     <LazyAuthModal
@@ -384,9 +315,15 @@ const {
 }
 
 .menu {
+  @include ui-round-ui-elements;
+
   position: absolute;
   top: 70px;
   right: 20px;
   z-index: $z-idx-dropdown;
+
+  width: 300px;
+  border: 1px solid $ui-color-transparent;
+  box-shadow: $box-shadow;
 }
 </style>

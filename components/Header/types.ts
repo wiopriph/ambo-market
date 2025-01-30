@@ -1,12 +1,10 @@
 import type { RouteLocationRaw } from '#vue-router';
+import type { DefineComponent } from 'vue';
 
 
-interface MenuItem {
+export interface MenuItem {
+  icon: DefineComponent;
   label: string;
-  icon: string;
   route: RouteLocationRaw;
 }
 
-export interface DropdownMenuProps {
-  list: MenuItem[];
-}

@@ -1,5 +1,83 @@
 <script setup lang="ts">
 import { usePosts } from '~/composables/usePosts';
+import IconMail from '~/assets/images/header/icon-mail.svg?component';
+import IconHeart from '~/assets/images/header/icon-heart.svg?component';
+import IconDeals from '~/assets/images/header/icon-deals.svg?component';
+import IconAds from '~/assets/images/header/icon-ads.svg?component';
+import IconSettings from '~/assets/images/header/icon-settings.svg?component';
+import { CATEGORIES } from '~/constants/categories';
+
+
+const { t } = useI18n();
+
+const menuList = computed(() => [
+  {
+    icon: IconAds,
+    label: t('ads'),
+    route: { name: 'user-ads' },
+  },
+  {
+    icon: IconMail,
+    label: t('messages'),
+    route: { name: 'im' },
+  },
+  {
+    icon: IconHeart,
+    label: t('favorites'),
+    route: { name: 'user-favorites' },
+  },
+  {
+    icon: IconDeals,
+    label: t('orders'),
+    route: {
+      name: 'order-history-status',
+      params: {
+        status: 'buy',
+      },
+    },
+  },
+  {
+    icon: IconSettings,
+    label: t('settings'),
+    route: { name: 'user-settings' },
+  },
+]);
+
+
+const {
+  cityId,
+  isPriorityCity,
+} = usePosts();
+
+const indexRoute = computed(() => {
+  if (isPriorityCity.value) {
+    return {
+      name: 'cityId',
+      params: {
+        cityId: cityId.value,
+      },
+    };
+  }
+
+  return { name: 'index' };
+});
+
+const categoryList = computed(() => CATEGORIES.map(category => ({
+  title: t(category.type),
+  img: category.img,
+  route: {
+    name: 'cityId-categoryId',
+    params: {
+      categoryId: category.type,
+      cityId: cityId.value,
+    },
+  },
+})));
+
+
+provide('menuList', menuList);
+provide('indexRoute', indexRoute);
+provide('categoryList', categoryList);
 
 
 const ROUTES_WITH_SEARCH_FORM = [
@@ -67,6 +145,27 @@ onBeforeUnmount(() => {
 
 const { isDesktopOrTablet } = useDevice();
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "main_page": "Main page",
+    "messages": "My messages",
+    "favorites": "Favorites",
+    "orders": "My orders",
+    "ads": "My ads",
+    "settings": "Settings"
+  },
+  "pt": {
+    "main_page": "Página principal",
+    "messages": "Minhas mensagens",
+    "favorites": "Favoritos",
+    "orders": "Minhas ordens",
+    "ads": "Meus anúncios",
+    "settings": "Configurações"
+  }
+}
+</i18n>
 
 <template>
   <div

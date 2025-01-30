@@ -57,7 +57,7 @@ const hideMapModal = () => {
 };
 </script>
 
-<i18n>
+<i18n lang="json">
 {
   "en": {
     "location": "Location:",
