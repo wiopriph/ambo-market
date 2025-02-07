@@ -6,29 +6,13 @@ import { CATEGORIES } from '~/constants/categories';
 import { CURRENCY } from '~/constants/currency';
 
 
-const {
-  isLoggedIn,
-  currentUser,
-} = useUser();
-
-watch(isLoggedIn, (state) => {
-  if (!state) {
-    navigateTo('/');
-  }
-});
-
 definePageMeta({
-  middleware: defineNuxtRouteMiddleware((to) => {
-    const { isLoggedIn } = useUser();
-
-    if (!isLoggedIn.value) {
-      return navigateTo(`/auth?redirect=${to.path}`);
-    }
-  }),
+  middleware: 'auth',
 });
 
+const { currentUser } = useUser();
 
-const needPhoneNumber = computed(() => isLoggedIn.value && currentUser.value && !currentUser.value.phone);
+const needPhoneNumber = computed(() => currentUser.value && !currentUser.value.phone);
 
 const { t } = useI18n();
 
