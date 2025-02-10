@@ -5,6 +5,12 @@ import IconSuccess from '~/assets/images/auth/icon-success.svg?component';
 import { useUser } from '~/composables/useUser';
 
 
+const {
+  isLoggedIn,
+  uid,
+  currentUser,
+} = useUser();
+
 const { t } = useI18n();
 
 const {
@@ -13,8 +19,8 @@ const {
   handleReset,
 } = useForm({
   initialValues: {
-    email: '',
-    name: '',
+    email: currentUser.value?.email || '',
+    name: currentUser.value?.name || '',
     subject: '',
     text: '',
   },
@@ -31,13 +37,6 @@ const { value: email } = useField<string>('email');
 const { value: name } = useField<string>('name');
 const { value: subject } = useField<string>('subject');
 const { value: text } = useField<string>('text');
-
-
-const {
-  isLoggedIn,
-  uid,
-  currentUser,
-} = useUser();
 
 
 watch(isLoggedIn, (state) => {
