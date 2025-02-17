@@ -33,7 +33,7 @@ export default defineNuxtPlugin(() => {
       fire: {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         https: async (name: string, params?: Record<string, any>) => {
-          const callable = httpsCallable(functions, `${name}_v2`);
+          const callable = httpsCallable(functions, name);
           const response = await callable(params);
 
           return response.data;
