@@ -1,15 +1,29 @@
 <script setup lang="ts">
 import type { MessageProps } from './types';
 import IconCheck from '~/assets/images/chat/icon-check.svg?component';
+import IconError from 'assets/images/chat/icon-error.svg?component';
 import formatLocalizedDate from '~/utils/formatLocalizedDate';
 
 
 const props = withDefaults(defineProps<MessageProps>(), {
-  isMine: false,
   isRead: false,
+  isSending: false,
+  isFailed: false,
+  isMine: false,
   date: 0,
   message: '',
 });
+
+const { locale } = useI18n();
+
+const formattedDate = computed(() => formatLocalizedDate(props.date, locale.value));
+
+
+const emit = defineEmits(['resend']);
+
+const resend = () => {
+  emit('resend');
+};
 
 
 const style = useCssModule();
@@ -26,11 +40,21 @@ const checkClassNames = computed(() => ({
   [style.unread]: !props.isRead,
 }));
 
-
-const { locale } = useI18n();
-
-const formattedDate = computed(() => formatLocalizedDate(props.date, locale.value));
+const { t } = useI18n();
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "error": "Message not sent!",
+    "resend": "Resend"
+  },
+  "pt": {
+    "error": "Mensagem não enviada!",
+    "resend": "Reenviar"
+  }
+}
+</i18n>
 
 <template>
   <div :class="classNames">
@@ -41,7 +65,10 @@ const formattedDate = computed(() => formatLocalizedDate(props.date, locale.valu
           v-text="formattedDate"
         />
 
-        <IconCheck :class="checkClassNames" />
+        <IconCheck
+          v-show="!isSending"
+          :class="checkClassNames"
+        />
       </div>
 
       <div :class="$style.content">
@@ -50,10 +77,28 @@ const formattedDate = computed(() => formatLocalizedDate(props.date, locale.valu
           v-text="props.message"
         />
       </div>
+
+      <div
+        v-if="isFailed"
+        :class="$style.error"
+      >
+        <IconError :class="$style.errorIcon" />
+
+        <p
+          :class="$style.errorText"
+          v-text="t('error')"
+        />
+
+        <button
+          :class="$style.errorButton"
+          @click="resend"
+        >
+          {{ t('resend') }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
-
 
 <style lang="scss" module>
 .root {
@@ -85,6 +130,7 @@ const formattedDate = computed(() => formatLocalizedDate(props.date, locale.valu
 
   .sender & {
     margin-left: auto;
+    flex-direction: row-reverse;
   }
 }
 
@@ -92,6 +138,7 @@ const formattedDate = computed(() => formatLocalizedDate(props.date, locale.valu
   width: 18px;
   height: 18px;
   margin-left: 4px;
+  margin-right: 4px;
 }
 
 .read {
@@ -104,6 +151,7 @@ const formattedDate = computed(() => formatLocalizedDate(props.date, locale.valu
 
 .date {
   @include ui-typo-10;
+  line-height: 18px;
   color: $ui-color-black;
 }
 
@@ -133,5 +181,32 @@ const formattedDate = computed(() => formatLocalizedDate(props.date, locale.valu
   .sender & {
     color: $ui-color-white;
   }
+}
+
+.error {
+  @include ui-typo-12;
+  display: flex;
+  align-items: center;
+
+  .sender & {
+    margin-left: auto;
+  }
+}
+
+.errorIcon {
+  width: 12px;
+  height: 12px;
+  color: $ui-color-system-red
+}
+
+.errorText {
+  margin-left: 4px;
+  margin-right: 4px;
+  color: $ui-color-system-red
+}
+
+.errorButton {
+  @include ui-button-link-view;
+  @include ui-typo-12;
 }
 </style>

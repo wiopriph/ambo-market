@@ -1,6 +1,8 @@
 export interface MessageProps {
-  isMine: boolean,
   isRead: boolean,
+  isSending?: boolean,
+  isFailed?: boolean,
+  isMine: boolean,
   date: number,
   message: string,
 }

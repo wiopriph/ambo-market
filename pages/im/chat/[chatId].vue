@@ -14,28 +14,60 @@ definePageMeta({
 });
 
 const message = ref<string>('');
-const isMessageSending = ref<boolean>(false);
-
 
 const { $fire } = useNuxtApp();
 const firestore = getFirestore($fire.app);
 
-const sendMessage = async () => {
+const sendMessage = () => {
   if (message.value) {
-    isMessageSending.value = true;
+    const tempMessage = {
+      id: `temp-${Date.now()}`,
+      text: message.value,
+      senderId: uid.value,
+      timestamp: Date.now(),
+      isRead: false,
+      isSending: true,
+      isFailed: false,
+    };
+
+    messages.value.push(tempMessage);
+
+    message.value = '';
+
+    nextTick(() => scrollToLastMessage());
+
+    $fire.https('sendMessage', {
+      text: tempMessage.text,
+      chatId: route.params.chatId,
+    })
+      .catch(() => {
+        const index = messages.value.findIndex(msg => msg.id === tempMessage.id);
+
+        if (index !== -1) {
+          messages.value[index].isFailed = true;
+          messages.value[index].isSending = false;
+        }
+      });
+  }
+};
+
+const retrySendMessage = async (messageId: string) => {
+  const messageToRetry = messages.value.find(msg => msg.id === messageId);
+
+  if (messageToRetry) {
+    messageToRetry.isFailed = false;
+    messageToRetry.isSending = true;
 
     try {
       await $fire.https('sendMessage', {
-        text: message.value,
+        text: messageToRetry.text,
         chatId: route.params.chatId,
       });
 
-      message.value = '';
-      isMessageSending.value = false;
+      messages.value = messages.value.filter(msg => msg.id !== messageId);
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-      isMessageSending.value = false;
+      messageToRetry.isFailed = true;
+      messageToRetry.isSending = false;
     }
   }
 };
@@ -79,6 +111,15 @@ const getChatSubscription = (chatId: string) => {
       };
 
       if (type === 'added') {
+        // Проверяем, есть ли временное сообщение с таким же текстом
+        const tempMessageIndex = messages.value.findIndex(
+          msg => msg.id.startsWith('temp-') && msg.text === messageData.text,
+        );
+
+        if (tempMessageIndex !== -1) {
+          messages.value.splice(tempMessageIndex, 1);
+        }
+
         messages.value.push(messageData);
 
         if (!messageData.isRead && messageData.senderId !== uid.value) {
@@ -181,7 +222,6 @@ const { t } = useI18n();
 const { isDesktopOrTablet } = useDevice();
 </script>
 
-
 <template>
   <div :class="$style.root">
     <UILoader v-if="isLoading" />
@@ -212,17 +252,20 @@ const { isDesktopOrTablet } = useDevice();
         ref="messagesContainer"
         :class="$style.messages"
       >
-        <ul :class="$style.list">
+        <ul>
           <li
             v-for="(mes, index) in messages"
             :key="index"
             :class="$style.message"
           >
             <ChatMessage
-              :isMine="checkMessageOwnership(mes.senderId)"
+              :isSending="mes.isSending"
+              :isFailed="mes.isFailed"
               :isRead="mes.isRead"
+              :isMine="checkMessageOwnership(mes.senderId)"
               :date="mes.timestamp"
               :message="mes.text"
+              @resend="retrySendMessage(mes.id)"
             />
           </li>
 
@@ -241,12 +284,12 @@ const { isDesktopOrTablet } = useDevice();
         <UIInput
           v-model="message"
           name="message"
+          @keydown.enter="sendMessage"
         />
 
         <UIButton
           :text="t('send')"
           :disabled="!message"
-          :isLoading="isMessageSending"
           :class="$style.sendButton"
           @click="sendMessage"
         />
@@ -282,10 +325,6 @@ const { isDesktopOrTablet } = useDevice();
   flex-grow: 1;
   padding: 10px;
   overflow: auto;
-}
-
-.list {
-  //padding: 20px 0;
 }
 
 .message {

@@ -17,8 +17,7 @@ const { $fire } = useNuxtApp();
 
 const fetchChatUsers = async () => {
   try {
-    // @todo: вынести в композбл
-    const response = await $fire.https('getChatUsersForClosedPost', { postId: props.postId });
+    const response = await $fire.https('getChatParticipantsByPost', { postId: props.postId });
 
     buyers.value = response as BuyerData[] || [];
 
@@ -36,7 +35,6 @@ const selectBuyer = async (buyerId: string | null) => {
   isLoading.value = true;
 
   try {
-    // @todo: вынести в композбл
     const response = await $fire.https('closePost', { postId: props.postId, buyerId });
 
     post.value = response?.post || null;

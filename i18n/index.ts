@@ -2,7 +2,6 @@ import en from './locales/en.json';
 import pt from './locales/pt.json';
 
 
-// TODO: Typesafe nuxt I18n will be available as experimetnal feature in v9
 // https://github.com/nuxt-modules/i18n/releases/tag/v9.0.0-rc.2
 type StringKey<T> = Extract<keyof T, string>;
 

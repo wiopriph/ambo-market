@@ -50,15 +50,19 @@ onMounted(() => {
     if (user) {
       try {
         await fetchProfile();
+
+        setTimeout(() => {
+          isAuthChecking.value = false;
+        }, 1000);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error('Error while fetching user profile:', error);
       }
     } else {
       setCurrentUser(null);
-    }
 
-    isAuthChecking.value = false;
+      isAuthChecking.value = false;
+    }
   });
 });
 </script>
