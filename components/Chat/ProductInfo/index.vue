@@ -7,7 +7,9 @@ import { POST_STATUSES } from '~/constants/post-statuses';
 
 const props = defineProps<ChatProductInfoProps>();
 
+const isSeller = computed(() => props.product?.userId === props.user?.id);
 const isClosedPost = computed(() => props.product?.status === POST_STATUSES.CLOSED);
+const hasBuyButton = computed(() => props.product?.isSafeDeal && props.product?.status === POST_STATUSES.OPEN);
 
 
 const { t } = useI18n();
@@ -90,7 +92,7 @@ const createOrder = () => {
     </div>
 
     <ul
-      v-if="!isClosedPost"
+      v-if="isSeller && !isClosedPost"
       :class="$style.buttons"
     >
       <li>
@@ -101,7 +103,7 @@ const createOrder = () => {
       </li>
 
       <li
-        v-if="product.isSafeDeal"
+        v-if="hasBuyButton"
         :class="$style.buyButton"
       >
         <UIButton

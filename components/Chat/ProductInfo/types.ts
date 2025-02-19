@@ -1,6 +1,9 @@
 interface User {
   id: string;
   name: string;
+  photoUrl?: string;
+  phone: string;
+  email: string;
 }
 
 interface Product {
@@ -12,9 +15,11 @@ interface Product {
   title: string;
   status: string;
   isSafeDeal: boolean;
+  isReviewed: boolean;
+  buyerId: string;
+  userId: string;
 }
 
-// @todo: прописать типы Product, User и Message
 export interface ChatProductInfoProps {
   user: User;
   product: Product;

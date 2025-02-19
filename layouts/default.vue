@@ -65,6 +65,18 @@ onMounted(() => {
     }
   });
 });
+
+
+const style = useCssModule();
+const route = useRoute();
+const ROUTES_WITHOUT_FOOTER = [
+  'im',
+  'im-chat-chatId',
+];
+
+const footerClassNames = computed(() => ({
+  [style.hide]: ROUTES_WITHOUT_FOOTER.includes(route.name as string),
+}));
 </script>
 
 <i18n>
@@ -115,7 +127,7 @@ onMounted(() => {
 
         <slot />
 
-        <Footer />
+        <Footer :class="footerClassNames" />
       </Body>
     </Html>
   </div>
@@ -130,5 +142,12 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   margin: 0 auto;
+}
+
+.hide {
+
+  @include md {
+    display: none;
+  }
 }
 </style>

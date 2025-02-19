@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import IconMail from '~/assets/images/header/icon-mail.svg?component';
 import { useUser } from '~/composables/useUser';
 import type { Chat } from '~/types/chat';
 
@@ -31,7 +30,7 @@ const getChatsList = async () => {
 };
 
 
-const CHAT_LIST_UPDATE_INTERVAL = 6000;
+const CHAT_LIST_UPDATE_INTERVAL = 30000;
 
 const chatListUpdateTimer = ref<ReturnType<typeof setInterval> | null>(null);
 
@@ -124,14 +123,10 @@ const { isDesktopOrTablet } = useDevice();
             :class="$style.backButton"
           />
 
-          <div :class="$style.chatTitle">
-            <IconMail :class="$style.chatIcon" />
-
-            <span
-              :class="$style.chatLabel"
-              v-text="t('messages')"
-            />
-          </div>
+          <h3
+            :class="$style.chatTitle"
+            v-text="t('messages')"
+          />
         </template>
 
         <LazyChatEmptyRooms v-if="isChatListEmpty" />
@@ -175,7 +170,6 @@ const { isDesktopOrTablet } = useDevice();
 
   display: flex;
   height: 100%;
-  padding: 20px;
 
   @include md {
     flex-direction: column;
@@ -184,6 +178,7 @@ const { isDesktopOrTablet } = useDevice();
 
   @include exclude-md {
     flex-direction: row;
+    padding: 20px;
   }
 }
 
@@ -225,29 +220,17 @@ const { isDesktopOrTablet } = useDevice();
 }
 
 .backButton {
-  margin-bottom: 10px;
+  padding: 10px;
 }
 
 .chatTitle {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 16px 0;
-}
-
-.chatIcon {
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
-  color: #4362CE;
-}
-
-.chatLabel {
   @include ui-typo-24-medium;
+  padding: 10px;
 }
 
 .chatList {
   width: 100%;
+  padding: 10px;
   overflow: scroll;
 
   @include md {

@@ -204,7 +204,7 @@ const { uid } = useUser();
 const isBuyerReviewEnabled = computed(() => {
   const { buyerId, isReviewed } = product.value;
 
-  return buyerId && !isReviewed && uid.value === buyerId;
+  return buyerId && uid.value === buyerId && !isReviewed;
 });
 
 const checkMessageOwnership = (id: string) => (id === uid.value);
