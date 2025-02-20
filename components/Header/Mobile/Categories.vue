@@ -61,6 +61,7 @@ const { t } = useI18n();
                 :src="category.img"
                 :alt="category.title"
                 :class="$style.icon"
+                loading="lazy"
                 quality="70"
               />
             </span>

@@ -66,6 +66,7 @@ const createOrder = () => {
           :src="product.image"
           :alt="product.title"
           :class="$style.productPhoto"
+          loading="lazy"
         />
       </div>
 

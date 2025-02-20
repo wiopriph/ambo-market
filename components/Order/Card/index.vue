@@ -61,6 +61,7 @@ const goToOrder = () => {
           :src="post.image"
           :alt="post.title"
           :class="$style.productPhoto"
+          loading="lazy"
         />
       </div>
 

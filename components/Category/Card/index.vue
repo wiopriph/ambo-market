@@ -18,6 +18,7 @@ const props = defineProps<Props>();
     <NuxtImg
       :src="props.img"
       :class="$style.icon"
+      loading="lazy"
       width="83"
       height="70"
       quality="90"

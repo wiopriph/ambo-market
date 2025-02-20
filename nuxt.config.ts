@@ -103,6 +103,17 @@ export default defineNuxtConfig({
     },
   },
 
+  // Cache-Control для NuxtImg
+  nitro: {
+    routeRules: {
+      '/_ipx/**': {
+        headers: {
+          'Cache-Control': 'public, max-age=31536000, immutable',
+        },
+      },
+    },
+  },
+
   routeRules: {
     '/auth': { ssr: false },
     '/im': { ssr: false },

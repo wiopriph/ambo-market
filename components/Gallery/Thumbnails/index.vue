@@ -68,6 +68,7 @@ const setCurrentImage = (index: number) => emit('select', index);
           :src="image"
           :class="$style.thumbnailImage"
           :alt="`miniature_${index}`"
+          loading="lazy"
         />
       </button>
     </nav>
