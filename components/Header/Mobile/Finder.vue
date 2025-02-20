@@ -128,6 +128,7 @@ const hideFilterModal = () => {
 
       <button
         :class="$style.filterButton"
+        aria-label="search filters"
         type="button"
         @click="showFilterModal"
       >
