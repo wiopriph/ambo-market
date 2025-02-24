@@ -106,11 +106,7 @@ const createChatRoom = async () => {
   try {
     isChatLoading.value = true;
 
-    const chat = await $fire.https('createChat', {
-      senderId: seller.id,
-      receiverId: buyer.id,
-      postId: post.id,
-    });
+    const chat = await $fire.https('createChat', { postId: post.id });
 
     if (chat && chat.chatId) {
       await navigateTo({
@@ -247,18 +243,6 @@ const createChatRoom = async () => {
           position="center"
         >
           <UserInfoShort :user="seller" />
-        </UILineDescription>
-
-        <UILineDescription
-          :title="t('chat')"
-          :class="$style.order"
-        >
-          <UIButton
-            :text="t('contact_buyer')"
-            :isLoading="isChatLoading"
-            :class="$style.chatButton"
-            @click="createChatRoom"
-          />
         </UILineDescription>
       </template>
 

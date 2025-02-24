@@ -4,6 +4,7 @@ import IconClose from '~/assets/images/galley/icon-close.svg?component';
 import IconLeftButton from '~/assets/images/galley/icon-left-button.svg?component';
 import IconRightButton from '~/assets/images/galley/icon-right-button.svg?component';
 import formatCurrency from '~/utils/formatCurrency';
+import { POST_STATUSES } from '~/constants/post-statuses';
 
 
 const props = defineProps<GalleryModalProps>();
@@ -41,6 +42,8 @@ const setCurrentImage = (index: number) => swiper.to(index);
 const nextSlide = () => swiper.next();
 const prevSlide = () => swiper.prev();
 
+
+const hasControlButtons = computed(() => props.post?.status === POST_STATUSES.OPEN);
 
 const formattedPrice = computed(() => formatCurrency(props.post?.price));
 
@@ -205,6 +208,7 @@ onBeforeUnmount(unlockScroll);
         />
 
         <ProductControls
+          v-if="hasControlButtons"
           :phoneNumber="phoneNumber"
           :isOwner="isOwner"
           :isSafeDeal="isSafeDeal"

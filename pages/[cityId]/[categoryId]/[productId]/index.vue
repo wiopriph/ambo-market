@@ -170,7 +170,7 @@ const breadcrumbsList = computed(() => [
 const { uid, isLoggedIn } = useUser();
 
 const isOwnerUser = computed(() => uid.value === seller.value?.id);
-const isClosedPost = computed(() => post.value?.status === POST_STATUSES.CLOSED);
+const hasControlButtons = computed(() => post.value?.status === POST_STATUSES.OPEN);
 
 
 const isNumberLoading = ref(false);
@@ -650,7 +650,7 @@ const { isDesktopOrTablet } = useDevice();
         </transition>
 
         <ProductControls
-          v-if="!isClosedPost"
+          v-if="hasControlButtons"
           :phoneNumber="seller.phone"
           :isSafeDeal="post.isSafeDeal"
           :isOwner="isOwnerUser"
@@ -743,7 +743,7 @@ const { isDesktopOrTablet } = useDevice();
           />
 
           <ProductControls
-            v-if="!isClosedPost"
+            v-if="hasControlButtons"
             :phoneNumber="seller.phone"
             :isOwner="isOwnerUser"
             :isSafeDeal="post.isSafeDeal"
