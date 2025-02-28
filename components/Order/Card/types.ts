@@ -11,7 +11,7 @@ interface Order {
     name: string; // Имя покупателя
   };
   post: {
-    image: string; // URL изображения товара
+    preview: string; // URL изображения товара
     title: string; // Название товара
   };
   messages: {

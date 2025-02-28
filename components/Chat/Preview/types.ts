@@ -5,7 +5,7 @@ interface User {
 }
 
 interface Product {
-  image?: string;
+  preview?: string;
   title: string;
 }
 

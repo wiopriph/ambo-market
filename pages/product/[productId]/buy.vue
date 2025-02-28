@@ -55,7 +55,6 @@ if (error && error?.value) {
 }
 
 const post = computed(() => product.value?.post);
-const previewImage = computed(() => post.value?.images?.length ? post.value?.images[0] : '');
 const formattedPrice = computed(() => formatCurrency(`${post.value?.price}`));
 
 const user = computed(() => product.value?.user);
@@ -147,7 +146,7 @@ const { t } = useI18n();
           <div :class="$style.product">
             <div :class="$style.photo">
               <NuxtImg
-                :src="previewImage"
+                :src="post?.preview"
                 :alt="post?.title"
                 :class="$style.productPhoto"
                 loading="lazy"

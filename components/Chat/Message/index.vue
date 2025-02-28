@@ -91,6 +91,7 @@ const { t } = useI18n();
 
         <button
           :class="$style.errorButton"
+          type="button"
           @click="resend"
         >
           {{ t('resend') }}

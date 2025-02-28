@@ -95,7 +95,7 @@ const seo = computed(() => {
     description: post.value?.description?.replace(/[\r\n]+/g, ' '),
   });
 
-  const image = post.value?.images?.length ? post.value?.images[0] : '';
+  const image = post.value?.preview || '';
 
   return {
     title,

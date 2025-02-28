@@ -58,7 +58,8 @@ const goToOrder = () => {
     <div :class="$style.main">
       <div :class="$style.photo">
         <NuxtImg
-          :src="post.image"
+          v-if="post"
+          :src="post.preview"
           :alt="post.title"
           :class="$style.productPhoto"
           loading="lazy"

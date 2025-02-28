@@ -11,7 +11,7 @@ interface Product {
   categoryId: string;
   location: { city: string };
   price: number;
-  image: string;
+  preview: string;
   title: string;
   status: string;
   isSafeDeal: boolean;

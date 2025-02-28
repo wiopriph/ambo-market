@@ -10,7 +10,7 @@ const props = defineProps<CardProps>();
 
 const formattedPrice = computed(() => formatCurrency(props.product?.price));
 const city = computed(() => props.product?.location?.displayName || '');
-const previewImage = computed(() => props.product?.images?.[0] || '');
+const previewImage = computed(() => props.product?.preview || '');
 const productTitle = computed(() => props.product?.title || '\u00A0');
 
 const hasStatus = computed(() => props.product?.status !== POST_STATUSES.OPEN);

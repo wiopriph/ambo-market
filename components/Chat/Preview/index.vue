@@ -38,7 +38,7 @@ const lastMessage = computed(() => {
   <div :class="classNames">
     <div :class="$style.photo">
       <NuxtImg
-        :src="product.image"
+        :src="product.preview"
         :alt="product.title"
         :class="$style.productPhoto"
         loading="lazy"

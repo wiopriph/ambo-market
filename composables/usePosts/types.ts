@@ -49,9 +49,9 @@ export interface FetchPostsParams {
 export interface Post {
   id: string;
   createdAt: number;
+  preview: string;
   images: string[];
   price: number;
-  searchBy: string;
   description: string;
   location: Location;
   isSafeDeal: boolean;

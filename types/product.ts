@@ -9,7 +9,6 @@ export type Post = {
   id: string;
   createdAt: number;
   price: number;
-  searchBy: string;
   description: string;
   isSafeDeal: boolean;
   title: string;
@@ -17,6 +16,7 @@ export type Post = {
   categoryId: string;
   status: 'open' | 'closed' | 'archived';
   location: Location;
+  preview: string;
   images: string[];
 };
 
