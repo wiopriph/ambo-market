@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ChatPreviewProps } from './types';
-import formatLocalizedDate from '~/utils/formatLocalizedDate';
+import { formatLocalizedDate } from '~/utils/formatDate';
 
 
 const props = withDefaults(defineProps<ChatPreviewProps>(), {

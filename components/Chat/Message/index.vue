@@ -2,7 +2,7 @@
 import type { MessageProps } from './types';
 import IconCheck from '~/assets/images/chat/icon-check.svg?component';
 import IconError from 'assets/images/chat/icon-error.svg?component';
-import formatLocalizedDate from '~/utils/formatLocalizedDate';
+import { formatLocalizedDate } from '~/utils/formatDate';
 
 
 const props = withDefaults(defineProps<MessageProps>(), {

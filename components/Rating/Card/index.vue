@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { RatingCardProps } from './types';
 import IconStar from '~/assets/images/icon-star.svg?component';
-import formatLocalizedDate from '~/utils/formatLocalizedDate';
+import { formatFullDate } from '~/utils/formatDate';
 
 
 const props = defineProps<RatingCardProps>();
@@ -30,7 +30,7 @@ const userProfileLink = computed(() => ({
 
 const { locale } = useI18n();
 
-const formattedDate = computed(() => formatLocalizedDate(props.date, locale.value));
+const formattedDate = computed(() => formatFullDate(props.date, locale.value));
 </script>
 
 

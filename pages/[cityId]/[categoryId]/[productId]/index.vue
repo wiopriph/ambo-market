@@ -5,7 +5,7 @@ import { CURRENCY } from '~/constants/currency';
 import { getCityIdByName } from '~/constants/cities';
 import { POST_STATUSES } from '~/constants/post-statuses';
 import type { ProductApiResponse, User } from '~/types/product';
-import formatLocalizedDate from '~/utils/formatLocalizedDate';
+import { formatFullDate } from '~/utils/formatDate';
 import { useUser } from '~/composables/useUser';
 
 
@@ -78,7 +78,7 @@ const postCityId = computed(() => getCityIdByName(postLocation.value?.city ?? ''
 const postCityName = computed(() => postLocation.value?.displayName);
 
 const formattedPrice = computed(() => formatCurrency(`${post.value?.price}`));
-const formattedDate = computed(() => post.value?.createdAt ? formatLocalizedDate(post.value?.createdAt, locale.value) : '');
+const formattedDate = computed(() => post.value?.createdAt ? formatFullDate(post.value?.createdAt, locale.value) : '');
 
 const seo = computed(() => {
   const categoryId = post.value?.categoryId;

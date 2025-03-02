@@ -4,7 +4,7 @@ import IconVerified from '~/assets/images/profile/icon-verified.svg?component';
 import IconUnverified from '~/assets/images/profile/icon-unverified.svg?component';
 import IconFB from '~/assets/images/icon-fb.svg?component';
 import IconStar from '~/assets/images/icon-star.svg?component';
-import formatLocalizedDate from '~/utils/formatLocalizedDate';
+import { formatFullDate } from '~/utils/formatDate';
 
 
 const props = defineProps<UserInfoProps>();
@@ -36,7 +36,7 @@ const formattedDate = computed(() => {
     return '';
   }
 
-  return formatLocalizedDate(creationTime, locale.value);
+  return formatFullDate(creationTime, locale.value);
 });
 
 const friendCount = computed(() => props.user?.friendCount || 0);
