@@ -26,19 +26,19 @@ const breadcrumbsMicrodata = computed(() =>
   }),
 );
 
+const script = computed(() => [
+  {
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({
+      '@context': 'https://schema.org/',
+      '@type': 'BreadcrumbList',
+      itemListElement: breadcrumbsMicrodata.value,
+    }),
+  },
+]);
+
 if (!props.disableMicrodata) {
-  useHead({
-    script: computed(() => [
-      {
-        type: 'application/ld+json',
-        innerHTML: JSON.stringify({
-          '@context': 'https://schema.org/',
-          '@type': 'BreadcrumbList',
-          itemListElement: breadcrumbsMicrodata.value,
-        }),
-      },
-    ]),
-  });
+  useHead({ script });
 }
 </script>
 

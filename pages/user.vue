@@ -19,35 +19,35 @@ const userCreationTime = user.value?.creationTime;
 const title = computed(() => t('seo.user.title', { name: userName }));
 const description = computed(() => t('seo.user.description', { name: userName }));
 
-useHead({
-  title: computed(() => title.value),
-  meta: computed(() => [
-    { key: 'description', name: 'description', content: description.value },
-    { key: 'og:title', property: 'og:title', content: title.value },
-    { key: 'og:description', property: 'og:description', content: description.value },
-    { key: 'og:image', property: 'og:image', content: userAvatar },
-    { key: 'twitter:title', property: 'twitter:title', content: title.value },
-    { key: 'twitter:description', property: 'twitter:description', content: description.value },
-    { key: 'twitter:image', property: 'twitter:image', content: userAvatar },
-  ]),
-  script: computed(() => [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'ProfilePage',
-        dateCreated: userCreationTime,
-        mainEntity: {
-          '@type': 'Person',
-          identifier: userId,
-          name: userName,
-          image: userAvatar,
-          description: description.value,
-        },
-      }),
-    },
-  ]),
-});
+const meta = computed(() => [
+  { key: 'description', name: 'description', content: description.value },
+  { key: 'og:title', property: 'og:title', content: title.value },
+  { key: 'og:description', property: 'og:description', content: description.value },
+  { key: 'og:image', property: 'og:image', content: userAvatar },
+  { key: 'twitter:title', property: 'twitter:title', content: title.value },
+  { key: 'twitter:description', property: 'twitter:description', content: description.value },
+  { key: 'twitter:image', property: 'twitter:image', content: userAvatar },
+]);
+
+const script = computed(() => [
+  {
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'ProfilePage',
+      dateCreated: userCreationTime,
+      mainEntity: {
+        '@type': 'Person',
+        identifier: userId,
+        name: userName,
+        image: userAvatar,
+        description: description.value,
+      },
+    }),
+  },
+]);
+
+useHead({ title, meta, script });
 
 
 const { uid } = useUser();

@@ -5,18 +5,18 @@ import { CITIES } from '~/constants/cities';
 const { t } = useI18n();
 
 const title = computed(() => t('title'));
+
 const description = computed(() => t('description'));
 
-useHead({
-  title: title.value,
-  meta: [
-    { key: 'og:title', property: 'og:title', content: title.value },
-    { key: 'twitter:title', property: 'twitter:title', content: title.value },
-    { key: 'description', name: 'description', content: description.value },
-    { key: 'og:description', property: 'og:description', content: description.value },
-    { key: 'twitter:description', property: 'twitter:description', content: description.value },
-  ],
-});
+const meta = computed(() => [
+  { key: 'og:title', property: 'og:title', content: title.value },
+  { key: 'twitter:title', property: 'twitter:title', content: title.value },
+  { key: 'description', name: 'description', content: description.value },
+  { key: 'og:description', property: 'og:description', content: description.value },
+  { key: 'twitter:description', property: 'twitter:description', content: description.value },
+]);
+
+useHead({ title, meta });
 
 
 const cities = computed(() => CITIES.map(city => ({

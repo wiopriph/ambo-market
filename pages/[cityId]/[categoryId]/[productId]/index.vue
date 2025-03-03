@@ -104,45 +104,47 @@ const seo = computed(() => {
   };
 });
 
-useHead({
-  title: computed(() => seo.value.title),
-  meta: computed(() => [
-    { key: 'og:title', property: 'og:title', content: seo.value.title },
-    { key: 'og:description', property: 'og:description', content: seo.value.description },
-    { hid: 'og:image', property: 'og:image', content: seo.value.image },
+const title = computed(() => seo.value.title);
 
-    { key: 'description', name: 'description', content: seo.value.description },
+const meta = computed(() => [
+  { key: 'og:title', property: 'og:title', content: seo.value.title },
+  { key: 'og:description', property: 'og:description', content: seo.value.description },
+  { hid: 'og:image', property: 'og:image', content: seo.value.image },
 
-    { hid: 'twitter:image', property: 'twitter:image', content: seo.value.image },
-    { key: 'twitter:title', property: 'twitter:title', content: seo.value.title },
-    { key: 'twitter:description', property: 'twitter:description', content: seo.value.description },
-  ]),
-  script: computed(() => [{
-    type: 'application/ld+json',
-    innerHTML: JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'Product',
-      identifier: post.value?.id,
-      name: post.value?.title,
-      image: post.value?.images,
-      description: post.value?.description,
-      category: postCategoryName.value,
+  { key: 'description', name: 'description', content: seo.value.description },
 
-      offers: {
-        '@type': 'Offer',
-        price: post.value?.price || 0,
-        priceCurrency: CURRENCY,
-        availability: 'https://schema.org/InStock',
-        priceValidUntil: '2099-12-31T23:59:59Z',
-        seller: {
-          '@type': 'Person',
-          name: seller.value?.name,
-          identifier: seller.value?.id,
-        },
+  { hid: 'twitter:image', property: 'twitter:image', content: seo.value.image },
+  { key: 'twitter:title', property: 'twitter:title', content: seo.value.title },
+  { key: 'twitter:description', property: 'twitter:description', content: seo.value.description },
+]);
+
+const script = computed(() => [{
+  type: 'application/ld+json',
+  innerHTML: JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    identifier: post.value?.id,
+    name: post.value?.title,
+    image: post.value?.images,
+    description: post.value?.description,
+    category: postCategoryName.value,
+
+    offers: {
+      '@type': 'Offer',
+      price: post.value?.price || 0,
+      priceCurrency: CURRENCY,
+      availability: 'https://schema.org/InStock',
+      priceValidUntil: '2099-12-31T23:59:59Z',
+      seller: {
+        '@type': 'Person',
+        name: seller.value?.name,
+        identifier: seller.value?.id,
       },
-    }),
-  }]),
-});
+    },
+  }),
+}]);
+
+useHead({ title, meta, script });
 
 const breadcrumbsList = computed(() => [
   {
@@ -295,7 +297,6 @@ const { isDesktopOrTablet } = useDevice();
     "description": "Description",
     "posted": "Posted",
     "share": "Share",
-
     "electronics": {
       "withCity": {
         "title": "{title} for sale in {city} {'|'} Electronics {'|'} Ambo Market",
@@ -445,7 +446,6 @@ const { isDesktopOrTablet } = useDevice();
     "description": "Descrição",
     "posted": "Postou",
     "share": "Compartilhar",
-
     "electronics": {
       "withCity": {
         "title": "{title} comprar em {city} {'|'} Eletrônicos {'|'} Ambo Market",

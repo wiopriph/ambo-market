@@ -89,16 +89,17 @@ const seo = computed(() => {
   };
 });
 
-useHead({
-  title: computed(() => seo.value.title),
-  meta: computed(() => [
-    { key: 'og:title', property: 'og:title', content: seo.value.title },
-    { key: 'twitter:title', property: 'twitter:title', content: seo.value.title },
-    { key: 'description', name: 'description', content: seo.value.description },
-    { key: 'og:description', property: 'og:description', content: seo.value.description },
-    { key: 'twitter:description', property: 'twitter:description', content: seo.value.description },
-  ]),
-});
+const title = computed(() => seo.value.title);
+
+const meta = computed(() => [
+  { key: 'og:title', property: 'og:title', content: seo.value.title },
+  { key: 'twitter:title', property: 'twitter:title', content: seo.value.title },
+  { key: 'description', name: 'description', content: seo.value.description },
+  { key: 'og:description', property: 'og:description', content: seo.value.description },
+  { key: 'twitter:description', property: 'twitter:description', content: seo.value.description },
+]);
+
+useHead({ title, meta });
 
 
 const { data: posts } = await useAsyncData('posts', () => fetchPosts(), {

@@ -9,7 +9,9 @@ definePageMeta({
 
 const { t } = useI18n();
 
-useHead({ title: computed(() => t('messages')) });
+const title = computed(() => t('messages'));
+
+useHead({ title });
 
 
 const { $fire } = useNuxtApp();

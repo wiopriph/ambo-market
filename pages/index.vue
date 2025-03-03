@@ -39,17 +39,17 @@ const seo = computed(() => {
   };
 });
 
+const title = computed(() => seo.value.title);
 
-useHead({
-  title: computed(() => seo.value.title),
-  meta: computed(() => [
-    { key: 'og:title', property: 'og:title', content: seo.value.title },
-    { key: 'twitter:title', property: 'twitter:title', content: seo.value.title },
-    { key: 'description', name: 'description', content: seo.value.description },
-    { key: 'og:description', property: 'og:description', content: seo.value.description },
-    { key: 'twitter:description', property: 'twitter:description', content: seo.value.description },
-  ]),
-});
+const meta = computed(() => [
+  { key: 'og:title', property: 'og:title', content: seo.value.title },
+  { key: 'twitter:title', property: 'twitter:title', content: seo.value.title },
+  { key: 'description', name: 'description', content: seo.value.description },
+  { key: 'og:description', property: 'og:description', content: seo.value.description },
+  { key: 'twitter:description', property: 'twitter:description', content: seo.value.description },
+]);
+
+useHead({ title, meta });
 
 const categories = computed(() => CATEGORIES.map(category => ({
   title: t(category.type),
