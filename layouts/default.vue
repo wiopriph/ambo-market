@@ -33,7 +33,7 @@ const meta = computed(() => [
 ]);
 
 
-useHead({ meta });
+useHead({ meta: meta.value });
 
 
 const { $fire } = useNuxtApp();

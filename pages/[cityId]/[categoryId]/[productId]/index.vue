@@ -144,7 +144,7 @@ const script = computed(() => [{
   }),
 }]);
 
-useHead({ title, meta, script });
+useHead({ title: title.value, meta: meta.value, script: script.value });
 
 const breadcrumbsList = computed(() => [
   {

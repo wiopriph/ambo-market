@@ -16,7 +16,7 @@ const meta = computed(() => [
   { key: 'twitter:description', property: 'twitter:description', content: description.value },
 ]);
 
-useHead({ title, meta });
+useHead({ title: title.value, meta: meta.value });
 
 
 const cities = computed(() => CITIES.map(city => ({

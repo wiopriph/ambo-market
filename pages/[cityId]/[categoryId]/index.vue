@@ -99,7 +99,7 @@ const meta = computed(() => [
   { key: 'twitter:description', property: 'twitter:description', content: seo.value.description },
 ]);
 
-useHead({ title, meta });
+useHead({ title: title.value, meta: meta.value });
 
 
 const { data: posts } = await useAsyncData('posts', () => fetchPosts(), {

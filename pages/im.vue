@@ -11,7 +11,7 @@ const { t } = useI18n();
 
 const title = computed(() => t('messages'));
 
-useHead({ title });
+useHead({ title: title.value });
 
 
 const { $fire } = useNuxtApp();

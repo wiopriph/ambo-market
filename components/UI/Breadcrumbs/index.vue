@@ -38,7 +38,7 @@ const script = computed(() => [
 ]);
 
 if (!props.disableMicrodata) {
-  useHead({ script });
+  useHead({ script: script.value });
 }
 </script>
 

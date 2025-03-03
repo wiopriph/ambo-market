@@ -10,9 +10,7 @@ const errorCode = computed(() => (props.error?.statusCode || 500));
 
 const is404Page = computed(() => errorCode.value === 404);
 
-useHead({
-  title: errorMessage.value,
-});
+useHead({ title: errorMessage.value });
 </script>
 
 <i18n>
