@@ -85,7 +85,7 @@ const submit = () => {
   &_success {
     @include ui-input-state-success();
 
-    background-image: url('@/assets/images/profile/icon-unverified.svg');
+    background-image: url('@/assets/images/profile/icon-verified.svg');
     background-repeat: no-repeat;
     background-position: right 16px center;
   }
