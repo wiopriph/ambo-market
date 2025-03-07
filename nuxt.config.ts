@@ -60,7 +60,7 @@ export default defineNuxtConfig({
       cookieKey: 'locale',
     },
 
-    vueI18n: './i18n/index.ts',
+    vueI18n: '~/i18n/index.ts',
   },
 
   swiper: {
