@@ -7,8 +7,29 @@ const route = useRoute();
 
 const userId = route.params.userUid;
 
-const { data: user } = await useAsyncData('user', () => $fire.https('getUserById', { userId }));
+const { data: user, error: orderError } = await useAsyncData('user', async () => {
+  try {
+    return await $fire.https('getUserById', { userId })
+  } catch (error) {
+    if (error?.code === 'functions/not-found') {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Not found',
+        fatal: true,
+      });
+    }
 
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Failed to load product data',
+      fatal: true,
+    });
+  }
+});
+
+if (orderError?.value) {
+  throw createError(orderError.value);
+}
 
 const { t } = useI18n();
 
