@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import { getApp, initializeApp } from 'firebase/app';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -18,10 +18,17 @@ import { getFunctions, httpsCallable } from 'firebase/functions';
 
 
 export default defineNuxtPlugin(() => {
-  const { public: { firebase } } = useRuntimeConfig();
+  const createFirebaseApp = () => {
+    try {
+      return getApp();
+    } catch {
+      const { public: { firebase } } = useRuntimeConfig();
 
-  const app = initializeApp(firebase);
+      return initializeApp(firebase);
+    }
+  };
 
+  const app = createFirebaseApp();
   const auth = getAuth(app);
   const functions = getFunctions(app);
 

@@ -126,7 +126,7 @@ export default defineNuxtConfig({
   ],
 
   experimental: {
-    asyncContext: true,
+    // asyncContext: true,
     defaults: {
       nuxtLink: {
         prefetch: false,
