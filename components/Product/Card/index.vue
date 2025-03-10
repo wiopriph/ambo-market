@@ -58,7 +58,6 @@ const link = computed(() => ({
         :src="previewImage"
         :alt="productTitle"
         :class="$style.photo"
-        loading="lazy"
       />
     </div>
 
