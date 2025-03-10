@@ -762,6 +762,7 @@ const { isDesktopOrTablet } = useDevice();
           />
 
           <AD
+            v-if="false"
             :class="$style.ad"
             type="vertical"
           />
@@ -796,6 +797,7 @@ const { isDesktopOrTablet } = useDevice();
     </section>
 
     <AD
+      v-if="false"
       :class="$style.ad"
       isMobile
       type="horizontal"

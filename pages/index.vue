@@ -185,9 +185,13 @@ const setPage = (pageNumber: number) => {
 
       <div :class="$style.content">
         <div :class="$style.left">
-          <AD type="vertical" />
+          <AD
+            v-if="false"
+            type="vertical"
+          />
 
           <AD
+            v-if="false"
             :class="$style.ad"
             type="vertical"
           />

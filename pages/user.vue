@@ -9,7 +9,7 @@ const userId = route.params.userUid;
 
 const { data: user, error: orderError } = await useAsyncData('user', async () => {
   try {
-    return await $fire.https('getUserById', { userId })
+    return await $fire.https('getUserById', { userId });
   } catch (error) {
     if (error?.code === 'functions/not-found') {
       throw createError({
@@ -95,7 +95,7 @@ const hasMobileUserInfo = computed(() => isMobileOrTablet && (route.name === 'us
       />
 
       <AD
-        v-else
+        v-if="false"
         :class="$style.ad"
         type="vertical"
       />

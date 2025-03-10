@@ -227,6 +227,7 @@ onBeforeUnmount(unlockScroll);
         />
 
         <AD
+          v-if="false"
           :class="$style.ad"
           type="vertical"
         />
