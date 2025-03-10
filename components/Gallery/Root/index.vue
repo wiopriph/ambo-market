@@ -60,14 +60,14 @@ const prevSlide = () => swiper.prev();
               :src="image"
               :alt="`image_${index}_blurred`"
               :class="$style.blurredImage"
-              loading="lazy"
+              :loading="index ? 'lazy' : 'eager'"
             />
 
             <NuxtImg
               :src="image"
               :alt="`image_${index}`"
               :class="$style.slide"
-              loading="lazy"
+              :loading="index ? 'lazy' : 'eager'"
             />
           </swiper-slide>
         </swiper-container>
