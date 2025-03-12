@@ -59,6 +59,22 @@ const close = () => {
 onMounted(fetchChatUsers);
 </script>
 
+<i18n lang="json">
+{
+  "en": {
+    "select_buyer": "Select the buyer",
+    "congratulations": "Congratulations on the sale! Please select a buyer from the list to earn reputation",
+    "buyer_not_exist": "Buyer is not in the list",
+    "closed": "Ad removed from publication"
+  },
+  "pt": {
+    "select_buyer": "Especifique o comprador",
+    "congratulations": "Parabéns pela venda! Por favor, selecione um comprador da lista para ganhar reputação",
+    "closed": "Anúncio removido da publicação"
+  }
+}
+</i18n>
+
 <template>
   <UIModal
     maxWidth="500px"
@@ -136,7 +152,6 @@ onMounted(fetchChatUsers);
     </div>
   </UIModal>
 </template>
-
 
 <style lang="scss" module>
 .root {
