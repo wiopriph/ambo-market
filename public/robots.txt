@@ -1,6 +1,6 @@
 User-agent: *
 
-Disallow: *?q=
+Disallow: *?
 
 Disallow: /auth
 Disallow: /product/create
