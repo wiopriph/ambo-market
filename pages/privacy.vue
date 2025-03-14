@@ -3,9 +3,9 @@
 
 <template>
   <div :class="$style.root">
-    <p :class="$style.bigTitle">
+    <h1 :class="$style.bigTitle">
       Privacy Policy
-    </p>
+    </h1>
 
     <p :class="$style.date">
       Effective Date:&nbsp;<strong>15 March 2025</strong>
@@ -126,7 +126,7 @@
         Zaire Angola.
       </p>
 
-      <p>
+      <p :class="$style.subtitle">
         How to contact us
       </p>
 
