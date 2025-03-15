@@ -684,6 +684,7 @@ const { isDesktopOrTablet } = useDevice();
                 </div>
 
                 <UIButton
+                  v-if="postLocation"
                   :text="t('show_on_map')"
                   :class="$style.locationMapButton"
                   type="secondary"
@@ -869,9 +870,9 @@ const { isDesktopOrTablet } = useDevice();
 }
 
 .mobilePrice {
-  @include ui-typo-36-bold;
+  @include ui-typo-24-bold;
 
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 
   @include exclude-md {
     display: none;
@@ -882,7 +883,7 @@ const { isDesktopOrTablet } = useDevice();
   overflow-wrap: anywhere;
 
   @include md {
-    @include ui-typo-24-medium;
+    @include ui-typo-20-medium;
   }
 
   @include exclude-md {

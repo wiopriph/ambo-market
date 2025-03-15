@@ -97,6 +97,10 @@ const goBack = () => {
   width: 100%;
   height: 100%;
   padding: 20px 20px 30px 20px;
+
+  @include md {
+    height: calc(100% - 44px);
+  }
 }
 
 .header {
@@ -114,6 +118,10 @@ const goBack = () => {
   height: 32px;
   padding: 0;
   background-color: $ui-color-white;
+
+  @include md {
+    display: none; // у модалки есть свой крестик
+  }
 }
 
 .backButton {
@@ -139,5 +147,6 @@ const goBack = () => {
 .footerText {
   margin-top: 10px;
   margin-bottom: 10px;
+  color: $ui-color-text-main;
 }
 </style>

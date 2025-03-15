@@ -121,7 +121,10 @@ const hideReviewModal = () => {
       </div>
     </div>
 
-    <div :class="$style.verified">
+    <div
+      v-if="false"
+      :class="$style.verified"
+    >
       <template v-if="user.emailVerified">
         <IconVerified :class="$style.verifiedIcon" />
 

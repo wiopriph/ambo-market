@@ -53,6 +53,7 @@ const innerValue = computed({
   position: relative;
   z-index: 0;
   display: inline-block;
+  flex: 1;
   min-width: 70px;
   margin-right: -1px;
   padding: 10px;

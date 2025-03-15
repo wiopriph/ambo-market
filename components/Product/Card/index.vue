@@ -180,6 +180,10 @@ $card-indent: 10px;
 
 .price {
   @include ui-typo-18-bold;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .name {

@@ -93,6 +93,12 @@ $font-bold-weight: 700;
   line-height: 22px;
 }
 
+@mixin ui-typo-20-medium {
+  font-weight: $font-medium-weight;
+  font-size: 20px;
+  line-height: 24px;
+}
+
 @mixin ui-typo-20-bold {
   font-weight: $font-bold-weight;
   font-size: 20px;

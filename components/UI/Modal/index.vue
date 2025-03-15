@@ -103,9 +103,13 @@ onBeforeUnmount(unlockScroll);
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  width: 100%;
   min-height: 100%;
   pointer-events: none;
+
+  @include md {
+    height: 100%;
+  }
 
   @include exclude-md {
     padding: 15px;

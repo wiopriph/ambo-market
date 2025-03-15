@@ -50,7 +50,6 @@ const change = (value: boolean) => {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  margin-top: 30px;
   padding: 10px 20px;
   transition: background-color .2s linear;
 
