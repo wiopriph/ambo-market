@@ -6,5 +6,8 @@ Disallow: /auth
 Disallow: /product/create
 Disallow: /im
 Disallow: /im/*
+Disallow: /orders
+Disallow: /orders/
+Disallow: /orders/*
 
 Sitemap: https://ambo.market/sitemap.xml

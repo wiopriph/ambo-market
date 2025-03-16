@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import QrcodeVue from 'qrcode.vue';
 import formatCurrency from '~/utils/formatCurrency';
 import { useUser } from '~/composables/useUser';
 import type { Point } from '~/components/Order/PointCard/types';
@@ -121,6 +122,20 @@ const createChatRoom = async () => {
     isChatLoading.value = false;
   }
 };
+
+
+const router = useRouter();
+const url = useRequestURL();
+
+const fullUrl = computed(() => {
+  const route = {
+    name: 'orders-orderId',
+    params: { orderId },
+  };
+  const resolvedRoute = router.resolve(route).href;
+
+  return `${url.origin}${resolvedRoute}`;
+});
 </script>
 
 <i18n lang="json">
@@ -160,6 +175,13 @@ const createChatRoom = async () => {
       :class="$style.title"
       v-text="orderTitle"
     />
+
+    <div :class="$style.qr">
+      <QrcodeVue
+        :size="200"
+        :value="fullUrl"
+      />
+    </div>
 
     <div>
       <template v-if="isSeller">
@@ -284,6 +306,14 @@ const createChatRoom = async () => {
 .title {
   @include ui-typo-24-bold;
   margin-bottom: 20px;
+}
+
+.qr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .order {

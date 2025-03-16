@@ -8,7 +8,7 @@ export interface User {
   disabled: boolean;
   rating?: number;
   phone?: string;
-  activeChats?: string[];
+  isAdmin?: boolean;
   favoritePosts?: string[];
 }
 

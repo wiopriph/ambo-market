@@ -44,8 +44,10 @@ const {
   setCurrentUser,
 } = useUser();
 
+let unsubscribeAuthState: (() => void) | null = null;
+
 onMounted(() => {
-  $fire.auth.onAuthStateChanged(async (user) => {
+  unsubscribeAuthState = $fire.auth.onAuthStateChanged(async (user) => {
     isAuthChecking.value = true;
 
     if (user) {
@@ -67,6 +69,11 @@ onMounted(() => {
   });
 });
 
+onUnmounted(() => {
+  if (unsubscribeAuthState) {
+    unsubscribeAuthState();
+  }
+});
 
 const style = useCssModule();
 const route = useRoute();
@@ -80,7 +87,7 @@ const footerClassNames = computed(() => ({
 }));
 </script>
 
-<i18n>
+<i18n lang="json">
 {
   "en": {
     "title": "Ambo Market - Classified Ads, Free Private Listings",
