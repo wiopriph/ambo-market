@@ -21,13 +21,14 @@ const { data: product, error } = await useAsyncData<ProductApiResponse>(async ()
     const { post, user } = response as ProductApiResponse;
 
     const postCityId = getCityIdByName(post?.location?.city);
+    const postCategoryId = post?.categoryId;
 
-    if (postCityId !== route.params.cityId) {
+    if (postCityId !== route.params.cityId || postCategoryId !== route.params.categoryId) {
       navigateTo({
         name: 'cityId-categoryId-productId',
         params: {
           productId: post?.id,
-          categoryId: post?.categoryId,
+          categoryId: postCategoryId,
           cityId: postCityId,
         },
       }, { redirectCode: 301 });
