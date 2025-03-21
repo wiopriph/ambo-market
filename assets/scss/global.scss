@@ -8,7 +8,7 @@
 }
 
 html {
-  @include ui-typo-15;
+  @include ui-typo-16;
   box-sizing: border-box;
   color: $ui-color-black;
   font-family: $ui-ff-default;
@@ -27,11 +27,11 @@ body {
 }
 
 input {
-  @include ui-typo-15;
+  @include ui-typo-16;
 }
 
 button {
-  @include ui-typo-15;
+  @include ui-typo-16;
   color: $ui-color-black;
 }
 

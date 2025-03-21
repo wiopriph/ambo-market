@@ -24,17 +24,16 @@ const props = defineProps<Props>();
 $parent-padding: 20px; // fix: компенсация бокового padding на малых экранах
 
 .root {
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-
-  &::-webkit-scrollbar { // fix: полоска прокрутки
-    width: 0;
-    height: 0;
-  }
-
   @include md {
     margin-right: -$parent-padding;
     margin-left: -$parent-padding;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar { // fix: полоска прокрутки
+      width: 0;
+      height: 0;
+    }
   }
 }
 

@@ -157,9 +157,9 @@ $card-indent: 10px;
 
 .address {
   @include badge;
-  @include ui-typo-14;
+  @include ui-typo-12;
 
-  padding: 3px 8px;
+  padding: 2px 6px;
 }
 
 .status {
@@ -179,7 +179,7 @@ $card-indent: 10px;
 }
 
 .price {
-  @include ui-typo-18-bold;
+  @include ui-typo-16-bold;
 
   overflow: hidden;
   white-space: nowrap;
@@ -187,9 +187,9 @@ $card-indent: 10px;
 }
 
 .name {
-  @include ui-typo-15;
+  @include ui-typo-14;
 
-  margin-top: 4px;
+  margin-top: 2px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

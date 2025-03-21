@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { CategoryCard as Props } from './types';
+import type { CategoryCard } from './types';
 
 
-const props = defineProps<Props>();
+const props = defineProps<CategoryCard>();
 </script>
 
 <template>
   <NuxtLink
-    :to="props.route"
+    :to="route"
     :class="$style.root"
   >
     <div
@@ -38,13 +38,13 @@ const props = defineProps<Props>();
   color: $ui-color-black;
   text-decoration: none;
   background-color: $ui-color-transparent;
-  border: 1px solid $ui-color-transparent;
-  transition: background-color .2s linear;
+  transition: background-color, box-shadow .2s linear;
 
   @include exclude-md {
 
     &:hover {
       background-color: #C7C7C7;
+      box-shadow: rgba(0, 0, 0, .1) 0 8px 16px 0;
     }
   }
 }
