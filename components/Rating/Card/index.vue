@@ -22,10 +22,7 @@ const userName = computed(() => {
 
 const userProfileLink = computed(() => ({
   name: 'user-userUid-status',
-  params: {
-    userUid: props.user.id,
-    status: 'all',
-  },
+  params: { userUid: props.user.id },
 }));
 
 const { locale } = useI18n();
