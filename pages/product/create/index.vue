@@ -180,7 +180,7 @@ const createPost = handleSubmit.withControlled(async () => {
 
     showSuccessModal();
     clearFields();
-    handleReset(); // @todo: может clearFields не нужен
+    handleReset();
   } catch (error) {
     isLoading.value = false;
     hasAPIError.value = true;
@@ -248,7 +248,7 @@ const createPost = handleSubmit.withControlled(async () => {
             boldTitle
           >
             <div>
-              <UICustomSelect
+              <UISelect
                 v-model="category"
                 :options="categoriesItems"
                 :placeholder="t('category_list')"

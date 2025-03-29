@@ -177,7 +177,7 @@ const { t } = useI18n();
           v-text="t('select_point')"
         />
 
-        <UICustomSelect
+        <UISelect
           v-model="point"
           :options="points"
           :placeholder="t('select')"

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { usePosts } from '~/composables/usePosts';
 import { MAX_POSTS_PER_PAGE } from '~/composables/usePosts/constants';
+import { getCityById } from '~/constants/cities';
 
 
 definePageMeta({
@@ -30,8 +31,10 @@ const breadcrumbs = computed(() => {
   const breadcrumbs = [];
 
   if (isPriorityCity.value) {
+    const city = getCityById(cityId.value);
+
     breadcrumbs.push({
-      title: t('main_page'),
+      title: city?.name || t('main_page'),
       to: {
         name: 'cityId',
         params: {

@@ -10,12 +10,12 @@ definePageMeta({
 
 const {
   cityId,
+  isPriorityCity,
   locationName,
   coords,
   page,
   getFilter,
   fetchPosts,
-  isFindActive,
   isLoading,
 } = usePosts();
 
@@ -27,9 +27,9 @@ const seo = computed(() => {
   let translationKey;
 
   if (searchQuery) {
-    translationKey = cityId.value !== 'all' ? 'search.withCity' : 'search.withoutCity';
+    translationKey = isPriorityCity.value ? 'search.withCity' : 'search.withoutCity';
   } else {
-    translationKey = cityId.value !== 'all' ? 'default.withCity' : 'default.withoutCity';
+    translationKey = isPriorityCity.value ? 'default.withCity' : 'default.withoutCity';
   }
 
   return {
@@ -143,77 +143,37 @@ const setPage = (pageNumber: number) => {
 
 <template>
   <div :class="$style.root">
-    <template v-if="isFindActive">
-      <h1
-        :class="$style.title"
-        v-text="seo.h1"
-      />
+    <h1
+      :class="$style.title"
+      v-text="seo.h1"
+    />
 
-      <div :class="$style.content">
-        <div :class="$style.left">
-          <FilterBlock :class="$style.filter" />
-        </div>
+    <CategoryList
+      :list="categories"
+      :class="$style.category"
+    />
 
-        <div :class="$style.main">
-          <ProductList
-            :list="posts?.posts"
-            :isLoading="isLoading"
-          />
-
-          <UIPagination
-            v-if="hasPagination"
-            :view="3"
-            :value="page"
-            :max="totalPages"
-            :class="$style.pagination"
-            @input="setPage"
-          />
-        </div>
+    <div :class="$style.content">
+      <div :class="$style.left">
+        <FilterBlock :class="$style.filter" />
       </div>
-    </template>
 
-    <template v-else>
-      <CategoryList
-        :list="categories"
-        :class="$style.category"
-      />
+      <div :class="$style.main">
+        <ProductList
+          :list="posts?.posts"
+          :isLoading="isLoading"
+        />
 
-      <h1
-        :class="$style.title"
-        v-text="seo.h1"
-      />
-
-      <div :class="$style.content">
-        <div :class="$style.left">
-          <AD
-            v-if="false"
-            type="vertical"
-          />
-
-          <AD
-            v-if="false"
-            :class="$style.ad"
-            type="vertical"
-          />
-        </div>
-
-        <div :class="$style.main">
-          <ProductList
-            :list="posts?.posts"
-            :isLoading="isLoading"
-          />
-
-          <UIPagination
-            v-if="hasPagination"
-            :view="3"
-            :value="page"
-            :max="totalPages"
-            :class="$style.pagination"
-            @input="setPage"
-          />
-        </div>
+        <UIPagination
+          v-if="hasPagination"
+          :view="3"
+          :value="page"
+          :max="totalPages"
+          :class="$style.pagination"
+          @input="setPage"
+        />
       </div>
-    </template>
+    </div>
   </div>
 </template>
 

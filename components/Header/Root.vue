@@ -96,7 +96,7 @@ const hasNavbar = ref(true);
 const lastScrollPosition = ref(0);
 const currentScrollPosition = ref(0);
 
-const { isFindActive } = usePosts();
+const { hasActiveFilters } = usePosts();
 
 
 const style = useCssModule();
@@ -104,8 +104,8 @@ const style = useCssModule();
 const mobileWrapClassNames = computed(() => ({
   [style.mobileWrap]: true,
   [style.small]: !hasFinder.value,
-  [style.medium]: hasFinder.value && !isFindActive.value,
-  [style.big]: hasFinder.value && isFindActive.value,
+  [style.medium]: hasFinder.value && !hasActiveFilters.value,
+  [style.big]: hasFinder.value && hasActiveFilters.value,
 }));
 
 const mobileClassNames = computed(() => ({

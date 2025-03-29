@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import type { Props } from './types';
+import type { SelectProps } from './types';
 
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<SelectProps>(), {
   label: '',
   placeholder: '',
   isRequired: false,
   sort: false,
   isDisabled: false,
 });
+
 
 const emit = defineEmits([
   'update:modelValue',
@@ -17,8 +18,6 @@ const emit = defineEmits([
 ]);
 
 const isFocused = ref<boolean>(false);
-const isCustomSelectOpened = ref<boolean>(false);
-const searchString = ref<string>('');
 
 const innerValue = computed({
   get: () => props.modelValue,
@@ -28,52 +27,15 @@ const innerValue = computed({
   },
 });
 
-const filteredOptions = computed(() => {
-  const options = [...props.options];
-
-  if (props.sort) {
-    options.sort((first, second) => {
-      if (first.text < second.text) {
-        return -1;
-      }
-
-      if (first.text > second.text) {
-        return 1;
-      }
-
-      return 0;
-    });
-  }
-
-  if (searchString.value) {
-    return options.filter(item =>
-      item.text.toLowerCase().includes(searchString.value.toLowerCase()),
-    );
-  }
-
-  return options;
-});
-
 const customSelectText = computed(() => {
   const selectedOption = props.options.find(item => item.value === innerValue.value);
 
   return selectedOption?.text || innerValue.value;
 });
 
-const hasError = computed(() => !!props.error);
-
 
 const style = useCssModule();
-
-const selectClassNames = computed(() => ({
-  [style.root]: true,
-  [style.customSelectDisabled]: props.isDisabled,
-}));
-
-const labelClassNames = computed(() => ({
-  [style.label]: true,
-  [style.labelRequired]: props.isRequired,
-}));
+const hasError = computed(() => !!props.error);
 
 const inputClassNames = computed(() => ({
   [style.input]: true,
@@ -85,11 +47,12 @@ const inputClassNames = computed(() => ({
   'has-error': hasError.value,
 }));
 
+const isCustomSelectOpened = ref<boolean>(false);
+
 const customSelectClassNames = computed(() => ({
   [style.customSelect__input]: true,
   [style.input_opened]: isCustomSelectOpened.value,
 }));
-
 
 const getCustomOptionClassNames = (value: string) => ({
   [style.optionButton]: true,
@@ -97,11 +60,9 @@ const getCustomOptionClassNames = (value: string) => ({
 });
 
 const selectOption = (value: string) => {
-  searchString.value = '';
   innerValue.value = value;
   isCustomSelectOpened.value = false;
 };
-
 
 const onFocus = () => {
   emit('focus');
@@ -125,80 +86,70 @@ const openCustomSelect = () => {
 };
 
 const closeCustomSelect = () => {
-  searchString.value = '';
   isCustomSelectOpened.value = false;
   onBlur();
 };
-
-const { t } = useI18n();
 </script>
 
-<i18n>
-{
-  "en": {
-    "no_results": "No results"
-  },
-  "pt": {
-    "no_results": "Sem resultados"
-  }
-}
-</i18n>
-
 <template>
-  <div :class="selectClassNames">
+  <div :class="$style.root">
+    <select
+      v-model="innerValue"
+      :class="[inputClassNames, $style.input_native]"
+      :disabled="isDisabled"
+      @focus="onFocus"
+      @blur="onBlur"
+    >
+      <option
+        value=""
+        disabled
+        selected
+        hidden
+        v-text="placeholder"
+      />
+
+      <option
+        v-for="(item, index) in options"
+        :key="index"
+        :class="$style.option"
+        :value="item.value"
+        v-text="item.text"
+      />
+    </select>
+
     <label
       v-if="label"
-      :class="labelClassNames"
-    >{{ label }}</label>
+      :class="$style.label"
+      v-text="label"
+    />
 
     <label
       v-click-outside="onClickOutside"
       :class="$style.customSelect"
     >
       <input
-        v-if="isCustomSelectOpened"
-        v-model="searchString"
-        :class="[inputClassNames, customSelectClassNames]"
-        type="text"
-      >
-
-      <input
-        v-else
         :value="customSelectText"
         :placeholder="placeholder"
         :class="[inputClassNames, customSelectClassNames]"
         :disabled="isDisabled"
         type="text"
+        tabindex="-1"
+        readonly
         @click="openCustomSelect"
       >
 
       <ul :class="$style.optionsList">
-        <template v-if="filteredOptions.length">
-          <li
-            v-for="(item, index) in filteredOptions"
-            :key="index"
-            :class="$style.option"
-          >
-            <button
-              :class="getCustomOptionClassNames(item.value)"
-              type="button"
-              @click="selectOption(item.value)"
-            >
-              {{ item.text }}
-            </button>
-          </li>
-        </template>
-
         <li
-          v-else
+          v-for="(item, index) in options"
+          :key="index"
           :class="$style.option"
         >
           <button
-            :class="$style.optionButton"
+            :class="getCustomOptionClassNames(item.value)"
             type="button"
-          >
-            {{ t('no_results') }}
-          </button>
+            @click="selectOption(item.value)"
+            v-text="item.text"
+          />
         </li>
       </ul>
     </label>
@@ -215,45 +166,11 @@ const { t } = useI18n();
   width: 100%;
 }
 
-.label {
-  @include ui-input-label;
-}
-
-.customSelect {
-  width: 100%;
-
-  .label ~ & {
-    top: 24px;
-  }
-
-  &__input {
-    z-index: 25;
-    text-transform: capitalize;
-    background-color: $ui-color-white;
-  }
-}
-
-.customSelectDisabled {
-
-  & .customSelect {
-    background-color: rgba($ui-color-transparent, .05);
-  }
-
-  & .background {
-    background-color: rgba($ui-color-transparent, .05);
-  }
-
-  & .label {
-    color: $ui-color-transparent;
-  }
-}
-
 .input {
   @include ui-input-master();
   @include ui-input-state-normal();
   overflow: initial;
-  color: $ui-color-text-light;
-  background: $ui-color-white url('@/assets/images/icon-carret.svg') no-repeat calc(100% - 15px) center;
+  background: url('@/assets/images/icon-carret.svg') no-repeat calc(100% - 15px) center;
   cursor: pointer;
 
   &_error {
@@ -271,22 +188,52 @@ const { t } = useI18n();
   &:disabled,
   &_disabled {
     @include ui-input-state-disabled();
-
-    background-color: rgba($ui-color-transparent, .05);
   }
 
   &_opened {
     @include ui-input-state-hover();
     border-radius: 4px 4px 0 0;
   }
-}
 
-.labelRequired {
-  @include ui-input-label-required;
+  @include exclude-md {
+
+    &_native {
+      opacity: 0;
+
+      &:focus {
+        opacity: 1;
+      }
+    }
+  }
 }
 
 .option {
   color: $ui-color-black;
+}
+
+.customSelect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  order: 1;
+  width: 100%;
+
+  .label ~ & {
+    top: 24px;
+  }
+
+  &__input {
+    position: relative;
+    z-index: $z-idx-over;
+  }
+
+  .input.input_native:focus ~ & {
+    display: none;
+  }
+
+  @include md {
+    display: none;
+  }
 }
 
 .optionsList {

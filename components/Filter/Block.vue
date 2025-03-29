@@ -4,6 +4,8 @@ import { PERIODS, DEFAULT_FILTERS } from '~/constants/filters';
 import getObjectDifferences from '~/utils/getObjectDifferences';
 import { usePosts } from '~/composables/usePosts';
 import type { Filters } from '~/composables/usePosts/types';
+import { CATEGORIES } from '~/constants/categories';
+import { CITIES } from '~/constants/cities';
 
 
 const { t } = useI18n();
@@ -14,8 +16,12 @@ const periods = computed(() => [
   { type: PERIODS.ALL, text: t('all') },
 ]);
 
+const categoriesItems = computed(() => CATEGORIES.map(({ type }) => ({ value: type, text: t(type) })));
+
 
 const {
+  cityId,
+  categoryId,
   currentFilters,
   getFilter,
 } = usePosts();
@@ -28,6 +34,61 @@ const setFilter = (type: string, value: string | number | boolean) => {
   const query = getObjectDifferences(filters, DEFAULT_FILTERS);
 
   navigateTo({ query });
+};
+
+
+const citiesList = computed(() => CITIES.map(city => ({
+  value: city.id,
+  text: city.name || t('everywhere'),
+})));
+
+const route = useRoute();
+
+const setCity = (cityId: string) => {
+  const query = { ...currentFilters.value };
+  const categoryId = route.params.categoryId;
+
+  if (categoryId) {
+    return navigateTo({
+      name: 'cityId-categoryId',
+      params: {
+        cityId: cityId || 'all',
+        categoryId,
+      },
+      query,
+    });
+  }
+
+  return navigateTo({
+    name: 'cityId',
+    params: {
+      cityId: cityId || 'all',
+    },
+    query,
+  });
+};
+
+const setCategory = (categoryId: string) => {
+  const query = { ...currentFilters.value };
+
+  if (categoryId) {
+    return navigateTo({
+      name: 'cityId-categoryId',
+      params: {
+        cityId: cityId.value,
+        categoryId,
+      },
+      query,
+    });
+  }
+
+  return navigateTo({
+    name: 'cityId',
+    params: {
+      cityId: cityId.value,
+    },
+    query,
+  });
 };
 
 
@@ -88,7 +149,10 @@ const clearAllFilters = () => {
 {
   "en": {
     "clear_all": "Clear all filter",
-    "price": "Price, $",
+    "everywhere": "Everywhere",
+    "category": "Category",
+    "select_category": "Select category",
+    "price": "Price",
     "from": "from",
     "to": "to",
     "safe_deal": "Safe deal",
@@ -99,7 +163,10 @@ const clearAllFilters = () => {
   },
   "pt": {
     "clear_all": "limpar todo o filtro",
-    "price": "$, Preço",
+    "everywhere": "Em todos os lugares",
+    "category": "Categoria",
+    "select_category": "Selecione a categoria",
+    "price": "Preço",
     "from": "por",
     "to": "até",
     "safe_deal": "Negociação segura",
@@ -136,6 +203,38 @@ const clearAllFilters = () => {
         type="button"
         @click="clearAllFilters"
         v-text="t('clear_all')"
+      />
+    </li>
+
+    <li :class="$style.block">
+      <span
+        :class="$style.title"
+        v-text="t('city')"
+      />
+
+      <UISelect
+        :modelValue="cityId"
+        :options="citiesList"
+        :placeholder="t('select_city')"
+        :class="$style.category"
+        name="category"
+        @update:model-value="setCity"
+      />
+    </li>
+
+    <li :class="$style.block">
+      <span
+        :class="$style.title"
+        v-text="t('category')"
+      />
+
+      <UISelect
+        :modelValue="categoryId"
+        :options="categoriesItems"
+        :placeholder="t('select_category')"
+        :class="$style.category"
+        name="category"
+        @update:model-value="setCategory"
       />
     </li>
 
@@ -266,6 +365,10 @@ const clearAllFilters = () => {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+}
+
+.category {
+  margin-top: 16px;
 }
 
 .periodList {

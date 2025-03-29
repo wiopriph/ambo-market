@@ -16,7 +16,7 @@ const modesList = computed(() => [
   { title: t('map'), name: 'map' },
 ]);
 
-const viewMode = ref<string>('map');
+const viewMode = ref<string>('cities');
 
 const setMode = (mode: string) => {
   viewMode.value = mode;

@@ -14,7 +14,7 @@ export function usePosts() {
     maxAge: 60 * 60 * 24 * 30,
   });
 
-  const location = useState<Location>('location', () => (DEFAULT_LOCATION as Location));
+  const location = useState<Location>('location', () => DEFAULT_LOCATION);
   const locationName = computed(() => location.value.displayName);
 
   const cityId = computed(() => getCityIdByName(location.value.city));
@@ -30,9 +30,9 @@ export function usePosts() {
     locationCookie.value = locationData;
   };
 
-  const filters = useState<Filters>('filters', () => (DEFAULT_FILTERS as Filters));
+  const filters = useState<Filters>('filters', () => DEFAULT_FILTERS);
   const currentFilters = computed(() => getObjectDifferences(filters.value, DEFAULT_FILTERS));
-  const isFindActive = computed(() => !!Object.keys(currentFilters.value).length || page.value > 1);
+  const hasActiveFilters = computed(() => !!Object.keys(currentFilters.value).length);
 
   const getFilter = <K extends keyof Filters>(name: K): Filters[K] => filters.value[name];
 
@@ -44,7 +44,7 @@ export function usePosts() {
 
 
   const page = useState<number>('page', () => 1);
-  const categoryId = useState<string | string[] | null>('categoryId', () => null);
+  const categoryId = useState<string>('categoryId', () => '');
 
 
   const isLoading = useState<boolean>('isLoading', () => false);
@@ -87,7 +87,7 @@ export function usePosts() {
 
     filters,
     currentFilters,
-    isFindActive,
+    hasActiveFilters,
     getFilter,
     initializeFilters,
 

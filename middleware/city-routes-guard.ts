@@ -6,11 +6,6 @@ const VALID_CITY_ID_REGEX = /^[a-zA-Z-_]+$/;
 export default defineNuxtRouteMiddleware((to) => {
   const cityId = to.params.cityId as string;
 
-  if (to.name === 'cityId' && cityId === 'all') {
-    // Редирект для 'all'
-    return navigateTo({ name: 'index' });
-  }
-
   if (!VALID_CITY_ID_REGEX.test(cityId)) {
     // Проверка на соответствие регулярному выражению
     throw createError({ statusCode: 404, statusMessage: 'Invalid city ID' });

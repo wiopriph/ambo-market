@@ -7,6 +7,18 @@ interface City {
 
 export const CITIES: City[] = [
   {
+    id: 'all',
+    name: '',
+    lat: null,
+    lon: null,
+  },
+  {
+    id: 'luanda',
+    name: 'Luanda',
+    lat: -8.8272699,
+    lon: 13.2439512,
+  },
+  {
     id: 'soyo',
     name: 'Soyo',
     lat: -6.1333775,
@@ -25,12 +37,6 @@ export const CITIES: City[] = [
     lon: 12.1919468,
   },
   {
-    id: 'luanda',
-    name: 'Luanda',
-    lat: -8.8272699,
-    lon: 13.2439512,
-  },
-  {
     id: 'lubango',
     name: 'Lubango',
     lat: -14.9195617,
@@ -47,12 +53,6 @@ export const CITIES: City[] = [
     name: 'Sumbe',
     lat: -11.2019365,
     lon: 13.8396845,
-  },
-  {
-    id: 'all',
-    name: '',
-    lat: null,
-    lon: null,
   },
 ];
 
@@ -80,5 +80,5 @@ export function getCityById(cityId: string): City | undefined {
 export function getCityIdByName(cityName: string): string {
   const cityInfo = cityMapByName.get(cityName);
 
-  return cityInfo?.id || 'all';
+  return cityInfo?.id ?? 'all';
 }

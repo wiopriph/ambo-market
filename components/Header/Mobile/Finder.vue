@@ -26,8 +26,7 @@ const {
   getFilter,
   currentFilters,
   cityId,
-  isPriorityCity,
-  isFindActive,
+  hasActiveFilters,
 } = usePosts();
 
 const searchString = ref('');
@@ -56,18 +55,11 @@ const find = () => {
     });
   }
 
-  if (isPriorityCity.value) {
-    return navigateTo({
-      name: 'cityId',
-      params: {
-        cityId: cityId.value,
-      },
-      query,
-    });
-  }
-
   return navigateTo({
-    name: 'index',
+    name: 'cityId',
+    params: {
+      cityId: cityId.value,
+    },
     query,
   });
 };
@@ -137,7 +129,7 @@ const hideFilterModal = () => {
     </div>
 
     <div
-      v-if="isFindActive"
+      v-if="hasActiveFilters"
       :class="$style.criterionWrap"
     >
       <button
@@ -187,14 +179,12 @@ const hideFilterModal = () => {
 .filterButton {
   @include ui-button-secondary;
 
-  & {
-    margin-left: 5px;
-    padding: 10px;
+  margin-left: 5px;
+  padding: 10px;
 
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .criterionWrap {

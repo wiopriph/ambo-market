@@ -2,6 +2,8 @@
 import { PERIODS, DEFAULT_FILTERS, type PeriodsValues } from '~/constants/filters';
 import getObjectDifferences from '~/utils/getObjectDifferences';
 import { usePosts } from '~/composables/usePosts';
+import { CATEGORIES } from '~/constants/categories';
+import { CITIES } from '~/constants/cities';
 
 
 const { t } = useI18n();
@@ -12,23 +14,40 @@ const periods = computed(() => [
   { type: PERIODS.ALL, text: t('all') },
 ]);
 
+const categoriesItems = computed(() => CATEGORIES.map(({ type }) => ({ value: type, text: t(type) })));
+
+const citiesList = computed(() => CITIES.map(city => ({
+  value: city.id,
+  text: city.name ? city.name : t('everywhere'),
+})));
+
 
 const {
+  cityId,
   getFilter,
   currentFilters,
 } = usePosts();
 
+const newCityId = ref('');
+const categoryId = ref('');
 const minPrice = ref<string | number>('');
 const maxPrice = ref<string | number>('');
 const safeTransaction = ref<boolean>(false);
 const period = ref<PeriodsValues>(PERIODS.ALL);
 
+
+const route = useRoute();
+
 onMounted(() => {
+  newCityId.value = cityId.value;
+  categoryId.value = route.params.categoryId as string;
+
   minPrice.value = getFilter('minPrice');
   maxPrice.value = getFilter('maxPrice');
   safeTransaction.value = getFilter('safeTransaction');
   period.value = getFilter('period');
 });
+
 
 const updateFilters = () => {
   const filters = {
@@ -41,9 +60,26 @@ const updateFilters = () => {
 
   const query = getObjectDifferences(filters, DEFAULT_FILTERS);
 
-  navigateTo({ query });
-
   close();
+
+  if (categoryId.value) {
+    return navigateTo({
+      name: 'cityId-categoryId',
+      params: {
+        cityId: newCityId.value || 'all',
+        categoryId: categoryId.value,
+      },
+      query,
+    });
+  }
+
+  return navigateTo({
+    name: 'cityId',
+    params: {
+      cityId: newCityId.value || 'all',
+    },
+    query,
+  });
 };
 
 
@@ -64,7 +100,10 @@ const clearAllFilters = () => {
 {
   "en": {
     "filters": "Filters",
-    "price": "Price, $",
+    "everywhere": "Everywhere",
+    "category": "Category",
+    "select_category": "Select category",
+    "price": "Price",
     "from": "from",
     "to": "to",
     "safe_deal": "Safe deal",
@@ -78,7 +117,10 @@ const clearAllFilters = () => {
   },
   "pt": {
     "filters": "Filtros",
-    "price": "$, Preço",
+    "everywhere": "Em todos os lugares",
+    "category": "Categoria",
+    "select_category": "Selecione a categoria",
+    "price": "Preço",
     "from": "por",
     "to": "até",
     "safe_deal": "Negociação segura",
@@ -100,6 +142,36 @@ const clearAllFilters = () => {
   >
     <div :class="$style.root">
       <ul :class="$style.wrap">
+        <li :class="$style.block">
+          <span
+            :class="$style.title"
+            v-text="t('city')"
+          />
+
+          <UISelect
+            v-model="newCityId"
+            :options="citiesList"
+            :placeholder="t('select_city')"
+            :class="$style.selector"
+            name="category"
+          />
+        </li>
+
+        <li :class="$style.block">
+          <span
+            :class="$style.title"
+            v-text="t('category')"
+          />
+
+          <UISelect
+            v-model="categoryId"
+            :options="categoriesItems"
+            :placeholder="t('select_category')"
+            :class="$style.selector"
+            name="category"
+          />
+        </li>
+
         <li :class="$style.block">
           <span
             :class="$style.title"
@@ -131,7 +203,7 @@ const clearAllFilters = () => {
             v-text="t('period')"
           />
 
-          <ul :class="$style.periodList">
+          <ul :class="$style.selector">
             <li
               v-for="({ type, text }) in periods"
               :key="type"
@@ -206,7 +278,7 @@ const clearAllFilters = () => {
 .priceRange {
   display: flex;
   flex-direction: row;
-  margin-top: 10px;
+  margin-top: 16px;
 }
 
 .price {
@@ -223,7 +295,7 @@ const clearAllFilters = () => {
   justify-content: space-between;
 }
 
-.periodList {
+.selector {
   margin-top: 16px;
 }
 

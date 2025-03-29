@@ -21,7 +21,7 @@ useHead({ title: title.value, meta: meta.value });
 
 const cities = computed(() => CITIES.map(city => ({
   id: city.id,
-  name: city.name,
+  name: city.name || t('everywhere'),
   route: {
     name: 'cityId',
     params: {
