@@ -151,7 +151,7 @@ const { isMobileOrTablet } = useDevice();
         :class="$style.wrap"
       >
         <div :class="$style.item">
-          <p
+          <h4
             :class="$style.title"
             v-text="t('company')"
           />
@@ -170,7 +170,7 @@ const { isMobileOrTablet } = useDevice();
         </div>
 
         <div :class="$style.item">
-          <p
+          <h4
             :class="$style.title"
             v-text="t('follow_us')"
           />
@@ -191,7 +191,7 @@ const { isMobileOrTablet } = useDevice();
         </div>
 
         <div :class="$style.item">
-          <p
+          <h4
             :class="$style.title"
             v-text="t('support')"
           />
@@ -206,7 +206,7 @@ const { isMobileOrTablet } = useDevice();
         </div>
 
         <div :class="$style.item">
-          <p
+          <h4
             :class="$style.title"
             v-text="t('languages')"
           />

@@ -15,6 +15,7 @@ definePageMeta({
 
 const {
   cityId,
+  categoryId,
   coords,
   locationName,
   isPriorityCity,
@@ -121,6 +122,14 @@ const hasPagination = computed(() => totalPages.value > 1);
 const setPage = (pageNumber: number) => {
   navigateTo({ query: { ...route.query, page: pageNumber } });
 };
+
+const top3Post = computed(() => {
+  if (posts.value?.posts) {
+    return posts.value?.posts.slice(0, 3).map(item => item.title);
+  }
+
+  return [];
+});
 </script>
 
 <i18n lang="json">
@@ -522,6 +531,14 @@ const setPage = (pageNumber: number) => {
           :class="$style.pagination"
           @input="setPage"
         />
+
+        <UITextRoll v-if="page === 1">
+          <SeoCategoryText
+            :cityId="cityId"
+            :categoryId="categoryId"
+            :productList="top3Post"
+          />
+        </UITextRoll>
       </div>
     </div>
   </div>

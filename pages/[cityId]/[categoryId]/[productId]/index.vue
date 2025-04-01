@@ -798,6 +798,17 @@ const { isDesktopOrTablet } = useDevice();
       </transition>
     </section>
 
+    <UITextRoll :class="$style.text">
+      <SeoProductText
+        :productTitle="post?.title"
+        :category="postCategoryName"
+        :price="formattedPrice"
+        :city="postCityName"
+        :seller="seller?.name"
+        :productList="[]"
+      />
+    </UITextRoll>
+
     <AD
       v-if="false"
       :class="$style.ad"
@@ -992,6 +1003,10 @@ const { isDesktopOrTablet } = useDevice();
 }
 
 .profileInfo {
+  margin-top: 20px;
+}
+
+.text {
   margin-top: 20px;
 }
 </style>

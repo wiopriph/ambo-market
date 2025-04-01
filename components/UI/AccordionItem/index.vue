@@ -4,7 +4,7 @@ import IconArrowDown from '~/assets/images/icon-carret.svg?component';
 
 
 const props = withDefaults(defineProps<Props>(), {
-  titleTag: 'p',
+  titleTag: 'h4',
   expanded: false,
   title: '',
 });
