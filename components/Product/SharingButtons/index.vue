@@ -55,13 +55,13 @@ const socialMediaLinks = computed(() => {
   "en": {
     "share_facebook": "Share on Facebook",
     "share_whatsapp": "Share on WhatsApp",
-    "share_twitter": "Share on Twitter",
+    "share_twitter": "Share on X",
     "send_email": "Send via email"
   },
   "pt": {
     "share_facebook": "Compartilhar no Facebook",
     "share_whatsapp": "Compartilhar no WhatsApp",
-    "share_twitter": "Compartilhar no Twitter",
+    "share_twitter": "Compartilhar no X",
     "send_email": "Enviar por e-mail"
   }
 }
