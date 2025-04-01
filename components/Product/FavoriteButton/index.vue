@@ -97,7 +97,6 @@ const toggleFavorite = async () => {
 .root {
   display: flex;
   align-items: center;
-  width: 20px;
   height: 20px;
   margin: 0;
   padding: 0;
@@ -115,8 +114,8 @@ const toggleFavorite = async () => {
 }
 
 .icon {
-  width: 100%;
-  height: 100%;
+  width: 20px;
+  height: 20px;
   transition: transform .2s cubic-bezier(.5, 0, .5, 3);
 
   .active:active & {
