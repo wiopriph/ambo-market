@@ -1007,6 +1007,6 @@ const { isDesktopOrTablet } = useDevice();
 }
 
 .text {
-  margin-top: 20px;
+  padding-top: 20px;
 }
 </style>
