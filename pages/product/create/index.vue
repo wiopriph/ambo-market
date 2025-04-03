@@ -30,7 +30,8 @@ const {
   },
   validationSchema: object({
     category: string().required(t('validation.required')),
-    productName: string().required(t('validation.required')),
+    productName: string().required(t('validation.required'))
+      .max(50, t('validation.productNameMaxLength')),
     price: string().required(t('validation.required')),
     description: string().required(t('validation.required')),
     isSafeDeal: boolean(),
@@ -194,6 +195,7 @@ const createPost = handleSubmit.withControlled(async () => {
     "category": "Category",
     "category_list": "Category List",
     "product_name": "Product name",
+    "product_name_length": "The name must not exceed 50 characters.",
     "price": "Price",
     "description": "Description",
     "photos": "Photos",
@@ -211,6 +213,7 @@ const createPost = handleSubmit.withControlled(async () => {
     "category": "Categoria",
     "category_list": "Lista de categorias",
     "product_name": "Nome do produto",
+    "product_name_length": "O nome não deve exceder os 50 caracteres.",
     "price": "Preço",
     "description": "Descrição",
     "photos": "Fotos",
@@ -278,6 +281,12 @@ const createPost = handleSubmit.withControlled(async () => {
               />
 
               <UIError :text="errors.productName" />
+
+              <p
+                v-if="!errors.productName"
+                :class="$style.notice"
+                v-text="t('product_name_length')"
+              />
             </div>
           </UILineDescription>
 
@@ -366,7 +375,7 @@ const createPost = handleSubmit.withControlled(async () => {
                 </li>
               </ul>
 
-              <div :class="$style.imagesNotice">
+              <div :class="$style.notice">
                 <p v-text="t('photos_notice.first')" />
 
                 <p v-text="t('photos_notice.second')" />
@@ -523,10 +532,10 @@ const createPost = handleSubmit.withControlled(async () => {
   }
 }
 
-.imagesNotice {
-  @include ui-typo-14;
+.notice {
+  @include ui-typo-12;
 
-  margin-top: 10px;
+  margin-top: 8px;
   color: $ui-color-text-main;
 }
 

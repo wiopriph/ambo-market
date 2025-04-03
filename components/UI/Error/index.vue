@@ -15,8 +15,9 @@ const props = defineProps<ErrorProps>();
 
 <style lang="scss" module>
 .root {
-  @include ui-typo-10;
+  @include ui-typo-12;
 
+  display: block;
   margin-top: 8px;
   color: $ui-color-system-red;
 }
