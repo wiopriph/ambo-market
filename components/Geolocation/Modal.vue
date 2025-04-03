@@ -29,9 +29,14 @@ const getButtonClassNames = (name: string) => ({
   [style.activeMode]: viewMode.value === name,
 });
 
+const getCityClassNames = (id: string) => ({
+  [style.link]: true,
+  [style.strong]: id === 'all',
+});
+
 const citiesList = computed(() => CITIES.map(city => ({
   id: city.id,
-  name: city.name,
+  name: city.name || t('everywhere'),
   route: {
     name: 'cityId',
     params: {
@@ -146,7 +151,7 @@ const save = () => {
         >
           <NuxtLink
             :to="city.route"
-            :class="$style.link"
+            :class="getCityClassNames(city.id)"
             @click="closeModal"
           >
             {{ city.name }}
@@ -233,5 +238,9 @@ const save = () => {
 
 .link {
   text-decoration: none;
+}
+
+.strong {
+  font-weight: $font-bold-weight;
 }
 </style>

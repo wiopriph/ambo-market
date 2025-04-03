@@ -29,6 +29,13 @@ const cities = computed(() => CITIES.map(city => ({
     },
   },
 })));
+
+const style = useCssModule();
+
+const getCityClassNames = (id: string) => ({
+  [style.link]: true,
+  [style.strong]: id === 'all',
+});
 </script>
 
 <i18n lang="json">
@@ -61,7 +68,7 @@ const cities = computed(() => CITIES.map(city => ({
       >
         <NuxtLink
           :to="city.route"
-          :class="$style.link"
+          :class="getCityClassNames(city.id)"
         >
           {{ city.name }}
         </NuxtLink>
@@ -105,5 +112,9 @@ const cities = computed(() => CITIES.map(city => ({
   @include sm {
     @include ui-typo-16-medium;
   }
+}
+
+.strong {
+  font-weight: $font-bold-weight;
 }
 </style>

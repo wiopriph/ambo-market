@@ -119,7 +119,6 @@ const inputClassNames = computed(() => ({
 
 .label {
   @include ui-typo-15-bold;
-  margin-bottom: 16px;
   background-color: $ui-color-white;
 }
 </style>

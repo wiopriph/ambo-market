@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { RouteLocationRaw } from '#vue-router';
-import IconLogo from '~/assets/images/icon-logo.svg?component';
 import IconHamburger from '~/assets/images/header/icon-hamburger.svg?component';
 import IconClose from '~/assets/images/header/icon-close.svg?component';
 import { usePosts } from '~/composables/usePosts';
@@ -109,6 +108,7 @@ const { t } = useI18n();
 <i18n lang="json">
 {
   "en": {
+    "title": "Ambo Market - Classifieds, Free Private Listings",
     "main_page": "Main page",
     "search": "Search for anything",
     "search_in_category": "Search in {category} section",
@@ -119,6 +119,7 @@ const { t } = useI18n();
     "sign_in": "Sign in"
   },
   "pt": {
+    "title": "Ambo Market - Classificados, anúncios grátis",
     "main_page": "Página principal",
     "search": "Procure por qualquer coisa",
     "search_in_category": "Pesquisar na seção {category}",
@@ -136,9 +137,14 @@ const { t } = useI18n();
     <NuxtLink
       :to="indexRoute"
       :aria-label="t('main_page')"
-      :class="[$style.logo, $style.logoWrap]"
+      :class="$style.logo"
     >
-      <IconLogo :class="$style.logo" />
+      <NuxtImg
+        :alt="t('title')"
+        src="/icon-logo.svg"
+        width="120px"
+        height="44px"
+      />
     </NuxtLink>
 
     <button
@@ -242,9 +248,6 @@ const { t } = useI18n();
 .logo {
   width: 120px;
   height: 44px;
-}
-
-.logoWrap {
   margin-right: 20px;
 }
 
