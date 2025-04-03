@@ -24,23 +24,21 @@ const citiesList = computed(() => CITIES.map(city => ({
 
 const {
   cityId,
+  categoryId,
   getFilter,
   currentFilters,
 } = usePosts();
 
 const newCityId = ref('');
-const categoryId = ref('');
+const newCategoryId = ref('');
 const minPrice = ref<string | number>('');
 const maxPrice = ref<string | number>('');
 const safeTransaction = ref<boolean>(false);
 const period = ref<PeriodsValues>(PERIODS.ALL);
 
-
-const route = useRoute();
-
 onMounted(() => {
   newCityId.value = cityId.value;
-  categoryId.value = route.params.categoryId as string;
+  newCategoryId.value = categoryId.value;
 
   minPrice.value = getFilter('minPrice');
   maxPrice.value = getFilter('maxPrice');
@@ -62,12 +60,12 @@ const updateFilters = () => {
 
   close();
 
-  if (categoryId.value) {
+  if (newCategoryId.value) {
     return navigateTo({
       name: 'cityId-categoryId',
       params: {
         cityId: newCityId.value || 'all',
-        categoryId: categoryId.value,
+        categoryId: newCategoryId.value,
       },
       query,
     });
@@ -166,7 +164,7 @@ const clearAllFilters = () => {
           />
 
           <UISelect
-            v-model="categoryId"
+            v-model="newCategoryId"
             :options="categoriesItems"
             :placeholder="t('select_category')"
             :class="$style.selector"
@@ -266,11 +264,7 @@ const clearAllFilters = () => {
 }
 
 .block {
-  padding: 20px 0;
-
-  & + & {
-    border-top: 1px solid $ui-color-transparent;
-  }
+  padding: 8px 0;
 }
 
 .title {
@@ -280,13 +274,13 @@ const clearAllFilters = () => {
 .priceRange {
   display: flex;
   flex-direction: row;
-  margin-top: 16px;
+  margin-top: 8px;
 }
 
 .price {
 
   & + & {
-    margin-left: 5px;
+    margin-left: 4px;
   }
 }
 
@@ -298,13 +292,13 @@ const clearAllFilters = () => {
 }
 
 .selector {
-  margin-top: 16px;
+  margin-top: 8px;
 }
 
 .periodItem {
 
   & + & {
-    margin-top: 10px;
+    margin-top: 8px;
   }
 }
 
@@ -321,7 +315,8 @@ const clearAllFilters = () => {
   width: 100%;
 
   & + & {
-    margin-top: 10px;
+    margin-top: 8px;
   }
 }
 </style>
+

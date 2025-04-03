@@ -45,7 +45,7 @@ const { t } = useI18n();
 
 <template>
   <div :class="$style.root">
-    <h2
+    <h1
       :class="$style.title"
       v-text="t('favorites')"
     />

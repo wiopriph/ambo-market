@@ -28,8 +28,7 @@ const getClass = (name: string, isActive: boolean) => ({
             :href="href"
             :class="getClass('link', isExactActive)"
             @click="navigate"
-            v-text="item.text"
-          />
+          >{{ item.text }}</a>
         </li>
       </NuxtLink>
     </ul>

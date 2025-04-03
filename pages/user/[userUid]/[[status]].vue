@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const props = defineProps<{ userName: string; }>();
+
 definePageMeta({
   middleware: defineNuxtRouteMiddleware((to) => {
     const { status } = to.params;
@@ -46,6 +48,12 @@ const menu = computed(() => {
   }));
 });
 
+const h1 = computed(() => {
+  const postStatus = route.params.status as string || 'all';
+
+  return t(`h1.${postStatus}`, { name: props.userName });
+});
+
 const emptyText = computed(() => {
   const status = route.params.status || 'all';
 
@@ -62,7 +70,12 @@ const emptyText = computed(() => {
     "empty_archive": "Blocked and inactive listings will be displayed on this page.",
     "all": "All",
     "open": "Active",
-    "closed": "Sold"
+    "closed": "Sold",
+    "h1": {
+      "all": "All listings by user {name}",
+      "open": "Active listings by user {name}",
+      "closed": "Sold listings by user {name}"
+    }
   },
   "pt": {
     "empty_all": "Todos os anúncios criados serão exibidos nesta página.",
@@ -71,13 +84,24 @@ const emptyText = computed(() => {
     "empty_archive": "Anúncios bloqueados e inativos serão exibidos nesta página.",
     "all": "Todos",
     "open": "Ativo",
-    "closed": "Vendido"
+    "closed": "Vendido",
+    "h1": {
+      "all": "Todos os anúncios do usuário {name}",
+      "open": "Anúncios ativos do usuário {name}",
+      "closed": "Anúncios vendidos do usuário {name}"
+    }
   }
 }
 </i18n>
 
 <template>
   <div :class="$style.root">
+    <h1
+      v-if="h1"
+      :class="$style.title"
+      v-text="h1"
+    />
+
     <UserNavigation
       :list="menu"
       :class="$style.menu"
@@ -95,6 +119,14 @@ const emptyText = computed(() => {
 <style lang="scss" module>
 .root {
   height: 100%;
+}
+
+.title {
+  @include ui-typo-24-bold;
+
+  @include md {
+    margin-top: 8px;
+  }
 }
 
 .menu {
