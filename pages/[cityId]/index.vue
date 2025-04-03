@@ -148,14 +148,14 @@ const setPage = (pageNumber: number) => {
 
 <template>
   <div :class="$style.root">
-    <CategoryList
-      :list="categories"
-      :class="$style.category"
-    />
-
     <h1
       :class="$style.title"
       v-text="seo.h1"
+    />
+
+    <CategoryList
+      :list="categories"
+      :class="$style.category"
     />
 
     <div :class="$style.content">
@@ -186,20 +186,19 @@ const setPage = (pageNumber: number) => {
 .root {
   @include ui-simple-container;
 
-  padding: 24px 20px;
+  padding: 10px 20px;
 }
 
 .title {
   @include ui-typo-32-bold;
-
-  margin-bottom: 24px;
 }
 
 .category {
-  margin-bottom: 36px;
+  margin-top: 20px;
 }
 
 .content {
+  margin-top: 14px; // 20 - 6
   display: flex;
 }
 

@@ -121,7 +121,7 @@ onBeforeUnmount(unlockScroll);
   width: 100%;
   max-width: 992px;
   margin: 0 auto;
-  overflow: hidden;
+  //overflow: hidden;
   background-color: $ui-color-white;
   pointer-events: auto;
 

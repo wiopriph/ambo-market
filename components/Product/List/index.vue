@@ -13,29 +13,31 @@ const hasList = computed(() => Array.isArray(props.list) && props.list.length);
 </script>
 
 <template>
-  <div v-if="isLoading">
-    <ul :class="$style.root">
-      <li
-        v-for="index in MAX_POSTS_PER_PAGE"
-        :key="index"
-        :class="$style.card"
-      >
-        <ProductCardSkeleton />
-      </li>
-    </ul>
-  </div>
+  <ul
+    v-if="isLoading"
+    :class="$style.root"
+  >
+    <li
+      v-for="index in MAX_POSTS_PER_PAGE"
+      :key="index"
+      :class="$style.card"
+    >
+      <ProductCardSkeleton />
+    </li>
+  </ul>
 
-  <div v-else-if="hasList">
-    <ul :class="$style.root">
-      <li
-        v-for="(product, index) in props.list"
-        :key="index"
-        :class="$style.card"
-      >
-        <ProductCard :product="product" />
-      </li>
-    </ul>
-  </div>
+  <ul
+    v-else-if="hasList"
+    :class="$style.root"
+  >
+    <li
+      v-for="(product, index) in props.list"
+      :key="index"
+      :class="$style.card"
+    >
+      <ProductCard :product="product" />
+    </li>
+  </ul>
 
   <ProductListEmpty
     v-else

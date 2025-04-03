@@ -611,7 +611,7 @@ const { isDesktopOrTablet } = useDevice();
               v-text="formattedPrice"
             />
 
-            <h2
+            <h1
               :class="$style.headerTitle"
               v-text="post.title"
             />
@@ -830,11 +830,10 @@ const { isDesktopOrTablet } = useDevice();
 .root {
   @include ui-simple-container;
 
-  padding: 0 20px 20px 20px;
+  padding: 10px 20px;
 }
 
 .breadcrumbs {
-  margin-top: 10px;
 
   @include md {
     display: none;

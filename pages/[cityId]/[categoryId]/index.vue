@@ -548,17 +548,17 @@ const top3Post = computed(() => {
 .root {
   @include ui-simple-container;
 
-  padding: 24px 20px;
+  padding: 10px 20px;
 }
 
 .title {
   @include ui-typo-32-bold;
 
-  margin-top: 20px;
-  margin-bottom: 24px;
+  margin-top: 10px;
 }
 
 .content {
+  margin-top: 14px; // 20 - 6
   display: flex;
 }
 
