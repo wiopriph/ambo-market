@@ -13,18 +13,6 @@ export const CITIES: City[] = [
     lon: null,
   },
   {
-    id: 'luanda',
-    name: 'Luanda',
-    lat: -8.8272699,
-    lon: 13.2439512,
-  },
-  {
-    id: 'soyo',
-    name: 'Soyo',
-    lat: -6.1333775,
-    lon: 12.3717548,
-  },
-  {
     id: 'benguela',
     name: 'Benguela',
     lat: -12.5790048,
@@ -37,16 +25,58 @@ export const CITIES: City[] = [
     lon: 12.1919468,
   },
   {
+    id: 'cuito',
+    name: 'Cuito',
+    lat: -12.3831319,
+    lon: 16.9425484,
+  },
+  {
+    id: 'huambo',
+    name: 'Huambo',
+    lat: -12.7772455,
+    lon: 15.7346713,
+  },
+  {
+    id: 'lobito',
+    name: 'Lobito',
+    lat: -12.3506867,
+    lon: 13.5464318,
+  },
+  {
     id: 'lubango',
     name: 'Lubango',
     lat: -14.9195617,
     lon: 13.4897509,
   },
   {
-    id: 'namibe',
+    id: 'luanda',
+    name: 'Luanda',
+    lat: -8.8272699,
+    lon: 13.2439512,
+  },
+  {
+    id: 'luena',
+    name: 'Luena',
+    lat: -11.7790355,
+    lon: 19.9122676,
+  },
+  {
+    id: 'mossamedes',
     name: 'Moçâmedes',
     lat: -15.195064,
     lon: 12.1458085,
+  },
+  {
+    id: 'saurimo',
+    name: 'Saurimo',
+    lat: -9.6589303,
+    lon: 20.3981118,
+  },
+  {
+    id: 'soyo',
+    name: 'Soyo',
+    lat: -6.1333775,
+    lon: 12.3717548,
   },
   {
     id: 'sumbe',
