@@ -70,7 +70,7 @@ const { t } = useI18n();
     "categories": "Categories"
   },
   "pt": {
-    "main_page": "Página principal",
+    "main_page": "Página inicial",
     "account": "Conta",
     "categories": "Categorias"
   }

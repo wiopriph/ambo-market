@@ -120,7 +120,7 @@ const { t } = useI18n();
   },
   "pt": {
     "title": "Ambo Market - Classificados, anúncios grátis",
-    "main_page": "Página principal",
+    "main_page": "Página inicial",
     "search": "Procure por qualquer coisa",
     "search_in_category": "Pesquisar na seção {category}",
     "find": "Encontrar",

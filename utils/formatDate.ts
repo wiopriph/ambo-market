@@ -13,10 +13,10 @@ const LOCALES = {
  * @param {'en' | 'pt'} locale - Локаль для форматирования ('en' или 'pt').
  * @returns {string} - Отформатированная дата.
  */
-function formatLocalizedDate(timestamp, locale = 'en') {
+function formatLocalizedDate(timestamp: Date | string | number, locale = 'en') {
   const date = new Date(timestamp);
   const today = new Date();
-  const monthNames = LOCALES[locale] || LOCALES.en;
+  const monthNames = LOCALES[locale as keyof typeof LOCALES] || LOCALES.en;
 
   const isSameDay = date.toDateString() === today.toDateString();
   const isThisYear = date.getFullYear() === today.getFullYear();
@@ -44,9 +44,9 @@ function formatLocalizedDate(timestamp, locale = 'en') {
  * @param {'en' | 'pt'} locale - Локаль для форматирования ('en' или 'pt').
  * @returns {string} - Отформатированная дата в формате "день месяц год".
  */
-function formatFullDate(timestamp, locale = 'en') {
+function formatFullDate(timestamp: Date | string | number, locale = 'en') {
   const date = new Date(timestamp);
-  const monthNames = LOCALES[locale] || LOCALES.en;
+  const monthNames = LOCALES[locale as keyof typeof LOCALES] || LOCALES.en;
 
   const day = date.getDate();
   const month = monthNames[date.getMonth()];

@@ -32,6 +32,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     'nuxt-gtag',
     '@nuxtjs/sitemap',
+    '@nuxt/content',
   ],
 
   // https://i18n.nuxtjs.org/docs/getting-started/usage

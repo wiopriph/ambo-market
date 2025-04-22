@@ -12,6 +12,10 @@ const companyLinks = computed(() => ([
     route: { name: 'about' },
   },
   {
+    name: t('blog'),
+    route: { name: 'blog' },
+  },
+  {
     name: t('terms_of_use'),
     route: { name: 'terms' },
   },
@@ -52,6 +56,7 @@ const { isMobileOrTablet } = useDevice();
     "place_ad": "Place Your Ad",
     "company": "Company",
     "about_us": "About Us",
+    "blog": "Blog",
     "terms_of_use": "Terms of Use",
     "privacy_policy": "Privacy Policy",
     "follow_us": "Follow Us",
@@ -63,6 +68,7 @@ const { isMobileOrTablet } = useDevice();
     "place_ad": "Coloque anúncio",
     "company": "Empresa",
     "about_us": "Sobre nós",
+    "blog": "Blog",
     "terms_of_use": "Termos de Uso",
     "privacy_policy": "Política de Privacidade",
     "follow_us": "Siga-nos",

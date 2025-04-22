@@ -157,7 +157,7 @@ const { isDesktopOrTablet } = useDevice();
     "settings": "Settings"
   },
   "pt": {
-    "main_page": "Página principal",
+    "main_page": "Página inicial",
     "messages": "Minhas mensagens",
     "favorites": "Favoritos",
     "orders": "Minhas ordens",

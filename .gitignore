@@ -102,3 +102,6 @@ nuxt.env
 
 # Ignore custom npmrc
 .npmrc
+
+# Ignore nuxt/content
+.data
