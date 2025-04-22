@@ -7,34 +7,19 @@ if (!doc.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page Not Found' });
 }
 
-const seo = computed(() => {
-  const title = doc.value?.title || '';
-  const description = doc.value?.description || '';
-  const seo = doc.value?.seo || {};
+const title = computed(() => doc.value?.title || '');
+const description = computed(() => doc.value?.description || '');
 
-  return {
-    title,
-    description,
-    ogTitle: seo?.ogTitle || title,
-    ogDescription: seo?.ogDescription || description,
-    ogImage: seo?.ogImage,
-    twitterTitle: seo?.twitterTitle || title,
-    twitterDescription: seo?.twitterDescription || description,
-    twitterImage: seo?.twitterImage,
-  };
-});
+// @todo: доделать работу с картинками
+const meta = computed(() => [
+  { key: 'og:title', property: 'og:title', content: title.value },
+  { key: 'twitter:title', property: 'twitter:title', content: title.value },
+  { key: 'description', name: 'description', content: description.value },
+  { key: 'og:description', property: 'og:description', content: description.value },
+  { key: 'twitter:description', property: 'twitter:description', content: description.value },
+]);
 
-
-useSeoMeta({
-  title: seo.value.title,
-  description: seo.value.description,
-  ogTitle: seo.value.ogTitle,
-  ogDescription: seo.value.ogDescription,
-  ogImage: seo.value.ogImage,
-  twitterTitle: seo.value.twitterTitle,
-  twitterDescription: seo.value.twitterDescription,
-  twitterImage: seo.value.twitterImage,
-});
+useHead({ title: title.value, meta: meta.value });
 
 const { t } = useI18n();
 

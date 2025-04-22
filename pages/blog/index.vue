@@ -1,16 +1,4 @@
 <script setup lang="ts">
-const { t } = useI18n();
-
-const breadcrumbs = computed(() => [
-  {
-    title: t('main_page'),
-    to: { name: 'index' },
-  },
-  {
-    title: t('blog'),
-  },
-]);
-
 const route = useRoute();
 
 const PER_PAGE = 10;
@@ -36,6 +24,32 @@ const hasPagination = computed(() => totalPages.value && totalPages.value > 1);
 const setPage = (pageNumber: number) => {
   navigateTo({ query: { ...route.query, page: pageNumber } });
 };
+
+const { t } = useI18n();
+
+const title = computed(() => t('title'));
+const description = computed(() => t('description'));
+
+const meta = computed(() => [
+  { key: 'og:title', property: 'og:title', content: title.value },
+  { key: 'twitter:title', property: 'twitter:title', content: title.value },
+  { key: 'description', name: 'description', content: description.value },
+  { key: 'og:description', property: 'og:description', content: description.value },
+  { key: 'twitter:description', property: 'twitter:description', content: description.value },
+]);
+
+useHead({ title: title.value, meta: meta.value });
+
+
+const breadcrumbs = computed(() => [
+  {
+    title: t('main_page'),
+    to: { name: 'index' },
+  },
+  {
+    title: t('blog'),
+  },
+]);
 </script>
 
 <i18n lang="json">
