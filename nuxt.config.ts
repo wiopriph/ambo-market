@@ -102,6 +102,14 @@ export default defineNuxtConfig({
         },
       },
     },
+
+    optimizeDeps: {
+      exclude: ['@sqlite.org/sqlite-wasm'],
+    },
+
+    ssr: {
+      noExternal: ['@sqlite.org/sqlite-wasm'],
+    },
   },
 
   // Cache-Control для NuxtImg
