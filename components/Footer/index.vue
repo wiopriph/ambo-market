@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { CATEGORIES } from '~/constants/categories';
+import { usePosts } from '~/composables/usePosts';
+
+
 const {
   t,
   locale,
@@ -8,12 +12,12 @@ const {
 
 const companyLinks = computed(() => ([
   {
-    name: t('about_us'),
-    route: { name: 'about' },
-  },
-  {
     name: t('blog'),
     route: { name: 'blog' },
+  },
+  {
+    name: t('about_us'),
+    route: { name: 'about' },
   },
   {
     name: t('terms_of_use'),
@@ -31,6 +35,21 @@ const socialLinks = [
     url: 'https://www.instagram.com/ambo.market/',
   },
 ];
+
+
+const { cityId } = usePosts();
+
+const categories = computed(() => CATEGORIES.map(category => ({
+  title: t(category.type),
+  img: category.img,
+  route: {
+    name: 'cityId-categoryId',
+    params: {
+      categoryId: category.type,
+      cityId: cityId.value,
+    },
+  },
+})));
 
 
 const availableLocales = computed(() => locales.value.filter(({ code }) => code !== locale.value));
@@ -111,6 +130,20 @@ const { isMobileOrTablet } = useDevice();
           </ul>
         </UIAccordionItem>
 
+        <UIAccordionItem :title="t('categories')">
+          <ul :class="$style.list">
+            <li
+              v-for="link in categories"
+              :key="link.title"
+              :class="$style.link"
+            >
+              <NuxtLink :to="link.route">
+                {{ link.title }}
+              </NuxtLink>
+            </li>
+          </ul>
+        </UIAccordionItem>
+
         <UIAccordionItem :title="t('company')">
           <ul :class="$style.list">
             <li
@@ -178,6 +211,40 @@ const { isMobileOrTablet } = useDevice();
         <div :class="$style.item">
           <h4
             :class="$style.title"
+            v-text="t('support')"
+          />
+
+          <ul :class="$style.list">
+            <li :class="$style.link">
+              <NuxtLink :to="{ name: 'contact' }">
+                {{ t('contact_us') }}
+              </NuxtLink>
+            </li>
+          </ul>
+        </div>
+
+        <div :class="$style.itemDouble">
+          <h4
+            :class="$style.title"
+            v-text="t('categories')"
+          />
+
+          <ul :class="[$style.list, $style.categoryList]">
+            <li
+              v-for="link in categories"
+              :key="link.title"
+              :class="[$style.link, $style.categoryLink]"
+            >
+              <NuxtLink :to="link.route">
+                {{ link.title }}
+              </NuxtLink>
+            </li>
+          </ul>
+        </div>
+
+        <div :class="$style.item">
+          <h4
+            :class="$style.title"
             v-text="t('follow_us')"
           />
 
@@ -192,21 +259,6 @@ const { isMobileOrTablet } = useDevice();
                 target="_blank"
                 rel="noopener noreferrer"
               >{{ social.name }}</a>
-            </li>
-          </ul>
-        </div>
-
-        <div :class="$style.item">
-          <h4
-            :class="$style.title"
-            v-text="t('support')"
-          />
-
-          <ul :class="$style.list">
-            <li :class="$style.link">
-              <NuxtLink :to="{ name: 'contact' }">
-                {{ t('contact_us') }}
-              </NuxtLink>
             </li>
           </ul>
         </div>
@@ -269,10 +321,20 @@ const { isMobileOrTablet } = useDevice();
 .item {
   @include ui-col-ready;
   @include ui-col-vertical-gutter;
-  @include ui-col(3);
+  @include ui-col(2);
 
   @include sm {
     @include ui-col(6);
+  }
+}
+
+.itemDouble {
+  @include ui-col-ready;
+  @include ui-col-vertical-gutter;
+  @include ui-col(4);
+
+  @include sm {
+    @include ui-col(12);
   }
 }
 
@@ -290,6 +352,18 @@ const { isMobileOrTablet } = useDevice();
   a:hover {
     text-decoration: underline;
   }
+}
+
+.categoryList {
+  column-count: 2;
+  column-gap: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+.categoryLink {
+  break-inside: avoid;
+  margin-bottom: 10px;
 }
 
 .langButton {
