@@ -79,6 +79,7 @@ export default defineNuxtConfig({
     cacheMaxAgeSeconds: 3600,
     sources: [
       '/api/sitemap',
+      '/api/sitemap-blog',
     ],
   },
 
