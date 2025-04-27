@@ -1,6 +1,6 @@
 ---
-title: Como Vender Rápido no Ambo Market
-description: Dicas práticas para vender seus produtos de forma rápida e eficaz no Ambo Market.
+title: "Como Vender Rápido no Ambo Market"
+description: "Dicas práticas para vender seus produtos de forma rápida e eficaz no Ambo Market."
 ---
 
 Vender rapidamente no **Ambo Market** requer estratégias eficazes e atenção aos detalhes. Este guia prático vai te ajudar a aumentar suas chances de fechar uma venda com sucesso.
