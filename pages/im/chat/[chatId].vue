@@ -237,7 +237,7 @@ const { isDesktopOrTablet } = useDevice();
           <LazyUserProfile
             :userId="user.id"
             :name="user.name"
-            :photo="user.photoURL"
+            :photo="user.photoUrl"
             @click="goToProfile"
           />
         </div>
@@ -273,7 +273,7 @@ const { isDesktopOrTablet } = useDevice();
             <RatingCreateButton
               :userId="user.id"
               :userName="user.name"
-              :userPhoto="user.photoURL"
+              :userPhoto="user.photoUrl"
               :postId="product.id"
             />
           </li>

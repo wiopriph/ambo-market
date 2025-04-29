@@ -1,6 +1,7 @@
 @use "rounds" as *;
 @use "colors" as *;
 @use "shadows" as *;
+@use "media" as *;
 
 @mixin ui-button-master {
   @include ui-round-ui-elements;
@@ -27,8 +28,10 @@
   color: $ui-color-white;
   background: $ui-color-blue;
 
-  &:hover {
-    background: $ui-color-blue-light;
+  @include exclude-sm {
+    &:hover {
+      background: $ui-color-blue-light;
+    }
   }
 
   &:active {
@@ -53,8 +56,10 @@
   background: $ui-color-white;
   border: 1px solid $ui-color-transparent;
 
-  &:hover {
-    background: $ui-color-transparent;
+  @include exclude-sm {
+    &:hover {
+      background: $ui-color-transparent;
+    }
   }
 
   &:active {
@@ -78,8 +83,10 @@
   color: $ui-color-white;
   background: $ui-color-add;
 
-  &:hover {
-    background: rgba($ui-color-add, .9);
+  @include exclude-sm {
+    &:hover {
+      background: rgba($ui-color-add, .9);
+    }
   }
 
   &:active {
@@ -122,7 +129,7 @@
   padding: 0;
 
   font-family: inherit;
-  color: $ui-color-blue;;
+  color: $ui-color-blue;
   text-align: left;
 
   background-color: transparent;

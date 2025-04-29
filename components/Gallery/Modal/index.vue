@@ -492,17 +492,17 @@ $column-width: 400px;
   }
 }
 
-$button-width: 140px;
-
 .mobileCardButton {
-  width: $button-width;
+  white-space: nowrap;
 }
 
 .mobileCardInfo {
   display: flex;
   flex-direction: column;
-  width: calc(100% - $button-width);
   color: $ui-color-white;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .mobileCardPrice {
