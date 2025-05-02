@@ -9,15 +9,26 @@ if (!doc.value) {
 
 const title = computed(() => doc.value?.title || '');
 const description = computed(() => doc.value?.description || '');
+const image = computed(() => doc.value?.image || '');
 
-// @todo: доделать работу с картинками
-const meta = computed(() => [
-  { key: 'og:title', property: 'og:title', content: title.value },
-  { key: 'twitter:title', property: 'twitter:title', content: title.value },
-  { key: 'description', name: 'description', content: description.value },
-  { key: 'og:description', property: 'og:description', content: description.value },
-  { key: 'twitter:description', property: 'twitter:description', content: description.value },
-]);
+const meta = computed(() => {
+  const metaTags = [
+    { key: 'og:title', property: 'og:title', content: title.value },
+    { key: 'twitter:title', property: 'twitter:title', content: title.value },
+    { key: 'description', name: 'description', content: description.value },
+    { key: 'og:description', property: 'og:description', content: description.value },
+    { key: 'twitter:description', property: 'twitter:description', content: description.value },
+  ];
+
+  if (image.value) {
+    metaTags.push(
+      { key: 'og:image', property: 'og:image', content: image.value },
+      { key: 'twitter:image', property: 'twitter:image', content: image.value },
+    );
+  }
+
+  return metaTags;
+});
 
 useHead({ title: title.value, meta: meta.value });
 
@@ -60,11 +71,6 @@ const breadcrumbs = computed(() => [
       <div :class="$style.main">
         <UIBreadcrumbs :items="breadcrumbs" />
 
-        <h1
-          :class="$style.title"
-          v-text="doc.title"
-        />
-
         <ContentRenderer
           :value="doc"
           :class="$style.prose"
@@ -81,13 +87,6 @@ const breadcrumbs = computed(() => [
   @include ui-simple-container;
 
   padding: 24px 20px;
-}
-
-.title {
-  @include ui-typo-32-bold;
-
-  margin-top: 10px;
-  margin-bottom: 24px;
 }
 
 .content {
@@ -137,8 +136,8 @@ const breadcrumbs = computed(() => [
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     line-height: 1.4;
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
+    margin-top: 18px;
+    margin-bottom: 14px;
     color: $ui-color-black;
     text-decoration: none;
 
@@ -160,23 +159,32 @@ const breadcrumbs = computed(() => [
     font-size: 18px;
   }
 
+  img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 10px 0;
+  }
+
   p {
     margin: 0.5em 0;
   }
 
   ul, ol {
     padding-left: 1.2em;
-    margin: 1em 0;
+    margin: 10px 0;
   }
 
   li {
-    margin-bottom: 0.3em;
+    margin-bottom: 4px;
   }
 
   table {
     width: 100%;
     border-collapse: collapse;
-    margin: 1em 0;
+    margin: 10px 0;
     font-size: 15px;
   }
 
@@ -190,15 +198,9 @@ const breadcrumbs = computed(() => [
     font-weight: 600;
   }
 
-  img {
-    max-width: 100%;
-    border-radius: 8px;
-    margin: 1em 0;
-  }
-
   blockquote {
     border-left: 4px solid $ui-color-transparent;
-    padding-left: 1em;
+    padding-left: 10px;
     color: #555;
     font-style: italic;
     margin: 1em 0;

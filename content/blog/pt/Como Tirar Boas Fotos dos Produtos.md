@@ -1,7 +1,10 @@
 ---
 title: "Como Tirar Boas Fotos dos Produtos"
 description: "Aprenda a tirar fotos de alta qualidade mesmo com equipamentos simples para vender mais no Ambo Market."
+image: "/images/blog/como-tirar-boas-fotos-dos-produtos.jpg"
 ---
+
+# Como Tirar Boas Fotos dos Produtos
 
 No mundo das vendas online, a imagem é tudo. Uma boa fotografia pode ser o diferencial entre um produto vendido e outro ignorado. Neste guia completo, você aprenderá como tirar fotos de alta qualidade dos seus produtos, mesmo com equipamentos simples, para atrair mais compradores e aumentar suas vendas no Ambo Market.
 

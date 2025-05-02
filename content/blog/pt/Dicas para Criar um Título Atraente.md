@@ -1,7 +1,10 @@
 ---
 title: "Dicas para Criar um Título Atraente"
 description: "Aprenda como criar títulos eficazes para atrair mais compradores no Ambo Market."
+image: "/images/blog/dicas-para-criar-um-titulo-atraente.jpg"
 ---
+
+# Dicas para Criar um Título Atraente
 
 Criar um bom título é uma das etapas mais importantes para vender rápido no Ambo Market. Um título atraente pode ser a diferença entre um anúncio ignorado e um anúncio clicado. Neste guia completo, você aprenderá as melhores práticas para escrever títulos que chamam atenção, geram confiança e atraem mais compradores.
 

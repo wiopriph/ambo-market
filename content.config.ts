@@ -10,7 +10,7 @@ export default defineContentConfig({
       },
       type: 'page',
       schema: z.object({
-        lang: z.string(),
+        image: z.string(),
         date: z.date(),
       }),
     }),

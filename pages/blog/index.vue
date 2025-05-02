@@ -96,7 +96,7 @@ const breadcrumbs = computed(() => [
             <BlogCard
               :route="post.path"
               :title="post.title"
-              :img="post.meta?.image || ''"
+              :img="post?.image"
               :date="post.date"
             />
           </li>
