@@ -33,8 +33,8 @@ if (orderError?.value) {
 
 const { t } = useI18n();
 
-const title = computed(() => t('seo.user.title', { name: user.value?.name }));
-const description = computed(() => t('seo.user.description', { name: user.value?.name }));
+const title = computed(() => t('title', { name: user.value?.name }));
+const description = computed(() => t('description', { name: user.value?.name }));
 
 const meta = computed(() => [
   { key: 'description', name: 'description', content: description.value },
@@ -76,6 +76,19 @@ const { isMobileOrTablet } = useDevice();
 
 const hasMobileUserInfo = computed(() => isMobileOrTablet && (route.name === 'user-userUid-status'));
 </script>
+
+<i18n lang="json">
+{
+  "en": {
+    "title": "{name} - User Profile on Ambo Market",
+    "description": "View {name}'s profile on Ambo Market. Check their recent listings, contact details, and activity history."
+  },
+  "pt": {
+    "title": "{name} - Perfil do Usuário no Ambo Market",
+    "description": "Veja o perfil de {name} no Ambo Market. Confira os anúncios recentes, informações de contato e histórico de atividades."
+  }
+}
+</i18n>
 
 <template>
   <div :class="$style.root">

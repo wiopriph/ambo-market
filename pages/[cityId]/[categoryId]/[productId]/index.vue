@@ -291,151 +291,151 @@ const { isDesktopOrTablet } = useDevice();
 <i18n lang="json">
 {
   "en": {
-    "contact_seller": "Contact seller",
-    "show_on_map": "Show on map",
+    "contact_seller": "Contact the Seller",
+    "show_on_map": "View Location on Map",
     "location": "Location",
     "category": "Category",
     "description": "Description",
-    "posted": "Posted",
-    "share": "Share",
+    "posted": "Posted On",
+    "share": "Share Listing",
     "electronics": {
       "withCity": {
-        "title": "{title} for sale in {city} {'|'} Electronics {'|'} Ambo Market",
-        "description": "{title}: for sale in {city} on Ambo Market. Discover electronics like phones, laptops, TVs, and more. {description}"
+        "title": "Buy {title} in {city} {'|'} Electronics {'|'} Ambo Market",
+        "description": "Buy {title} in {city} on Ambo Market. Phones, laptops, TVs and more at great prices. {description}"
       },
       "withoutCity": {
-        "title": "{title} for sale {'|'} Electronics {'|'} Ambo Market",
-        "description": "{title}: for sale on Ambo Market. Discover electronics like phones, laptops, TVs, and more. {description}"
+        "title": "Buy {title} {'|'} Electronics {'|'} Ambo Market",
+        "description": "Buy {title} on Ambo Market. Discover phones, laptops, TVs and more. {description}"
       }
     },
     "clothing": {
       "withCity": {
-        "title": "{title} for sale in {city} {'|'} Clothing {'|'} Ambo Market",
-        "description": "{title}: for sale in {city} on Ambo Market. Explore fashion items including clothing, shoes, and accessories. {description}"
+        "title": "Buy {title} in {city} {'|'} Fashion {'|'} Ambo Market",
+        "description": "Buy {title} in {city} – explore clothes, shoes, and accessories. Great deals on Ambo Market. {description}"
       },
       "withoutCity": {
-        "title": "{title} for sale {'|'} Clothing {'|'} Ambo Market",
-        "description": "{title}: for sale on Ambo Market. Explore fashion items including clothing, shoes, and accessories. {description}"
+        "title": "Buy {title} {'|'} Fashion {'|'} Ambo Market",
+        "description": "Buy {title} – clothes, shoes and accessories available across Angola. {description}"
       }
     },
     "transport": {
       "withCity": {
-        "title": "{title} for sale in {city} {'|'} Transport {'|'} Ambo Market",
-        "description": "{title}: for sale in {city} on Ambo Market. Find cars, motorcycles, and other vehicles at great prices. {description}"
+        "title": "Buy {title} in {city} {'|'} Vehicles {'|'} Ambo Market",
+        "description": "Buy {title} in {city} – explore cars, motorcycles, and more. Verified listings only. {description}"
       },
       "withoutCity": {
-        "title": "{title} for sale {'|'} Transport {'|'} Ambo Market",
-        "description": "{title}: for sale on Ambo Market. Find cars, motorcycles, and other vehicles at great prices. {description}"
+        "title": "Buy {title} {'|'} Vehicles {'|'} Ambo Market",
+        "description": "Buy {title} – cars, motorcycles, and other transport options. {description}"
       }
     },
     "auto-parts": {
       "withCity": {
-        "title": "{title} for sale in {city} {'|'} Auto Parts {'|'} Ambo Market",
-        "description": "{title}: for sale in {city} on Ambo Market. Buy car parts including engines, tires, and accessories. {description}"
+        "title": "Buy {title} in {city} {'|'} Auto Parts {'|'} Ambo Market",
+        "description": "Buy {title} – car parts in {city}: tires, batteries, engines and accessories. {description}"
       },
       "withoutCity": {
-        "title": "{title} for sale {'|'} Auto Parts {'|'} Ambo Market",
-        "description": "{title}: for sale on Ambo Market. Buy car parts including engines, tires, and accessories. {description}"
+        "title": "Buy {title} {'|'} Auto Parts {'|'} Ambo Market",
+        "description": "Buy {title} – auto parts like tires, engines, and batteries. {description}"
       }
     },
     "beauty-health": {
       "withCity": {
-        "title": "{title} for sale in {city} {'|'} Beauty & Health {'|'} Ambo Market",
-        "description": "{title}: for sale in {city} on Ambo Market. Discover cosmetics, personal care products, and health equipment. {description}"
+        "title": "Buy {title} in {city} {'|'} Beauty & Health {'|'} Ambo Market",
+        "description": "Shop {title} in {city}. Find cosmetics, wellness and health items online. {description}"
       },
       "withoutCity": {
-        "title": "{title} for sale {'|'} Beauty & Health {'|'} Ambo Market",
-        "description": "{title}: for sale on Ambo Market. Discover cosmetics, personal care products, and health equipment. {description}"
+        "title": "Buy {title} {'|'} Beauty & Health {'|'} Ambo Market",
+        "description": "Buy {title} – cosmetics, wellness and personal care deals. {description}"
       }
     },
     "real-estate": {
       "withCity": {
-        "title": "{title} for rent/sale in {city} {'|'} Real Estate {'|'} Ambo Market",
-        "description": "{title}: real estate in {city} on Ambo Market. Find apartments, houses, or commercial properties. {description}"
+        "title": "{title} in {city} {'|'} Real Estate {'|'} Ambo Market",
+        "description": "View {title} – real estate in {city}. Homes, apartments and land for sale or rent. {description}"
       },
       "withoutCity": {
-        "title": "{title} for rent/sale {'|'} Real Estate {'|'} Ambo Market",
-        "description": "{title}: real estate on Ambo Market. Find apartments, houses, or commercial properties. {description}"
+        "title": "{title} {'|'} Real Estate {'|'} Ambo Market",
+        "description": "Real estate listing: {title}. Homes, apartments and property offers. {description}"
       }
     },
     "childrens-goods": {
       "withCity": {
-        "title": "{title} for sale in {city} {'|'} Children's Goods {'|'} Ambo Market",
-        "description": "{title}: for sale in {city} on Ambo Market. Explore toys, clothing, and accessories for children. {description}"
+        "title": "Buy {title} in {city} {'|'} Kids Items {'|'} Ambo Market",
+        "description": "Buy {title} in {city}. Find toys, clothing and products for children. {description}"
       },
       "withoutCity": {
-        "title": "{title} for sale {'|'} Children's Goods {'|'} Ambo Market",
-        "description": "{title}: for sale on Ambo Market. Explore toys, clothing, and accessories for children. {description}"
+        "title": "Buy {title} {'|'} Kids Items {'|'} Ambo Market",
+        "description": "Buy {title} – children's toys, clothes, and more. {description}"
       }
     },
     "job": {
       "withCity": {
-        "title": "{title} in {city} {'|'} Jobs {'|'} Ambo Market",
-        "description": "{title}: job listing in {city} on Ambo Market. Find your next career opportunity today. {description}"
+        "title": "{title} in {city} {'|'} Job Listings {'|'} Ambo Market",
+        "description": "{title} – Job opening in {city}. Find career opportunities and apply easily. {description}"
       },
       "withoutCity": {
-        "title": "{title} {'|'} Jobs {'|'} Ambo Market",
-        "description": "{title}: job listing on Ambo Market. Find your next career opportunity today. {description}"
+        "title": "{title} {'|'} Job Listings {'|'} Ambo Market",
+        "description": "Job post: {title}. Browse job offers and find your next role. {description}"
       }
     },
     "services": {
       "withCity": {
         "title": "{title} in {city} {'|'} Services {'|'} Ambo Market",
-        "description": "{title}: service in {city} on Ambo Market. Discover professional and personal services near you. {description}"
+        "description": "Find {title} in {city}. Explore reliable personal and business services. {description}"
       },
       "withoutCity": {
         "title": "{title} {'|'} Services {'|'} Ambo Market",
-        "description": "{title}: service on Ambo Market. Discover professional and personal services near you. {description}"
+        "description": "Service offered: {title}. Browse and hire trusted services. {description}"
       }
     },
     "building-materials": {
       "withCity": {
-        "title": "{title} for sale in {city} {'|'} Building Materials {'|'} Ambo Market",
-        "description": "{title}: for sale in {city} on Ambo Market. Find construction materials, tools, and supplies. {description}"
+        "title": "Buy {title} in {city} {'|'} Construction Materials {'|'} Ambo Market",
+        "description": "Find {title} in {city} – cement, bricks, tools and supplies. {description}"
       },
       "withoutCity": {
-        "title": "{title} for sale {'|'} Building Materials {'|'} Ambo Market",
-        "description": "{title}: for sale on Ambo Market. Find construction materials, tools, and supplies. {description}"
+        "title": "Buy {title} {'|'} Construction Materials {'|'} Ambo Market",
+        "description": "Buy {title} – tools and materials for building and renovation. {description}"
       }
     },
     "animals": {
       "withCity": {
-        "title": "{title} for sale in {city} {'|'} Animals {'|'} Ambo Market",
-        "description": "{title}: for sale in {city} on Ambo Market. Buy pets, livestock, and animal supplies. {description}"
+        "title": "Buy {title} in {city} {'|'} Animals {'|'} Ambo Market",
+        "description": "{title} – animals in {city} for sale or adoption. Pets, livestock and supplies. {description}"
       },
       "withoutCity": {
-        "title": "{title} for sale {'|'} Animals {'|'} Ambo Market",
-        "description": "{title}: for sale on Ambo Market. Buy pets, livestock, and animal supplies. {description}"
+        "title": "Buy {title} {'|'} Animals {'|'} Ambo Market",
+        "description": "{title} – pets, livestock and animal supplies for sale. {description}"
       }
     },
     "for-business": {
       "withCity": {
-        "title": "{title} for sale in {city} {'|'} Business Supplies {'|'} Ambo Market",
-        "description": "{title}: for sale in {city} on Ambo Market. Discover office equipment, machinery, and business tools. {description}"
+        "title": "Buy {title} in {city} {'|'} Business Supplies {'|'} Ambo Market",
+        "description": "Buy {title} – business products in {city}. Office, retail and industrial equipment. {description}"
       },
       "withoutCity": {
-        "title": "{title} for sale {'|'} Business Supplies {'|'} Ambo Market",
-        "description": "{title}: for sale on Ambo Market. Discover office equipment, machinery, and business tools. {description}"
+        "title": "Buy {title} {'|'} Business Supplies {'|'} Ambo Market",
+        "description": "Business tools: {title}. Office gear, equipment, and B2B products. {description}"
       }
     },
     "for-home": {
       "withCity": {
-        "title": "{title} for sale in {city} {'|'} Home & Garden {'|'} Ambo Market",
-        "description": "{title}: for sale in {city} on Ambo Market. Find furniture, appliances, and decor for your home. {description}"
+        "title": "Buy {title} in {city} {'|'} Home & Garden {'|'} Ambo Market",
+        "description": "Buy {title} for your home in {city}. Furniture, appliances and home decor. {description}"
       },
       "withoutCity": {
-        "title": "{title} for sale {'|'} Home & Garden {'|'} Ambo Market",
-        "description": "{title}: for sale on Ambo Market. Find furniture, appliances, and decor for your home. {description}"
+        "title": "Buy {title} {'|'} Home & Garden {'|'} Ambo Market",
+        "description": "Home item for sale: {title}. Appliances, decor, and furniture deals. {description}"
       }
     },
     "other": {
       "withCity": {
-        "title": "{title} for sale in {city} {'|'} Other {'|'} Ambo Market",
-        "description": "{title}: for sale in {city} on Ambo Market. Explore various items and deals. {description}"
+        "title": "Buy {title} in {city} {'|'} Other {'|'} Ambo Market",
+        "description": "{title} for sale in {city}. Explore rare and unique items. {description}"
       },
       "withoutCity": {
-        "title": "{title} for sale {'|'} Other {'|'} Ambo Market",
-        "description": "{title}: for sale on Ambo Market. Explore various items and deals. {description}"
+        "title": "Buy {title} {'|'} Other {'|'} Ambo Market",
+        "description": "{title} for sale. Discover unusual offers and collectibles. {description}"
       }
     }
   },
@@ -444,147 +444,147 @@ const { isDesktopOrTablet } = useDevice();
     "show_on_map": "Mostrar no mapa",
     "location": "Localização",
     "category": "Categoria",
-    "description": "Descrição",
-    "posted": "Postou",
-    "share": "Compartilhar",
+    "description": "Descrição do produto",
+    "posted": "Publicado em",
+    "share": "Compartilhar anúncio",
     "electronics": {
       "withCity": {
-        "title": "{title} comprar em {city} {'|'} Eletrônicos {'|'} Ambo Market",
-        "description": "{title}: venda em {city} no Ambo Market. {description}"
+        "title": "Comprar {title} em {city} {'|'} Eletrônicos {'|'} Ambo Market",
+        "description": "Anúncio de {title} em {city}. Celulares, laptops, TVs e outros eletrônicos com ótimos preços. {description}"
       },
       "withoutCity": {
-        "title": "{title} comprar {'|'} Eletrônicos {'|'} Ambo Market",
-        "description": "{title}: venda no Ambo Market. {description}"
+        "title": "Comprar {title} {'|'} Eletrônicos {'|'} Ambo Market",
+        "description": "Anúncio de {title}. Encontre celulares, notebooks, TVs e mais. {description}"
       }
     },
     "clothing": {
       "withCity": {
-        "title": "{title} comprar em {city} {'|'} Roupas e acessórios {'|'} Ambo Market",
-        "description": "{title}: venda em {city} no Ambo Market. {description}"
+        "title": "Comprar {title} em {city} {'|'} Moda {'|'} Ambo Market",
+        "description": "Compre {title} em {city}. Roupas, sapatos e acessórios masculinos, femininos e infantis. {description}"
       },
       "withoutCity": {
-        "title": "{title} comprar {'|'} Roupas e acessórios {'|'} Ambo Market",
-        "description": "{title}: venda no Ambo Market. {description}"
+        "title": "Comprar {title} {'|'} Moda {'|'} Ambo Market",
+        "description": "Anúncio de {title}. Moda para todas as idades: roupas, calçados e acessórios. {description}"
       }
     },
     "transport": {
       "withCity": {
-        "title": "{title} comprar em {city} {'|'} Transporte {'|'} Ambo Market",
-        "description": "{title}: venda em {city} no Ambo Market. {description}"
+        "title": "Comprar {title} em {city} {'|'} Transporte {'|'} Ambo Market",
+        "description": "Venda de {title} em {city}. Carros, motos e outros veículos à venda. {description}"
       },
       "withoutCity": {
-        "title": "{title} comprar {'|'} Transporte {'|'} Ambo Market",
-        "description": "{title}: venda no Ambo Market. {description}"
+        "title": "Comprar {title} {'|'} Transporte {'|'} Ambo Market",
+        "description": "Encontre {title} – carros, motos e mais. Negocie com segurança. {description}"
       }
     },
     "auto-parts": {
       "withCity": {
-        "title": "{title} comprar em {city} {'|'} Peças de automóveis {'|'} Ambo Market",
-        "description": "{title}: venda em {city} no Ambo Market. {description}"
+        "title": "Comprar {title} em {city} {'|'} Peças de automóveis {'|'} Ambo Market",
+        "description": "Venda de {title} em {city}. Motores, pneus, baterias e acessórios. {description}"
       },
       "withoutCity": {
-        "title": "{title} comprar {'|'} Peças de automóveis {'|'} Ambo Market",
-        "description": "{title}: venda no Ambo Market. {description}"
+        "title": "Comprar {title} {'|'} Peças de automóveis {'|'} Ambo Market",
+        "description": "Anúncio de {title}. Peças novas e usadas: pneus, motores, acessórios. {description}"
       }
     },
     "beauty-health": {
       "withCity": {
-        "title": "{title} comprar em {city} {'|'} Beleza e saúde {'|'} Ambo Market",
-        "description": "{title}: venda em {city} no Ambo Market. {description}"
+        "title": "Comprar {title} em {city} {'|'} Beleza e Saúde {'|'} Ambo Market",
+        "description": "Produto {title} em {city}. Cosméticos, cuidados pessoais e equipamentos de saúde. {description}"
       },
       "withoutCity": {
-        "title": "{title} comprar {'|'} Beleza e saúde {'|'} Ambo Market",
-        "description": "{title}: venda no Ambo Market. {description}"
+        "title": "Comprar {title} {'|'} Beleza e Saúde {'|'} Ambo Market",
+        "description": "Anúncio de {title}. Itens de beleza, bem-estar e cuidados com a saúde. {description}"
       }
     },
     "real-estate": {
       "withCity": {
-        "title": "{title} comprar ou alugar em {city} {'|'} Imóveis {'|'} Ambo Market",
-        "description": "{title}: imóvel em {city} no Ambo Market. {description}"
+        "title": "{title} para comprar ou alugar em {city} {'|'} Imóveis {'|'} Ambo Market",
+        "description": "{title} disponível em {city}. Casas, apartamentos, terrenos e mais. {description}"
       },
       "withoutCity": {
-        "title": "{title} comprar ou alugar {'|'} Imóveis {'|'} Ambo Market",
-        "description": "{title}: imóvel no Ambo Market. {description}"
+        "title": "{title} para comprar ou alugar {'|'} Imóveis {'|'} Ambo Market",
+        "description": "Imóvel: {title}. Encontre opções para comprar ou alugar. {description}"
       }
     },
     "childrens-goods": {
       "withCity": {
-        "title": "{title} comprar em {city} {'|'} Produtos infantis {'|'} Ambo Market",
-        "description": "{title}: venda em {city} no Ambo Market. {description}"
+        "title": "Comprar {title} em {city} {'|'} Produtos Infantis {'|'} Ambo Market",
+        "description": "Anúncio de {title} em {city}. Brinquedos, roupas e artigos infantis com ótimos preços. {description}"
       },
       "withoutCity": {
-        "title": "{title} comprar {'|'} Produtos infantis {'|'} Ambo Market",
-        "description": "{title}: venda no Ambo Market. {description}"
+        "title": "Comprar {title} {'|'} Produtos Infantis {'|'} Ambo Market",
+        "description": "Venda de {title}. Brinquedos, roupas e acessórios para crianças. {description}"
       }
     },
     "job": {
       "withCity": {
         "title": "{title} em {city} {'|'} Empregos {'|'} Ambo Market",
-        "description": "{title}: oferta de emprego em {city} no Ambo Market. {description}"
+        "description": "Oferta de emprego: {title} em {city}. Veja vagas disponíveis e candidate-se. {description}"
       },
       "withoutCity": {
         "title": "{title} {'|'} Empregos {'|'} Ambo Market",
-        "description": "{title}: oferta de emprego no Ambo Market. {description}"
+        "description": "Vaga de emprego: {title}. Encontre oportunidades em diversos setores. {description}"
       }
     },
     "services": {
       "withCity": {
         "title": "{title} em {city} {'|'} Serviços {'|'} Ambo Market",
-        "description": "{title}: serviço em {city} no Ambo Market. {description}"
+        "description": "Serviço: {title} em {city}. Contrate serviços profissionais e particulares. {description}"
       },
       "withoutCity": {
         "title": "{title} {'|'} Serviços {'|'} Ambo Market",
-        "description": "{title}: serviço no Ambo Market. {description}"
+        "description": "Serviço anunciado: {title}. Veja opções de serviços em Angola. {description}"
       }
     },
     "building-materials": {
       "withCity": {
-        "title": "{title} comprar em {city} {'|'} Materiais de construção {'|'} Ambo Market",
-        "description": "{title}: venda em {city} no Ambo Market. {description}"
+        "title": "Comprar {title} em {city} {'|'} Materiais de Construção {'|'} Ambo Market",
+        "description": "Anúncio de {title} em {city}. Cimento, tijolos, ferramentas e mais para sua obra. {description}"
       },
       "withoutCity": {
-        "title": "{title} comprar {'|'} Materiais de construção {'|'} Ambo Market",
-        "description": "{title}: venda no Ambo Market. {description}"
+        "title": "Comprar {title} {'|'} Materiais de Construção {'|'} Ambo Market",
+        "description": "Venda de {title}. Encontre tudo para construção e reforma. {description}"
       }
     },
     "animals": {
       "withCity": {
-        "title": "{title} comprar ou adotar em {city} {'|'} Animais {'|'} Ambo Market",
-        "description": "{title}: venda ou adoção em {city} no Ambo Market. {description}"
+        "title": "{title} para compra ou adoção em {city} {'|'} Animais {'|'} Ambo Market",
+        "description": "{title} disponível em {city}. Pets, gado e animais exóticos. {description}"
       },
       "withoutCity": {
-        "title": "{title} comprar ou adotar {'|'} Animais {'|'} Ambo Market",
-        "description": "{title}: venda ou adoção no Ambo Market. {description}"
+        "title": "{title} para compra ou adoção {'|'} Animais {'|'} Ambo Market",
+        "description": "Anúncio de {title}. Encontre animais domésticos e de criação. {description}"
       }
     },
     "for-business": {
       "withCity": {
-        "title": "{title} comprar em {city} {'|'} Para negócios {'|'} Ambo Market",
-        "description": "{title}: venda em {city} no Ambo Market. {description}"
+        "title": "Comprar {title} em {city} {'|'} Para Negócios {'|'} Ambo Market",
+        "description": "Venda de {title} em {city}. Equipamentos, máquinas e suprimentos para empresas. {description}"
       },
       "withoutCity": {
-        "title": "{title} comprar {'|'} Para negócios {'|'} Ambo Market",
-        "description": "{title}: venda no Ambo Market. {description}"
+        "title": "Comprar {title} {'|'} Para Negócios {'|'} Ambo Market",
+        "description": "Produto empresarial: {title}. Encontre itens para sua empresa. {description}"
       }
     },
     "for-home": {
       "withCity": {
-        "title": "{title} comprar em {city} {'|'} Para casa {'|'} Ambo Market",
-        "description": "{title}: venda em {city} no Ambo Market. {description}"
+        "title": "Comprar {title} em {city} {'|'} Para Casa {'|'} Ambo Market",
+        "description": "Anúncio de {title} para casa em {city}. Móveis, eletrodomésticos e decoração. {description}"
       },
       "withoutCity": {
-        "title": "{title} comprar {'|'} Para casa {'|'} Ambo Market",
-        "description": "{title}: venda no Ambo Market. {description}"
+        "title": "Comprar {title} {'|'} Para Casa {'|'} Ambo Market",
+        "description": "{title} à venda. Produtos para o lar com ótimos preços. {description}"
       }
     },
     "other": {
       "withCity": {
-        "title": "{title} comprar em {city} {'|'} Outros {'|'} Ambo Market",
-        "description": "{title}: venda em {city} no Ambo Market. {description}"
+        "title": "Comprar {title} em {city} {'|'} Outros {'|'} Ambo Market",
+        "description": "Anúncio de {title} em {city}. Itens raros, exclusivos e diferenciados. {description}"
       },
       "withoutCity": {
-        "title": "{title} comprar {'|'} Outros {'|'} Ambo Market",
-        "description": "{title}: venda no Ambo Market. {description}"
+        "title": "Comprar {title} {'|'} Outros {'|'} Ambo Market",
+        "description": "{title} à venda. Produtos únicos e colecionáveis no Ambo Market. {description}"
       }
     }
   }

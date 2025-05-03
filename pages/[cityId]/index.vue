@@ -94,52 +94,52 @@ const setPage = (pageNumber: number) => {
   "en": {
     "default": {
       "withCity": {
-        "h1": "All classifieds in {city}",
-        "title": "Ambo Market - {city} Classifieds, Free Private Listings",
-        "description": "Classifieds – fresh private ads for buying and selling all kinds of goods in {city}. The easiest way to sell or buy items. Post your ad for free on Ambo Market."
+        "h1": "Buy and Sell in {city} – All Classified Ads",
+        "title": "Buy, Sell & Post Free Ads in {city} {'|'} Ambo Market",
+        "description": "Buy and sell everything in {city} – from electronics and vehicles to clothing and services. Free classifieds for private sellers. Post your ad now on Ambo Market!"
       },
       "withoutCity": {
-        "h1": "All classifieds",
-        "title": "Ambo Market - Classifieds, Free Private Listings",
-        "description": "Classifieds – fresh private ads for buying and selling all kinds of goods. The easiest way to sell or buy items. Post your ad for free on Ambo Market."
+        "h1": "Buy and Sell Online – All Classifieds",
+        "title": "Buy, Sell & Post Free Ads {'|'} Ambo Market Angola",
+        "description": "Browse thousands of classified ads – post your ad for free and sell anything fast! Ambo Market connects buyers and sellers across Angola with ease."
       }
     },
     "search": {
       "withCity": {
-        "h1": "Listings for «{q}» in {city}",
-        "title": "{q} - Buy in {city} at the best prices {'|'} Ambo Market",
-        "description": "Find all listings for «{q}» in {city}: a wide selection of goods 🤩 with photos and reviews at affordable prices 💸 across all provinces of Angola on Ambo Market."
+        "h1": "Results for «{q}» in {city} – Buy or Sell",
+        "title": "Buy or Sell {q} in {city} at the Best Prices {'|'} Ambo Market",
+        "description": "Looking for {q} in {city}? Explore new and used items with photos and trusted sellers. Ambo Market – Angola’s classifieds for safe and easy buying and selling."
       },
       "withoutCity": {
-        "h1": "Listings for «{q}»",
-        "title": "{q} - Buy at the best prices {'|'} Ambo Market",
-        "description": "Find all listings for «{q}»: a wide selection of goods 🤩 with photos and reviews at affordable prices 💸 across all provinces of Angola on Ambo Market."
+        "h1": "Results for «{q}» – Buy or Sell Now",
+        "title": "Buy or Sell {q} Online at Great Prices {'|'} Ambo Market Angola",
+        "description": "Search listings for {q} across Angola. Find great deals, used and new items, and post your own ads free. Ambo Market makes buying and selling simple and safe."
       }
     }
   },
   "pt": {
     "default": {
       "withCity": {
-        "h1": "Todos os anúncios em {city}",
-        "title": "Ambo Market - Classificados em {city}, anúncios grátis",
-        "description": "Classificados – anúncios particulares recentes para compra e venda de todos os tipos de produtos em {city}. O jeito mais fácil de vender ou comprar. Anuncie grátis no Ambo Market."
+        "h1": "Compre e Venda em {city} – Todos os Anúncios",
+        "title": "Comprar, Vender e Anunciar Grátis em {city} {'|'} Ambo Market",
+        "description": "Compre e venda produtos em {city} – eletrônicos, veículos, roupas, serviços e muito mais. Anúncios grátis para todos. Publique o seu no Ambo Market agora!"
       },
       "withoutCity": {
-        "h1": "Todos os anúncios",
-        "title": "Ambo Market - Classificados, anúncios grátis",
-        "description": "Classificados – anúncios particulares recentes para compra e venda de todos os tipos de produtos. O jeito mais fácil de vender ou comprar. Anuncie grátis no Ambo Market."
+        "h1": "Compre e Venda Online – Todos os Classificados",
+        "title": "Comprar, Vender e Anunciar Grátis em Angola {'|'} Ambo Market",
+        "description": "Veja milhares de anúncios gratuitos para vender ou comprar qualquer coisa em Angola. Publique grátis. Encontre ótimos negócios com segurança no Ambo Market."
       }
     },
     "search": {
       "withCity": {
-        "h1": "Anúncios para «{q}» em {city}",
-        "title": "{q} - Comprar em {city} com os melhores preços {'|'} Ambo Market",
-        "description": "Encontre todos os anúncios para «{q}» em {city}: uma grande variedade de produtos 🤩 com fotos e avaliações a preços acessíveis 💸 em todas as províncias de Angola no Ambo Market."
+        "h1": "Resultados para «{q}» em {city} – Compre ou Venda",
+        "title": "Comprar ou Vender {q} em {city} com Bons Preços {'|'} Ambo Market",
+        "description": "Veja anúncios de {q} em {city}: produtos novos e usados, com fotos, avaliações e bons preços 💸. O Ambo Market conecta compradores e vendedores em Angola."
       },
       "withoutCity": {
-        "h1": "Anúncios para «{q}»",
-        "title": "{q} - Comprar com os melhores preços {'|'} Ambo Market",
-        "description": "Encontre todos os anúncios para «{q}»: uma grande variedade de produtos 🤩 com fotos e avaliações a preços acessíveis 💸 em todas as províncias de Angola no Ambo Market."
+        "h1": "Resultados para «{q}» – Compre ou Venda Agora",
+        "title": "Comprar ou Vender {q} Online com Bons Preços {'|'} Ambo Market",
+        "description": "Busque anúncios de {q} em toda Angola. Encontre ofertas incríveis e publique seu anúncio grátis. Ambo Market é o jeito mais fácil e seguro de negociar online."
       }
     }
   }

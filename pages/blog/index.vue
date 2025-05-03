@@ -57,18 +57,18 @@ const breadcrumbs = computed(() => [
   "en": {
     "main_page": "Main page",
     "blog": "Blog",
-    "title": "Ambo Market Blog – Tips, News and Trends from Angola",
+    "title": "Ambo Market Blog – Tips, Guides & Market Trends in Angola",
     "h1": "Ambo Market Blog",
-    "description": "Read the Ambo Market blog and stay up to date with the latest news, practical guides and trends in the Angolan market. Useful information for buyers and sellers in Angola!",
-    "not_found": "There are no articles matching this request."
+    "description": "Discover tips, how-to guides, and market news on the Ambo Market blog. Stay informed and grow your buying or selling skills in Angola!",
+    "not_found": "No articles found matching your request."
   },
   "pt": {
     "main_page": "Página inicial",
     "blog": "Blog",
-    "title": "Blog da Ambo Market – Dicas, Notícias e Tendências de Angola",
+    "title": "Blog da Ambo Market – Dicas, Guias e Tendências do Mercado Angolano",
     "h1": "Blog da Ambo Market",
-    "description": "Leia o blog da Ambo Market e fique por dentro das últimas notícias, guias práticos e tendências do mercado angolano. Informação útil para compradores e vendedores em Angola!",
-    "not_found": "Não existem posts correspondentes a esta solicitação."
+    "description": "Explore dicas, tutoriais e notícias do mercado no blog da Ambo Market. Fique informado e aprimore sua experiência de compra e venda em Angola!",
+    "not_found": "Nenhum artigo encontrado para esta pesquisa."
   }
 }
 </i18n>

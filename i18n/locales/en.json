@@ -17,10 +17,6 @@
     "messages": "Messages",
     "product": {
       "title": "{name} - {characteristics} - Ambo Market"
-    },
-    "user": {
-      "title": "{name} - User Profile on Ambo Market",
-      "description": "Explore the user profile of {name} on Ambo Market - your gateway to their contact information, recent listings, and user history."
     }
   },
   "logout": "Logout",

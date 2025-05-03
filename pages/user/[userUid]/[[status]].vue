@@ -65,30 +65,30 @@ const emptyText = computed(() => {
 {
   "en": {
     "empty_all": "All created listings will be displayed on this page.",
-    "empty_open": "All created listings will be displayed on this page.",
+    "empty_open": "All active listings will be displayed on this page.",
     "empty_closed": "All sold listings will be displayed on this page.",
-    "empty_archive": "Blocked and inactive listings will be displayed on this page.",
+    "empty_archive": "Blocked or inactive listings will be displayed on this page.",
     "all": "All",
     "open": "Active",
     "closed": "Sold",
     "h1": {
-      "all": "All listings by user {name}",
-      "open": "Active listings by user {name}",
-      "closed": "Sold listings by user {name}"
+      "all": "All listings by {name}",
+      "open": "Active listings by {name}",
+      "closed": "Sold listings by {name}"
     }
   },
   "pt": {
     "empty_all": "Todos os anúncios criados serão exibidos nesta página.",
-    "empty_open": "Todos os anúncios criados serão exibidos nesta página.",
+    "empty_open": "Todos os anúncios ativos serão exibidos nesta página.",
     "empty_closed": "Todos os anúncios vendidos serão exibidos nesta página.",
-    "empty_archive": "Anúncios bloqueados e inativos serão exibidos nesta página.",
+    "empty_archive": "Anúncios bloqueados ou inativos serão exibidos nesta página.",
     "all": "Todos",
     "open": "Ativo",
     "closed": "Vendido",
     "h1": {
-      "all": "Todos os anúncios do usuário {name}",
-      "open": "Anúncios ativos do usuário {name}",
-      "closed": "Anúncios vendidos do usuário {name}"
+      "all": "Todos os anúncios de {name}",
+      "open": "Anúncios ativos de {name}",
+      "closed": "Anúncios vendidos de {name}"
     }
   }
 }

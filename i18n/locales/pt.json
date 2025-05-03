@@ -17,10 +17,6 @@
     "messages": "Mensagens",
     "product": {
       "title": "{name} - {characteristics}  - Ambo Market"
-    },
-    "user": {
-      "title": "{name} - Perfil do Usuário no Ambo Market",
-      "description": "Explore o perfil do usuário {name} no Ambo Market - seu acesso às informações de contato, anúncios recentes e histórico do usuário."
     }
   },
   "logout": "Sair",
