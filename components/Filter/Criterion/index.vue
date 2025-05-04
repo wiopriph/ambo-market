@@ -57,7 +57,7 @@ const click = () => {
     "search": "Consulta de pesquisa: {value}",
     "from": "Por {value} $",
     "to": "Até {value} $",
-    "safe_deal": "Negociação segura",
+    "safe_deal": "Negócio Seguro",
     "day": "Por 24 horas",
     "week": "Por 7 dias",
     "all": "O tempo todo"

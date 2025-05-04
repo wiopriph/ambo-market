@@ -116,7 +116,7 @@ const { isMobileOrTablet } = useDevice();
     "languages": "Languages"
   },
   "pt": {
-    "place_ad": "Coloque anúncio",
+    "place_ad": "Publicar Anúncio",
     "company": "Empresa",
     "about_us": "Sobre nós",
     "blog": "Blog",

@@ -124,7 +124,7 @@ const { t } = useI18n();
     "confirm_order": "Confirm order"
   },
   "pt": {
-    "making_deal": "Negociação Segura em Andamento",
+    "making_deal": "Negócio Seguro em Andamento",
     "select_point": "Selecione seu ponto de retirada",
     "select": "Selecionar",
     "recipient": "Destinatário",

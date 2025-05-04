@@ -171,7 +171,7 @@ const clearAllFilters = () => {
     "price": "Preço",
     "from": "por",
     "to": "até",
-    "safe_deal": "Negociação segura",
+    "safe_deal": "Negócio Seguro",
     "period": "Período de colocação",
     "day": "Por 24 horas",
     "week": "Por 7 dias",

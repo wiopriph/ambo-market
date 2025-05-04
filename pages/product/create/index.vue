@@ -223,9 +223,9 @@ const createPost = handleSubmit.withControlled(async () => {
     },
     "add_photo": "Adicionar foto",
     "location": "Localização",
-    "safe_deal": "Negociação segura",
+    "safe_deal": "Negócio Seguro",
     "safe_deal_description": "Seus itens estão disponíveis para venda no {deal}.",
-    "place_ad": "Coloque anúncio"
+    "place_ad": "Publicar Anúncio"
   }
 }
 </i18n>

@@ -108,25 +108,25 @@ const { t } = useI18n();
 <i18n lang="json">
 {
   "en": {
-    "title": "Ambo Market - Classifieds, Free Private Listings",
-    "main_page": "Main page",
-    "search": "Search for anything",
-    "search_in_category": "Search in {category} section",
-    "find": "Find",
-    "place_ad": "Place Ad",
-    "account": "Account",
-    "categories": "Categories",
-    "sign_in": "Sign in"
+    "title": "Ambo Market – Buy and Sell in Angola | Free Classifieds",
+    "main_page": "Home",
+    "search": "Search anything...",
+    "search_in_category": "Search in {category}",
+    "find": "Search",
+    "place_ad": "Post an Ad",
+    "account": "My Account",
+    "categories": "All Categories",
+    "sign_in": "Sign In"
   },
   "pt": {
-    "title": "Ambo Market - Classificados, anúncios grátis",
-    "main_page": "Página inicial",
-    "search": "Procure por qualquer coisa",
-    "search_in_category": "Pesquisar na seção {category}",
-    "find": "Encontrar",
-    "place_ad": "Coloque anúncio",
-    "account": "Conta",
-    "categories": "Categorias",
+    "title": "Ambo Market – Compre e Venda em Angola | Anúncios Grátis",
+    "main_page": "Início",
+    "search": "Buscar qualquer coisa...",
+    "search_in_category": "Buscar em {category}",
+    "find": "Buscar",
+    "place_ad": "Publicar Anúncio",
+    "account": "Minha Conta",
+    "categories": "Todas as Categorias",
     "sign_in": "Entrar"
   }
 }
