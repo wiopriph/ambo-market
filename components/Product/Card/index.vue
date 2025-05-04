@@ -180,6 +180,7 @@ $card-indent: 10px;
 
 .price {
   @include ui-typo-16-bold;
+  line-height: 24px;
 
   overflow: hidden;
   white-space: nowrap;
