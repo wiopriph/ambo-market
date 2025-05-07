@@ -2,6 +2,7 @@
 title: "Como Vender no Ambo Market: Guia Passo a Passo"
 description: "Descubra como vender seus produtos com segurança e facilidade no Ambo Market. Veja o passo a passo para criar um anúncio e fechar bons negócios."
 image: "/images/background.png"
+date: "2025-05-05T12:00:00+00:00"
 ---
 
 # Como Vender no Ambo Market: Guia Passo a Passo

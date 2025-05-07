@@ -2,6 +2,7 @@
 title: "O que Fazer e Não Fazer nas Vendas Online"
 description: "Guia prático com boas práticas e erros a evitar nas vendas online em Angola."
 image: "/images/blog/o-que-fazer-e-nao-fazer-nas-vendas-online.jpg"
+date: "2025-05-03T12:00:00+00:00" 
 ---
 
 # O que Fazer e Não Fazer nas Vendas Online

@@ -9,7 +9,11 @@ if (!doc.value) {
 
 const title = computed(() => doc.value?.title || '');
 const description = computed(() => doc.value?.description || '');
-const image = computed(() => doc.value?.image || '');
+const image = computed(() => {
+  const img = doc.value?.image || '';
+
+  return img.startsWith('/images/') ? `${useRuntimeConfig().public.appBaseUrl}${img}` : img;
+});
 
 const meta = computed(() => {
   const metaTags = [
@@ -30,7 +34,48 @@ const meta = computed(() => {
   return metaTags;
 });
 
-useHead({ title: title.value, meta: meta.value });
+const config = useRuntimeConfig();
+
+const datePublished = computed(() => doc.value?.date || '');
+const dateModified = computed(() => doc.value?.dateModified || datePublished.value);
+
+
+const script = computed(() => [
+  {
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: title.value,
+      description: description.value,
+      image: image.value,
+      author: {
+        '@type': 'Person',
+        name: 'Equipe Ambo',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Ambo Market',
+        logo: {
+          '@type': 'ImageObject',
+          url: `${config.public.appBaseUrl}/images/background.png`,
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': `${config.public.appBaseUrl}${route.path}`,
+      },
+      datePublished: datePublished.value,
+      dateModified: dateModified.value,
+    }),
+  },
+]);
+
+useHead({
+  title: title.value,
+  meta: meta.value,
+  script: script.value,
+});
 
 const { t } = useI18n();
 

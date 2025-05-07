@@ -32,7 +32,7 @@ const formattedDate = computed(() => props.date ? formatLocalizedDate(props.date
       />
 
       <div
-        v-if="formattedDate"
+        v-if="false"
         :class="$style.date"
         v-text="formattedDate"
       />

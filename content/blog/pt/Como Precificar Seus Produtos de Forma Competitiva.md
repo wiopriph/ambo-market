@@ -2,6 +2,7 @@
 title: "Como Precificar Seus Produtos de Forma Competitiva"
 description: "Aprenda como definir preços ideais para vender mais rápido no Ambo Market, atrair compradores e aumentar seus lucros."
 image: "/images/blog/como-precificar-seus-produtos-de-forma-competitiva.png"
+date: "2025-04-25T12:00:00+00:00"
 ---
 
 # Como Precificar Seus Produtos de Forma Competitiva

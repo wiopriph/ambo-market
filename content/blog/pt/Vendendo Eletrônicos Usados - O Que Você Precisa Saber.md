@@ -2,6 +2,7 @@
 title: "Vendendo Eletrônicos Usados: O Que Você Precisa Saber"
 description: "Guia completo para vender eletrônicos usados com segurança, rapidez e bom lucro no Ambo Market."
 image: "/images/blog/vendendo-eletronicos-usados-o-que-voce-precisa-saber.jpg"
+date: "2025-05-02T12:00:00+00:00"
 ---
 
 # Vendendo Eletrônicos Usados: O Que Você Precisa Saber

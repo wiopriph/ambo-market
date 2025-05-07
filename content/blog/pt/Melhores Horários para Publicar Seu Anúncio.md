@@ -2,6 +2,7 @@
 title: "Melhores Horários para Publicar Seu Anúncio"
 description: "Descubra os melhores dias e horários para publicar anúncios no Ambo Market e vender mais rápido."
 image: "/images/blog/melhores-horarios-para-publicar-seu-anuncio.jpg"
+date: "2025-04-25T11:00:00+00:00"
 ---
 
 # Melhores Horários para Publicar Seu Anúncio

@@ -2,6 +2,7 @@
 title: "Como Negociar um Bom Negócio"
 description: "Aprenda técnicas e estratégias para negociar melhor ao comprar ou vender no Ambo Market."
 image: "/images/blog/como-negociar-um-bom-negocio.png"
+date: "2025-05-02T12:00:00+00:00" 
 ---
 
 # Como Negociar um Bom Negócio

@@ -12,6 +12,7 @@ export default defineContentConfig({
       schema: z.object({
         image: z.string(),
         date: z.date(),
+        dateModified: z.date(),
       }),
     }),
     // blogEn: defineCollection({
