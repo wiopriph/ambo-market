@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const route = useRoute();
 
-const PER_PAGE = 10;
+const PER_PAGE = 20;
 
 const { data: posts } = await useAsyncData('posts', () => queryCollection('blog')
   .limit(PER_PAGE)
