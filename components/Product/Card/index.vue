@@ -4,6 +4,7 @@ import IconShield from '~/assets/images/product/icon-shield.svg?component';
 import formatCurrency from '~/utils/formatCurrency';
 import { getCityIdByName } from '~/constants/cities';
 import { POST_STATUSES } from '~/constants/post-statuses';
+import { getPostRoute } from '~/utils/getPostRoute';
 
 
 const props = defineProps<CardProps>();
@@ -15,13 +16,12 @@ const productTitle = computed(() => props.product?.title || '\u00A0');
 
 const hasStatus = computed(() => props.product?.status !== POST_STATUSES.OPEN);
 
-const link = computed(() => ({
-  name: 'cityId-categoryId-productId',
-  params: {
-    cityId: getCityIdByName(props.product?.location?.city || ''),
-    categoryId: props.product?.categoryId,
-    productId: props.product?.id,
-  },
+const link = computed(() => getPostRoute({
+  oldCategoryId: props.product?.oldCategoryId,
+
+  cityId: getCityIdByName(props.product?.location?.city),
+  categoryId: props.product?.categoryId,
+  productId: props.product?.id,
 }));
 </script>
 

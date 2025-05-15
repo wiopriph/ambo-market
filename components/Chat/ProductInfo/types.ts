@@ -9,6 +9,9 @@ interface User {
 interface Product {
   id: string;
   categoryId: string;
+  oldCategoryId: string; // @todo: убрать
+  subcategoryId?: string;
+  brandId?: string;
   location: { city: string };
   price: number;
   preview: string;

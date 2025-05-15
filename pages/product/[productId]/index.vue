@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getCityIdByName } from '~/constants/cities';
 import type { Post } from '~/composables/usePosts/types';
+import { getPostRoute } from '~/utils/getPostRoute';
 
 
 interface User {
@@ -27,16 +28,15 @@ definePageMeta({
 
       const { post } = response as PostByIdResponse;
 
-      const postCityId = getCityIdByName(post.location?.city || '');
+      const route = getPostRoute({
+        oldCategoryId: post.oldCategoryId,
 
-      return navigateTo({
-        name: 'cityId-categoryId-productId',
-        params: {
-          productId: post.id,
-          categoryId: post.categoryId,
-          cityId: postCityId,
-        },
+        productId: post.id,
+        categoryId: post.categoryId,
+        cityId: getCityIdByName(post.location?.city),
       });
+
+      return navigateTo(route);
     } catch (error) {
       if (error?.code === 'functions/not-found') {
         throw createError({

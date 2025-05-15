@@ -3,6 +3,7 @@ import type { ChatProductInfoProps } from './types';
 import formatCurrency from '~/utils/formatCurrency';
 import { getCityIdByName } from '~/constants/cities';
 import { POST_STATUSES } from '~/constants/post-statuses';
+import { getPostRoute } from '~/utils/getPostRoute';
 
 
 const props = defineProps<ChatProductInfoProps>();
@@ -16,13 +17,12 @@ const { t } = useI18n();
 
 const formattedPrice = computed(() => formatCurrency(props.product?.price));
 
-const linkToProduct = computed(() => ({
-  name: 'cityId-categoryId-productId',
-  params: {
-    categoryId: props.product?.categoryId,
-    cityId: getCityIdByName(props.product?.location?.city),
-    productId: props.product?.id,
-  },
+const linkToProduct = computed(() => getPostRoute({
+  oldCategoryId: props.product?.oldCategoryId,
+
+  categoryId: props.product?.categoryId,
+  cityId: getCityIdByName(props.product?.location?.city),
+  productId: props.product?.id,
 }));
 
 

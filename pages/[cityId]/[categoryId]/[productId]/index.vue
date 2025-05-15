@@ -7,6 +7,7 @@ import { POST_STATUSES } from '~/constants/post-statuses';
 import type { ProductApiResponse, User } from '~/types/product';
 import { formatFullDate } from '~/utils/formatDate';
 import { useUser } from '~/composables/useUser';
+import { getPostRoute } from '~/utils/getPostRoute';
 
 
 const { $fire } = useNuxtApp();
@@ -21,17 +22,19 @@ const { data: product, error } = await useAsyncData<ProductApiResponse>(async ()
     const { post, user } = response as ProductApiResponse;
 
     const postCityId = getCityIdByName(post?.location?.city);
-    const postCategoryId = post?.categoryId;
+    const postCategoryId = post?.oldCategoryId; // @todo: заменить на categoryId
 
     if (postCityId !== route.params.cityId || postCategoryId !== route.params.categoryId) {
-      navigateTo({
-        name: 'cityId-categoryId-productId',
-        params: {
-          productId: post?.id,
-          categoryId: postCategoryId,
-          cityId: postCityId,
-        },
-      }, { redirectCode: 301 });
+      const route = getPostRoute({
+        oldCategoryId: post?.oldCategoryId,
+
+        productId: post?.id,
+        categoryId: post?.categoryId,
+        cityId: getCityIdByName(post?.location?.city),
+      });
+
+
+      navigateTo(route, { redirectCode: 301 });
     }
 
     return {
@@ -72,7 +75,9 @@ const seller = computed({
 });
 const post = computed(() => product.value?.post);
 
-const postCategoryName = computed(() => t(`${post.value?.categoryId}`));
+const categoryId = computed(() => post.value?.oldCategoryId); // @todo: заменить на categoryId
+
+const postCategoryName = computed(() => t(`${categoryId.value}`));
 
 const postLocation = computed(() => post.value?.location);
 const postCityId = computed(() => getCityIdByName(postLocation.value?.city ?? ''));
@@ -82,15 +87,14 @@ const formattedPrice = computed(() => formatCurrency(`${post.value?.price}`));
 const formattedDate = computed(() => post.value?.createdAt ? formatFullDate(post.value?.createdAt, locale.value) : '');
 
 const seo = computed(() => {
-  const categoryId = post.value?.categoryId;
   const translationKey = postCityId.value && postCityName.value ? 'withCity' : 'withoutCity';
 
-  const title = t(`${categoryId}.${translationKey}.title`, {
+  const title = t(`${categoryId.value}.${translationKey}.title`, {
     title: post.value?.title,
     city: postCityName.value,
   });
 
-  const description = t(`${categoryId}.${translationKey}.description`, {
+  const description = t(`${categoryId.value}.${translationKey}.description`, {
     title: post.value?.title,
     city: postCityName.value,
     description: post.value?.description?.replace(/[\r\n]+/g, ' '),
@@ -162,7 +166,7 @@ const breadcrumbsList = computed(() => [
     to: {
       name: 'cityId-categoryId',
       params: {
-        categoryId: post.value?.categoryId,
+        categoryId: categoryId.value,
         cityId: postCityId.value,
       },
     },
