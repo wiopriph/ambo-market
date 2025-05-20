@@ -63,12 +63,12 @@ const indexRoute = computed(() => {
 });
 
 const categoryList = computed(() => CATEGORIES.map(category => ({
-  title: t(category.type),
+  title: t(category.key),
   img: category.img,
   route: {
     name: 'cityId-categoryId',
     params: {
-      categoryId: category.type,
+      categoryId: category.id,
       cityId: cityId.value,
     },
   },
@@ -84,6 +84,8 @@ const ROUTES_WITH_SEARCH_FORM = [
   'index',
   'cityId',
   'cityId-categoryId',
+  'cityId-categoryId-subcategoryId',
+  'cityId-categoryId-subcategoryId-brandId',
   'privacy',
 ];
 

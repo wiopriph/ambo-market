@@ -14,7 +14,6 @@ export type Post = {
   title: string;
   userId: string;
   categoryId: string;
-  oldCategoryId: string; // @todo: убрать
   subcategoryId?: string;
   brandId?: string;
   status: 'open' | 'closed' | 'archived';

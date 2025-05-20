@@ -1,20 +1,15 @@
 <script setup lang="ts">
-import { PERIODS, DEFAULT_FILTERS, type PeriodsValues } from '~/constants/filters';
-import getObjectDifferences from '~/utils/getObjectDifferences';
 import { usePosts } from '~/composables/usePosts';
+import { DEFAULT_FILTERS } from '~/constants/filters';
 import { CATEGORIES } from '~/constants/categories';
 import { CITIES } from '~/constants/cities';
+import getObjectDifferences from '~/utils/getObjectDifferences';
 
 
 const { t } = useI18n();
 
-const periods = computed(() => [
-  { type: PERIODS.DAY, text: t('day') },
-  { type: PERIODS.WEEK, text: t('week') },
-  { type: PERIODS.ALL, text: t('all') },
-]);
 
-const categoriesItems = computed(() => CATEGORIES.map(({ type }) => ({ value: type, text: t(type) })));
+const categoriesItems = computed(() => CATEGORIES.map(({ id, key }) => ({ value: id, text: t(key) })));
 
 const citiesList = computed(() => CITIES.map(city => ({
   value: city.id,
@@ -25,25 +20,45 @@ const citiesList = computed(() => CITIES.map(city => ({
 const {
   cityId,
   categoryId,
+  subcategoryId,
+  brandId,
   getFilter,
   currentFilters,
 } = usePosts();
 
 const newCityId = ref('');
 const newCategoryId = ref('');
+const newSubcategoryId = ref('');
+const newBrandId = ref('');
+
 const minPrice = ref<string | number>('');
 const maxPrice = ref<string | number>('');
 const safeTransaction = ref<boolean>(false);
-const period = ref<PeriodsValues>(PERIODS.ALL);
+
+const subcategoriesItems = computed(() => {
+  const category = CATEGORIES.find(cat => cat.id === newCategoryId.value);
+
+  return category?.subcategories?.map(({ id, key }) => ({ value: id, text: t(key) })) || [];
+});
+
+
+const brandsItems = computed(() => {
+  const category = CATEGORIES.find(cat => cat.id === newCategoryId.value);
+  const subcategory = category?.subcategories?.find(sc => sc.id === newSubcategoryId.value);
+
+  return subcategory?.brands?.map(({ id, key }) => ({ value: id, text: t(key) })) || [];
+});
+
 
 onMounted(() => {
   newCityId.value = cityId.value;
   newCategoryId.value = categoryId.value;
+  newSubcategoryId.value = subcategoryId.value;
+  newBrandId.value = brandId.value;
 
   minPrice.value = getFilter('minPrice');
   maxPrice.value = getFilter('maxPrice');
   safeTransaction.value = getFilter('safeTransaction');
-  period.value = getFilter('period');
 });
 
 
@@ -53,31 +68,37 @@ const updateFilters = () => {
     minPrice: minPrice.value,
     maxPrice: maxPrice.value,
     safeTransaction: safeTransaction.value,
-    period: period.value,
   };
 
   const query = getObjectDifferences(filters, DEFAULT_FILTERS);
 
   close();
 
-  if (newCategoryId.value) {
-    return navigateTo({
-      name: 'cityId-categoryId',
-      params: {
-        cityId: newCityId.value || 'all',
-        categoryId: newCategoryId.value,
-      },
-      query,
-    });
+  const params: Record<string, string> = {
+    cityId: newCityId.value || 'all',
+  };
+
+  const valuesMap = {
+    categoryId: newCategoryId.value,
+    subcategoryId: newSubcategoryId.value,
+    brandId: newBrandId.value,
+  };
+
+  const keys = ['categoryId', 'subcategoryId', 'brandId'];
+
+  for (const key of keys) {
+    const value = valuesMap[key as keyof typeof valuesMap];
+
+    if (value) {
+      params[key] = value;
+    } else {
+      break;
+    }
   }
 
-  return navigateTo({
-    name: 'cityId',
-    params: {
-      cityId: newCityId.value || 'all',
-    },
-    query,
-  });
+  const name = Object.keys(params).join('-');
+
+  return navigateTo({ name, params, query });
 };
 
 
@@ -100,16 +121,13 @@ const clearAllFilters = () => {
     "filters": "Filters",
     "everywhere": "Everywhere",
     "category": "Category",
-    "select_city": "Select city",
-    "select_category": "Select category",
+    "subcategory": "Subcategory",
+    "brand": "Brand",
+    "select": "Select",
     "price": "Price",
     "from": "from",
     "to": "to",
     "safe_deal": "Safe deal",
-    "period": "Placement period",
-    "day": "For 24 hours",
-    "week": "For 7 days",
-    "all": "All the time",
     "radius": "Radius",
     "clear_all": "Clear all filter",
     "update_search": "Update search"
@@ -118,16 +136,13 @@ const clearAllFilters = () => {
     "filters": "Filtros",
     "everywhere": "Em todos os lugares",
     "category": "Categoria",
-    "select_city": "Selecione a cidade",
-    "select_category": "Selecione a categoria",
+    "subcategory": "Subcategoria",
+    "brand": "Marca",
+    "select": "Selecione",
     "price": "Preço",
     "from": "por",
     "to": "até",
     "safe_deal": "Negócio Seguro",
-    "period": "Período de colocação",
-    "day": "Por 24 horas",
-    "week": "Por 7 dias",
-    "all": "O tempo todo",
     "radius": "raio",
     "clear_all": "limpar todo o filtro",
     "update_search": "Atualizar pesquisa"
@@ -151,7 +166,7 @@ const clearAllFilters = () => {
           <UISelect
             v-model="newCityId"
             :options="citiesList"
-            :placeholder="t('select_city')"
+            :placeholder="t('select')"
             :class="$style.selector"
             name="category"
           />
@@ -166,9 +181,45 @@ const clearAllFilters = () => {
           <UISelect
             v-model="newCategoryId"
             :options="categoriesItems"
-            :placeholder="t('select_category')"
+            :placeholder="t('select')"
             :class="$style.selector"
             name="category"
+          />
+        </li>
+
+        <li
+          v-if="subcategoriesItems.length"
+          :class="$style.block"
+        >
+          <span
+            :class="$style.title"
+            v-text="t('subcategory')"
+          />
+
+          <UISelect
+            v-model="newSubcategoryId"
+            :options="subcategoriesItems"
+            :placeholder="t('select')"
+            :class="$style.selector"
+            name="subcategory"
+          />
+        </li>
+
+        <li
+          v-if="brandsItems.length"
+          :class="$style.block"
+        >
+          <span
+            :class="$style.title"
+            v-text="t('brand')"
+          />
+
+          <UISelect
+            v-model="newBrandId"
+            :options="brandsItems"
+            :placeholder="t('select')"
+            :class="$style.selector"
+            name="brand"
           />
         </li>
 
@@ -195,27 +246,6 @@ const clearAllFilters = () => {
               type="number"
             />
           </div>
-        </li>
-
-        <li :class="$style.block">
-          <span
-            :class="$style.title"
-            v-text="t('period')"
-          />
-
-          <ul :class="$style.selector">
-            <li
-              v-for="({ type, text }) in periods"
-              :key="type"
-              :class="$style.periodItem"
-            >
-              <UIInputRadio
-                v-model="period"
-                :text="text"
-                :val="type"
-              />
-            </li>
-          </ul>
         </li>
 
         <li
@@ -293,13 +323,6 @@ const clearAllFilters = () => {
 
 .selector {
   margin-top: 8px;
-}
-
-.periodItem {
-
-  & + & {
-    margin-top: 8px;
-  }
 }
 
 .bottom {

@@ -74,12 +74,12 @@ const socialLinks = [
 const { cityId } = usePosts();
 
 const categories = computed(() => CATEGORIES.map(category => ({
-  title: t(category.type),
+  title: t(category.key),
   img: category.img,
   route: {
     name: 'cityId-categoryId',
     params: {
-      categoryId: category.type,
+      categoryId: category.id,
       cityId: cityId.value,
     },
   },

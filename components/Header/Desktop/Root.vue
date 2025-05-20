@@ -66,30 +66,36 @@ onMounted(() => {
 
 
 const find = () => {
-  const categoryId = route.params.categoryId;
   const query = {
     ...currentFilters.value,
     q: searchString.value,
   };
 
-  if (categoryId) {
-    return navigateTo({
-      name: 'cityId-categoryId',
-      params: {
-        cityId: cityId.value,
-        categoryId,
-      },
-      query,
-    });
+  const params: Record<string, string> = {
+    cityId: cityId.value || 'all',
+  };
+
+  const valuesMap = {
+    categoryId: route.params.categoryId,
+    subcategoryId: route.params.subcategoryId,
+    brandId: route.params.brandId,
+  };
+
+  const keys = ['categoryId', 'subcategoryId', 'brandId'];
+
+  for (const key of keys) {
+    const value = valuesMap[key as keyof typeof valuesMap];
+
+    if (value) {
+      params[key] = value as string;
+    } else {
+      break;
+    }
   }
 
-  return navigateTo({
-    name: 'cityId',
-    params: {
-      cityId: cityId.value,
-    },
-    query,
-  });
+  const name = Object.keys(params).join('-');
+
+  return navigateTo({ name, params, query });
 };
 
 

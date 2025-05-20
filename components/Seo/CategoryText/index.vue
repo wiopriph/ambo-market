@@ -19,11 +19,10 @@ const categoryName = computed(() => t(props.categoryId));
 <i18n>
 {
   "en": {
-    "title": "Buy and Sell {category} in {city} – Free Listings on Ambo Market",
-    "title_everywhere": "Buy and Sell {category} Across Angola – Free Listings on Ambo Market",
+    "title": "{title} – Free Listings on Ambo Market",
     "intro": "If you are looking for {category} in {city}, you are in the right place! On Ambo Market, you can easily buy, sell, or exchange {category} at no extra cost. Post free ads, find great deals, and save time searching for the products or services you need.",
     "intro_everywhere": "If you are looking for {category} in Angola, you are in the right place! On Ambo Market, you can easily buy, sell, or exchange {category} at no extra cost. Post free ads, find great deals, and save time searching for the products or services you need.",
-    "why_choose": "Why Choose Ambo Market for Buying and Selling {category}?",
+    "why_choose": "Why Ambo Market?",
     "free_listings": "Free Listings",
     "free_listings_desc": "Ambo Market is a platform where anyone can post an ad for free and quickly find buyers. Simply create a listing, add photos, set your price, and wait for responses!",
     "wide_selection": "Wide Selection of {category}",
@@ -49,11 +48,10 @@ const categoryName = computed(() => t(props.categoryId));
     "start_now_everywhere": "Start your search now and discover amazing offers on {category} in Angola!"
   },
   "pt": {
-    "title": "Compre e Venda {category} em {city} – Anúncios Gratuitos no Ambo Market",
-    "title_everywhere": "Compre e venda {category} em toda Angola – Anúncios Gratuitos no Ambo Market",
+    "title": "{title} – Anúncios Gratuitos no Ambo Market",
     "intro": "Se você está procurando {category} em {city}, chegou ao lugar certo! No Ambo Market, você pode comprar, vender ou trocar {category} sem custos adicionais. Publique anúncios gratuitos, encontre ótimas ofertas e economize tempo na busca pelos produtos ou serviços que você precisa.",
     "intro_everywhere": "Se você está procurando {category} em Angola, chegou ao lugar certo! No Ambo Market, você pode comprar, vender ou trocar {category} sem custos adicionais. Publique anúncios gratuitos, encontre ótimas ofertas e economize tempo na busca pelos produtos ou serviços que você precisa.",
-    "why_choose": "Por que escolher o Ambo Market para comprar e vender {category}?",
+    "why_choose": "Por que Ambo Market?",
     "free_listings": "Anúncios Gratuitos",
     "free_listings_desc": "O Ambo Market é uma plataforma onde qualquer pessoa pode publicar um anúncio gratuitamente e encontrar compradores rapidamente. Basta criar um anúncio, adicionar fotos, definir o preço e aguardar os contatos!",
     "wide_selection": "Grande Variedade de {category}",
@@ -84,14 +82,14 @@ const categoryName = computed(() => t(props.categoryId));
 <template>
   <div :class="$style.root">
     <h3>
-      {{ cityId === 'all' ? t('title_everywhere', { category: categoryName }) : t('title', { category: categoryName, city: cityName }) }}
+      {{ t('title', { title: props.title }) }}
     </h3>
 
     <p>
       {{ cityId === 'all' ? t('intro_everywhere', { category: categoryName }) : t('intro', { category: categoryName, city: cityName }) }}
     </p>
 
-    <h3 v-text="t('why_choose', { category: categoryName, city: cityName })" />
+    <h3 v-text="t('why_choose')" />
 
     <ol>
       <li>
@@ -104,7 +102,7 @@ const categoryName = computed(() => t(props.categoryId));
         <p v-text="t('wide_selection', { category: categoryName })" />
 
 
-        <p>
+        <p v-if="productList">
           {{ t('wide_selection_desc') }}
           {{ productList?.length > 1 ? t('you_can_find', { options: productList.join(', ') }) : '' }}
         </p>

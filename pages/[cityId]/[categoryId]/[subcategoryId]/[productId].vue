@@ -10,6 +10,10 @@ import { useUser } from '~/composables/useUser';
 import { getPostRoute } from '~/utils/getPostRoute';
 
 
+definePageMeta({
+  path: '/:cityId/:categoryId/:subcategoryId/:productId([a-zA-Z0-9]{20})',
+});
+
 const { $fire } = useNuxtApp();
 const route = useRoute();
 
@@ -22,15 +26,16 @@ const { data: product, error } = await useAsyncData<ProductApiResponse>(async ()
     const { post, user } = response as ProductApiResponse;
 
     const postCityId = getCityIdByName(post?.location?.city);
-    const postCategoryId = post?.oldCategoryId; // @todo: заменить на categoryId
 
-    if (postCityId !== route.params.cityId || postCategoryId !== route.params.categoryId) {
+    if (postCityId !== route.params.cityId ||
+      post?.categoryId !== route.params.categoryId ||
+      (post?.subcategoryId && (post?.subcategoryId !== route.params.subcategoryId))) {
       const route = getPostRoute({
-        oldCategoryId: post?.oldCategoryId,
-
         productId: post?.id,
+        brandId: post?.brandId,
+        subcategoryId: post?.subcategoryId,
         categoryId: post?.categoryId,
-        cityId: getCityIdByName(post?.location?.city),
+        cityId: postCityId,
       });
 
 
@@ -62,7 +67,6 @@ if (error && error?.value) {
   throw createError(error?.value);
 }
 
-
 const { t, locale } = useI18n();
 
 const seller = computed({
@@ -75,9 +79,11 @@ const seller = computed({
 });
 const post = computed(() => product.value?.post);
 
-const categoryId = computed(() => post.value?.oldCategoryId); // @todo: заменить на categoryId
+const categoryId = computed(() => post.value?.categoryId);
+const postCategoryName = computed(() => t(`categories.${categoryId.value}`));
 
-const postCategoryName = computed(() => t(`${categoryId.value}`));
+const subcategoryId = computed(() => post.value?.subcategoryId);
+const postSubcategoryName = computed(() => t(`subcategories.${subcategoryId.value}`));
 
 const postLocation = computed(() => post.value?.location);
 const postCityId = computed(() => getCityIdByName(postLocation.value?.city ?? ''));
@@ -87,7 +93,7 @@ const formattedPrice = computed(() => formatCurrency(`${post.value?.price}`));
 const formattedDate = computed(() => post.value?.createdAt ? formatFullDate(post.value?.createdAt, locale.value) : '');
 
 const seo = computed(() => {
-  const translationKey = postCityId.value && postCityName.value ? 'withCity' : 'withoutCity';
+  const translationKey = postCityId.value && postCityName.value ? 'city' : 'everywhere';
 
   const title = t(`${categoryId.value}.${translationKey}.title`, {
     title: post.value?.title,
@@ -167,6 +173,17 @@ const breadcrumbsList = computed(() => [
       name: 'cityId-categoryId',
       params: {
         categoryId: categoryId.value,
+        cityId: postCityId.value,
+      },
+    },
+  },
+  {
+    title: postSubcategoryName.value,
+    to: {
+      name: 'cityId-categoryId-subcategoryId',
+      params: {
+        categoryId: categoryId.value,
+        subcategoryId: subcategoryId.value,
         cityId: postCityId.value,
       },
     },
@@ -302,144 +319,104 @@ const { isDesktopOrTablet } = useDevice();
     "description": "Description",
     "posted": "Posted On",
     "share": "Share Listing",
-    "electronics": {
-      "withCity": {
-        "title": "Buy {title} in {city} {'|'} Electronics {'|'} Ambo Market",
-        "description": "Buy {title} in {city} on Ambo Market. Phones, laptops, TVs and more at great prices. {description}"
-      },
-      "withoutCity": {
-        "title": "Buy {title} {'|'} Electronics {'|'} Ambo Market",
-        "description": "Buy {title} on Ambo Market. Discover phones, laptops, TVs and more. {description}"
-      }
-    },
-    "clothing": {
-      "withCity": {
-        "title": "Buy {title} in {city} {'|'} Fashion {'|'} Ambo Market",
-        "description": "Buy {title} in {city} – explore clothes, shoes, and accessories. Great deals on Ambo Market. {description}"
-      },
-      "withoutCity": {
-        "title": "Buy {title} {'|'} Fashion {'|'} Ambo Market",
-        "description": "Buy {title} – clothes, shoes and accessories available across Angola. {description}"
-      }
-    },
-    "transport": {
-      "withCity": {
+    "vehicles": {
+      "city": {
         "title": "Buy {title} in {city} {'|'} Vehicles {'|'} Ambo Market",
-        "description": "Buy {title} in {city} – explore cars, motorcycles, and more. Verified listings only. {description}"
+        "description": "Buy {title} in {city} – cars, bikes, boats and more. Trusted listings only. {description}"
       },
-      "withoutCity": {
+      "everywhere": {
         "title": "Buy {title} {'|'} Vehicles {'|'} Ambo Market",
-        "description": "Buy {title} – cars, motorcycles, and other transport options. {description}"
-      }
-    },
-    "auto-parts": {
-      "withCity": {
-        "title": "Buy {title} in {city} {'|'} Auto Parts {'|'} Ambo Market",
-        "description": "Buy {title} – car parts in {city}: tires, batteries, engines and accessories. {description}"
-      },
-      "withoutCity": {
-        "title": "Buy {title} {'|'} Auto Parts {'|'} Ambo Market",
-        "description": "Buy {title} – auto parts like tires, engines, and batteries. {description}"
-      }
-    },
-    "beauty-health": {
-      "withCity": {
-        "title": "Buy {title} in {city} {'|'} Beauty & Health {'|'} Ambo Market",
-        "description": "Shop {title} in {city}. Find cosmetics, wellness and health items online. {description}"
-      },
-      "withoutCity": {
-        "title": "Buy {title} {'|'} Beauty & Health {'|'} Ambo Market",
-        "description": "Buy {title} – cosmetics, wellness and personal care deals. {description}"
+        "description": "Explore {title} for sale – cars, motorcycles, and commercial vehicles. {description}"
       }
     },
     "real-estate": {
-      "withCity": {
+      "city": {
         "title": "{title} in {city} {'|'} Real Estate {'|'} Ambo Market",
-        "description": "View {title} – real estate in {city}. Homes, apartments and land for sale or rent. {description}"
+        "description": "Find {title} in {city} – houses, land, apartments and commercial property. {description}"
       },
-      "withoutCity": {
+      "everywhere": {
         "title": "{title} {'|'} Real Estate {'|'} Ambo Market",
-        "description": "Real estate listing: {title}. Homes, apartments and property offers. {description}"
+        "description": "View {title} for sale or rent – real estate listings across Angola. {description}"
       }
     },
-    "childrens-goods": {
-      "withCity": {
-        "title": "Buy {title} in {city} {'|'} Kids Items {'|'} Ambo Market",
-        "description": "Buy {title} in {city}. Find toys, clothing and products for children. {description}"
+    "electronics": {
+      "city": {
+        "title": "Buy {title} in {city} {'|'} Electronics {'|'} Ambo Market",
+        "description": "Looking for {title} in {city}? Browse phones, laptops, TVs and more on Ambo Market. {description}"
       },
-      "withoutCity": {
-        "title": "Buy {title} {'|'} Kids Items {'|'} Ambo Market",
-        "description": "Buy {title} – children's toys, clothes, and more. {description}"
+      "everywhere": {
+        "title": "Buy {title} {'|'} Electronics {'|'} Ambo Market",
+        "description": "Buy {title} on Ambo Market – smartphones, gadgets, computers and more. {description}"
       }
     },
-    "job": {
-      "withCity": {
-        "title": "{title} in {city} {'|'} Job Listings {'|'} Ambo Market",
-        "description": "{title} – Job opening in {city}. Find career opportunities and apply easily. {description}"
+    "fashion": {
+      "city": {
+        "title": "Buy {title} in {city} {'|'} Fashion {'|'} Ambo Market",
+        "description": "Find {title} in {city} – stylish clothes, shoes, and accessories at great prices. {description}"
       },
-      "withoutCity": {
-        "title": "{title} {'|'} Job Listings {'|'} Ambo Market",
-        "description": "Job post: {title}. Browse job offers and find your next role. {description}"
+      "everywhere": {
+        "title": "Buy {title} {'|'} Fashion {'|'} Ambo Market",
+        "description": "Buy {title} – discover fashion deals across Angola. Clothes, shoes, and more. {description}"
+      }
+    },
+    "jobs": {
+      "city": {
+        "title": "{title} in {city} {'|'} Jobs {'|'} Ambo Market",
+        "description": "Job opening: {title} in {city}. Apply now or explore other offers. {description}"
+      },
+      "everywhere": {
+        "title": "{title} {'|'} Jobs {'|'} Ambo Market",
+        "description": "Job post: {title}. Find career opportunities across Angola. {description}"
       }
     },
     "services": {
-      "withCity": {
+      "city": {
         "title": "{title} in {city} {'|'} Services {'|'} Ambo Market",
-        "description": "Find {title} in {city}. Explore reliable personal and business services. {description}"
+        "description": "Find {title} in {city} – reliable personal or business services. {description}"
       },
-      "withoutCity": {
+      "everywhere": {
         "title": "{title} {'|'} Services {'|'} Ambo Market",
-        "description": "Service offered: {title}. Browse and hire trusted services. {description}"
-      }
-    },
-    "building-materials": {
-      "withCity": {
-        "title": "Buy {title} in {city} {'|'} Construction Materials {'|'} Ambo Market",
-        "description": "Find {title} in {city} – cement, bricks, tools and supplies. {description}"
-      },
-      "withoutCity": {
-        "title": "Buy {title} {'|'} Construction Materials {'|'} Ambo Market",
-        "description": "Buy {title} – tools and materials for building and renovation. {description}"
+        "description": "Service offered: {title}. Post or explore trusted services across Angola. {description}"
       }
     },
     "animals": {
-      "withCity": {
+      "city": {
         "title": "Buy {title} in {city} {'|'} Animals {'|'} Ambo Market",
-        "description": "{title} – animals in {city} for sale or adoption. Pets, livestock and supplies. {description}"
+        "description": "Find {title} in {city} – pets, livestock, and supplies. {description}"
       },
-      "withoutCity": {
+      "everywhere": {
         "title": "Buy {title} {'|'} Animals {'|'} Ambo Market",
-        "description": "{title} – pets, livestock and animal supplies for sale. {description}"
+        "description": "{title} – pets, exotic animals, or farm livestock across Angola. {description}"
       }
     },
-    "for-business": {
-      "withCity": {
-        "title": "Buy {title} in {city} {'|'} Business Supplies {'|'} Ambo Market",
-        "description": "Buy {title} – business products in {city}. Office, retail and industrial equipment. {description}"
+    "hobby": {
+      "city": {
+        "title": "Buy {title} in {city} {'|'} Hobby & Leisure {'|'} Ambo Market",
+        "description": "Find {title} in {city} – sports gear, musical instruments, games, collectibles and more. {description}"
       },
-      "withoutCity": {
-        "title": "Buy {title} {'|'} Business Supplies {'|'} Ambo Market",
-        "description": "Business tools: {title}. Office gear, equipment, and B2B products. {description}"
+      "everywhere": {
+        "title": "Buy {title} {'|'} Hobby & Leisure {'|'} Ambo Market",
+        "description": "Buy {title} on Ambo Market – everything for your hobbies: games, music, sports, crafts and more. {description}"
       }
     },
-    "for-home": {
-      "withCity": {
+    "kids": {
+      "city": {
+        "title": "Buy {title} in {city} {'|'} Kids Items {'|'} Ambo Market",
+        "description": "Looking for {title} in {city}? Find toys, clothes and baby items. {description}"
+      },
+      "everywhere": {
+        "title": "Buy {title} {'|'} Kids Items {'|'} Ambo Market",
+        "description": "Buy {title} – toys, clothing and more for kids across Angola. {description}"
+      }
+    },
+    "home": {
+      "city": {
         "title": "Buy {title} in {city} {'|'} Home & Garden {'|'} Ambo Market",
-        "description": "Buy {title} for your home in {city}. Furniture, appliances and home decor. {description}"
+        "description": "Find {title} in {city} – furniture, appliances, décor and more. {description}"
       },
-      "withoutCity": {
+      "everywhere": {
         "title": "Buy {title} {'|'} Home & Garden {'|'} Ambo Market",
-        "description": "Home item for sale: {title}. Appliances, decor, and furniture deals. {description}"
-      }
-    },
-    "other": {
-      "withCity": {
-        "title": "Buy {title} in {city} {'|'} Other {'|'} Ambo Market",
-        "description": "{title} for sale in {city}. Explore rare and unique items. {description}"
-      },
-      "withoutCity": {
-        "title": "Buy {title} {'|'} Other {'|'} Ambo Market",
-        "description": "{title} for sale. Discover unusual offers and collectibles. {description}"
+        "description": "Explore {title} for your home. Buy or sell furniture, tools and accessories. {description}"
       }
     }
   },
@@ -451,144 +428,104 @@ const { isDesktopOrTablet } = useDevice();
     "description": "Descrição do produto",
     "posted": "Publicado em",
     "share": "Compartilhar anúncio",
-    "electronics": {
-      "withCity": {
-        "title": "Comprar {title} em {city} {'|'} Eletrônicos {'|'} Ambo Market",
-        "description": "Anúncio de {title} em {city}. Celulares, laptops, TVs e outros eletrônicos com ótimos preços. {description}"
+    "vehicles": {
+      "city": {
+        "title": "Comprar {title} em {city} {'|'} Veículos {'|'} Ambo Market",
+        "description": "Compre {title} em {city} – carros, motas, barcos e mais. Apenas anúncios verificados. {description}"
       },
-      "withoutCity": {
-        "title": "Comprar {title} {'|'} Eletrônicos {'|'} Ambo Market",
-        "description": "Anúncio de {title}. Encontre celulares, notebooks, TVs e mais. {description}"
-      }
-    },
-    "clothing": {
-      "withCity": {
-        "title": "Comprar {title} em {city} {'|'} Moda {'|'} Ambo Market",
-        "description": "Compre {title} em {city}. Roupas, sapatos e acessórios masculinos, femininos e infantis. {description}"
-      },
-      "withoutCity": {
-        "title": "Comprar {title} {'|'} Moda {'|'} Ambo Market",
-        "description": "Anúncio de {title}. Moda para todas as idades: roupas, calçados e acessórios. {description}"
-      }
-    },
-    "transport": {
-      "withCity": {
-        "title": "Comprar {title} em {city} {'|'} Transporte {'|'} Ambo Market",
-        "description": "Venda de {title} em {city}. Carros, motos e outros veículos à venda. {description}"
-      },
-      "withoutCity": {
-        "title": "Comprar {title} {'|'} Transporte {'|'} Ambo Market",
-        "description": "Encontre {title} – carros, motos e mais. Negocie com segurança. {description}"
-      }
-    },
-    "auto-parts": {
-      "withCity": {
-        "title": "Comprar {title} em {city} {'|'} Peças de automóveis {'|'} Ambo Market",
-        "description": "Venda de {title} em {city}. Motores, pneus, baterias e acessórios. {description}"
-      },
-      "withoutCity": {
-        "title": "Comprar {title} {'|'} Peças de automóveis {'|'} Ambo Market",
-        "description": "Anúncio de {title}. Peças novas e usadas: pneus, motores, acessórios. {description}"
-      }
-    },
-    "beauty-health": {
-      "withCity": {
-        "title": "Comprar {title} em {city} {'|'} Beleza e Saúde {'|'} Ambo Market",
-        "description": "Produto {title} em {city}. Cosméticos, cuidados pessoais e equipamentos de saúde. {description}"
-      },
-      "withoutCity": {
-        "title": "Comprar {title} {'|'} Beleza e Saúde {'|'} Ambo Market",
-        "description": "Anúncio de {title}. Itens de beleza, bem-estar e cuidados com a saúde. {description}"
+      "everywhere": {
+        "title": "Comprar {title} {'|'} Veículos {'|'} Ambo Market",
+        "description": "Explore {title} à venda – carros, motas e veículos comerciais. {description}"
       }
     },
     "real-estate": {
-      "withCity": {
-        "title": "{title} para comprar ou alugar em {city} {'|'} Imóveis {'|'} Ambo Market",
-        "description": "{title} disponível em {city}. Casas, apartamentos, terrenos e mais. {description}"
+      "city": {
+        "title": "{title} em {city} {'|'} Imóveis {'|'} Ambo Market",
+        "description": "Encontre {title} em {city} – casas, terrenos, apartamentos e imóveis comerciais. {description}"
       },
-      "withoutCity": {
-        "title": "{title} para comprar ou alugar {'|'} Imóveis {'|'} Ambo Market",
-        "description": "Imóvel: {title}. Encontre opções para comprar ou alugar. {description}"
+      "everywhere": {
+        "title": "{title} {'|'} Imóveis {'|'} Ambo Market",
+        "description": "Veja {title} para venda ou aluguel – imóveis em toda Angola. {description}"
       }
     },
-    "childrens-goods": {
-      "withCity": {
-        "title": "Comprar {title} em {city} {'|'} Produtos Infantis {'|'} Ambo Market",
-        "description": "Anúncio de {title} em {city}. Brinquedos, roupas e artigos infantis com ótimos preços. {description}"
+    "electronics": {
+      "city": {
+        "title": "Comprar {title} em {city} {'|'} Eletrônicos {'|'} Ambo Market",
+        "description": "À procura de {title} em {city}? Veja telemóveis, computadores, TVs e mais. {description}"
       },
-      "withoutCity": {
-        "title": "Comprar {title} {'|'} Produtos Infantis {'|'} Ambo Market",
-        "description": "Venda de {title}. Brinquedos, roupas e acessórios para crianças. {description}"
+      "everywhere": {
+        "title": "Comprar {title} {'|'} Eletrônicos {'|'} Ambo Market",
+        "description": "Compre {title} no Ambo Market – smartphones, gadgets, computadores e muito mais. {description}"
       }
     },
-    "job": {
-      "withCity": {
+    "fashion": {
+      "city": {
+        "title": "Comprar {title} em {city} {'|'} Moda {'|'} Ambo Market",
+        "description": "Encontre {title} em {city} – roupas, calçados e acessórios com ótimos preços. {description}"
+      },
+      "everywhere": {
+        "title": "Comprar {title} {'|'} Moda {'|'} Ambo Market",
+        "description": "Compre {title} – descubra ofertas de moda em toda Angola. {description}"
+      }
+    },
+    "jobs": {
+      "city": {
         "title": "{title} em {city} {'|'} Empregos {'|'} Ambo Market",
-        "description": "Oferta de emprego: {title} em {city}. Veja vagas disponíveis e candidate-se. {description}"
+        "description": "Vaga de emprego: {title} em {city}. Candidate-se agora ou veja outras oportunidades. {description}"
       },
-      "withoutCity": {
+      "everywhere": {
         "title": "{title} {'|'} Empregos {'|'} Ambo Market",
-        "description": "Vaga de emprego: {title}. Encontre oportunidades em diversos setores. {description}"
+        "description": "Oferta de emprego: {title}. Encontre oportunidades de carreira em Angola. {description}"
       }
     },
     "services": {
-      "withCity": {
+      "city": {
         "title": "{title} em {city} {'|'} Serviços {'|'} Ambo Market",
-        "description": "Serviço: {title} em {city}. Contrate serviços profissionais e particulares. {description}"
+        "description": "Encontre {title} em {city} – serviços confiáveis para pessoas e empresas. {description}"
       },
-      "withoutCity": {
+      "everywhere": {
         "title": "{title} {'|'} Serviços {'|'} Ambo Market",
-        "description": "Serviço anunciado: {title}. Veja opções de serviços em Angola. {description}"
-      }
-    },
-    "building-materials": {
-      "withCity": {
-        "title": "Comprar {title} em {city} {'|'} Materiais de Construção {'|'} Ambo Market",
-        "description": "Anúncio de {title} em {city}. Cimento, tijolos, ferramentas e mais para sua obra. {description}"
-      },
-      "withoutCity": {
-        "title": "Comprar {title} {'|'} Materiais de Construção {'|'} Ambo Market",
-        "description": "Venda de {title}. Encontre tudo para construção e reforma. {description}"
+        "description": "Serviço oferecido: {title}. Publique ou encontre serviços de confiança em Angola. {description}"
       }
     },
     "animals": {
-      "withCity": {
-        "title": "{title} para compra ou adoção em {city} {'|'} Animais {'|'} Ambo Market",
-        "description": "{title} disponível em {city}. Pets, gado e animais exóticos. {description}"
+      "city": {
+        "title": "Comprar {title} em {city} {'|'} Animais {'|'} Ambo Market",
+        "description": "Encontre {title} em {city} – animais de estimação, gado e acessórios. {description}"
       },
-      "withoutCity": {
-        "title": "{title} para compra ou adoção {'|'} Animais {'|'} Ambo Market",
-        "description": "Anúncio de {title}. Encontre animais domésticos e de criação. {description}"
+      "everywhere": {
+        "title": "Comprar {title} {'|'} Animais {'|'} Ambo Market",
+        "description": "{title} – animais domésticos, exóticos ou de fazenda em toda Angola. {description}"
       }
     },
-    "for-business": {
-      "withCity": {
-        "title": "Comprar {title} em {city} {'|'} Para Negócios {'|'} Ambo Market",
-        "description": "Venda de {title} em {city}. Equipamentos, máquinas e suprimentos para empresas. {description}"
+    "hobby": {
+      "city": {
+        "title": "Comprar {title} em {city} {'|'} Lazer & Passatempos {'|'} Ambo Market",
+        "description": "Encontre {title} em {city} – desporto, música, jogos, coleções e mais. {description}"
       },
-      "withoutCity": {
-        "title": "Comprar {title} {'|'} Para Negócios {'|'} Ambo Market",
-        "description": "Produto empresarial: {title}. Encontre itens para sua empresa. {description}"
+      "everywhere": {
+        "title": "Comprar {title} {'|'} Lazer & Passatempos {'|'} Ambo Market",
+        "description": "Compre {title} no Ambo Market – tudo para os seus passatempos: jogos, música, desporto e artesanato. {description}"
       }
     },
-    "for-home": {
-      "withCity": {
-        "title": "Comprar {title} em {city} {'|'} Para Casa {'|'} Ambo Market",
-        "description": "Anúncio de {title} para casa em {city}. Móveis, eletrodomésticos e decoração. {description}"
+    "kids": {
+      "city": {
+        "title": "Comprar {title} em {city} {'|'} Artigos Infantis {'|'} Ambo Market",
+        "description": "À procura de {title} em {city}? Encontre brinquedos, roupas e artigos para bebés. {description}"
       },
-      "withoutCity": {
-        "title": "Comprar {title} {'|'} Para Casa {'|'} Ambo Market",
-        "description": "{title} à venda. Produtos para o lar com ótimos preços. {description}"
+      "everywhere": {
+        "title": "Comprar {title} {'|'} Artigos Infantis {'|'} Ambo Market",
+        "description": "Compre {title} – brinquedos, roupas e muito mais para crianças em toda Angola. {description}"
       }
     },
-    "other": {
-      "withCity": {
-        "title": "Comprar {title} em {city} {'|'} Outros {'|'} Ambo Market",
-        "description": "Anúncio de {title} em {city}. Itens raros, exclusivos e diferenciados. {description}"
+    "home": {
+      "city": {
+        "title": "Comprar {title} em {city} {'|'} Casa & Jardim {'|'} Ambo Market",
+        "description": "Encontre {title} em {city} – móveis, eletrodomésticos, decoração e mais. {description}"
       },
-      "withoutCity": {
-        "title": "Comprar {title} {'|'} Outros {'|'} Ambo Market",
-        "description": "{title} à venda. Produtos únicos e colecionáveis no Ambo Market. {description}"
+      "everywhere": {
+        "title": "Comprar {title} {'|'} Casa & Jardim {'|'} Ambo Market",
+        "description": "Explore {title} para sua casa. Compre ou venda móveis, ferramentas e acessórios. {description}"
       }
     }
   }

@@ -1,12 +1,8 @@
-import type { PeriodsValues } from '~/constants/filters';
-
-
 export interface Filters {
   q: string;
   minPrice: number | string;
   maxPrice: number | string;
   safeTransaction: boolean;
-  period: PeriodsValues;
 }
 
 export interface Location {
@@ -21,6 +17,8 @@ export interface InitializeFilters {
   filters: Filters;
   page: number;
   categoryId: string;
+  subcategoryId: string;
+  brandId: string;
 }
 
 
@@ -30,15 +28,12 @@ export interface LocationCoords {
   radius: string | number | null;
 }
 
-export interface DatePublished {
-  from: number | null;
-  to: number | null;
-}
 
 export interface FetchPostsParams {
-  category: string | string[] | null;
+  categoryId: string;
+  subcategoryId: string;
+  brandId: string;
   location: LocationCoords;
-  datePublished: DatePublished;
   minPrice: number | string;
   maxPrice: number | string;
   search: string;
@@ -58,8 +53,7 @@ export interface Post {
   title: string;
   userId: string;
   categoryId: string;
-  oldCategoryId: string; // @todo: убрать
-  subcategoryId?: string;
+  subcategoryId: string;
   brandId?: string;
   status: string;
 }

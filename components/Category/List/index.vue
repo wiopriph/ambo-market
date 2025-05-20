@@ -40,8 +40,8 @@ $parent-padding: 20px; // fix: компенсация бокового padding �
 .wrap {
   display: grid;
   grid-gap: 8px;
-  grid-template-rows: repeat(2, 90px);
-  grid-template-columns: repeat(7, minmax(160px, 200px));
+  grid-template-rows: repeat(2, 100px);
+  grid-template-columns: repeat(5, minmax(160px, 300px));
 
   @include md {
     width: max-content;

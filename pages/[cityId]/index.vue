@@ -6,7 +6,7 @@ import { MAX_POSTS_PER_PAGE } from '~/composables/usePosts/constants';
 
 definePageMeta({
   middleware: [
-    'city-routes-guard',
+    'validate-city',
     'set-city-middleware',
     'set-filters-middleware',
   ],
@@ -69,12 +69,12 @@ useHead({
 });
 
 const categories = computed(() => CATEGORIES.map(category => ({
-  title: t(category.type),
+  title: t(category.key),
   img: category.img,
   route: {
     name: 'cityId-categoryId',
     params: {
-      categoryId: category.type,
+      categoryId: category.id,
       cityId: cityId.value,
     },
   },

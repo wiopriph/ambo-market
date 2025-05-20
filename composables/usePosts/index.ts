@@ -1,7 +1,6 @@
 import type { Filters, Location, InitializeFilters } from './types';
 import { DEFAULT_LOCATION, DEFAULT_FILTERS, MAX_POSTS_PER_PAGE } from './constants';
 import usePostApi from './hooks';
-import generateDatePublished from '~/utils/generateDatePublished';
 import getObjectDifferences from '~/utils/getObjectDifferences';
 import { getCityIdByName } from '~/constants/cities';
 
@@ -17,7 +16,7 @@ export function usePosts() {
   const location = useState<Location>('location', () => DEFAULT_LOCATION);
   const locationName = computed(() => location.value.displayName);
 
-  const cityId = computed(() => getCityIdByName(location.value.city));
+  const cityId = computed(() => getCityIdByName(location.value?.city));
   const isPriorityCity = computed(() => cityId.value !== 'all');
   const coords = computed(() => ({
     latitude: location.value.lat,
@@ -38,6 +37,9 @@ export function usePosts() {
 
   const initializeFilters = (data: InitializeFilters) => {
     categoryId.value = data.categoryId;
+    subcategoryId.value = data.subcategoryId;
+    brandId.value = data.brandId;
+
     page.value = data.page || 1;
     filters.value = data.filters;
   };
@@ -45,6 +47,8 @@ export function usePosts() {
 
   const page = useState<number>('page', () => 1);
   const categoryId = useState<string>('categoryId', () => '');
+  const subcategoryId = useState<string>('subcategoryId', () => '');
+  const brandId = useState<string>('brandId', () => '');
 
 
   const isLoading = useState<boolean>('isLoading', () => false);
@@ -55,13 +59,14 @@ export function usePosts() {
 
     try {
       return await GET_POSTS({
-        category: categoryId.value,
+        categoryId: categoryId.value,
+        subcategoryId: subcategoryId.value,
+        brandId: brandId.value,
         location: {
           latitude: location.value.lat,
           longitude: location.value.lon,
           radius: location.value.radius,
         },
-        datePublished: generateDatePublished(filters.value.period),
         minPrice: filters.value.minPrice,
         maxPrice: filters.value.maxPrice,
         search: filters.value.q,
@@ -93,6 +98,8 @@ export function usePosts() {
 
     page,
     categoryId,
+    subcategoryId,
+    brandId,
 
     isLoading,
 

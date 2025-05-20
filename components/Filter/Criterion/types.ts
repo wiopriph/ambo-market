@@ -1,7 +1,4 @@
-import type { PeriodsValues } from '~/constants/filters';
-
-
 export interface CriterionProps {
-  type: PeriodsValues;
+  type: string;
   value: string | boolean | number;
 }

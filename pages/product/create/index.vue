@@ -23,6 +23,8 @@ const {
 } = useForm({
   initialValues: {
     category: '',
+    subcategory: '',
+    brand: '',
     productName: '',
     price: '',
     description: '',
@@ -30,6 +32,30 @@ const {
   },
   validationSchema: object({
     category: string().required(t('validation.required')),
+    subcategory: string().test('subcategory-required', t('validation.required'), function(value) {
+      const categoryId = this.parent.category;
+      const category = CATEGORIES.find(c => c.id === categoryId);
+
+      if (category?.subcategories?.length) {
+        return !!value;
+      }
+
+      return true;
+    }),
+
+    brand: string().test('brand-required', t('validation.required'), function(value) {
+      const categoryId = this.parent.category;
+      const subcategoryId = this.parent.subcategory;
+      const category = CATEGORIES.find(c => c.id === categoryId);
+      const subcategory = category?.subcategories?.find(sc => sc.id === subcategoryId);
+
+      if (subcategory?.brands?.length) {
+        return !!value;
+      }
+
+      return true;
+    }),
+
     productName: string().required(t('validation.required'))
       .max(50, t('validation.productNameMaxLength')),
     price: string().required(t('validation.required')),
@@ -39,13 +65,34 @@ const {
 });
 
 const { value: category } = useField<string>('category');
+const { value: subcategory } = useField<string>('subcategory');
+const { value: brand } = useField<string>('brand');
 const { value: productName } = useField<string>('productName');
 const { value: price } = useField<string>('price');
 const { value: description } = useField<string>('description');
 const { value: isSafeDeal } = useField<boolean>('isSafeDeal');
 
 
-const categoriesItems = computed(() => CATEGORIES.map(({ type }) => ({ value: type, text: t(type) })));
+const categoriesItems = computed(() => CATEGORIES.map(({ id, key }) => ({ value: id, text: t(key) })));
+
+const subcategoriesItems = computed(() => {
+  const selected = CATEGORIES.find(c => c.id === category.value);
+
+  return selected?.subcategories?.map(({ id, key }) => ({
+    value: id,
+    text: t(key),
+  })) || [];
+});
+
+const brandsItems = computed(() => {
+  const categoryItem = CATEGORIES.find(c => c.id === category.value);
+  const subcategoryItem = categoryItem?.subcategories?.find(sc => sc.id === subcategory.value);
+
+  return subcategoryItem?.brands?.map(({ id, key }) => ({
+    value: id,
+    text: t(key),
+  })) || [];
+});
 
 
 type Image = {
@@ -164,6 +211,8 @@ const createPost = handleSubmit.withControlled(async () => {
       description: description.value,
       price: +price.value,
       categoryId: category.value,
+      subcategoryId: subcategory.value,
+      brandId: brand.value,
       images: images.value,
       location: location.value,
       isSafeDeal: isSafeDeal.value,
@@ -187,13 +236,24 @@ const createPost = handleSubmit.withControlled(async () => {
     hasAPIError.value = true;
   }
 });
+
+watch(category, () => {
+  subcategory.value = '';
+  brand.value = '';
+});
+
+watch(subcategory, () => {
+  brand.value = '';
+});
 </script>
 
 <i18n>
 {
   "en": {
     "category": "Category",
-    "category_list": "Category List",
+    "subcategory": "Subcategory",
+    "brand": "Brand",
+    "select": "Select",
     "product_name": "Product name",
     "product_name_length": "The name must not exceed 50 characters.",
     "price": "Price",
@@ -211,7 +271,9 @@ const createPost = handleSubmit.withControlled(async () => {
   },
   "pt": {
     "category": "Categoria",
-    "category_list": "Lista de categorias",
+    "subcategory": "Subcategoria",
+    "brand": "Marca",
+    "select": "Selecione",
     "product_name": "Nome do produto",
     "product_name_length": "O nome não deve exceder os 50 caracteres.",
     "price": "Preço",
@@ -254,7 +316,7 @@ const createPost = handleSubmit.withControlled(async () => {
               <UISelect
                 v-model="category"
                 :options="categoriesItems"
-                :placeholder="t('category_list')"
+                :placeholder="t('select')"
                 :error="errors.category"
                 isRequired
                 name="category"
@@ -263,6 +325,52 @@ const createPost = handleSubmit.withControlled(async () => {
               <UIError :text="errors.category" />
             </div>
           </UILineDescription>
+
+          <UILineDescription
+            v-if="subcategoriesItems.length"
+            :title="t('subcategory')"
+            :class="$style.line"
+            position="center"
+            requiredTitle
+            boldTitle
+          >
+            <div>
+              <UISelect
+                v-model="subcategory"
+                :options="subcategoriesItems"
+                :placeholder="t('select')"
+                :error="errors.subcategory"
+                isRequired
+                name="subcategory"
+              />
+
+              <UIError :text="errors.subcategory" />
+            </div>
+          </UILineDescription>
+
+
+          <UILineDescription
+            v-if="brandsItems.length"
+            :title="t('brand')"
+            :class="$style.line"
+            position="center"
+            requiredTitle
+            boldTitle
+          >
+            <div>
+              <UISelect
+                v-model="brand"
+                :options="brandsItems"
+                :placeholder="t('select')"
+                :error="errors.brand"
+                isRequired
+                name="brand"
+              />
+
+              <UIError :text="errors.brand" />
+            </div>
+          </UILineDescription>
+
 
           <UILineDescription
             :title="t('product_name')"

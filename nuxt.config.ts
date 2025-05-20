@@ -50,7 +50,7 @@ export default defineNuxtConfig({
       },
       {
         code: 'pt',
-        language: 'pt-BR',
+        language: 'pt-AO',
         name: 'Português',
         shortName: 'Pt',
       },

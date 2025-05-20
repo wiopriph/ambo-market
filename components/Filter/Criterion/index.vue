@@ -8,7 +8,6 @@ const props = withDefaults(defineProps<CriterionProps>(), {
 });
 
 const FILTERS = {
-  PERIOD: 'period',
   SAFE_TRANSACTION: 'safeTransaction',
   MIN_PRICE: 'minPrice',
   MAX_PRICE: 'maxPrice',
@@ -19,8 +18,6 @@ const { t } = useI18n();
 
 const displayText = computed(() => {
   switch (props.type) {
-    case FILTERS.PERIOD:
-      return t(`${props.value}`);
     case FILTERS.SAFE_TRANSACTION:
       return t('safe_deal');
     case FILTERS.MIN_PRICE:
@@ -48,19 +45,13 @@ const click = () => {
     "search": "Search: {value}",
     "from": "From {value} $",
     "to": "To {value} $",
-    "safe_deal": "Safe deal",
-    "day": "For 24 hours",
-    "week": "For 7 days",
-    "all": "All the time"
+    "safe_deal": "Safe deal"
   },
   "pt": {
     "search": "Consulta de pesquisa: {value}",
     "from": "Por {value} $",
     "to": "Até {value} $",
-    "safe_deal": "Negócio Seguro",
-    "day": "Por 24 horas",
-    "week": "Por 7 dias",
-    "all": "O tempo todo"
+    "safe_deal": "Negócio Seguro"
   }
 }
 </i18n>

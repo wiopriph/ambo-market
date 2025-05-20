@@ -18,8 +18,6 @@ const { t } = useI18n();
 const formattedPrice = computed(() => formatCurrency(props.product?.price));
 
 const linkToProduct = computed(() => getPostRoute({
-  oldCategoryId: props.product?.oldCategoryId,
-
   categoryId: props.product?.categoryId,
   cityId: getCityIdByName(props.product?.location?.city),
   productId: props.product?.id,

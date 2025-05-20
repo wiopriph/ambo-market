@@ -29,14 +29,14 @@ definePageMeta({
       const { post } = response as PostByIdResponse;
 
       const route = getPostRoute({
-        oldCategoryId: post.oldCategoryId,
-
-        productId: post.id,
-        categoryId: post.categoryId,
+        productId: post?.id,
+        brandId: post?.brandId,
+        subcategoryId: post?.subcategoryId,
+        categoryId: post?.categoryId,
         cityId: getCityIdByName(post.location?.city),
       });
 
-      return navigateTo(route);
+      return navigateTo(route, { redirectCode: 301 });
     } catch (error) {
       if (error?.code === 'functions/not-found') {
         throw createError({
