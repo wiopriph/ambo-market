@@ -8,6 +8,7 @@
     "passwordMinLength": "Password is too short",
     "passwordMaxLength": "Password is too long",
     "reviewMaxLength": "Review is too long",
+    "imagesRequired": "Please add at least one photo",
     "productNameMaxLength": "You have exceeded the 50-character limit."
   },
   "seo": {

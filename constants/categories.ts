@@ -211,6 +211,10 @@ export const CATEGORIES: Category[] = [
         key: 'subcategories.computers',
         brands: [
           {
+            id: 'other',
+            key: 'brands.other',
+          },
+          {
             id: 'hp',
             key: 'brands.hp',
           },

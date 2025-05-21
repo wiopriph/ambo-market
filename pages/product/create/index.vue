@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate';
-import { boolean, object, string } from 'yup';
+import { boolean, object, array, string } from 'yup';
 import { useUser } from '~/composables/useUser';
 import { CATEGORIES } from '~/constants/categories';
 import { CURRENCY } from '~/constants/currency';
@@ -16,10 +16,24 @@ const needPhoneNumber = computed(() => currentUser.value && !currentUser.value.p
 
 const { t } = useI18n();
 
+type Image = {
+  base64: string;
+  mimeType: string;
+};
+
+type Location = {
+  lat: number;
+  lon: number;
+  cityId: string;
+  city: string;
+  displayName: string;
+  address: string;
+};
+
 const {
   errors,
   handleSubmit,
-  handleReset,
+  resetForm,
 } = useForm({
   initialValues: {
     category: '',
@@ -29,6 +43,8 @@ const {
     price: '',
     description: '',
     isSafeDeal: false,
+    images: [],
+    location: {},
   },
   validationSchema: object({
     category: string().required(t('validation.required')),
@@ -61,6 +77,8 @@ const {
     price: string().required(t('validation.required')),
     description: string().required(t('validation.required')),
     isSafeDeal: boolean(),
+    images: array().min(1, t('validation.imagesRequired')),
+    location: object().required(t('validation.required')),
   }),
 });
 
@@ -71,7 +89,8 @@ const { value: productName } = useField<string>('productName');
 const { value: price } = useField<string>('price');
 const { value: description } = useField<string>('description');
 const { value: isSafeDeal } = useField<boolean>('isSafeDeal');
-
+const { value: images } = useField<Image[]>('images');
+const { value: location } = useField<Location>('location');
 
 const categoriesItems = computed(() => CATEGORIES.map(({ id, key }) => ({ value: id, text: t(key) })));
 
@@ -93,14 +112,6 @@ const brandsItems = computed(() => {
     text: t(key),
   })) || [];
 });
-
-
-type Image = {
-  base64: string;
-  mimeType: string;
-};
-
-const images = ref<Image[]>([]);
 
 const hasPhotos = computed(() => images.value.length > 0);
 
@@ -145,21 +156,11 @@ const loadFile = () => {
   fileInput.value?.click();
 };
 
-
-type Location = {
-  latitude: number;
-  longitude: number;
-  address: string;
-};
-
-const location = ref<Location>({});
-
 const hasLocation = computed(() => Object.keys(location.value).length > 0);
 
 const setLocation = (payload: Location) => {
   location.value = payload;
 };
-
 
 const progress = computed(() => [
   { active: !!category.value, label: t('category') },
@@ -169,7 +170,6 @@ const progress = computed(() => [
   { active: hasPhotos.value, label: t('photos') },
   { active: hasLocation.value, label: t('location') },
 ]);
-
 
 const isModalVisible = ref(false);
 
@@ -181,16 +181,19 @@ const hideSuccessModal = () => {
   isModalVisible.value = false;
 };
 
-
 const clearFields = () => {
-  category.value = '';
-  productName.value = '';
-  description.value = '';
-  price.value = '';
-  isSafeDeal.value = false;
-  images.value = [];
+  resetForm({
+    values: {
+      category: '',
+      productName: '',
+      price: '',
+      description: '',
+      isSafeDeal: false,
+      images: [],
+      location: location.value,
+    },
+  });
 };
-
 
 const { $fire } = useNuxtApp();
 
@@ -230,7 +233,6 @@ const createPost = handleSubmit.withControlled(async () => {
 
     showSuccessModal();
     clearFields();
-    handleReset();
   } catch (error) {
     isLoading.value = false;
     hasAPIError.value = true;
@@ -265,6 +267,7 @@ watch(subcategory, () => {
     },
     "add_photo": "Add photo",
     "location": "Location",
+    "enter_your_address": "Enter your address or select a location on the map below",
     "safe_deal": "Safe deal",
     "safe_deal_description": "Your items are available for sale under {deal}.",
     "place_ad": "Place Ad"
@@ -285,6 +288,7 @@ watch(subcategory, () => {
     },
     "add_photo": "Adicionar foto",
     "location": "Localização",
+    "enter_your_address": "Insira o seu endereço ou selecione um local no mapa abaixo",
     "safe_deal": "Negócio Seguro",
     "safe_deal_description": "Seus itens estão disponíveis para venda no {deal}.",
     "place_ad": "Publicar Anúncio"
@@ -308,7 +312,6 @@ watch(subcategory, () => {
           <UILineDescription
             :title="t('category')"
             :class="$style.line"
-            position="center"
             requiredTitle
             boldTitle
           >
@@ -330,7 +333,6 @@ watch(subcategory, () => {
             v-if="subcategoriesItems.length"
             :title="t('subcategory')"
             :class="$style.line"
-            position="center"
             requiredTitle
             boldTitle
           >
@@ -348,12 +350,10 @@ watch(subcategory, () => {
             </div>
           </UILineDescription>
 
-
           <UILineDescription
             v-if="brandsItems.length"
             :title="t('brand')"
             :class="$style.line"
-            position="center"
             requiredTitle
             boldTitle
           >
@@ -371,11 +371,9 @@ watch(subcategory, () => {
             </div>
           </UILineDescription>
 
-
           <UILineDescription
             :title="t('product_name')"
             :class="$style.line"
-            position="center"
             requiredTitle
             boldTitle
           >
@@ -401,7 +399,6 @@ watch(subcategory, () => {
           <UILineDescription
             :title="t('price')"
             :class="$style.line"
-            position="center"
             requiredTitle
             boldTitle
           >
@@ -428,7 +425,6 @@ watch(subcategory, () => {
           <UILineDescription
             :title="t('description')"
             :class="$style.line"
-            position="center"
             requiredTitle
             boldTitle
           >
@@ -447,7 +443,6 @@ watch(subcategory, () => {
           <UILineDescription
             :title="t('photos')"
             :class="$style.line"
-            position="center"
             requiredTitle
             boldTitle
           >
@@ -488,16 +483,29 @@ watch(subcategory, () => {
 
                 <p v-text="t('photos_notice.second')" />
               </div>
+
+              <UIError :text="errors.images" />
             </div>
           </UILineDescription>
 
           <UILineDescription
             :title="t('location')"
             :class="$style.line"
-            position="center"
             requiredTitle
             boldTitle
           >
+            <div :class="$style.currentAddress">
+              <strong
+                v-if="location?.displayName"
+                v-text="location.displayName"
+              />
+
+              <span
+                v-else
+                v-text="t('enter_your_address')"
+              />
+            </div>
+
             <div :class="$style.addressCol">
               <ClientOnly>
                 <GeolocationSelector
@@ -512,7 +520,6 @@ watch(subcategory, () => {
           <UILineDescription
             :title="t('safe_deal')"
             :class="$style.line"
-            position="center"
             boldTitle
           >
             <div :class="$style.safeDeal">
@@ -541,7 +548,6 @@ watch(subcategory, () => {
 
           <UILineDescription
             :class="$style.line"
-            position="center"
           >
             <UIButton
               :text="t('place_ad')"
@@ -658,6 +664,10 @@ watch(subcategory, () => {
 
   margin-left: 10px;
   color: $ui-color-black;
+}
+
+.currentAddress {
+  margin-bottom: 20px;
 }
 
 .addressCol {

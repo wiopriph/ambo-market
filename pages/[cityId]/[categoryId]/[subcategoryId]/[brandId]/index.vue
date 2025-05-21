@@ -563,6 +563,18 @@ const setPage = (pageNumber: number) => {
       }
     },
     "computers": {
+      "other": {
+        "city": {
+          "h1": "Computers in {city}",
+          "title": "Buy and Sell Computers in {city} {'|'} Ambo Market",
+          "description": "Browse computers of various brands in {city} – affordable and reliable options available."
+        },
+        "everywhere": {
+          "h1": "Computers in Angola",
+          "title": "Buy and Sell Computers in Angola {'|'} Ambo Market",
+          "description": "Explore a wide range of computers across Angola – different brands, models and prices."
+        }
+      },
       "hp": {
         "city": {
           "h1": "HP Computers in {city}",
@@ -1129,6 +1141,18 @@ const setPage = (pageNumber: number) => {
       }
     },
     "computers": {
+      "other": {
+        "city": {
+          "h1": "Computadores em {city}",
+          "title": "Comprar e Vender Computadores em {city} {'|'} Ambo Market",
+          "description": "Veja computadores de várias marcas em {city} – opções acessíveis e confiáveis disponíveis."
+        },
+        "everywhere": {
+          "h1": "Computadores em Angola",
+          "title": "Comprar e Vender Computadores em Angola {'|'} Ambo Market",
+          "description": "Explore uma ampla variedade de computadores em Angola – diferentes marcas, modelos e preços."
+        }
+      },
       "hp": {
         "city": {
           "h1": "Computadores HP em {city}",

@@ -16,7 +16,7 @@ export default function useOpenStreetMapApi() {
         },
       });
 
-      return parseGeoResponse(response || {});
+      return parseGeoResponse(response ?? {});
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -56,8 +56,37 @@ export default function useOpenStreetMapApi() {
     }
   };
 
+  const SEARCH_CITIES = async (query: string) => {
+    try {
+      const response = await $fetch('https://nominatim.openstreetmap.org/search', {
+        method: 'GET',
+        params: {
+          q: query,
+          format: 'json',
+          addressdetails: 1,
+          limit: 10,
+          countrycodes: 'AO',
+          'accept-language': 'en',
+        },
+      });
+
+      if (!Array.isArray(response)) {
+        return [];
+      }
+
+      if (response.length === 0) {
+        return [];
+      }
+
+      return response.map(city => parseGeoResponse(city));
+    } catch (error) {
+      return [];
+    }
+  };
+
   return {
     GET_CITY_BY_GEO,
     SEARCH_CITY,
+    SEARCH_CITIES,
   };
 }

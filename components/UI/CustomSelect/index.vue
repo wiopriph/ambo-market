@@ -14,7 +14,12 @@ const emit = defineEmits([
   'update:modelValue',
   'focus',
   'blur',
+  'search',
 ]);
+
+const emitSearch = () => {
+  emit('search', searchString.value);
+};
 
 const isFocused = ref<boolean>(false);
 const isCustomSelectOpened = ref<boolean>(false);
@@ -55,10 +60,15 @@ const filteredOptions = computed(() => {
 });
 
 const customSelectText = computed(() => {
+  if (typeof innerValue.value === 'object' && innerValue.value !== null) {
+    return innerValue.value.displayName || innerValue.value.text || '[unknown]'; // только для поиска гео
+  }
+
   const selectedOption = props.options.find(item => item.value === innerValue.value);
 
   return selectedOption?.text || innerValue.value;
 });
+
 
 const hasError = computed(() => !!props.error);
 
@@ -158,6 +168,7 @@ const { t } = useI18n();
       <input
         v-if="isCustomSelectOpened"
         v-model="searchString"
+        v-debounce:400="emitSearch"
         :class="[inputClassNames, customSelectClassNames]"
         type="text"
       >
@@ -228,7 +239,6 @@ const { t } = useI18n();
 
   &__input {
     z-index: 25;
-    text-transform: capitalize;
     background-color: $ui-color-white;
   }
 }

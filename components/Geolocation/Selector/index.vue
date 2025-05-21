@@ -4,6 +4,7 @@ import { DISTANCE, getLabelByRadius } from '~/constants/distance';
 import { usePosts } from '~/composables/usePosts';
 import { useOpenStreetMap } from '~/composables/useOpenStreetMap';
 import IconGeo from '~/assets/images/icon-geo.svg?component';
+import { CITIES } from '~/constants/cities';
 
 
 const DEFAULT_COORDINATES = [-8.8272699, 13.2439512];
@@ -28,8 +29,6 @@ const selectedLocation = ref({});
 
 const isLoading = ref(false);
 
-const searchQuery = ref('');
-
 
 const setCoordinates = (lat: number, lon: number) => {
   latitude.value = lat;
@@ -52,6 +51,7 @@ const getCurrentLocation = async () => {
 
     await fetchLocationInfo({ latitude, longitude });
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Error determining current location:', error);
 
     await fetchLocationInfo({
@@ -63,10 +63,12 @@ const getCurrentLocation = async () => {
   }
 };
 
+const searchQuery = ref('');
+
 
 const emit = defineEmits(['select']);
 
-const { getCityByGeo, searchCity } = useOpenStreetMap();
+const { getCityByGeo, searchCities } = useOpenStreetMap();
 
 const fetchLocationInfo = async ({ latitude, longitude }: { latitude: number; longitude: number }) => {
   isLoading.value = true;
@@ -83,31 +85,72 @@ const fetchLocationInfo = async ({ latitude, longitude }: { latitude: number; lo
 
     emit('select', selectedLocation.value);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Error fetching location info:', error);
   } finally {
     isLoading.value = false;
   }
 };
 
-const searchForCity = async () => {
+const fallbackCities = computed(() =>
+  CITIES
+    .filter(city => city.id !== 'all')
+    .map(city => ({
+      text: city.name,
+      value: {
+        cityId: city.id,
+        city: city.name,
+        displayName: city.name,
+        lat: city.lat,
+        lon: city.lon,
+      },
+    })),
+);
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const searchResults = ref<any[]>(fallbackCities.value);
+const showDropdown = ref(false);
+
+
+const searchForCity = async (searchQuery: string) => {
   try {
     isLoading.value = true;
 
-    const firstCity = await searchCity(searchQuery.value);
+    const result = await searchCities(searchQuery);
 
-    selectedLocation.value = {
-      ...firstCity,
-      radius: radius.value,
-    };
+    if (Array.isArray(result) && result.length > 0) {
+      searchResults.value = result.map(city => ({
+        text: city.displayName,
+        value: city,
+      }));
+    } else {
+      searchResults.value = fallbackCities.value;
+    }
 
-    setCoordinates(firstCity?.lat, firstCity?.lon);
 
-    emit('select', selectedLocation.value);
+    showDropdown.value = true;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Error searching for city:', error);
   } finally {
     isLoading.value = false;
   }
+};
+
+const selectedCity = ref<string | object>('');
+
+watch(() => selectedCity.value, (newVal) => {
+  if (newVal && newVal.lat && newVal.lon) {
+    selectLocation(newVal);
+  }
+});
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const selectLocation = (location: any) => {
+  searchQuery.value = location.display_name;
+  setCoordinates(location.lat, location.lon); // Устанавливаем координаты
+  fetchLocationInfo({ latitude: location.lat, longitude: location.lon }); // Обновляем информацию о местоположении
+  showDropdown.value = false;
 };
 
 const updateRadius = (value: string) => {
@@ -163,11 +206,13 @@ const handleMapClick = ({ latlng }) => {
 {
   "en": {
     "search": "Search",
+    "start_input": "Start typing an address to find it",
     "select_location": "Select the location where you want to find the item, you can change the search radius",
     "radius": "Radius"
   },
   "pt": {
     "search": "Buscar",
+    "start_input": "Comece a digitar um endereço para encontrá-lo",
     "select_location": "Selecione a localização onde deseja encontrar o item, você pode alterar o raio de pesquisa",
     "radius": "Raio"
   }
@@ -177,18 +222,11 @@ const handleMapClick = ({ latlng }) => {
 <template>
   <div :class="$style.root">
     <div :class="$style.search">
-      <UIInput
-        v-model="searchQuery"
-        :placeholder="t('search')"
-        :class="$style.searchInput"
-        name="search"
-        type="text"
-      />
-
-      <UIButton
-        :text="t('search')"
-        type="secondary"
-        @click="searchForCity"
+      <UICustomSelect
+        v-model="selectedCity"
+        :options="searchResults"
+        :placeholder="t('start_input')"
+        @search="searchForCity"
       />
     </div>
 
@@ -214,6 +252,7 @@ const handleMapClick = ({ latlng }) => {
         >
           <button
             :class="$style.mapButton"
+            type="button"
             @click="getCurrentLocation"
           >
             <IconGeo />
@@ -283,12 +322,12 @@ const handleMapClick = ({ latlng }) => {
 
 .search {
   position: absolute;
-  top: 10px;
-  left: 20px;
+  top: 5px;
+  left: 5px;
   z-index: 1001;
   display: flex;
   width: 100%;
-  max-width: calc(100% - 40px);
+  max-width: calc(100% - 10px);
   margin-bottom: 0;
 }
 
@@ -341,10 +380,6 @@ const handleMapClick = ({ latlng }) => {
 
 .mobileRadiusText {
   margin-top: 10px;
-}
-
-.searchInput {
-  margin-right: 4px;
 }
 
 .map {

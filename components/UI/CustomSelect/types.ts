@@ -4,7 +4,7 @@ export interface Option {
 }
 
 export interface Props {
-  modelValue: string;
+  modelValue: string | object;
   options: Option[];
   label?: string;
   sort?: boolean;

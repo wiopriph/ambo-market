@@ -6,14 +6,18 @@ export function useOpenStreetMap() {
   const {
     GET_CITY_BY_GEO,
     SEARCH_CITY,
+    SEARCH_CITIES,
   } = useOpenStreetMapApi();
 
-  const getCityByGeo = async (params: Geo) => GET_CITY_BY_GEO(params);
+  const getCityByGeo = async (params: Geo) => await GET_CITY_BY_GEO(params);
 
-  const searchCity = async (query: string) => SEARCH_CITY(query);
+  const searchCity = async (query: string) => await SEARCH_CITY(query);
+
+  const searchCities = async (query: string) => await SEARCH_CITIES(query);
 
   return {
     getCityByGeo,
     searchCity,
+    searchCities,
   };
 }
