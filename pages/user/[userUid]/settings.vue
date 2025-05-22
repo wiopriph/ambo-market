@@ -7,7 +7,7 @@ definePageMeta({
     const { isLoggedIn, uid } = useUser();
 
     if (!isLoggedIn.value) {
-      return navigateTo(`/auth?redirect=${to.path}`);
+      return navigateTo({ name: 'auth', query: { redirect: to.path } });
     }
 
     if (uid.value !== to.params.userUid) {

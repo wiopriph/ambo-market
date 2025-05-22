@@ -25,12 +25,12 @@ const goBack = () => {
 <i18n>
 {
   "en": {
-    "terms_privacy_agreement": "By creating an account, you agree to our {terms} and {policy}",
+    "terms_privacy_agreement": "By creating an account, you agree to our {terms} and {policy}.",
     "terms_of_service": "Terms of Service",
     "privacy_policy": "Privacy Policy"
   },
   "pt": {
-    "terms_privacy_agreement": "Ao criar uma conta, você concorda com nossos {terms} e {policy}",
+    "terms_privacy_agreement": "Ao criar uma conta, você concorda com nossos {terms} e {policy}.",
     "terms_of_service": "Termos de Serviço",
     "privacy_policy": "Política de Privacidade"
   }

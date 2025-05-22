@@ -8,6 +8,7 @@ import type { ProductApiResponse, User } from '~/types/product';
 import { formatFullDate } from '~/utils/formatDate';
 import { useUser } from '~/composables/useUser';
 import { getPostRoute } from '~/utils/getPostRoute';
+import { AUTH_ACTIONS } from '~/constants/authActions';
 
 
 definePageMeta({
@@ -210,13 +211,19 @@ const getPhoneNumber = async () => {
       isNumberLoading.value = false;
     }
   } else {
-    await navigateTo(`/auth?redirect=${route.path}`);
+    await navigateTo({
+      name: 'auth',
+      query: {
+        action: AUTH_ACTIONS.CALL,
+        redirect: route.path,
+      },
+    });
   }
 };
 
 const showNumber = () => {
-  showShowNumberModal();
   getPhoneNumber();
+  showShowNumberModal();
 };
 
 
@@ -254,7 +261,13 @@ const createChatRoom = async () => {
       isChatLoading.value = false;
     }
   } else {
-    await navigateTo(`/auth?redirect=${route.path}`);
+    await navigateTo({
+      name: 'auth',
+      query: {
+        action: AUTH_ACTIONS.CHAT,
+        redirect: route.path,
+      },
+    });
   }
 };
 

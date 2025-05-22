@@ -94,25 +94,51 @@ const createAccount = () => {
 };
 
 const { t } = useI18n();
+
+
+const authPromptMessage = computed(() => {
+  const action = route.query.action as string;
+
+  switch (action) {
+    case 'favorites':
+      return t('sign_in_to_add_favorites');
+    case 'chat':
+      return t('sign_for_chat');
+    case 'call':
+      return t('sign_for_call');
+    case 'order':
+      return t('sign_for_order');
+    default:
+      return t('sign_in');
+  }
+});
 </script>
 
 <i18n lang="json">
 {
   "en": {
-    "welcome": "Welcome",
-    "sign_in": "Sign in to continue",
-    "continue_with_facebook": "Continue with Facebook",
-    "continue_with_google": "Continue with Google",
-    "continue_with_email": "Continue with E-mail",
-    "no_account_create_one": "Don't have an account? Create one"
+    "welcome": "Hello!",
+    "sign_in": "Log in or create an account to continue.",
+    "sign_in_to_add_favorites": "Log in to save this item and keep track of your favorites.",
+    "sign_for_chat": "Log in to ask questions and chat with the seller.",
+    "sign_for_call": "Log in to see the seller’s phone number.",
+    "sign_for_order": "Log in to complete your order safely.",
+    "continue_with_facebook": "Log in with Facebook",
+    "continue_with_google": "Log in with Google",
+    "continue_with_email": "Log in with E-mail",
+    "no_account_create_one": "Don’t have an account? Create one now"
   },
   "pt": {
-    "welcome": "Bem-vindo",
-    "sign_in": "Faça login para continuar",
-    "continue_with_facebook": "Continuar com o Facebook",
-    "continue_with_google": "Continuar com o Google",
-    "continue_with_email": "Continuar com E-mail",
-    "no_account_create_one": "Não possui uma conta? Crie uma"
+    "welcome": "Olá!",
+    "sign_in": "Faça login ou crie uma conta para continuar.",
+    "sign_in_to_add_favorites": "Faça login para salvar este item e acompanhar seus favoritos.",
+    "sign_for_chat": "Faça login para tirar dúvidas e conversar com o vendedor.",
+    "sign_for_call": "Faça login para ver o número de telefone do vendedor.",
+    "sign_for_order": "Faça login para concluir seu pedido com segurança.",
+    "continue_with_facebook": "Entrar com Facebook",
+    "continue_with_google": "Entrar com Google",
+    "continue_with_email": "Entrar com E-mail",
+    "no_account_create_one": "Ainda não tem uma conta? Crie uma agora"
   }
 }
 </i18n>
@@ -131,7 +157,7 @@ const { t } = useI18n();
 
     <p
       :class="$style.description"
-      v-text="t('sign_in')"
+      v-text="authPromptMessage"
     />
 
     <div :class="$style.list">
@@ -204,9 +230,9 @@ const { t } = useI18n();
 }
 
 .description {
-  @include ui-typo-14;
+  @include ui-typo-18;
 
-  margin-top: 10px;
+  margin-top: 20px;
   color: $ui-color-text-main;
 }
 
@@ -229,7 +255,7 @@ const { t } = useI18n();
   height: 60px;
 
   & + & {
-    margin-top: 10px;
+    margin-top: 12px;
   }
 }
 

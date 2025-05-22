@@ -5,6 +5,6 @@ export default defineNuxtRouteMiddleware((to) => {
   const { isLoggedIn } = useUser();
 
   if (!isLoggedIn.value) {
-    return navigateTo(`/auth?redirect=${to.path}`);
+    return navigateTo({ name: 'auth', query: { redirect: to.path } });
   }
 });

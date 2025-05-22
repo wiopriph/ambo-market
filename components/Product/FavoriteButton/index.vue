@@ -2,6 +2,7 @@
 import type { FavoriteButtonProps } from '~/components/Product/FavoriteButton/types';
 import IconHeart from '~/assets/images/header/icon-heart.svg?component';
 import { useUser } from '~/composables/useUser';
+import { AUTH_ACTIONS } from '~/constants/authActions';
 
 
 const props = withDefaults(defineProps<FavoriteButtonProps>(), {
@@ -39,25 +40,33 @@ const buttonText = computed(() => (isFavoritePost.value ? t('remove') : t('add')
 
 
 const toggleFavorite = async () => {
-  if (isLoggedIn.value) {
-    try {
-      isLoading.value = true;
-
-      if (isFavoritePost.value) {
-        await removePostFromFavorite(props.postId);
-      } else {
-        await addPostToFavorite(props.postId);
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Error toggling favorite status:', error);
-    } finally {
-      isLoading.value = false;
-    }
-  } else {
+  if (!isLoggedIn.value) {
     const currentPath = useRoute().path;
 
-    await navigateTo(`/auth?redirect=${currentPath}`);
+    await navigateTo({
+      name: 'auth',
+      query: {
+        action: AUTH_ACTIONS.FAVORITES,
+        redirect: currentPath,
+      },
+    });
+
+    return;
+  }
+
+  isLoading.value = true;
+
+  try {
+    if (isFavoritePost.value) {
+      await removePostFromFavorite(props.postId);
+    } else {
+      await addPostToFavorite(props.postId);
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error toggling favorite status:', error);
+  } finally {
+    isLoading.value = false;
   }
 };
 </script>

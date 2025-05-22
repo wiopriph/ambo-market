@@ -59,16 +59,16 @@ const authByGoogle = async () => {
 <i18n>
 {
   "en": {
-    "welcome": "Welcome",
-    "sign_in": "Sign in to continue",
+    "welcome": "Hello!",
+    "sign_in": "Log in or create an account to continue.",
     "continue_with_facebook": "Continue with Facebook",
     "continue_with_google": "Continue with Google",
     "continue_with_email": "Continue with E-mail",
     "no_account_create_one": "Don't have an account? Create one"
   },
   "pt": {
-    "welcome": "Bem-vindo",
-    "sign_in": "Faça login para continuar",
+    "welcome": "Olá!",
+    "sign_in": "Faça login ou crie uma conta para continuar.",
     "continue_with_facebook": "Continuar com o Facebook",
     "continue_with_google": "Continuar com o Google",
     "continue_with_email": "Continuar com E-mail",
@@ -138,9 +138,9 @@ const authByGoogle = async () => {
 }
 
 .description {
-  @include ui-typo-14;
+  @include ui-typo-18;
 
-  margin-top: 10px;
+  margin-top: 20px;
   color: $ui-color-text-main;
 }
 
@@ -148,7 +148,7 @@ const authByGoogle = async () => {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .button {
@@ -162,7 +162,7 @@ const authByGoogle = async () => {
   justify-content: flex-start;
 
   & + & {
-    margin-top: 10px;
+    margin-top: 12px;
   }
 }
 

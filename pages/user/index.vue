@@ -15,7 +15,7 @@ definePageMeta({
       });
     }
 
-    return navigateTo(`/auth?redirect=${to.path}`);
+    return navigateTo({ name: 'auth', query: { redirect: to.path } });
   }),
 });
 </script>
