@@ -10,4 +10,6 @@ Disallow: /orders
 Disallow: /orders/
 Disallow: /orders/*
 
+Disallow: /_nuxt/
+
 Sitemap: https://ambo.market/sitemap.xml
