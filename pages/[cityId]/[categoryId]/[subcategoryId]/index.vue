@@ -736,61 +736,61 @@ const setPage = (pageNumber: number) => {
       "cars": {
         "city": {
           "h1": "Carros à Venda em {city}",
-          "title": "Compre e Venda Carros em {city} {'|'} Ambo Market",
-          "description": "Encontre carros novos e usados em {city}. Compare preços, leia avaliações e fale com vendedores confiáveis. Anuncie seu carro gratuitamente."
+          "title": "Carros Novos e Usados em {city} {'|'} Compre e Venda {'|'} Ambo Market",
+          "description": "Compre e venda carros em {city}. Veja ofertas de veículos novos e usados, compare preços e fale com vendedores de confiança. Anuncie o seu carro grátis!"
         },
         "everywhere": {
           "h1": "Carros à Venda",
-          "title": "Compre e Venda Carros em Angola {'|'} Ambo Market",
-          "description": "Descubra carros novos e usados à venda em toda Angola. Compare preços e fale com vendedores confiáveis. Anuncie o seu carro gratuitamente."
+          "title": "Carros Novos e Usados em Angola {'|'} Compre e Venda {'|'} Ambo Market",
+          "description": "Descubra os melhores carros à venda em Angola. Novos e usados, com preços competitivos. Anuncie ou compre com segurança e rapidez."
         }
       },
       "motorcycles": {
         "city": {
           "h1": "Motas à Venda em {city}",
-          "title": "Compre e Venda Motociclos em {city} {'|'} Ambo Market",
-          "description": "Veja anúncios de motas, scooters e muito mais em {city}. Conecte-se com vendedores confiáveis ou publique o seu anúncio gratuitamente."
+          "title": "Motas e Scooters em {city} {'|'} Compre e Venda {'|'} Ambo Market",
+          "description": "Veja anúncios de motas, scooters e outros veículos de duas rodas em {city}. Conecte-se com vendedores verificados ou anuncie grátis."
         },
         "everywhere": {
           "h1": "Motas à Venda",
-          "title": "Compre e Venda Motociclos em Angola {'|'} Ambo Market",
-          "description": "Encontre motas, scooters e outros veículos de duas rodas à venda em Angola. Anuncie ou compre de forma segura e gratuita."
+          "title": "Motas, Scooters e Motociclos em Angola {'|'} Ambo Market",
+          "description": "Compre ou venda motas em Angola. Anúncios de scooters e outros veículos de duas rodas. Plataforma rápida, gratuita e segura."
         }
       },
       "commercial": {
         "city": {
           "h1": "Veículos Comerciais em {city}",
-          "title": "Caminhões, Carrinhas e Veículos de Trabalho em {city} {'|'} Ambo Market",
-          "description": "Encontre veículos comerciais para negócios e serviços em {city}. Veja ofertas de caminhões, carrinhas e muito mais com vendedores verificados."
+          "title": "Caminhões, Carrinhas e Comerciais em {city} {'|'} Ambo Market",
+          "description": "Veja veículos comerciais à venda em {city}. Caminhões, carrinhas, furgões e mais. Publique seu anúncio ou compre de vendedores verificados."
         },
         "everywhere": {
           "h1": "Veículos Comerciais",
-          "title": "Caminhões, Carrinhas e Veículos Comerciais em Angola {'|'} Ambo Market",
-          "description": "Encontre veículos comerciais em toda Angola. Caminhões, carrinhas e opções para trabalho com vendedores confiáveis."
+          "title": "Venda de Caminhões, Carrinhas e Comerciais em Angola {'|'} Ambo Market",
+          "description": "Anúncios de veículos comerciais em Angola. Ideal para empresas e serviços. Compre ou venda caminhões, carrinhas e utilitários com segurança."
         }
       },
       "boats": {
         "city": {
           "h1": "Barcos e Embarcações em {city}",
-          "title": "Compre e Venda Barcos em {city} {'|'} Ambo Market",
-          "description": "Explore anúncios de barcos de pesca, lanchas e outros tipos de embarcações em {city}. Publique seu anúncio gratuitamente."
+          "title": "Venda de Barcos em {city} {'|'} Pesca, Lazer e Transporte {'|'} Ambo Market",
+          "description": "Compre ou venda barcos em {city}. Pesca, lazer, lanchas e outros tipos de embarcação. Anuncie gratuitamente."
         },
         "everywhere": {
           "h1": "Barcos e Embarcações",
-          "title": "Compre e Venda Barcos em Angola {'|'} Ambo Market",
-          "description": "Veja anúncios de barcos à venda em toda Angola. Pesca, lazer e transporte. Publique seu anúncio gratuitamente."
+          "title": "Compra e Venda de Barcos em Angola {'|'} Ambo Market",
+          "description": "Veja anúncios de barcos em Angola. Ideal para pesca, transporte ou lazer. Publique o seu anúncio de forma gratuita."
         }
       },
       "parts": {
         "city": {
           "h1": "Peças e Acessórios em {city}",
-          "title": "Compre Peças e Acessórios para Carros em {city} {'|'} Ambo Market",
-          "description": "Encontre pneus, baterias, faróis e outras peças automotivas em {city}. Compre ou venda peças com facilidade e segurança."
+          "title": "Venda de Peças e Acessórios para Carros em {city} {'|'} Ambo Market",
+          "description": "Encontre peças auto em {city}: pneus, baterias, faróis, espelhos e mais. Venda ou compre com facilidade e segurança."
         },
         "everywhere": {
           "h1": "Peças e Acessórios",
-          "title": "Compre Peças e Acessórios para Carros em Angola {'|'} Ambo Market",
-          "description": "Procure peças auto em toda Angola. Pneus, baterias, espelhos e muito mais. Anuncie ou compre de forma rápida e segura."
+          "title": "Peças para Carros em Angola {'|'} Venda Rápida e Segura {'|'} Ambo Market",
+          "description": "Procure peças e acessórios para carros em Angola. Anuncie gratuitamente ou compre com vendedores de confiança em poucos cliques."
         }
       }
     },
@@ -848,73 +848,73 @@ const setPage = (pageNumber: number) => {
       "phones": {
         "city": {
           "h1": "Telemóveis à Venda em {city}",
-          "title": "Compre Smartphones em {city} {'|'} Ambo Market",
-          "description": "Encontre ofertas de telemóveis novos e usados em {city}. Veja iPhones, Androids e muito mais. Anuncie o seu telemóvel gratuitamente."
+          "title": "Smartphones Novos e Usados em {city} {'|'} Compre e Venda {'|'} Ambo Market",
+          "description": "Encontre ofertas de telemóveis em {city}. iPhones, Androids e muito mais. Compre com segurança ou anuncie o seu gratuitamente."
         },
         "everywhere": {
           "h1": "Telemóveis à Venda",
-          "title": "Compre Smartphones em Angola {'|'} Ambo Market",
-          "description": "Compre e venda telemóveis em toda Angola. Encontre ótimos preços em smartphones. Publique o seu anúncio gratuitamente."
+          "title": "Smartphones Novos e Usados em Angola {'|'} Compre e Venda {'|'} Ambo Market",
+          "description": "Compre e venda smartphones em Angola. Veja ofertas de iPhone, Samsung, Xiaomi e outros. Publique o seu anúncio grátis."
         }
       },
       "computers": {
         "city": {
           "h1": "Computadores e Portáteis em {city}",
-          "title": "Compre Laptops, PCs e Acessórios em {city} {'|'} Ambo Market",
-          "description": "Veja anúncios de portáteis, computadores de mesa e acessórios em {city}. Publique o seu anúncio gratuitamente."
+          "title": "Laptops, PCs e Acessórios em {city} {'|'} Ambo Market",
+          "description": "Compre e venda portáteis, computadores e acessórios em {city}. Marcas populares, preços acessíveis. Anuncie grátis!"
         },
         "everywhere": {
           "h1": "Computadores e Portáteis",
-          "title": "Compre Laptops, PCs e Acessórios em Angola {'|'} Ambo Market",
-          "description": "Compre e venda computadores, monitores e acessórios em Angola. Anuncie ou explore ofertas facilmente."
+          "title": "Laptops, PCs e Acessórios em Angola {'|'} Ambo Market",
+          "description": "Encontre computadores novos e usados em Angola. Monitores, teclados, impressoras e muito mais. Publique o seu anúncio gratuitamente."
         }
       },
       "gaming": {
         "city": {
           "h1": "Equipamentos de Jogos em {city}",
-          "title": "Compre Consolas, Jogos e Acessórios em {city} {'|'} Ambo Market",
-          "description": "Encontre consolas, comandos e jogos de vídeo em {city}. PS5, Xbox, Nintendo e mais. Anuncie ou compre já."
+          "title": "Consolas, Jogos e Acessórios em {city} {'|'} Ambo Market",
+          "description": "Descubra consolas, jogos e acessórios em {city}. PS5, Xbox, Nintendo Switch e mais. Anuncie ou compre hoje mesmo!"
         },
         "everywhere": {
           "h1": "Equipamentos de Jogos",
-          "title": "Compre Consolas, Jogos e Acessórios em Angola {'|'} Ambo Market",
-          "description": "Compre e venda consolas e jogos em toda Angola. Veja ofertas de PS5, Xbox e mais."
+          "title": "Venda de Consolas, Jogos e Acessórios em Angola {'|'} Ambo Market",
+          "description": "Ofertas em consolas e videojogos em Angola. Encontre PS5, Xbox, Nintendo e jogos populares. Publique seu anúncio grátis."
         }
       },
       "tv-audio-photo": {
         "city": {
           "h1": "TV, Áudio e Fotografia em {city}",
-          "title": "Compre TVs, Colunas e Câmaras em {city} {'|'} Ambo Market",
-          "description": "Veja anúncios de televisores, sistemas de som, câmaras e mais em {city}. Compre ou venda gratuitamente."
+          "title": "Televisores, Colunas e Câmaras em {city} {'|'} Ambo Market",
+          "description": "Compre ou venda equipamentos de som, imagem e vídeo em {city}. TVs, colunas, câmaras e muito mais. Anuncie grátis."
         },
         "everywhere": {
           "h1": "TV, Áudio e Fotografia",
-          "title": "Compre TVs, Colunas e Câmaras em Angola {'|'} Ambo Market",
-          "description": "Descubra eletrônicos para casa ou trabalho em Angola. TVs, áudio, fotografia e mais."
+          "title": "Venda de TVs, Colunas e Câmaras em Angola {'|'} Ambo Market",
+          "description": "Explore eletrônicos em Angola: TVs, som e fotografia. Ofertas novas e usadas com vendedores de confiança."
         }
       },
       "appliances": {
         "city": {
           "h1": "Eletrodomésticos em {city}",
-          "title": "Compre Frigoríficos, Máquinas e Fornos em {city} {'|'} Ambo Market",
-          "description": "Encontre eletrodomésticos para cozinha e lavandaria em {city}. Compre novo ou usado. Anuncie de graça."
+          "title": "Frigoríficos, Máquinas e Fornos em {city} {'|'} Ambo Market",
+          "description": "Compre ou venda eletrodomésticos em {city}. Equipamentos de cozinha e lavandaria novos ou usados. Anuncie de graça!"
         },
         "everywhere": {
           "h1": "Eletrodomésticos",
-          "title": "Compre Frigoríficos, Máquinas e Fornos em Angola {'|'} Ambo Market",
-          "description": "Compre eletrodomésticos em toda Angola. Frigoríficos, fogões, máquinas de lavar e mais."
+          "title": "Venda de Frigoríficos, Máquinas e Fornos em Angola {'|'} Ambo Market",
+          "description": "Veja eletrodomésticos em Angola: frigoríficos, fogões, micro-ondas, máquinas de lavar e mais. Publique seu anúncio grátis."
         }
       },
       "accessories-electronics": {
         "city": {
           "h1": "Acessórios Eletrônicos em {city}",
-          "title": "Compre Carregadores, Cabos e Gadgets em {city} {'|'} Ambo Market",
-          "description": "Encontre acessórios para telemóveis, computadores e TVs em {city}. Cabos, capas, comandos e muito mais."
+          "title": "Cabos, Carregadores e Gadgets em {city} {'|'} Ambo Market",
+          "description": "Veja acessórios eletrônicos em {city}: carregadores, capas, fones, comandos e mais. Compre ou anuncie facilmente."
         },
         "everywhere": {
           "h1": "Acessórios Eletrônicos",
-          "title": "Compre Carregadores, Cabos e Gadgets em Angola {'|'} Ambo Market",
-          "description": "Veja ofertas de acessórios eletrônicos em Angola. Adaptadores, cartões de memória e outros gadgets."
+          "title": "Venda de Acessórios Eletrônicos em Angola {'|'} Ambo Market",
+          "description": "Ofertas de acessórios para telemóveis, PCs e TVs em Angola. Gadgets úteis para casa ou trabalho. Publique o seu anúncio grátis."
         }
       }
     },
@@ -922,73 +922,73 @@ const setPage = (pageNumber: number) => {
       "men": {
         "city": {
           "h1": "Moda Masculina em {city}",
-          "title": "Compre Roupas e Acessórios Masculinos em {city} {'|'} Ambo Market",
-          "description": "Compre casacos, camisas, calças e mais para homem em {city}. Moda estilosa e acessível. Publique seu anúncio gratuitamente."
+          "title": "Roupas e Acessórios Masculinos em {city} {'|'} Compre e Venda {'|'} Ambo Market",
+          "description": "Compre casacos, camisas, calças, sapatos e acessórios masculinos em {city}. Moda acessível e estilosa. Anuncie gratuitamente!"
         },
         "everywhere": {
           "h1": "Moda Masculina",
-          "title": "Compre Roupas e Acessórios Masculinos em Angola {'|'} Ambo Market",
-          "description": "Descubra moda masculina em toda Angola. Anuncie ou compre casacos, camisas, calças e sapatos."
+          "title": "Roupas e Acessórios Masculinos em Angola {'|'} Ambo Market",
+          "description": "Descubra moda masculina em Angola. Anuncie ou compre roupas e acessórios com facilidade e segurança."
         }
       },
       "women": {
         "city": {
           "h1": "Moda Feminina em {city}",
-          "title": "Compre Vestidos, Blusas e Acessórios em {city} {'|'} Ambo Market",
-          "description": "Encontre roupas e acessórios femininos em {city}. Vestidos, carteiras, blusas e mais. Anuncie gratuitamente."
+          "title": "Vestidos, Acessórios e Roupas Femininas em {city} {'|'} Ambo Market",
+          "description": "Explore moda feminina em {city}. Vestidos, carteiras, blusas, calçados e mais. Compre ou anuncie grátis!"
         },
         "everywhere": {
           "h1": "Moda Feminina",
-          "title": "Compre Vestidos, Blusas e Acessórios em Angola {'|'} Ambo Market",
-          "description": "Moda feminina em toda Angola. Compre ou venda roupas e acessórios com facilidade."
+          "title": "Roupas e Acessórios Femininos em Angola {'|'} Compre e Venda {'|'} Ambo Market",
+          "description": "Moda feminina disponível em toda Angola. Anuncie ou compre roupas, bolsas, sapatos e acessórios com facilidade."
         }
       },
       "shoes": {
         "city": {
           "h1": "Sapatos à Venda em {city}",
-          "title": "Compre Sapatos Masculinos e Femininos em {city} {'|'} Ambo Market",
-          "description": "Descubra sapatos para todas as ocasiões em {city}. Ténis, botas, sandálias – novos ou usados. Anuncie grátis."
+          "title": "Sapatos Masculinos e Femininos em {city} {'|'} Ambo Market",
+          "description": "Encontre sapatos estilosos em {city}. Ténis, botas, sandálias e mais – novos ou usados. Anuncie seu par gratuitamente."
         },
         "everywhere": {
           "h1": "Sapatos à Venda",
-          "title": "Compre Sapatos Masculinos e Femininos em Angola {'|'} Ambo Market",
-          "description": "Explore uma grande variedade de sapatos em Angola. Compre ou anuncie com facilidade."
+          "title": "Sapatos para Homem e Mulher em Angola {'|'} Compre e Venda {'|'} Ambo Market",
+          "description": "Explore diversos modelos de sapatos em Angola. Calçado para todas as ocasiões. Anuncie ou compre com segurança."
         }
       },
       "bags": {
         "city": {
           "h1": "Mochilas e Malas em {city}",
-          "title": "Compre Malas, Mochilas e Mais em {city} {'|'} Ambo Market",
-          "description": "Veja anúncios de malas femininas, mochilas escolares, malas de viagem e mais em {city}. Anuncie ou compre facilmente."
+          "title": "Malas de Mão, Mochilas e de Viagem em {city} {'|'} Ambo Market",
+          "description": "Veja malas femininas, mochilas escolares e malas de viagem em {city}. Compre ou publique anúncios de forma fácil e grátis."
         },
         "everywhere": {
           "h1": "Mochilas e Malas",
-          "title": "Compre Malas, Mochilas e Mais em Angola {'|'} Ambo Market",
-          "description": "Descubra malas para trabalho, escola ou viagem em Angola. Publique ou veja ofertas gratuitamente."
+          "title": "Malas de Mão, Mochilas e de Viagem em Angola {'|'} Ambo Market",
+          "description": "Descubra malas para uso diário, trabalho ou viagem em Angola. Publique ou veja ofertas com um clique."
         }
       },
       "accessories-fashion": {
         "city": {
           "h1": "Acessórios de Moda em {city}",
-          "title": "Compre Relógios, Bijuterias e Óculos em {city} {'|'} Ambo Market",
-          "description": "Complete seu visual com acessórios de estilo. Veja chapéus, cintos, brincos e mais em {city}."
+          "title": "Relógios, Óculos e Bijuterias em {city} {'|'} Ambo Market",
+          "description": "Complete o seu visual com acessórios de moda em {city}. Chapéus, cintos, colares, óculos e mais. Compre ou anuncie grátis."
         },
         "everywhere": {
           "h1": "Acessórios de Moda",
-          "title": "Compre Relógios, Bijuterias e Óculos em Angola {'|'} Ambo Market",
-          "description": "Acessórios ideais para qualquer look. Compre relógios, colares, óculos e mais em Angola."
+          "title": "Relógios, Bijuterias e Óculos em Angola {'|'} Ambo Market",
+          "description": "Acessórios para complementar qualquer look. Compre ou venda relógios, colares, pulseiras e muito mais em Angola."
         }
       },
       "beauty-products": {
         "city": {
           "h1": "Produtos de Beleza em {city}",
-          "title": "Compre Perfumes, Maquilhagem e Cuidados Pessoais em {city} {'|'} Ambo Market",
-          "description": "Veja cosméticos, produtos para cabelo e bem-estar em {city}. Ótimos para uso pessoal ou revenda. Anuncie de graça."
+          "title": "Perfumes, Maquilhagem e Cosméticos em {city} {'|'} Ambo Market",
+          "description": "Veja produtos de beleza em {city}. Perfumes, cremes, maquilhagem, itens para cabelo e muito mais. Anuncie ou compre facilmente."
         },
         "everywhere": {
           "h1": "Produtos de Beleza",
-          "title": "Compre Perfumes, Maquilhagem e Cuidados Pessoais em Angola {'|'} Ambo Market",
-          "description": "Compre e venda produtos de beleza e saúde em Angola. Maquilhagem, cremes, perfumes e muito mais."
+          "title": "Cosméticos, Perfumes e Cuidados Pessoais em Angola {'|'} Ambo Market",
+          "description": "Compre e venda produtos de beleza em Angola. Maquilhagem, cuidados com a pele e perfumes. Tudo num só lugar."
         }
       }
     },

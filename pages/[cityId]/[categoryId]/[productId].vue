@@ -430,11 +430,11 @@ const { isDesktopOrTablet } = useDevice();
     "share": "Compartilhar anúncio",
     "vehicles": {
       "city": {
-        "title": "Comprar {title} em {city} {'|'} Veículos {'|'} Ambo Market",
+        "title": "{title} à venda em {city} {'|'} Veículos {'|'} Ambo Market",
         "description": "Compre {title} em {city} – carros, motas, barcos e mais. Apenas anúncios verificados. {description}"
       },
       "everywhere": {
-        "title": "Comprar {title} {'|'} Veículos {'|'} Ambo Market",
+        "title": "{title} à venda em Angola {'|'} Veículos {'|'} Ambo Market",
         "description": "Explore {title} à venda – carros, motas e veículos comerciais. {description}"
       }
     },
