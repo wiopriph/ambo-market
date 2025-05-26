@@ -222,6 +222,10 @@ const breadcrumbs = computed(() => [
     margin: 10px 0;
   }
 
+  ul {
+    list-style-type: disc;
+  }
+
   li {
     margin-bottom: 4px;
   }
