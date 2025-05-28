@@ -13,6 +13,7 @@ export default defineContentConfig({
         image: z.string(),
         date: z.date(),
         dateModified: z.date(),
+        tags: z.array(z.string()).optional(),
       }),
     }),
     // blogEn: defineCollection({

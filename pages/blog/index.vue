@@ -3,11 +3,50 @@ const route = useRoute();
 
 const PER_PAGE = 20;
 
-const { data: posts } = await useAsyncData('posts', () => queryCollection('blog')
-  .limit(PER_PAGE)
-  .skip(((Number(route.query.page) || 1) - 1) * PER_PAGE)
-  .all(), {
-  watch: [() => route.params],
+const { data: posts } = await useAsyncData('posts', () => {
+  const tagsQuery = route.query.tags || '';
+
+  const query = queryCollection('blog')
+    .limit(PER_PAGE)
+    .skip(((Number(route.query.page) || 1) - 1) * PER_PAGE);
+
+  if (tagsQuery) {
+    query.where('tags', 'LIKE', `%${tagsQuery}%`);
+  }
+
+  return query.all();
+}, {
+  watch: [() => route.query],
+});
+
+const TAGS = [
+  'Guias',
+  'Imóveis',
+  'Transporte',
+  'Eletrônicos',
+];
+
+const currentTag = computed(() => route.query.tags || 'Todos os temas');
+
+const tagsList = computed(() => {
+  const list = [{
+    title: 'Todos os temas',
+    route: { name: 'blog' },
+  }];
+
+  TAGS.forEach((tag) => {
+    list.push({
+      title: tag,
+      route: {
+        name: 'blog',
+        query: {
+          tags: tag,
+        },
+      },
+    });
+  });
+
+  return list;
 });
 
 
@@ -55,20 +94,20 @@ const breadcrumbs = computed(() => [
 <i18n lang="json">
 {
   "en": {
-    "main_page": "Main page",
+    "main_page": "Home",
     "blog": "Blog",
-    "title": "Ambo Market Blog – Tips, Guides & Market Trends in Angola",
+    "title": "Ambo Market Blog – Expert Tips, Guides & Market Insights from Angola",
     "h1": "Ambo Market Blog",
-    "description": "Discover tips, how-to guides, and market news on the Ambo Market blog. Stay informed and grow your buying or selling skills in Angola!",
-    "not_found": "No articles found matching your request."
+    "description": "Stay ahead with expert tips, step-by-step guides, and the latest market trends on the Ambo Market blog. Whether you're buying or selling in Angola, our blog helps you succeed!",
+    "not_found": "Sorry, no articles match your search. Try another topic!"
   },
   "pt": {
-    "main_page": "Página inicial",
+    "main_page": "Página Inicial",
     "blog": "Blog",
-    "title": "Blog da Ambo Market – Dicas, Guias e Tendências do Mercado Angolano",
+    "title": "Blog da Ambo Market – Dicas, Guias e Insights do Mercado Angolano",
     "h1": "Blog da Ambo Market",
-    "description": "Explore dicas, tutoriais e notícias do mercado no blog da Ambo Market. Fique informado e aprimore sua experiência de compra e venda em Angola!",
-    "not_found": "Nenhum artigo encontrado para esta pesquisa."
+    "description": "Fique à frente com dicas de especialistas, guias passo a passo e as últimas tendências do mercado no blog da Ambo Market. Se você compra ou vende em Angola, nosso blog é seu parceiro para o sucesso!",
+    "not_found": "Desculpe, nenhum artigo encontrado para essa pesquisa. Tente outro tema!"
   }
 }
 </i18n>
@@ -84,6 +123,19 @@ const breadcrumbs = computed(() => [
           v-text="t('h1')"
         />
 
+        <ul :class="$style.tags">
+          <li
+            v-for="tag in tagsList"
+            :key="tag.title"
+          >
+            <BlogTag
+              :value="tag.title"
+              :route="tag.route"
+              :isActive="tag.title === currentTag"
+            />
+          </li>
+        </ul>
+
         <ul
           v-if="posts?.length"
           :class="$style.list"
@@ -98,6 +150,7 @@ const breadcrumbs = computed(() => [
               :title="post.title"
               :img="post?.image"
               :date="post.date"
+              :tags="post.tags"
             />
           </li>
         </ul>
@@ -132,7 +185,7 @@ const breadcrumbs = computed(() => [
 .title {
   @include ui-typo-32-bold;
 
-  margin-top: 10px;
+  margin-top: 18px;
   margin-bottom: 24px;
 }
 
@@ -188,5 +241,12 @@ const breadcrumbs = computed(() => [
   @include sm {
     @include ui-col(12);
   }
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 </style>

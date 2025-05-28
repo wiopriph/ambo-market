@@ -3,6 +3,7 @@ title: "Usando Filtros para Encontrar o que Precisa"
 description: "Aprenda a usar os filtros do Ambo Market para encontrar rapidamente os produtos e serviços ideais para você."
 image: "/images/blog/usando-filtros-para-encontrar-o-que-precisa/preview.png"
 date: "2025-05-02T12:00:00+00:00"
+tags: ['Guias']
 ---
 
 # Usando Filtros para Encontrar o que Precisa

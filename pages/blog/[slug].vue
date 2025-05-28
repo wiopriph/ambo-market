@@ -120,6 +120,20 @@ const breadcrumbs = computed(() => [
           :value="doc"
           :class="$style.prose"
         />
+
+        <ul
+          v-if="doc.tags?.length"
+          :class="$style.tags"
+        >
+          <li
+            v-for="tag in doc.tags"
+            :key="tag"
+          >
+            <NuxtLink :to="{ name: 'blog', query: { tags: tag } }">
+              {{ `#${tag.toLowerCase()}` }}
+            </NuxtLink>
+          </li>
+        </ul>
       </div>
 
       <div :class="$style.left" />
@@ -261,5 +275,12 @@ const breadcrumbs = computed(() => [
     border-radius: 4px;
     font-size: 90%;
   }
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
 }
 </style>

@@ -1,14 +1,8 @@
 <script setup lang="ts">
 import type { BlogCard } from './types';
-import { formatLocalizedDate } from '~/utils/formatDate';
 
 
 const props = defineProps<BlogCard>();
-
-
-const { locale } = useI18n();
-
-const formattedDate = computed(() => props.date ? formatLocalizedDate(props.date, locale.value) : '');
 </script>
 
 <template>
@@ -32,10 +26,17 @@ const formattedDate = computed(() => props.date ? formatLocalizedDate(props.date
       />
 
       <div
-        v-if="false"
-        :class="$style.date"
-        v-text="formattedDate"
-      />
+        v-if="tags?.length"
+        :class="$style.tagsWrap"
+      >
+        <ul :class="$style.tags">
+          <li
+            v-for="tag in tags"
+            :key="tag"
+            v-text="`#${tag?.toLowerCase()}`"
+          />
+        </ul>
+      </div>
     </div>
   </NuxtLink>
 </template>
@@ -93,12 +94,17 @@ $card-indent: 10px;
   text-overflow: ellipsis;
 }
 
-.date {
+.tagsWrap {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.tags {
   @include ui-typo-14;
 
   margin-top: 2px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  display: flex;
+  gap: 12px;
+  color: $ui-color-text-main;
 }
 </style>

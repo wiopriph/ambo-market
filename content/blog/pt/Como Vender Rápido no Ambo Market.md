@@ -3,6 +3,7 @@ title: "Como Vender Rápido no Ambo Market"
 description: "Dicas práticas para vender seus produtos de forma rápida e eficaz no Ambo Market."
 image: "/images/blog/como-vender-rapido-no-ambo-market.png"
 date: "2025-04-26T09:00:00+00:00"
+tags: ['Guias']
 ---
 
 # Como Vender Rápido no Ambo Market

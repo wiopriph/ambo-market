@@ -2,7 +2,8 @@
 title: Como Salvar Seus Anúncios Favoritos
 description: Aprenda a salvar, acessar e organizar seus anúncios preferidos no Ambo Market com facilidade.
 image: "/images/blog/como-salvar-seus-anuncios-favoritos.png"
-date: "2025-05-13T12:00:00+00:00" 
+date: "2025-05-13T12:00:00+00:00"
+tags: ['Guias']
 ---
 
 # Como Salvar Seus Anúncios Favoritos

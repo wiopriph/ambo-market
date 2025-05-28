@@ -3,6 +3,7 @@ title: "Comprar e Vender Carros: Um Guia para Iniciantes"
 description: "Tudo o que você precisa saber para começar a comprar ou vender carros no Ambo Market com segurança e praticidade."
 image: "/images/blog/comprar-e-vender-carros-um-guia-para-iniciantes.png"
 date: "2025-05-27T12:00:00+00:00"
+tags: ['Guias', 'Transporte']
 ---
 
 # Comprar e Vender Carros: Um Guia para Iniciantes

@@ -2,7 +2,8 @@
 title: "Como Comprar com Segurança dos Vendedores"
 description: "Saiba como fazer compras seguras no Ambo Market. Dicas práticas para evitar golpes e usar o recurso Negócio Seguro com confiança."
 image: "/images/blog/como-comprar-com-seguranca-dos-vendedores.png"
-date: "2025-05-06T12:00:00+00:00" 
+date: "2025-05-06T12:00:00+00:00"
+tags: ['Guias']
 ---
 
 # Como Comprar com Segurança dos Vendedores
