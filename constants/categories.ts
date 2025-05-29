@@ -154,8 +154,8 @@ export const CATEGORIES: Category[] = [
         key: 'subcategories.sale',
       },
       {
-        id: 'commercial',
-        key: 'subcategories.commercial',
+        id: 'commercial-property',
+        key: 'subcategories.commercial-property',
       },
       {
         id: 'land',

@@ -244,7 +244,7 @@ const setPage = (pageNumber: number) => {
           "description": "Buy property across Angola – houses, apartments and land. Post or browse listings for free."
         }
       },
-      "commercial": {
+      "commercial-property": {
         "city": {
           "h1": "Commercial Real Estate in {city}",
           "title": "Offices, Shops and Warehouses in {city} {'|'} Ambo Market",
@@ -819,7 +819,7 @@ const setPage = (pageNumber: number) => {
           "description": "Compre imóveis em toda Angola – casas, terrenos e apartamentos. Publique ou veja anúncios gratuitamente."
         }
       },
-      "commercial": {
+      "commercial-property": {
         "city": {
           "h1": "Imóveis Comerciais em {city}",
           "title": "Lojas, Escritórios e Armazéns em {city} {'|'} Ambo Market",
