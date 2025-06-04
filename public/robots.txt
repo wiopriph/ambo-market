@@ -1,9 +1,6 @@
 User-agent: *
 
-Disallow: /*?*minPrice=
-Disallow: /*?*maxPrice=
-Disallow: /*?*q=
-Disallow: /*?*safeTransaction=
+Disallow: *?
 
 Disallow: /auth
 Disallow: /product/create
