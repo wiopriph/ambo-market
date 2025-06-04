@@ -68,6 +68,19 @@ if (error && error?.value) {
   throw createError(error?.value);
 }
 
+const { data: recommendedPosts } = await useAsyncData(
+  'recommendedPosts',
+  async () => {
+    const response = await $fire.https('getRecommendedPosts', {
+      postId: route.params.productId,
+      limit: 4,
+    });
+
+    return response?.posts || [];
+  },
+  { watch: [() => route.params] },
+);
+
 const { t, locale } = useI18n();
 
 const seller = computed({
@@ -332,6 +345,7 @@ const { isDesktopOrTablet } = useDevice();
     "description": "Description",
     "posted": "Posted On",
     "share": "Share Listing",
+    "related_listings": "Related Listings",
     "vehicles": {
       "city": {
         "title": "Buy {title} in {city} {'|'} Vehicles {'|'} Ambo Market",
@@ -441,6 +455,7 @@ const { isDesktopOrTablet } = useDevice();
     "description": "Descrição do produto",
     "posted": "Publicado em",
     "share": "Compartilhar anúncio",
+    "related_listings": "Anúncios Relacionados",
     "vehicles": {
       "city": {
         "title": "Comprar {title} em {city} {'|'} Veículos {'|'} Ambo Market",
@@ -752,7 +767,19 @@ const { isDesktopOrTablet } = useDevice();
       </transition>
     </section>
 
-    <UITextRoll :class="$style.text">
+    <section
+      v-if="recommendedPosts?.length"
+      :class="$style.block"
+    >
+      <h3
+        :class="$style.listingTitle"
+        v-text="t('related_listings')"
+      />
+
+      <ProductList :list="recommendedPosts" />
+    </section>
+
+    <UITextRoll :class="$style.block">
       <SeoProductText
         :productTitle="post?.title"
         :category="postCategoryName"
@@ -959,7 +986,13 @@ const { isDesktopOrTablet } = useDevice();
   margin-top: 20px;
 }
 
-.text {
-  padding-top: 20px;
+.block {
+  margin-top: 20px;
+}
+
+.listingTitle {
+  @include ui-typo-24-bold;
+
+  margin-bottom: 20px;
 }
 </style>
