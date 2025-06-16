@@ -8,7 +8,7 @@ import type { ProductApiResponse, User } from '~/types/product';
 import { formatFullDate } from '~/utils/formatDate';
 import { useUser } from '~/composables/useUser';
 import { getPostRoute } from '~/utils/getPostRoute';
-import { AUTH_ACTIONS } from '~/constants/authActions';
+import { AUTH_ACTIONS } from '~/constants/auth-actions';
 
 
 definePageMeta({

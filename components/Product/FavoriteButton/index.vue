@@ -2,7 +2,7 @@
 import type { FavoriteButtonProps } from '~/components/Product/FavoriteButton/types';
 import IconHeart from '~/assets/images/header/icon-heart.svg?component';
 import { useUser } from '~/composables/useUser';
-import { AUTH_ACTIONS } from '~/constants/authActions';
+import { AUTH_ACTIONS } from '~/constants/auth-actions';
 
 
 const props = withDefaults(defineProps<FavoriteButtonProps>(), {
