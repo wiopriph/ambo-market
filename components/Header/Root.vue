@@ -6,6 +6,13 @@ import IconDeals from '~/assets/images/header/icon-deals.svg?component';
 import IconAds from '~/assets/images/header/icon-ads.svg?component';
 import IconSettings from '~/assets/images/header/icon-settings.svg?component';
 import { CATEGORIES } from '~/constants/categories';
+import {
+  CLICK_CHATS_BUTTON,
+  CLICK_FAVORITES_BUTTON,
+  CLICK_MY_ADS_BUTTON,
+  CLICK_ORDERS_BUTTON,
+  CLICK_SETTINGS_BUTTON,
+} from '~/constants/analytics-events';
 
 
 const { t } = useI18n();
@@ -15,16 +22,19 @@ const menuList = computed(() => [
     icon: IconAds,
     label: t('ads'),
     route: { name: 'user-ads' },
+    event: CLICK_MY_ADS_BUTTON,
   },
   {
     icon: IconMail,
     label: t('messages'),
     route: { name: 'im' },
+    event: CLICK_CHATS_BUTTON,
   },
   {
     icon: IconHeart,
     label: t('favorites'),
     route: { name: 'user-favorites' },
+    event: CLICK_FAVORITES_BUTTON,
   },
   {
     icon: IconDeals,
@@ -35,11 +45,13 @@ const menuList = computed(() => [
         status: 'buy',
       },
     },
+    event: CLICK_ORDERS_BUTTON,
   },
   {
     icon: IconSettings,
     label: t('settings'),
     route: { name: 'user-settings' },
+    event: CLICK_SETTINGS_BUTTON,
   },
 ]);
 

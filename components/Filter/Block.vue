@@ -6,6 +6,7 @@ import { DEFAULT_FILTERS } from '~/constants/filters';
 import { CATEGORIES, getCategoryById } from '~/constants/categories';
 import { CITIES } from '~/constants/cities';
 import getObjectDifferences from '~/utils/getObjectDifferences';
+import { SELECT_BRAND, SELECT_CATEGORY, SELECT_CITY, SELECT_SUBCATEGORY } from '~/constants/analytics-events';
 
 
 const { t } = useI18n();
@@ -61,13 +62,18 @@ const citiesList = computed(() => CITIES.map(city => ({
   text: city.name || t('everywhere'),
 })));
 
+const { pushEvent } = useAnalyticsEvent();
+
 const route = useRoute();
+
 
 const setCity = (city: string) => {
   const query = { ...currentFilters.value };
-  const params: Record<string, string> = {
-    cityId: city || 'all',
-  };
+  const cityId = city || 'all';
+
+  pushEvent(SELECT_CITY, { city_id: cityId });
+
+  const params: Record<string, string> = { cityId };
 
   const keys: string[] = ['categoryId', 'subcategoryId', 'brandId'];
 
@@ -88,6 +94,8 @@ const setCity = (city: string) => {
 
 const setCategory = (categoryId: string) => {
   const query = { ...currentFilters.value };
+
+  pushEvent(SELECT_CATEGORY, { category_id: categoryId });
 
   if (categoryId) {
     return navigateTo({
@@ -112,6 +120,8 @@ const setCategory = (categoryId: string) => {
 const setSubcategory = (subcategoryId: string) => {
   const query = { ...currentFilters.value };
 
+  pushEvent(SELECT_SUBCATEGORY, { category_id: subcategoryId });
+
   return navigateTo({
     name: 'cityId-categoryId-subcategoryId',
     params: {
@@ -125,6 +135,8 @@ const setSubcategory = (subcategoryId: string) => {
 
 const setBrand = (brandId: string) => {
   const query = { ...currentFilters.value };
+
+  pushEvent(SELECT_BRAND, { brand_id: brandId });
 
   return navigateTo({
     name: 'cityId-categoryId-subcategoryId-brandId',
@@ -250,7 +262,7 @@ const clearAllFilters = () => {
         :options="citiesList"
         :placeholder="t('select')"
         :class="$style.category"
-        name="category"
+        name="city"
         @update:model-value="setCity"
       />
     </li>
@@ -282,7 +294,7 @@ const clearAllFilters = () => {
         :options="subcategoriesItems"
         :placeholder="t('select')"
         :class="$style.category"
-        name="category"
+        name="subcategory"
         @update:model-value="setSubcategory"
       />
     </li>

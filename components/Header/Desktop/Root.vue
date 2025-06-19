@@ -4,15 +4,25 @@ import IconHamburger from '~/assets/images/header/icon-hamburger.svg?component';
 import IconClose from '~/assets/images/header/icon-close.svg?component';
 import { usePosts } from '~/composables/usePosts';
 import { useUser } from '~/composables/useUser';
+import {
+  CLICK_CATEGORY_BUTTON,
+  CLICK_LOGIN_BUTTON,
+  CLICK_POST_AD_BUTTON,
+  CLICK_USER_BUTTON, SEARCH_SUBMIT,
+} from '~/constants/analytics-events';
 
 
 const indexRoute = inject<RouteLocationRaw>('indexRoute');
 
 
+const { pushEvent } = useAnalyticsEvent();
+
 const isMenuOpen = ref(false);
 
 const openMenu = () => {
   isMenuOpen.value = true;
+
+  pushEvent(CLICK_USER_BUTTON);
 };
 
 const closeMenu = () => {
@@ -24,6 +34,8 @@ const isCategoryOpen = ref(false);
 
 const toggleCategory = () => {
   isCategoryOpen.value = !isCategoryOpen.value;
+
+  pushEvent(CLICK_CATEGORY_BUTTON);
 };
 
 
@@ -31,6 +43,8 @@ const isAuthModalVisible = ref(false);
 
 const showAuthModal = () => {
   isAuthModalVisible.value = true;
+
+  pushEvent(CLICK_LOGIN_BUTTON);
 };
 
 const hideAuthModal = () => {
@@ -95,11 +109,15 @@ const find = () => {
 
   const name = Object.keys(params).join('-');
 
+  pushEvent(SEARCH_SUBMIT, { query: searchString.value });
+
   return navigateTo({ name, params, query });
 };
 
 
 const goToCreatePage = () => {
+  pushEvent(CLICK_POST_AD_BUTTON);
+
   navigateTo({ name: 'product-create' });
 };
 

@@ -5,6 +5,7 @@ import IconEmail from '~/assets/images/auth/socials/icon-email.svg?component';
 import { useUser } from '~/composables/useUser';
 import { AUTH_STATES } from '~/constants/auth-states';
 import type { AuthModalStateValue } from '~/constants/auth-states';
+import { CLICK_CREATE_ACCOUNT, CLICK_EMAIL_LOGIN, CLICK_SOCIAL_LOGIN } from '~/constants/analytics-events';
 
 
 definePageMeta({
@@ -34,6 +35,8 @@ watch(isLoggedIn, (state) => {
 });
 
 
+const { pushEvent } = useAnalyticsEvent();
+
 const isAuthModalVisible = ref(false);
 
 const showAuthModal = () => {
@@ -58,6 +61,8 @@ const authByFb = async () => {
   clearError();
 
   try {
+    pushEvent(CLICK_SOCIAL_LOGIN, { platform: 'facebook' });
+
     await $fire.auth.signInWithFacebook();
   } catch (error) {
     backendError.value = error?.message;
@@ -68,6 +73,8 @@ const authByGoogle = async () => {
   clearError();
 
   try {
+    pushEvent(CLICK_SOCIAL_LOGIN, { platform: 'google' });
+
     await $fire.auth.signInWithGoogle();
   } catch (error) {
     backendError.value = error?.message;
@@ -80,6 +87,8 @@ const currentState = ref<AuthModalStateValue>(AUTH_STATES.WELCOME);
 const authByEmail = () => {
   clearError();
 
+  pushEvent(CLICK_EMAIL_LOGIN);
+
   currentState.value = AUTH_STATES.LOGIN;
 
   showAuthModal();
@@ -87,6 +96,8 @@ const authByEmail = () => {
 
 const createAccount = () => {
   clearError();
+
+  pushEvent(CLICK_CREATE_ACCOUNT);
 
   currentState.value = AUTH_STATES.REGISTRATION;
 

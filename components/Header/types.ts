@@ -6,5 +6,6 @@ export interface MenuItem {
   icon: DefineComponent;
   label: string;
   route: RouteLocationRaw;
+  event: string;
 }
 

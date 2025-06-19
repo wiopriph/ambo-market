@@ -4,6 +4,7 @@ import { DEFAULT_FILTERS } from '~/constants/filters';
 import { CATEGORIES } from '~/constants/categories';
 import { CITIES } from '~/constants/cities';
 import getObjectDifferences from '~/utils/getObjectDifferences';
+import { SELECT_BRAND, SELECT_CATEGORY, SELECT_CITY, SELECT_SUBCATEGORY } from '~/constants/analytics-events';
 
 
 const { t } = useI18n();
@@ -113,6 +114,25 @@ const clearAllFilters = () => {
 
   close();
 };
+
+const { pushEvent } = useAnalyticsEvent();
+
+
+const setCity = (cityId: string) => {
+  pushEvent(SELECT_CITY, { city_id: cityId });
+};
+
+const setCategory = (categoryId: string) => {
+  pushEvent(SELECT_CATEGORY, { category_id: categoryId });
+};
+
+const setSubcategory = (subcategoryId: string) => {
+  pushEvent(SELECT_SUBCATEGORY, { category_id: subcategoryId });
+};
+
+const setBrand = (brandId: string) => {
+  pushEvent(SELECT_BRAND, { brand_id: brandId });
+};
 </script>
 
 <i18n lang="json">
@@ -168,7 +188,8 @@ const clearAllFilters = () => {
             :options="citiesList"
             :placeholder="t('select')"
             :class="$style.selector"
-            name="category"
+            name="city"
+            @update:model-value="setCity"
           />
         </li>
 
@@ -184,6 +205,7 @@ const clearAllFilters = () => {
             :placeholder="t('select')"
             :class="$style.selector"
             name="category"
+            @update:model-value="setCategory"
           />
         </li>
 
@@ -202,6 +224,7 @@ const clearAllFilters = () => {
             :placeholder="t('select')"
             :class="$style.selector"
             name="subcategory"
+            @update:model-value="setSubcategory"
           />
         </li>
 
@@ -220,6 +243,7 @@ const clearAllFilters = () => {
             :placeholder="t('select')"
             :class="$style.selector"
             name="brand"
+            @update:model-value="setBrand"
           />
         </li>
 

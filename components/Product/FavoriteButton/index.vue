@@ -3,6 +3,7 @@ import type { FavoriteButtonProps } from '~/components/Product/FavoriteButton/ty
 import IconHeart from '~/assets/images/header/icon-heart.svg?component';
 import { useUser } from '~/composables/useUser';
 import { AUTH_ACTIONS } from '~/constants/auth-actions';
+import { CLICK_AD_FAVORITE } from '~/constants/analytics-events';
 
 
 const props = withDefaults(defineProps<FavoriteButtonProps>(), {
@@ -39,7 +40,11 @@ const { t } = useI18n();
 const buttonText = computed(() => (isFavoritePost.value ? t('remove') : t('add')));
 
 
+const { pushEvent } = useAnalyticsEvent();
+
 const toggleFavorite = async () => {
+  pushEvent(CLICK_AD_FAVORITE, { product_id: props.postId });
+
   if (!isLoggedIn.value) {
     const currentPath = useRoute().path;
 

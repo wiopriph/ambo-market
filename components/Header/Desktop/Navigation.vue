@@ -6,6 +6,7 @@ import IconHeart from '~/assets/images/header/icon-heart.svg?component';
 import IconAds from '~/assets/images/header/icon-ads.svg?component';
 import { getLabelByRadius } from '~/constants/distance';
 import { usePosts } from '~/composables/usePosts';
+import { CLICK_LOCATION_BUTTON } from '~/constants/analytics-events';
 
 
 const { t } = useI18n();
@@ -45,10 +46,13 @@ const hasRadius = computed(() => locationName.value && coords.value.radius);
 const selectedRadiusLabel = computed(() => getLabelByRadius(`${coords.value?.radius || ''}`));
 const locationNameOrDefault = computed(() => locationName.value || t('everywhere'));
 
+const { pushEvent } = useAnalyticsEvent();
 
 const isMapModalVisible = ref(false);
 
 const showMapModal = () => {
+  pushEvent(CLICK_LOCATION_BUTTON);
+
   isMapModalVisible.value = true;
 };
 

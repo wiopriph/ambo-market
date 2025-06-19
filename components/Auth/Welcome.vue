@@ -3,21 +3,28 @@ import IconFb from '~/assets/images/auth/socials/icon-fb.svg?component';
 import IconGoogle from '~/assets/images/auth/socials/icon-google.svg?component';
 import IconEmail from '~/assets/images/auth/socials/icon-email.svg?component';
 import { AUTH_STATES } from '~/constants/auth-states';
+import { CLICK_CREATE_ACCOUNT, CLICK_EMAIL_LOGIN, CLICK_SOCIAL_LOGIN } from '~/constants/analytics-events';
 
 
 const { t } = useI18n();
 
 const emit = defineEmits(['close', 'select']);
 
+const { pushEvent } = useAnalyticsEvent();
+
 const closeModal = () => {
   emit('close');
 };
 
 const authByEmail = () => {
+  pushEvent(CLICK_EMAIL_LOGIN);
+
   emit('select', AUTH_STATES.LOGIN);
 };
 
 const createAccount = () => {
+  pushEvent(CLICK_CREATE_ACCOUNT);
+
   emit('select', AUTH_STATES.REGISTRATION);
 };
 
@@ -35,6 +42,8 @@ const authByFb = async () => {
   clearError();
 
   try {
+    pushEvent(CLICK_SOCIAL_LOGIN, { platform: 'facebook' });
+
     await $fire.auth.signInWithFacebook();
 
     closeModal();
@@ -47,6 +56,8 @@ const authByGoogle = async () => {
   clearError();
 
   try {
+    pushEvent(CLICK_SOCIAL_LOGIN, { platform: 'google' });
+
     await $fire.auth.signInWithGoogle();
 
     closeModal();

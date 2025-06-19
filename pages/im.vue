@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useUser } from '~/composables/useUser';
 import type { Chat } from '~/types/chat';
+import { CLICK_CHAT_ITEM } from '~/constants/analytics-events';
 
 
 definePageMeta({
@@ -71,7 +72,12 @@ const isChatListEmpty = computed(() => !isLoading.value && !(chatList.value && c
 
 const getActiveChat = (chatId: string) => route.params.chatId === chatId;
 
+const { pushEvent } = useAnalyticsEvent();
+
+
 const goToChatRoomRoute = (chatId: string) => {
+  pushEvent(CLICK_CHAT_ITEM, { chat_id: chatId });
+
   navigateTo({
     name: 'im-chat-chatId',
     params: { chatId },

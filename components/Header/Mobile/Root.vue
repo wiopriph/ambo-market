@@ -4,14 +4,23 @@ import IconLogo from '~/assets/images/icon-logo.svg?component';
 import IconHamburger from '~/assets/images/header/icon-hamburger.svg?component';
 import IconProfile from '~/assets/images/header/icon-profile.svg?component';
 import { useUser } from '~/composables/useUser';
+import {
+  CLICK_CATEGORY_BUTTON,
+  CLICK_LOCATION_BUTTON,
+  CLICK_LOGIN_BUTTON,
+  CLICK_USER_BUTTON,
+} from '~/constants/analytics-events';
 
 
 const indexRoute = inject<RouteLocationRaw>('indexRoute');
 
+const { pushEvent } = useAnalyticsEvent();
 
 const isAuthModalVisible = ref(false);
 
 const showAuthModal = () => {
+  pushEvent(CLICK_LOGIN_BUTTON);
+
   isAuthModalVisible.value = true;
 };
 
@@ -23,6 +32,8 @@ const hideAuthModal = () => {
 const isCategoryModalVisible = ref(false);
 
 const showCategoryModal = () => {
+  pushEvent(CLICK_CATEGORY_BUTTON);
+
   isCategoryModalVisible.value = true;
 };
 
@@ -34,6 +45,8 @@ const hideCategoryModal = () => {
 const isMenuModalVisible = ref(false);
 
 const showMenuModal = () => {
+  pushEvent(CLICK_USER_BUTTON);
+
   isMenuModalVisible.value = true;
 };
 
@@ -45,6 +58,8 @@ const hideMenuModal = () => {
 const isMapModalVisible = ref(false);
 
 const showMapModal = () => {
+  pushEvent(CLICK_LOCATION_BUTTON);
+
   isMapModalVisible.value = true;
 };
 

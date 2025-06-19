@@ -7,6 +7,7 @@ import {
   onSnapshot,
 } from 'firebase/firestore';
 import { useUser } from '~/composables/useUser';
+import { CLICK_SEND_MESSAGE } from '~/constants/analytics-events';
 
 
 definePageMeta({
@@ -17,6 +18,9 @@ const message = ref<string>('');
 
 const { $fire } = useNuxtApp();
 const firestore = getFirestore($fire.app);
+
+const { pushEvent } = useAnalyticsEvent();
+
 
 const sendMessage = () => {
   if (message.value) {
@@ -31,6 +35,11 @@ const sendMessage = () => {
     };
 
     messages.value.push(tempMessage);
+
+    pushEvent(CLICK_SEND_MESSAGE, {
+      chat_id: route.params.chatId,
+      message_length: messages.value.length,
+    });
 
     message.value = '';
 

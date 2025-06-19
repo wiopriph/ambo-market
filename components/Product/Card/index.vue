@@ -5,6 +5,7 @@ import formatCurrency from '~/utils/formatCurrency';
 import { getCityIdByName } from '~/constants/cities';
 import { POST_STATUSES } from '~/constants/post-statuses';
 import { getPostRoute } from '~/utils/getPostRoute';
+import { CLICK_PRODUCT_CARD } from '~/constants/analytics-events';
 
 
 const props = defineProps<CardProps>();
@@ -23,6 +24,8 @@ const link = computed(() => getPostRoute({
   brandId: props.product?.brandId,
   productId: props.product?.id,
 }));
+
+const { pushEvent } = useAnalyticsEvent();
 </script>
 
 <template>
@@ -31,6 +34,7 @@ const link = computed(() => getPostRoute({
     :class="$style.root"
     target="_blank"
     rel="noopener noreferrer"
+    @click="pushEvent(CLICK_PRODUCT_CARD, { product_id: props.product?.id })"
   >
     <div :class="$style.photoWrap">
       <div :class="$style.line">

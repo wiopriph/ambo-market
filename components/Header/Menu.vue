@@ -11,6 +11,14 @@ const emit = defineEmits(['close']);
 const close = () => emit('close');
 
 
+const { pushEvent } = useAnalyticsEvent();
+
+const menuClick = (event: string) => {
+  pushEvent(event);
+  close();
+};
+
+
 const { $fire } = useNuxtApp();
 
 const logout = async () => {
@@ -53,7 +61,7 @@ const { t } = useI18n();
         <NuxtLink
           :to="item.route"
           :class="$style.item"
-          @click="close"
+          @click="menuClick(item.event)"
         >
           <component
             :is="item.icon"

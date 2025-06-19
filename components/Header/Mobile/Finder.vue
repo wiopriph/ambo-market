@@ -5,6 +5,7 @@ import { DEFAULT_FILTERS } from '~/constants/filters';
 import getObjectDifferences from '~/utils/getObjectDifferences';
 import { usePosts } from '~/composables/usePosts';
 import type { Filters } from '~/composables/usePosts/types';
+import { SEARCH_SUBMIT } from '~/constants/analytics-events';
 
 
 const { t } = useI18n();
@@ -37,6 +38,8 @@ onMounted(() => {
 
 const hasRemoveFiltersButton = computed(() => Object.keys(currentFilters.value).length > 2);
 
+const { pushEvent } = useAnalyticsEvent();
+
 const find = () => {
   const query = {
     ...currentFilters.value,
@@ -66,6 +69,8 @@ const find = () => {
   }
 
   const name = Object.keys(params).join('-');
+
+  pushEvent(SEARCH_SUBMIT, { query: searchString.value });
 
   return navigateTo({ name, params, query });
 };

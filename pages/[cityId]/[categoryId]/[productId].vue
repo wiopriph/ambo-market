@@ -9,11 +9,14 @@ import { formatFullDate } from '~/utils/formatDate';
 import { useUser } from '~/composables/useUser';
 import { getPostRoute } from '~/utils/getPostRoute';
 import { AUTH_ACTIONS } from '~/constants/auth-actions';
+import { CLICK_AD_PHOTO, CLICK_BUY, CLICK_CALL, CLICK_CHAT, CLICK_SHOW_ON_MAP } from '~/constants/analytics-events';
 
 
 definePageMeta({
   path: '/:cityId/:categoryId/:productId([a-zA-Z0-9]{20})',
 });
+
+const { pushEvent } = useAnalyticsEvent();
 
 const { $fire } = useNuxtApp();
 const route = useRoute();
@@ -235,12 +238,16 @@ const getPhoneNumber = async () => {
 };
 
 const showNumber = () => {
+  pushEvent(CLICK_CALL, { product_id: postId.value });
+
   getPhoneNumber();
   showShowNumberModal();
 };
 
 
 const createOrder = () => {
+  pushEvent(CLICK_BUY, { product_id: postId.value });
+
   navigateTo({
     name: 'product-productId-buy',
     params: { productId: postId.value },
@@ -251,6 +258,8 @@ const createOrder = () => {
 const isChatLoading = ref(false);
 
 const createChatRoom = async () => {
+  pushEvent(CLICK_CHAT, { product_id: postId.value });
+
   if (isLoggedIn.value) {
     try {
       isChatLoading.value = true;
@@ -300,6 +309,8 @@ const currentSlideIndex = ref(0);
 const isGalleryModalVisible = ref(false);
 
 const showGalleryModal = (index: number) => {
+  pushEvent(CLICK_AD_PHOTO, { product_id: postId.value });
+
   currentSlideIndex.value = index;
   isGalleryModalVisible.value = true;
 };
@@ -312,6 +323,8 @@ const hideGalleryModal = () => {
 const isMapModalVisible = ref(false);
 
 const showMapModal = () => {
+  pushEvent(CLICK_SHOW_ON_MAP, { product_id: postId.value });
+
   isMapModalVisible.value = true;
 };
 

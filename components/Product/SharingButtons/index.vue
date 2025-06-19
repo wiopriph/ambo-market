@@ -4,6 +4,7 @@ import IconFacebook from '~/assets/images/share/icon-facebook.svg?component';
 import IconMail from '~/assets/images/share/icon-mail.svg?component';
 import IconTwitter from '~/assets/images/share/icon-twitter.svg?component';
 import IconWhatsapp from '~/assets/images/share/icon-whatsapp.svg?component';
+import { CLICK_SHARE_SOCIAL } from '~/constants/analytics-events';
 
 
 const props = defineProps<ProductSharingButtonsProps>();
@@ -12,10 +13,10 @@ const config = useRuntimeConfig();
 
 const { t } = useI18n();
 
-const socialMediaLinks = computed(() => {
-  const fullPath = `${config?.public?.appBaseUrl}${props.link}`;
+const fullPath = computed(() => `${config?.public?.appBaseUrl}${props.link}`);
 
-  const encodeLink = encodeURIComponent(fullPath);
+const socialMediaLinks = computed(() => {
+  const encodeLink = encodeURIComponent(fullPath.value);
   const encodeTitle = encodeURIComponent(props.title);
 
   return [
@@ -48,6 +49,12 @@ const socialMediaLinks = computed(() => {
     },
   ];
 });
+
+const { pushEvent } = useAnalyticsEvent();
+
+const share = (platform: string) => {
+  pushEvent(CLICK_SHARE_SOCIAL, { platform, link: fullPath.value });
+};
 </script>
 
 <i18n lang="json">
@@ -78,6 +85,7 @@ const socialMediaLinks = computed(() => {
         :href="social.link"
         :target="social.target"
         :aria-label="social.text"
+        @click="share(social.type)"
       >
         <component
           :is="social.icon"
