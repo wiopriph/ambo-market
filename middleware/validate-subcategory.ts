@@ -15,6 +15,17 @@ export default defineNuxtRouteMiddleware((to) => {
     throw createError({ statusCode: 404, statusMessage: 'Invalid category' });
   }
 
+  if (categoryId === 'real-estate' && subcategoryId === 'commercial') {
+    return navigateTo({
+      ...to,
+      params: {
+        ...to.params,
+        categoryId,
+        subcategoryId: 'commercial-property',
+      },
+    }, { redirectCode: 301 });
+  }
+
   const isValidSubcategory = category.subcategories?.some(
     sub => sub.id === subcategoryId,
   );
