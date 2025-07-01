@@ -120,7 +120,7 @@ const setCategory = (categoryId: string) => {
 const setSubcategory = (subcategoryId: string) => {
   const query = { ...currentFilters.value };
 
-  pushEvent(SELECT_SUBCATEGORY, { category_id: subcategoryId });
+  pushEvent(SELECT_SUBCATEGORY, { subcategory_id: subcategoryId });
 
   return navigateTo({
     name: 'cityId-categoryId-subcategoryId',

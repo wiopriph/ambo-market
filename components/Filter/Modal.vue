@@ -127,7 +127,7 @@ const setCategory = (categoryId: string) => {
 };
 
 const setSubcategory = (subcategoryId: string) => {
-  pushEvent(SELECT_SUBCATEGORY, { category_id: subcategoryId });
+  pushEvent(SELECT_SUBCATEGORY, { subcategory_id: subcategoryId });
 };
 
 const setBrand = (brandId: string) => {
