@@ -24,6 +24,7 @@ const TAGS = [
   'Imóveis',
   'Transporte',
   'Eletrônicos',
+  'Negócios',
 ];
 
 const currentTag = computed(() => route.query.tags || 'Todos os temas');

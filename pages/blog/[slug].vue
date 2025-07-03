@@ -97,11 +97,11 @@ const breadcrumbs = computed(() => [
 <i18n lang="json">
 {
   "en": {
-    "main_page": "Main page",
+    "main_page": "Home",
     "blog": "Blog"
   },
   "pt": {
-    "main_page": "Página inicial",
+    "main_page": "Página Inicial",
     "blog": "Blog"
   }
 }
