@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate';
 import { boolean, object, array, string } from 'yup';
+import type { RouteLocationRaw } from 'vue-router';
 import { useUser } from '~/composables/useUser';
 import { CATEGORIES } from '~/constants/categories';
 import { CURRENCY } from '~/constants/currency';
+import type { Option } from '~/components/UI/Select/types';
 
 
 definePageMeta({
@@ -92,26 +94,22 @@ const { value: isSafeDeal } = useField<boolean>('isSafeDeal');
 const { value: images } = useField<Image[]>('images');
 const { value: location } = useField<Location>('location');
 
-const categoriesItems = computed(() => CATEGORIES.map(({ id, key }) => ({ value: id, text: t(key) })));
 
-const subcategoriesItems = computed(() => {
-  const selected = CATEGORIES.find(c => c.id === category.value);
+const toOptions = (arr?: Array<{ id: string; key: string }>): Option[] =>
+  (arr ?? []).map(({ id, key }) => ({ value: id, text: t(key) }));
 
-  return selected?.subcategories?.map(({ id, key }) => ({
-    value: id,
-    text: t(key),
-  })) || [];
-});
 
-const brandsItems = computed(() => {
-  const categoryItem = CATEGORIES.find(c => c.id === category.value);
-  const subcategoryItem = categoryItem?.subcategories?.find(sc => sc.id === subcategory.value);
+const currentCategory = computed(() => CATEGORIES.find(c => c.id === category.value));
+const currentSubcategory = computed(() =>
+  currentCategory.value?.subcategories?.find(sc => sc.id === subcategory.value) ?? null,
+);
 
-  return subcategoryItem?.brands?.map(({ id, key }) => ({
-    value: id,
-    text: t(key),
-  })) || [];
-});
+const categoriesItems = computed<Option[]>(() => toOptions(CATEGORIES));
+const subcategoriesItems = computed<Option[]>(() => toOptions(currentCategory.value?.subcategories));
+const brandsItems = computed<Option[]>(() => toOptions(currentSubcategory.value?.brands));
+
+
+const hasSafeDeal = computed(() => !!currentCategory.value?.hasSafeDeal);
 
 const hasPhotos = computed(() => images.value.length > 0);
 
@@ -199,7 +197,7 @@ const { $fire } = useNuxtApp();
 
 const isLoading = ref(false);
 const hasAPIError = ref(false);
-const createdProduct = ref({});
+const createdProduct = ref<{ title: string; route: RouteLocationRaw } | null>(null);
 
 const createPost = handleSubmit.withControlled(async () => {
   if (isLoading.value) {
@@ -218,7 +216,7 @@ const createPost = handleSubmit.withControlled(async () => {
       brandId: brand.value,
       images: images.value,
       location: location.value,
-      isSafeDeal: isSafeDeal.value,
+      isSafeDeal: hasSafeDeal.value && isSafeDeal.value,
     });
 
     createdProduct.value = {
@@ -518,6 +516,7 @@ watch(subcategory, () => {
           </UILineDescription>
 
           <UILineDescription
+            v-if="hasSafeDeal"
             :title="t('safe_deal')"
             :class="$style.line"
             boldTitle
@@ -536,7 +535,7 @@ watch(subcategory, () => {
               >
                 <template #deal>
                   <NuxtLink
-                    :to="{ name: 'index' }"
+                    :to="{ name: 'blog-slug', params: { slug: 'como-comprar-com-seguranca-dos-vendedores' } }"
                     target="_blank"
                   >
                     {{ t('safe_deal') }}
