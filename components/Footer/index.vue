@@ -68,6 +68,10 @@ const socialLinks = [
     name: 'Instagram',
     url: 'https://www.instagram.com/ambo.market/',
   },
+  {
+    name: 'Facebook',
+    url: 'https://www.facebook.com/ambo.market.ao',
+  },
 ];
 
 
@@ -113,7 +117,8 @@ const { isMobileOrTablet } = useDevice();
     "follow_us": "Follow Us",
     "support": "Support",
     "contact_us": "Contact Us",
-    "languages": "Languages"
+    "languages": "Languages",
+    "categories": "Categories"
   },
   "pt": {
     "place_ad": "Publicar Anúncio",
@@ -125,7 +130,8 @@ const { isMobileOrTablet } = useDevice();
     "follow_us": "Siga-nos",
     "support": "Suporte",
     "contact_us": "Entre em contato conosco",
-    "languages": "Idiomas"
+    "languages": "Idiomas",
+    "categories": "Categorias"
   }
 }
 </i18n>
