@@ -30,7 +30,7 @@ export default defineNuxtConfig({
     '@nuxtjs/leaflet',
     'nuxt-swiper',
     '@nuxt/image',
-    'nuxt-gtag',
+    '@zadigetvoltaire/nuxt-gtm',
     '@nuxtjs/sitemap',
     '@nuxt/content',
   ],
@@ -68,10 +68,8 @@ export default defineNuxtConfig({
     bundled: false,
   },
 
-  gtag: {
-    // NUXT_PUBLIC_GTAG_ID overwrites the `gtag.id` module option
-    enabled: process.env.NODE_ENV === 'production',
-    loadingStrategy: 'async',
+  gtm: {
+    id: process.env.NUXT_PUBLIC_GTAG_ID || 'GTM-PZLNCCVG',
   },
 
   sitemap: {
