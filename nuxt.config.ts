@@ -71,6 +71,7 @@ export default defineNuxtConfig({
   gtag: {
     // NUXT_PUBLIC_GTAG_ID overwrites the `gtag.id` module option
     enabled: process.env.NODE_ENV === 'production',
+    loadingStrategy: 'async',
   },
 
   sitemap: {
