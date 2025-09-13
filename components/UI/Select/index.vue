@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useId, computed, ref } from 'vue';
 import type { SelectProps } from './types';
 
 
@@ -17,6 +18,8 @@ const emit = defineEmits([
 ]);
 
 const isFocused = ref<boolean>(false);
+
+const inputId = `select-${useId()}`;
 
 const innerValue = computed({
   get: () => props.modelValue,
@@ -53,31 +56,50 @@ const inputClassNames = computed(() => ({
 
 <template>
   <div :class="$style.root">
-    <label :class="$style.label">
-      <select
-        v-model="innerValue"
-        :class="inputClassNames"
-        :disabled="isDisabled"
-        @focus="onFocus"
-        @blur="onBlur"
-      >
-        <option
-          value=""
-          disabled
-          selected
-          hidden
-          v-text="placeholder"
-        />
+    <label
+      v-if="label"
+      :for="inputId"
+      :class="$style.label"
+      v-text="label"
+    />
 
-        <option
-          v-for="(item, index) in options"
-          :key="index"
-          :class="$style.option"
-          :value="item.value"
-          v-text="item.text"
-        />
-      </select>
-    </label>
+    <select
+      :id="inputId"
+      v-model="innerValue"
+      :class="inputClassNames"
+      :disabled="isDisabled"
+      :required="isRequired"
+      :aria-required="isRequired || undefined"
+      :aria-invalid="hasError || undefined"
+      :aria-describedby="hasError ? `${inputId}-error` : undefined"
+      :aria-label="!label ? (placeholder || 'Select') : undefined"
+      @focus="onFocus"
+      @blur="onBlur"
+    >
+      <option
+        value=""
+        disabled
+        hidden
+        v-text="placeholder"
+      />
+
+      <option
+        v-for="(item, index) in options"
+        :key="index"
+        :class="$style.option"
+        :value="item.value"
+        v-text="item.text"
+      />
+    </select>
+
+    <p
+      v-if="hasError"
+      :id="`${inputId}-error`
+      "
+      :class="$style.srOnly"
+    >
+      {{ props.error }}
+    </p>
   </div>
 </template>
 
@@ -120,6 +142,18 @@ const inputClassNames = computed(() => ({
 .label {
   @include ui-typo-15-bold;
   background-color: $ui-color-white;
+  margin-bottom: 16px;
+}
+
+.srOnly {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 </style>
-

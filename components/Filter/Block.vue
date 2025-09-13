@@ -252,30 +252,22 @@ const clearAllFilters = () => {
     </li>
 
     <li :class="$style.block">
-      <span
-        :class="$style.title"
-        v-text="t('city')"
-      />
-
       <UISelect
         :modelValue="cityId"
         :options="citiesList"
         :placeholder="t('select')"
         :class="$style.category"
+        :label="t('city')"
         name="city"
         @update:model-value="setCity"
       />
     </li>
 
     <li :class="$style.block">
-      <span
-        :class="$style.title"
-        v-text="t('category')"
-      />
-
       <UISelect
         :modelValue="categoryId"
         :options="categoriesItems"
+        :label="t('category')"
         :placeholder="t('select')"
         :class="$style.category"
         name="category"
@@ -284,14 +276,10 @@ const clearAllFilters = () => {
     </li>
 
     <li :class="$style.block">
-      <span
-        :class="$style.title"
-        v-text="t('subcategory')"
-      />
-
       <UISelect
         :modelValue="subcategoryId"
         :options="subcategoriesItems"
+        :label="t('subcategory')"
         :placeholder="t('select')"
         :class="$style.category"
         name="subcategory"
@@ -303,16 +291,11 @@ const clearAllFilters = () => {
       v-if="brandsItems.length"
       :class="$style.block"
     >
-      <span
-        :class="$style.title"
-        v-text="t('brand')"
-      />
-
       <UISelect
         :modelValue="brandId"
         :options="brandsItems"
+        :label="t('brand')"
         :placeholder="t('select')"
-        :class="$style.category"
         name="brand"
         @update:model-value="setBrand"
       />
@@ -425,9 +408,5 @@ const clearAllFilters = () => {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-}
-
-.category {
-  margin-top: 16px;
 }
 </style>

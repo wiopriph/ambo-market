@@ -21,7 +21,8 @@ const props = defineProps<CategoryCard>();
       loading="lazy"
       width="83"
       height="70"
-      quality="90"
+      quality="80"
+      format="webp"
       alt=""
     />
   </NuxtLink>

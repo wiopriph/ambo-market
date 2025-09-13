@@ -16,6 +16,7 @@ const props = defineProps<BlogCard>();
         :alt="title"
         :class="$style.photo"
         placeholder="./blog-placeholder.png"
+        format="webp"
       />
     </div>
 

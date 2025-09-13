@@ -61,7 +61,9 @@ const { pushEvent } = useAnalyticsEvent();
       <NuxtImg
         :src="previewImage"
         :alt="productTitle"
+        :preload="{ fetchPriority: 'high' }"
         :class="$style.photo"
+        fetchPriority="high"
       />
     </div>
 

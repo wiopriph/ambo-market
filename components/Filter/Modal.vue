@@ -178,14 +178,10 @@ const setBrand = (brandId: string) => {
     <div :class="$style.root">
       <ul :class="$style.wrap">
         <li :class="$style.block">
-          <span
-            :class="$style.title"
-            v-text="t('city')"
-          />
-
           <UISelect
             v-model="newCityId"
             :options="citiesList"
+            :label="t('city')"
             :placeholder="t('select')"
             :class="$style.selector"
             name="city"
@@ -194,16 +190,11 @@ const setBrand = (brandId: string) => {
         </li>
 
         <li :class="$style.block">
-          <span
-            :class="$style.title"
-            v-text="t('category')"
-          />
-
           <UISelect
             v-model="newCategoryId"
             :options="categoriesItems"
+            :label="t('category')"
             :placeholder="t('select')"
-            :class="$style.selector"
             name="category"
             @update:model-value="setCategory"
           />
@@ -213,14 +204,10 @@ const setBrand = (brandId: string) => {
           v-if="subcategoriesItems.length"
           :class="$style.block"
         >
-          <span
-            :class="$style.title"
-            v-text="t('subcategory')"
-          />
-
           <UISelect
             v-model="newSubcategoryId"
             :options="subcategoriesItems"
+            :label="t('subcategory')"
             :placeholder="t('select')"
             :class="$style.selector"
             name="subcategory"
@@ -232,16 +219,11 @@ const setBrand = (brandId: string) => {
           v-if="brandsItems.length"
           :class="$style.block"
         >
-          <span
-            :class="$style.title"
-            v-text="t('brand')"
-          />
-
           <UISelect
             v-model="newBrandId"
             :options="brandsItems"
+            :label="t('brand')"
             :placeholder="t('select')"
-            :class="$style.selector"
             name="brand"
             @update:model-value="setBrand"
           />

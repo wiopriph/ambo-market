@@ -35,6 +35,15 @@ export default defineNuxtConfig({
     '@nuxt/content',
   ],
 
+  app: {
+    head: {
+      link: [
+        { rel: 'preconnect', href: 'https://youlangol.firebaseapp.com', crossorigin: '' },
+        { rel: 'dns-prefetch', href: 'https://youlangol.firebaseapp.com' },
+      ],
+    },
+  },
+
   // https://i18n.nuxtjs.org/docs/getting-started/usage
   i18n: {
     baseUrl: process.env.NUXT_PUBLIC_APP_BASE_URL,
@@ -62,6 +71,10 @@ export default defineNuxtConfig({
     },
 
     vueI18n: '~/i18n/index.ts',
+
+    bundle: {
+      optimizeTranslationDirective: false,
+    },
   },
 
   swiper: {
@@ -70,6 +83,7 @@ export default defineNuxtConfig({
 
   gtm: {
     id: process.env.NUXT_PUBLIC_GTAG_ID || 'GTM-PZLNCCVG',
+    enabled: process.env.NODE_ENV === 'production',
   },
 
   sitemap: {
@@ -109,6 +123,10 @@ export default defineNuxtConfig({
 
     ssr: {
       noExternal: ['@sqlite.org/sqlite-wasm'],
+    },
+
+    build: {
+      cssCodeSplit: false,
     },
   },
 
