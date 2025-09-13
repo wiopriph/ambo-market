@@ -17,7 +17,10 @@ definePageMeta({
 const { $fire } = useNuxtApp();
 const route = useRoute();
 
-const { data: orders } = await useAsyncData('orders', () => $fire.https('getOrders', { status: route.params.status }));
+const { data: orders } = await useAsyncData(
+  () => `orders-status-${route.params.status}`,
+  () => $fire.https('getOrders', { status: route.params.status }),
+);
 
 
 const { t } = useI18n();

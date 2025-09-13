@@ -1,7 +1,11 @@
 <script setup lang="ts">
 const route = useRoute();
-const { data: doc } = await useAsyncData(route.path, () => queryCollection('blog').path(route.path)
-  .first());
+
+const { data: doc } = await useAsyncData(
+  () => `blog-${route.params.slug}`,
+  () => queryCollection('blog').path(route.path)
+    .first(),
+);
 
 if (!doc.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page Not Found' });

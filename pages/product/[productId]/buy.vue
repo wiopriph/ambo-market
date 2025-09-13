@@ -11,44 +11,46 @@ definePageMeta({
 const { $fire } = useNuxtApp();
 const route = useRoute();
 
-const { data: product, error } = await useAsyncData(async () => {
-  try {
-    const response = await $fire.https('getPostById', { postId: route.params.productId });
+const { data: product, error } = await useAsyncData(
+  () => `post-${route.params.productId}`,
+  async () => {
+    try {
+      const response = await $fire.https('getPostById', { postId: route.params.productId });
 
-    const { post, user } = response as ProductApiResponse;
+      const { post, user } = response as ProductApiResponse;
 
-    if (post.isSafeDeal && post.status === POST_STATUSES.OPEN) {
-      return {
-        post,
-        user,
-      };
-    }
+      if (post.isSafeDeal && post.status === POST_STATUSES.OPEN) {
+        return {
+          post,
+          user,
+        };
+      }
 
-    throw new Error('ACCESS_DENIED');
-  } catch (error_: any) {
-    if (error_?.message === 'ACCESS_DENIED') {
+      throw new Error('ACCESS_DENIED');
+    } catch (error_: any) {
+      if (error_?.message === 'ACCESS_DENIED') {
+        throw createError({
+          statusCode: 403,
+          statusMessage: 'Access denied',
+          fatal: true,
+        });
+      }
+
+      if (error_?.code === 'functions/not-found') {
+        throw createError({
+          statusCode: 404,
+          statusMessage: 'Not found',
+          fatal: true,
+        });
+      }
+
       throw createError({
-        statusCode: 403,
-        statusMessage: 'Access denied',
+        statusCode: 500,
+        statusMessage: 'Failed to load product data',
         fatal: true,
       });
     }
-
-    if (error_?.code === 'functions/not-found') {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'Not found',
-        fatal: true,
-      });
-    }
-
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Failed to load product data',
-      fatal: true,
-    });
-  }
-});
+  });
 
 if (error && error?.value) {
   throw createError(error?.value);
@@ -59,27 +61,30 @@ const formattedPrice = computed(() => formatCurrency(`${post.value?.price}`));
 
 const user = computed(() => product.value?.user);
 
-const { data: points, error: errorPoints } = await useAsyncData(async () => {
-  try {
-    const points = await $fire.https('getPickupPoints');
+const { data: points, error: errorPoints } = await useAsyncData(
+  'pickupPoints',
+  async () => {
+    try {
+      const points = await $fire.https('getPickupPoints');
 
-    return points?.list?.map(({ id, address }: { id: string; address: string }) => ({ value: id, text: address }));
-  } catch (error_) {
-    if (error_?.code === 'functions/not-found') {
+      return points?.list?.map(({ id, address }: { id: string; address: string }) => ({ value: id, text: address }));
+    } catch (error_) {
+      if (error_?.code === 'functions/not-found') {
+        throw createError({
+          statusCode: 404,
+          statusMessage: 'Not found',
+          fatal: true,
+        });
+      }
+
       throw createError({
-        statusCode: 404,
-        statusMessage: 'Not found',
+        statusCode: 500,
+        statusMessage: 'Failed to load pickup points',
         fatal: true,
       });
     }
-
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Failed to load pickup points',
-      fatal: true,
-    });
-  }
-});
+  },
+);
 
 if (errorPoints?.value) {
   throw createError(errorPoints.value);

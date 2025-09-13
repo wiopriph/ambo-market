@@ -32,16 +32,19 @@ interface OrderData {
 const { $fire } = useNuxtApp();
 const route = useRoute();
 
-const { data: orderData, error: orderError } = await useAsyncData(async () => {
-  try {
-    return await $fire.https('getOrderById', { orderId: route.params.orderId });
-  } catch {
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Failed to load order data',
-    });
-  }
-});
+const { data: orderData, error: orderError } = await useAsyncData(
+  () => `order-${route.params.orderId}`,
+  async () => {
+    try {
+      return await $fire.https('getOrderById', { orderId: route.params.orderId });
+    } catch {
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Failed to load order data',
+      });
+    }
+  },
+);
 
 if (orderError?.value) {
   throw createError(orderError.value);

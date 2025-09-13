@@ -23,7 +23,10 @@ definePageMeta({
 
 const { $fire } = useNuxtApp();
 
-const { data: posts } = await useAsyncData('favorites_posts', () => $fire.https('getFavoritePosts'));
+const { data: posts } = await useAsyncData(
+  'myFavoritesPosts',
+  () => $fire.https('getFavoritePosts'),
+);
 
 const { t } = useI18n();
 </script>

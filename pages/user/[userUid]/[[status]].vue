@@ -20,12 +20,13 @@ const { $fire } = useNuxtApp();
 const route = useRoute();
 
 const { data: posts } = await useAsyncData(
-  'posts', () => $fire.https('getPostsByUser', {
+  () => `posts-${route.params.userUid}-${route.params.status || ''}`,
+  () => $fire.https('getPostsByUser', {
     userId: route.params.userUid,
     status: route.params.status || '',
-  }), {
-    watch: [() => route.params],
-  });
+  }),
+  { watch: [() => route.params] },
+);
 
 
 const ADS_TYPES = ['all', 'open', 'closed'];

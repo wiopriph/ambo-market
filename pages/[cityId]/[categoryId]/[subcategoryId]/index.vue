@@ -123,9 +123,11 @@ const meta = computed(() => [
 useHead({ title: title.value, meta: meta.value });
 
 
-const { data: posts } = await useAsyncData('posts', () => fetchPosts(), {
-  watch: [() => [coords, route.query, route.params]],
-});
+const { data: posts } = await useAsyncData(
+  () => `posts:${route.fullPath}`,
+  () => fetchPosts(),
+  { watch: [() => [coords, route.query, route.params]] },
+);
 
 
 const totalPages = computed(() => {

@@ -3,21 +3,23 @@ const route = useRoute();
 
 const PER_PAGE = 20;
 
-const { data: posts } = await useAsyncData('posts', () => {
-  const tagsQuery = route.query.tags || '';
+const { data: posts } = await useAsyncData(
+  () => `blog-${route.query.tags || 'all'}-${route.query.page || 1}`,
+  () => {
+    const tagsQuery = route.query.tags || '';
 
-  const query = queryCollection('blog')
-    .limit(PER_PAGE)
-    .skip(((Number(route.query.page) || 1) - 1) * PER_PAGE);
+    const query = queryCollection('blog')
+      .limit(PER_PAGE)
+      .skip(((Number(route.query.page) || 1) - 1) * PER_PAGE);
 
-  if (tagsQuery) {
-    query.where('tags', 'LIKE', `%${tagsQuery}%`);
-  }
+    if (tagsQuery) {
+      query.where('tags', 'LIKE', `%${tagsQuery}%`);
+    }
 
-  return query.all();
-}, {
-  watch: [() => route.query],
-});
+    return query.all();
+  },
+  { watch: [() => route.query] },
+);
 
 const TAGS = [
   'Guias',
@@ -51,9 +53,11 @@ const tagsList = computed(() => {
 });
 
 
-const { data: postCount } = await useAsyncData('postCount', () => queryCollection('blog').count(), {
-  watch: [() => route.params],
-});
+const { data: postCount } = await useAsyncData(
+  () => `blog-count-${route.query.tags || 'all'}-${route.query.page || 1}`,
+  () => queryCollection('blog').count(),
+  { watch: [() => route.params] },
+);
 
 
 const totalPages = computed(() => postCount.value ? Math.ceil(postCount.value / PER_PAGE) : 1);

@@ -1,27 +1,30 @@
 <script setup lang="ts">
 const { $fire } = useNuxtApp();
 
-const { data: points, error } = await useAsyncData(async () => {
-  try {
-    const points = await $fire.https('getPickupPoints');
+const { data: points, error } = await useAsyncData(
+  'pickupPoints',
+  async () => {
+    try {
+      const points = await $fire.https('getPickupPoints');
 
-    return points?.list;
-  } catch (error_) {
-    if (error_?.code === 'functions/not-found') {
+      return points?.list;
+    } catch (error_) {
+      if (error_?.code === 'functions/not-found') {
+        throw createError({
+          statusCode: 404,
+          statusMessage: 'Not found',
+          fatal: true,
+        });
+      }
+
       throw createError({
-        statusCode: 404,
-        statusMessage: 'Not found',
+        statusCode: 500,
+        statusMessage: 'Failed to load pickup points',
         fatal: true,
       });
     }
-
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Failed to load pickup points',
-      fatal: true,
-    });
-  }
-});
+  },
+);
 
 if (error?.value) {
   throw createError(error.value);

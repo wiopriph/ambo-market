@@ -23,56 +23,59 @@ const route = useRoute();
 
 const postId = computed(() => `${route.params.productId}`);
 
-const { data: product, error } = await useAsyncData<ProductApiResponse>(async () => {
-  try {
-    const response = await $fire.https('getPostById', { postId: postId.value });
+const { data: product, error } = await useAsyncData<ProductApiResponse>(
+  () => `post-${route.params.productId}`,
+  async () => {
+    try {
+      const response = await $fire.https('getPostById', { postId: postId.value });
 
-    const { post, user } = response as ProductApiResponse;
+      const { post, user } = response as ProductApiResponse;
 
-    const postCityId = getCityIdByName(post?.location?.city);
+      const postCityId = getCityIdByName(post?.location?.city);
 
-    if (postCityId !== route.params.cityId ||
-      post?.categoryId !== route.params.categoryId ||
-      (post?.subcategoryId && (post?.subcategoryId !== route.params.subcategoryId))) {
-      const route = getPostRoute({
-        productId: post?.id,
-        brandId: post?.brandId,
-        subcategoryId: post?.subcategoryId,
-        categoryId: post?.categoryId,
-        cityId: postCityId,
-      });
+      if (postCityId !== route.params.cityId ||
+        post?.categoryId !== route.params.categoryId ||
+        (post?.subcategoryId && (post?.subcategoryId !== route.params.subcategoryId))) {
+        const route = getPostRoute({
+          productId: post?.id,
+          brandId: post?.brandId,
+          subcategoryId: post?.subcategoryId,
+          categoryId: post?.categoryId,
+          cityId: postCityId,
+        });
 
 
-      navigateTo(route, { redirectCode: 301 });
-    }
+        navigateTo(route, { redirectCode: 301 });
+      }
 
-    return {
-      post,
-      user,
-    };
-  } catch (error) {
-    if (error?.code === 'functions/not-found') {
+      return {
+        post,
+        user,
+      };
+    } catch (error) {
+      if (error?.code === 'functions/not-found') {
+        throw createError({
+          statusCode: 404,
+          statusMessage: 'Not found',
+          fatal: true,
+        });
+      }
+
       throw createError({
-        statusCode: 404,
-        statusMessage: 'Not found',
+        statusCode: 500,
+        statusMessage: 'Failed to load product data',
         fatal: true,
       });
     }
-
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Failed to load product data',
-      fatal: true,
-    });
-  }
-});
+  },
+);
 
 if (error && error?.value) {
   throw createError(error?.value);
 }
 
 const { data: recommendedPosts } = await useAsyncData(
-  'recommendedPosts',
+  () => `recommendedPosts-${route.params.productId}`,
   async () => {
     const response = await $fire.https('getRecommendedPosts', {
       postId: route.params.productId,

@@ -5,27 +5,29 @@ import { useUser } from '~/composables/useUser';
 const { $fire } = useNuxtApp();
 const route = useRoute();
 
-const { data: user, error: orderError } = await useAsyncData('user', async () => {
-  try {
-    return await $fire.https('getUserById', { userId: route.params.userUid });
-  } catch (error) {
-    if (error?.code === 'functions/not-found') {
+const { data: user, error: orderError } = await useAsyncData(
+  () => `user-${route.params.userUid}`,
+  async () => {
+    try {
+      return await $fire.https('getUserById', { userId: route.params.userUid });
+    } catch (error) {
+      if (error?.code === 'functions/not-found') {
+        throw createError({
+          statusCode: 404,
+          statusMessage: 'Not found',
+          fatal: true,
+        });
+      }
+
       throw createError({
-        statusCode: 404,
-        statusMessage: 'Not found',
+        statusCode: 500,
+        statusMessage: 'Failed to load product data',
         fatal: true,
       });
     }
-
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Failed to load product data',
-      fatal: true,
-    });
-  }
-}, {
-  watch: [() => route.params],
-});
+  },
+  { watch: [() => route.params] },
+);
 
 if (orderError?.value) {
   throw createError(orderError.value);

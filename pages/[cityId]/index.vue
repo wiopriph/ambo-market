@@ -82,9 +82,11 @@ const categories = computed(() => CATEGORIES.map(category => ({
 
 const route = useRoute();
 
-const { data: posts } = await useAsyncData('posts', () => fetchPosts(), {
-  watch: [() => [coords, route.query, route.params]],
-});
+const { data: posts } = await useAsyncData(
+  () => `posts:${route.fullPath}`,
+  () => fetchPosts(),
+  { watch: [() => [coords, route.query, route.params]] },
+);
 
 
 const totalPages = computed(() => {
