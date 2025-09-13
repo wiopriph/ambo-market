@@ -5,9 +5,6 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  GoogleAuthProvider,
-  FacebookAuthProvider,
-  signInWithPopup,
   updateProfile,
   sendEmailVerification,
   sendPasswordResetEmail,
@@ -32,9 +29,6 @@ export default defineNuxtPlugin(() => {
   const auth = getAuth(app);
   const functions = getFunctions(app);
 
-  const googleProvider = new GoogleAuthProvider();
-  const facebookProvider = new FacebookAuthProvider();
-
   return {
     provide: {
       fire: {
@@ -47,8 +41,20 @@ export default defineNuxtPlugin(() => {
         },
         auth: {
           signIn: (email: string, password: string) => signInWithEmailAndPassword(auth, email, password),
-          signInWithGoogle: () => signInWithPopup(auth, googleProvider),
-          signInWithFacebook: () => signInWithPopup(auth, facebookProvider),
+
+          async signInWithGoogle() {
+            const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth');
+            const provider = new GoogleAuthProvider();
+
+            return signInWithPopup(auth, provider);
+          },
+
+          async signInWithFacebook() {
+            const { FacebookAuthProvider, signInWithPopup } = await import('firebase/auth');
+            const provider = new FacebookAuthProvider();
+
+            return signInWithPopup(auth, provider);
+          },
 
           signUp: async (email: string, password: string, displayName: string) => {
             const { user } = await createUserWithEmailAndPassword(auth, email, password);
