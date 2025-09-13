@@ -124,10 +124,6 @@ export default defineNuxtConfig({
     ssr: {
       noExternal: ['@sqlite.org/sqlite-wasm'],
     },
-
-    build: {
-      cssCodeSplit: false,
-    },
   },
 
   // Cache-Control для NuxtImg
