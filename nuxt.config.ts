@@ -38,6 +38,8 @@ export default defineNuxtConfig({
   app: {
     head: {
       link: [
+        { rel: 'preconnect', href: 'https://www.googleapis.com', crossorigin: '' },
+        { rel: 'dns-prefetch', href: 'https://www.googleapis.com' },
         { rel: 'preconnect', href: 'https://youlangol.firebaseapp.com', crossorigin: '' },
         { rel: 'dns-prefetch', href: 'https://youlangol.firebaseapp.com' },
       ],
