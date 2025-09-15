@@ -1,6 +1,6 @@
 ---
-title: Entendendo as Avaliações de Compradores e Vendedores
-description: Saiba como funcionam as avaliações no Ambo Market, como elas influenciam a reputação e como usá-las a seu favor.
+title: "Entendendo as Avaliações de Compradores e Vendedores"
+description: "Saiba como funcionam as avaliações no Ambo Market, como elas influenciam a reputação e como usá-las a seu favor."
 image: "/images/blog/entendendo-as-avaliacoes-de-compradores-e-vendedores.png"
 date: "2025-05-10T12:00:00+00:00"
 tags: ['Guias']
