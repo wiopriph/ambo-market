@@ -66,11 +66,11 @@ const companyLinks = computed(() => ([
 const socialLinks = [
   {
     name: 'Instagram',
-    url: 'https://www.instagram.com/ambo.market/',
+    url: 'https://www.instagram.com/ambo.market',
   },
   {
     name: 'Facebook',
-    url: 'https://www.facebook.com/ambo.market.ao',
+    url: 'https://www.facebook.com/ambo.market',
   },
 ];
 
