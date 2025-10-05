@@ -72,6 +72,10 @@ const socialLinks = [
     name: 'Facebook',
     url: 'https://www.facebook.com/ambo.market',
   },
+  {
+    name: 'Youtube',
+    url: 'https://www.youtube.com/@ambo.market',
+  },
 ];
 
 
