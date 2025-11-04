@@ -21,10 +21,8 @@ interface PostByIdResponse {
 
 definePageMeta({
   middleware: defineNuxtRouteMiddleware(async (to) => {
-    const { $fire } = useNuxtApp();
-
     try {
-      const response = await $fire.https('getPostById', { postId: to.params.productId });
+      const response = await $fetch<{ post: any; user: any }>(`/api/posts/${to.params.productId}`);
 
       const { post } = response as PostByIdResponse;
 

@@ -8,7 +8,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     supabase: {
-      serviceKey: process.env.NUXT_SUPABASE_SERVICE_KEY,
+      serviceKey: '',
     },
 
     public: {
