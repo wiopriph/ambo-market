@@ -74,20 +74,15 @@ if (error && error?.value) {
   throw createError(error?.value);
 }
 
-const recommendedPosts = [];
+const { data: recommendedPosts } = await useAsyncData(
+  () => `recommendedPosts-${route.params.productId}`,
+  async () => {
+    const response = await $fetch<{ posts: [] }>(`/api/posts/${postId.value}/recommended`, { params: { limit: 4 } });
 
-// const { data: recommendedPosts } = await useAsyncData(
-//   () => `recommendedPosts-${route.params.productId}`,
-//   async () => {
-//     const response = await $fire.https('getRecommendedPosts', {
-//       postId: route.params.productId,
-//       limit: 4,
-//     });
-//
-//     return response?.posts || [];
-//   },
-//   { watch: [() => route.params] },
-// );
+    return response?.posts || [];
+  },
+  { watch: [() => route.params] },
+);
 
 const { t, locale } = useI18n();
 
