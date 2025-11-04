@@ -4,6 +4,25 @@ import { useUser } from '~/composables/useUser';
 
 const route = useRoute();
 
+definePageMeta({
+  middleware: defineNuxtRouteMiddleware(async (to) => {
+    const userUid = to.params.userUid as string;
+    const isFirebaseUid = (s: string) => /^[A-Za-z0-9]{24,40}$/.test(s);
+
+    if (isFirebaseUid(userUid)) {
+      try {
+        const { newId } = await $fetch<{ newId: string }>(`/api/users/map/${userUid}`);
+
+        if (newId) {
+          return navigateTo(`/user/${newId}`, { redirectCode: 301 });
+        }
+      } catch {
+        return abortNavigation({ statusCode: 404, statusMessage: 'User not found' });
+      }
+    }
+  }),
+});
+
 const { data: user, error: orderError } = await useAsyncData(
   () => `user-${route.params.userUid}`,
   async () => {
