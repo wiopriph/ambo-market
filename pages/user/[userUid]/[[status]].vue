@@ -16,15 +16,11 @@ definePageMeta({
   }),
 });
 
-const { $fire } = useNuxtApp();
 const route = useRoute();
 
 const { data: posts } = await useAsyncData(
   () => `posts-${route.params.userUid}-${route.params.status || ''}`,
-  () => $fire.https('getPostsByUser', {
-    userId: route.params.userUid,
-    status: route.params.status || '',
-  }),
+  () => $fetch(`/api/users/${route.params.userUid}/posts`, { params: { status: route.params.status } }),
   { watch: [() => route.params] },
 );
 

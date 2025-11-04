@@ -22,18 +22,13 @@ export interface InitializeFilters {
 }
 
 
-export interface LocationCoords {
-  latitude: number | null;
-  longitude: number | null;
-  radius: string | number | null;
-}
-
-
 export interface FetchPostsParams {
   categoryId: string;
   subcategoryId: string;
   brandId: string;
-  location: LocationCoords;
+  latitude: number | null;
+  longitude: number | null;
+  radius: string | number | null;
   minPrice: number | string;
   maxPrice: number | string;
   search: string;

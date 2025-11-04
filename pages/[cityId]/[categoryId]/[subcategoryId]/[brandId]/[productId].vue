@@ -13,7 +13,7 @@ import { CLICK_AD_PHOTO, CLICK_BUY, CLICK_CALL, CLICK_CHAT, CLICK_SHOW_ON_MAP } 
 
 
 definePageMeta({
-  path: '/:cityId/:categoryId/:subcategoryId/:brandId/:productId([a-zA-Z0-9]{20})',
+  path: '/:cityId/:categoryId/:subcategoryId/:brandId/:productId([A-Za-z0-9_-]{20}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})',
 });
 
 const { pushEvent } = useAnalyticsEvent();
@@ -27,7 +27,7 @@ const { data: product, error } = await useAsyncData<ProductApiResponse>(
   () => `post-${route.params.productId}`,
   async () => {
     try {
-      const response = await $fire.https('getPostById', { postId: postId.value });
+      const response = await $fetch<{ post: any; user: any }>(`/api/posts/${postId.value}`);
 
       const { post, user } = response as ProductApiResponse;
 
@@ -74,18 +74,20 @@ if (error && error?.value) {
   throw createError(error?.value);
 }
 
-const { data: recommendedPosts } = await useAsyncData(
-  () => `recommendedPosts-${route.params.productId}`,
-  async () => {
-    const response = await $fire.https('getRecommendedPosts', {
-      postId: route.params.productId,
-      limit: 4,
-    });
+const recommendedPosts = [];
 
-    return response?.posts || [];
-  },
-  { watch: [() => route.params] },
-);
+// const { data: recommendedPosts } = await useAsyncData(
+//   () => `recommendedPosts-${route.params.productId}`,
+//   async () => {
+//     const response = await $fire.https('getRecommendedPosts', {
+//       postId: route.params.productId,
+//       limit: 4,
+//     });
+//
+//     return response?.posts || [];
+//   },
+//   { watch: [() => route.params] },
+// );
 
 const { t, locale } = useI18n();
 

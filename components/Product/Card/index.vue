@@ -32,7 +32,6 @@ const { pushEvent } = useAnalyticsEvent();
   <NuxtLink
     :to="link"
     :class="$style.root"
-    target="_blank"
     rel="noopener noreferrer"
     @click="pushEvent(CLICK_PRODUCT_CARD, { product_id: props.product?.id })"
   >

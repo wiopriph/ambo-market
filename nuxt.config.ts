@@ -7,8 +7,13 @@ export default defineNuxtConfig({
   ssr: true,
 
   runtimeConfig: {
+    supabase: {
+      serviceKey: process.env.NUXT_SUPABASE_SERVICE_KEY,
+    },
+
     public: {
       appBaseUrl: '',
+
       firebase: {
         apiKey: '',
         authDomain: '',
@@ -16,6 +21,11 @@ export default defineNuxtConfig({
         storageBucket: '',
         messagingSenderId: undefined,
         appId: '',
+      },
+
+      supabase: {
+        url: process.env.SUPABASE_URL,
+        key: process.env.SUPABASE_KEY,
       },
     },
   },
@@ -33,6 +43,7 @@ export default defineNuxtConfig({
     '@zadigetvoltaire/nuxt-gtm',
     '@nuxtjs/sitemap',
     '@nuxt/content',
+    '@nuxtjs/supabase',
   ],
 
   app: {
@@ -159,5 +170,9 @@ export default defineNuxtConfig({
         prefetch: false,
       },
     },
+  },
+
+  supabase: {
+    redirect: false,
   },
 });
