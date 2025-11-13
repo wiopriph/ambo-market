@@ -197,7 +197,7 @@ const { t } = useI18n();
         tag="p"
       >
         <template #points>
-          <NuxtLink :to="{ name: 'pickup-points' }">
+          <NuxtLink :to="{ name: 'offices' }">
             {{ t(`${status}.description.points`) }}
           </NuxtLink>
         </template>

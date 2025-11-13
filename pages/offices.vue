@@ -1,37 +1,15 @@
 <script setup lang="ts">
-const { $fire } = useNuxtApp();
+const { data, error } = await useFetch('/api/offices/list');
 
-const { data: points, error } = await useAsyncData(
-  'pickupPoints',
-  async () => {
-    try {
-      const points = await $fire.https('getPickupPoints');
-
-      return points?.list;
-    } catch (error_) {
-      if (error_?.code === 'functions/not-found') {
-        throw createError({
-          statusCode: 404,
-          statusMessage: 'Not found',
-          fatal: true,
-        });
-      }
-
-      throw createError({
-        statusCode: 500,
-        statusMessage: 'Failed to load pickup points',
-        fatal: true,
-      });
-    }
-  },
-);
-
-if (error?.value) {
+if (error.value) {
   throw createError(error.value);
 }
 
+const points = computed(() => data.value?.items || []);
+
 const { t } = useI18n();
 </script>
+
 
 <i18n lang="json">
 {
@@ -91,14 +69,14 @@ const { t } = useI18n();
 
   @include md {
     @include ui-col(12);
+
+    & + & {
+      margin-top: 20px;
+    }
   }
 
   @include exclude-md {
     @include ui-col(6);
-  }
-
-  & + & {
-    margin-top: 20px;
   }
 }
 

@@ -49,7 +49,10 @@ const { t } = useI18n();
       </I18nT>
     </li>
 
-    <li :class="$style.item">
+    <li
+      v-if="false"
+      :class="$style.item"
+    >
       <I18nT
         keypath="opening_hours"
         tag="p"
