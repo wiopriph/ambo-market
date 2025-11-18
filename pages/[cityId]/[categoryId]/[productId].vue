@@ -9,7 +9,7 @@ import { formatFullDate } from '~/utils/formatDate';
 import { useUser } from '~/composables/useUser';
 import { getPostRoute } from '~/utils/getPostRoute';
 import { AUTH_ACTIONS } from '~/constants/auth-actions';
-import { CLICK_AD_PHOTO, CLICK_BUY, CLICK_CALL, CLICK_CHAT, CLICK_SHOW_ON_MAP } from '~/constants/analytics-events';
+import { CLICK_AD_PHOTO, CLICK_CALL, CLICK_CHAT, CLICK_SHOW_ON_MAP } from '~/constants/analytics-events';
 
 
 definePageMeta({
@@ -242,16 +242,6 @@ const showNumber = () => {
 
   getPhoneNumber();
   showShowNumberModal();
-};
-
-
-const createOrder = () => {
-  pushEvent(CLICK_BUY, { product_id: postId.value });
-
-  navigateTo({
-    name: 'product-productId-buy',
-    params: { productId: postId.value },
-  });
 };
 
 
@@ -630,7 +620,6 @@ const { isDesktopOrTablet } = useDevice();
           @close-post="showClosePostModal"
           @show-number="showNumber"
           @create-chat-room="createChatRoom"
-          @create-order="createOrder"
         />
 
         <ul>
@@ -724,7 +713,6 @@ const { isDesktopOrTablet } = useDevice();
             @close-post="showClosePostModal"
             @show-number="showNumber"
             @create-chat-room="createChatRoom"
-            @create-order="createOrder"
           />
 
           <UserInfo

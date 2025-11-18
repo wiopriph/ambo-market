@@ -1,16 +1,10 @@
 <script setup lang="ts">
 import { usePosts } from '~/composables/usePosts';
-// import IconMail from '~/assets/images/header/icon-mail.svg?component';
-// import IconHeart from '~/assets/images/header/icon-heart.svg?component';
-// import IconDeals from '~/assets/images/header/icon-deals.svg?component';
 import IconAds from '~/assets/images/header/icon-ads.svg?component';
 import IconSettings from '~/assets/images/header/icon-settings.svg?component';
 import { CATEGORIES } from '~/constants/categories';
 import {
-  // CLICK_CHATS_BUTTON,
-  // CLICK_FAVORITES_BUTTON,
   CLICK_MY_ADS_BUTTON,
-  // CLICK_ORDERS_BUTTON,
   CLICK_SETTINGS_BUTTON,
 } from '~/constants/analytics-events';
 
@@ -24,29 +18,6 @@ const menuList = computed(() => [
     route: { name: 'user-ads' },
     event: CLICK_MY_ADS_BUTTON,
   },
-  // {
-  //   icon: IconMail,
-  //   label: t('messages'),
-  //   route: { name: 'im' },
-  //   event: CLICK_CHATS_BUTTON,
-  // },
-  // {
-  //   icon: IconHeart,
-  //   label: t('favorites'),
-  //   route: { name: 'user-favorites' },
-  //   event: CLICK_FAVORITES_BUTTON,
-  // },
-  // {
-  //   icon: IconDeals,
-  //   label: t('orders'),
-  //   route: {
-  //     name: 'order-history-status',
-  //     params: {
-  //       status: 'buy',
-  //     },
-  //   },
-  //   event: CLICK_ORDERS_BUTTON,
-  // },
   {
     icon: IconSettings,
     label: t('settings'),
@@ -164,17 +135,11 @@ const { isDesktopOrTablet } = useDevice();
 {
   "en": {
     "main_page": "Main page",
-    "messages": "My messages",
-    "favorites": "Favorites",
-    "orders": "My orders",
     "ads": "My ads",
     "settings": "Settings"
   },
   "pt": {
     "main_page": "Página inicial",
-    "messages": "Minhas mensagens",
-    "favorites": "Favoritos",
-    "orders": "Minhas ordens",
     "ads": "Meus anúncios",
     "settings": "Configurações"
   }

@@ -4,11 +4,6 @@ Disallow: *?
 
 Disallow: /auth
 Disallow: /product/create
-Disallow: /im
-Disallow: /im/*
-Disallow: /orders
-Disallow: /orders/
-Disallow: /orders/*
 
 Disallow: /_nuxt/
 

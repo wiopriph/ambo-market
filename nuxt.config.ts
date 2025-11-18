@@ -154,8 +154,6 @@ export default defineNuxtConfig({
     '/auth': { ssr: false },
     '/im': { ssr: false },
     '/product/create': { ssr: false },
-    '/orders': { ssr: false },
-    '/orders/[orderId]': { ssr: false },
   },
 
   plugins: [

@@ -10,10 +10,7 @@ const props = defineProps<ChatProductInfoProps>();
 
 const isSeller = computed(() => props.product?.userId === props.user?.id);
 const isClosedPost = computed(() => props.product?.status === POST_STATUSES.CLOSED);
-const hasBuyButton = computed(() => props.product?.isSafeDeal && props.product?.status === POST_STATUSES.OPEN);
 
-
-const { t } = useI18n();
 
 const formattedPrice = computed(() => formatCurrency(props.product?.price));
 
@@ -33,28 +30,7 @@ const showShowNumberModal = () => {
 const hideShowNumberModal = () => {
   isShowNumberModalVisible.value = false;
 };
-
-
-const createOrder = () => {
-  navigateTo({
-    name: 'product-productId-buy',
-    params: { productId: props.product?.id },
-  });
-};
 </script>
-
-<i18n lang="json">
-{
-  "en": {
-    "call": "Call",
-    "buy": "Buy"
-  },
-  "pt": {
-    "call": "Call",
-    "buy": "Buy"
-  }
-}
-</i18n>
 
 <template>
   <div :class="$style.product">
@@ -96,19 +72,8 @@ const createOrder = () => {
     >
       <li>
         <UIButton
-          :text="t('call')"
+          text="Call"
           @click="showShowNumberModal"
-        />
-      </li>
-
-      <li
-        v-if="hasBuyButton"
-        :class="$style.buyButton"
-      >
-        <UIButton
-          :text="t('buy')"
-          type="tertiary"
-          @click="createOrder"
         />
       </li>
     </ul>

@@ -11,7 +11,6 @@ const emit = defineEmits([
   'closePost',
   'showNumber',
   'createChatRoom',
-  'createOrder',
 ]);
 
 const closePost = () => {
@@ -25,22 +24,16 @@ const showNumber = () => {
 const createChatRoom = () => {
   emit('createChatRoom');
 };
-
-const createOrder = () => {
-  emit('createOrder');
-};
 </script>
 
 <i18n>
 {
   "en": {
     "contact_seller": "Contact seller",
-    "buy": "Buy",
     "close_post": "Close Ad"
   },
   "pt": {
     "contact_seller": "Contatar vendedor",
-    "buy": "Comprar",
     "close_post": "Anúncio Fechado"
   }
 }
@@ -78,14 +71,6 @@ const createOrder = () => {
         :class="$style.button"
         type="secondary"
         @click="createChatRoom"
-      />
-
-      <UIButton
-        v-if="false"
-        :text="t('buy')"
-        :class="$style.button"
-        type="tertiary"
-        @click="createOrder"
       />
     </template>
   </div>

@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import IconLocation from '~/assets/images/header/icon-location.svg?component';
-// import IconDeals from '~/assets/images/header/icon-deals.svg?component';
-// import IconMail from '~/assets/images/header/icon-mail.svg?component';
-// import IconHeart from '~/assets/images/header/icon-heart.svg?component';
 import IconAds from '~/assets/images/header/icon-ads.svg?component';
 import { getLabelByRadius } from '~/constants/distance';
 import { usePosts } from '~/composables/usePosts';
@@ -12,26 +9,6 @@ import { CLICK_LOCATION_BUTTON } from '~/constants/analytics-events';
 const { t } = useI18n();
 
 const links = computed(() => [
-  // {
-  //   icon: IconDeals,
-  //   text: t('orders'),
-  //   to: {
-  //     name: 'order-history-status',
-  //     params: {
-  //       status: 'buy',
-  //     },
-  //   },
-  // },
-  // {
-  //   icon: IconHeart,
-  //   text: t('favorites'),
-  //   to: { name: 'user-favorites' },
-  // },
-  // {
-  //   icon: IconMail,
-  //   text: t('messages'),
-  //   to: { name: 'im' },
-  // },
   {
     icon: IconAds,
     text: t('ads'),
@@ -66,18 +43,12 @@ const hideMapModal = () => {
   "en": {
     "location": "Location:",
     "everywhere": "Everywhere",
-    "messages": "Chats",
-    "favorites": "Favorites",
-    "ads": "My ads",
-    "orders": "My orders"
+    "ads": "My ads"
   },
   "pt": {
     "location": "Localização:",
     "everywhere": "Em todos os lugares",
-    "messages": "Minhas mensagens",
-    "favorites": "Favoritos",
-    "ads": "Meus anúncios",
-    "orders": "Minhas ordens"
+    "ads": "Meus anúncios"
   }
 }
 </i18n>

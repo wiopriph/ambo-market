@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import IconAds from '~/assets/images/header/icon-ads.svg?component';
-// import IconMail from '~/assets/images/header/icon-mail.svg?component';
-// import IconHeart from '~/assets/images/header/icon-heart.svg?component';
-// import IconDeals from '~/assets/images/header/icon-deals.svg?component';
 import IconSettings from '~/assets/images/header/icon-settings.svg?component';
 import { useUser } from '~/composables/useUser';
 
@@ -22,31 +19,6 @@ const menuList = computed(() => [
       },
     },
   },
-  // {
-  //   icon: IconMail,
-  //   label: t('messages'),
-  //   route: { name: 'im' },
-  // },
-  // {
-  //   icon: IconHeart,
-  //   label: t('favorites'),
-  //   route: {
-  //     name: 'user-userUid-favorites',
-  //     params: {
-  //       userUid: uid.value,
-  //     },
-  //   },
-  // },
-  // {
-  //   icon: IconDeals,
-  //   label: t('orders'),
-  //   route: {
-  //     name: 'order-history-status',
-  //     params: {
-  //       status: 'buy',
-  //     },
-  //   },
-  // },
   {
     icon: IconSettings,
     label: t('settings'),
@@ -63,16 +35,10 @@ const menuList = computed(() => [
 <i18n>
 {
   "en": {
-    "messages": "My messages",
-    "favorites": "Favorites",
-    "orders": "My orders",
     "ads": "My ads",
     "settings": "Settings"
   },
   "pt": {
-    "messages": "Minhas mensagens",
-    "favorites": "Favoritos",
-    "orders": "Minhas ordens",
     "ads": "Meus anúncios",
     "settings": "Configurações"
   }

@@ -14,10 +14,18 @@ const { t } = useI18n();
 <i18n lang="json">
 {
   "en": {
-    "points": "Pick-up points"
+    "points": "Pick-up points",
+    "name": "Pickup point name: {name}",
+    "address": "Address: {address}",
+    "contact_phone": "Contact phone: {phone}",
+    "opening_hours": "Business hours: {hours}"
   },
   "pt": {
-    "points": "Pontos de coleta"
+    "points": "Pontos de coleta",
+    "name": "Nome do ponto de coleta: {name}",
+    "address": "Endereço: {address}",
+    "contact_phone": "Telefone de contato: {phone}",
+    "opening_hours": "Horário de funcionamento: {hours}"
   }
 }
 </i18n>
@@ -35,10 +43,45 @@ const { t } = useI18n();
         :key="point.id"
         :class="$style.point"
       >
-        <OrderPointCard
-          :point="point"
+        <div
           :class="$style.card"
-        />
+        >
+          <ul>
+            <li :class="$style.item">
+              <p>
+                <strong
+                  :class="$style.text"
+                  v-text="point.name"
+                />
+              </p>
+            </li>
+
+            <li :class="$style.item">
+              <I18nT
+                keypath="address"
+                tag="p"
+              >
+                <template #address>
+                  <span
+                    :class="$style.text"
+                    v-text="point.address"
+                  />
+                </template>
+              </I18nT>
+            </li>
+
+            <li :class="$style.item">
+              <I18nT
+                keypath="contact_phone"
+                tag="div"
+              >
+                <template #phone>
+                  <a :href="`tel:${point.phone}`">{{ point.phone }}</a>
+                </template>
+              </I18nT>
+            </li>
+          </ul>
+        </div>
       </li>
     </ul>
   </div>
@@ -98,5 +141,13 @@ const { t } = useI18n();
 
 .text {
   color: $ui-color-black;
+}
+
+.item {
+  color: $ui-color-text-main;
+
+  & + & {
+    margin-top: 8px;
+  }
 }
 </style>
