@@ -7,17 +7,10 @@ const props = defineProps<ControlsProps>();
 
 const { t } = useI18n();
 
-const emit = defineEmits([
-  'closePost',
-  'showNumber',
-]);
+const emit = defineEmits(['closePost']);
 
 const closePost = () => {
   emit('closePost');
-};
-
-const showNumber = () => {
-  emit('showNumber');
 };
 </script>
 
@@ -44,21 +37,11 @@ const showNumber = () => {
       @click="closePost"
     />
 
-    <template v-else>
-      <a
-        v-if="props.phoneNumber"
-        :href="`tel:${phoneNumber}`"
-        :class="[$style.button, $style.numberButton]"
-      >{{ phoneNumber }}</a>
-
-      <UIButton
-        v-else
-        :isLoading="isNumberLoading"
-        :text="t('show_number')"
-        :class="$style.button"
-        @click="showNumber"
-      />
-    </template>
+    <a
+      v-else-if="props.phoneNumber"
+      :href="`tel:${phoneNumber}`"
+      :class="[$style.button, $style.numberButton]"
+    >{{ phoneNumber }}</a>
   </div>
 </template>
 

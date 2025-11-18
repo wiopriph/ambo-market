@@ -7,7 +7,5 @@ export interface GalleryModalProps {
   currentIndex: number;
   phoneNumber?: string;
   isOwner: boolean;
-  isSafeDeal: boolean;
-  isNumberLoading: boolean;
   isClosePostLoading?: boolean;
 }

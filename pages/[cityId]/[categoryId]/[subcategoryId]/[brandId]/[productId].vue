@@ -8,8 +8,7 @@ import type { ProductApiResponse, User } from '~/types/product';
 import { formatFullDate } from '~/utils/formatDate';
 import { useUser } from '~/composables/useUser';
 import { getPostRoute } from '~/utils/getPostRoute';
-import { AUTH_ACTIONS } from '~/constants/auth-actions';
-import { CLICK_AD_PHOTO, CLICK_CALL, CLICK_SHOW_ON_MAP } from '~/constants/analytics-events';
+import { CLICK_AD_PHOTO, CLICK_SHOW_ON_MAP } from '~/constants/analytics-events';
 
 
 definePageMeta({
@@ -18,7 +17,6 @@ definePageMeta({
 
 const { pushEvent } = useAnalyticsEvent();
 
-const { $fire } = useNuxtApp();
 const route = useRoute();
 
 const postId = computed(() => `${route.params.productId}`);
@@ -223,54 +221,11 @@ const breadcrumbsList = computed(() => [
   { title: `${post.value?.title}` },
 ]);
 
-const { uid, isLoggedIn } = useUser();
+const { uid } = useUser();
 
 const isOwnerUser = computed(() => uid.value === seller.value?.id);
 const hasControlButtons = computed(() => post.value?.status === POST_STATUSES.OPEN);
 
-
-const isNumberLoading = ref(false);
-const isShowNumberModalVisible = ref(false);
-
-const showShowNumberModal = () => {
-  isShowNumberModalVisible.value = true;
-};
-
-const hideShowNumberModal = () => {
-  isShowNumberModalVisible.value = false;
-};
-
-const getPhoneNumber = async () => {
-  if (isLoggedIn.value) {
-    try {
-      isNumberLoading.value = true;
-
-      const user = await $fire.https('getPostUserData', { userId: seller.value?.id });
-
-      seller.value = user as User;
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-    } finally {
-      isNumberLoading.value = false;
-    }
-  } else {
-    await navigateTo({
-      name: 'auth',
-      query: {
-        action: AUTH_ACTIONS.CALL,
-        redirect: route.path,
-      },
-    });
-  }
-};
-
-const showNumber = () => {
-  pushEvent(CLICK_CALL, { product_id: postId.value });
-
-  getPhoneNumber();
-  showShowNumberModal();
-};
 
 const isClosePostModalVisible = ref(false);
 
@@ -586,11 +541,8 @@ const { isDesktopOrTablet } = useDevice();
             :seller="seller"
             :currentIndex="currentSlideIndex"
             :phoneNumber="seller.phone"
-            :isSafeDeal="post.isSafeDeal"
             :isOwner="isOwnerUser"
-            :isNumberLoading="isNumberLoading"
             @close-post="showClosePostModal"
-            @show-number="showNumber"
             @close="hideGalleryModal"
           />
         </transition>
@@ -600,10 +552,8 @@ const { isDesktopOrTablet } = useDevice();
           :phoneNumber="seller.phone"
           :isSafeDeal="post.isSafeDeal"
           :isOwner="isOwnerUser"
-          :isNumberLoading="isNumberLoading"
           :class="[$style.contacts, $style.hideOnDesktop]"
           @close-post="showClosePostModal"
-          @show-number="showNumber"
         />
 
         <ul>
@@ -690,22 +640,13 @@ const { isDesktopOrTablet } = useDevice();
             v-if="hasControlButtons"
             :phoneNumber="seller.phone"
             :isOwner="isOwnerUser"
-            :isSafeDeal="post.isSafeDeal"
-            :isNumberLoading="isNumberLoading"
             :class="$style.contacts"
             @close-post="showClosePostModal"
-            @show-number="showNumber"
           />
 
           <UserInfo
             :user="seller"
             :class="$style.profileInfo"
-          />
-
-          <AD
-            v-if="false"
-            :class="$style.ad"
-            type="vertical"
           />
         </div>
       </div>
@@ -723,16 +664,6 @@ const { isDesktopOrTablet } = useDevice();
           v-if="isClosePostModalVisible"
           :postId="postId"
           @close="hideClosePostModal"
-        />
-      </transition>
-
-      <transition name="fade">
-        <LazyProductShowNumberModal
-          v-if="isShowNumberModalVisible"
-          :isLoading="isNumberLoading"
-          :user="seller"
-          @show-number="getPhoneNumber"
-          @close="hideShowNumberModal"
         />
       </transition>
     </section>
@@ -759,13 +690,6 @@ const { isDesktopOrTablet } = useDevice();
         :productList="[]"
       />
     </UITextRoll>
-
-    <AD
-      v-if="false"
-      :class="$style.ad"
-      isMobile
-      type="horizontal"
-    />
   </div>
 </template>
 
@@ -926,10 +850,6 @@ const { isDesktopOrTablet } = useDevice();
 }
 
 .profileInfoMobile {
-  margin-top: 20px;
-}
-
-.ad {
   margin-top: 20px;
 }
 

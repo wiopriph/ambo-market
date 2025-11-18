@@ -51,12 +51,10 @@ const formattedPrice = computed(() => formatCurrency(props.post?.price));
 const emit = defineEmits([
   'close',
   'closePost',
-  'showNumber',
 ]);
 
 const closeModal = () => emit('close');
 const closePost = () => emit('closePost');
-const showNumber = () => emit('showNumber');
 
 
 const isScrollLocked = ref(false);
@@ -201,23 +199,14 @@ onBeforeUnmount(unlockScroll);
           v-if="hasControlButtons"
           :phoneNumber="phoneNumber"
           :isOwner="isOwner"
-          :isSafeDeal="isSafeDeal"
-          :isNumberLoading="isNumberLoading"
           :isClosePostLoading="isClosePostLoading"
           :class="$style.contacts"
           @close-post="closePost"
-          @show-number="showNumber"
         />
 
         <UserInfo
           :user="seller"
           :class="$style.profileInfo"
-        />
-
-        <AD
-          v-if="false"
-          :class="$style.ad"
-          type="vertical"
         />
       </div>
     </div>
@@ -294,10 +283,6 @@ $column-width: 400px;
 }
 
 .profileInfo {
-  margin-top: 20px;
-}
-
-.ad {
   margin-top: 20px;
 }
 
