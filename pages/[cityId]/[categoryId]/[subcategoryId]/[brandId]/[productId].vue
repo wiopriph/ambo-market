@@ -518,13 +518,6 @@ const { isDesktopOrTablet } = useDevice();
               v-text="post.title"
             />
           </div>
-
-          <div :class="$style.favoriteBlock">
-            <ProductFavoriteButton
-              :postId="postId"
-              :hasText="isDesktopOrTablet"
-            />
-          </div>
         </div>
 
         <GalleryRoot
@@ -774,14 +767,6 @@ const { isDesktopOrTablet } = useDevice();
 
   @include exclude-md {
     @include ui-typo-32-medium;
-  }
-}
-
-.favoriteBlock {
-
-  @include exclude-md {
-    display: flex;
-    align-items: center;
   }
 }
 

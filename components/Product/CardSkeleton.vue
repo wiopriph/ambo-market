@@ -7,11 +7,7 @@
     </div>
 
     <div :class="$style.info">
-      <div :class="$style.favorite">
-        <div :class="$style.price" />
-
-        <div :class="$style.heart" />
-      </div>
+      <div :class="$style.price" />
 
       <div :class="$style.name" />
     </div>
@@ -77,13 +73,7 @@ $card-indent: 10px;
   padding: 10px;
 }
 
-.favorite {
-  display: flex;
-  justify-content: space-between;
-}
-
 .price,
-.heart,
 .name {
   @include ui-round-ui-elements;
   background-color: $ui-color-transparent;
@@ -91,11 +81,6 @@ $card-indent: 10px;
 
 .price {
   width: 55px;
-  height: 20px;
-}
-
-.heart {
-  width: 20px;
   height: 20px;
 }
 

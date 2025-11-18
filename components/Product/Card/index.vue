@@ -67,14 +67,10 @@ const { pushEvent } = useAnalyticsEvent();
     </div>
 
     <div :class="$style.info">
-      <div :class="$style.favorite">
-        <span
-          :class="$style.price"
-          v-text="formattedPrice"
-        />
-
-        <ProductFavoriteButton :postId="product.id" />
-      </div>
+      <div
+        :class="$style.price"
+        v-text="formattedPrice"
+      />
 
       <div
         :class="$style.name"
@@ -176,11 +172,6 @@ $card-indent: 10px;
 
 .info {
   padding: 10px;
-}
-
-.favorite {
-  display: flex;
-  justify-content: space-between;
 }
 
 .price {

@@ -105,22 +105,6 @@ const createAccount = () => {
 };
 
 const { t } = useI18n();
-
-
-const authPromptMessage = computed(() => {
-  const action = route.query.action as string;
-
-  switch (action) {
-    case 'favorites':
-      return t('sign_in_to_add_favorites');
-    case 'chat':
-      return t('sign_for_chat');
-    case 'call':
-      return t('sign_for_call');
-    default:
-      return t('sign_in');
-  }
-});
 </script>
 
 <i18n lang="json">
@@ -128,9 +112,6 @@ const authPromptMessage = computed(() => {
   "en": {
     "welcome": "Hello!",
     "sign_in": "Log in or create an account to continue.",
-    "sign_in_to_add_favorites": "Log in to save this item and keep track of your favorites.",
-    "sign_for_chat": "Log in to ask questions and chat with the seller.",
-    "sign_for_call": "Log in to see the seller’s phone number.",
     "continue_with_facebook": "Log in with Facebook",
     "continue_with_google": "Log in with Google",
     "continue_with_email": "Log in with E-mail",
@@ -139,9 +120,6 @@ const authPromptMessage = computed(() => {
   "pt": {
     "welcome": "Olá!",
     "sign_in": "Faça login ou crie uma conta para continuar.",
-    "sign_in_to_add_favorites": "Faça login para salvar este item e acompanhar seus favoritos.",
-    "sign_for_chat": "Faça login para tirar dúvidas e conversar com o vendedor.",
-    "sign_for_call": "Faça login para ver o número de telefone do vendedor.",
     "continue_with_facebook": "Entrar com Facebook",
     "continue_with_google": "Entrar com Google",
     "continue_with_email": "Entrar com E-mail",
@@ -164,7 +142,7 @@ const authPromptMessage = computed(() => {
 
     <p
       :class="$style.description"
-      v-text="authPromptMessage"
+      v-text="t('sign_in')"
     />
 
     <div :class="$style.list">
