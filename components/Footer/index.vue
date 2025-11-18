@@ -119,8 +119,6 @@ const { isMobileOrTablet } = useDevice();
     "terms_of_use": "Terms of Use",
     "privacy_policy": "Privacy Policy",
     "follow_us": "Follow Us",
-    "support": "Support",
-    "contact_us": "Contact Us",
     "languages": "Languages",
     "categories": "Categories"
   },
@@ -132,8 +130,6 @@ const { isMobileOrTablet } = useDevice();
     "terms_of_use": "Termos de Uso",
     "privacy_policy": "Política de Privacidade",
     "follow_us": "Siga-nos",
-    "support": "Suporte",
-    "contact_us": "Entre em contato conosco",
     "languages": "Idiomas",
     "categories": "Categorias"
   }
@@ -229,16 +225,6 @@ const { isMobileOrTablet } = useDevice();
             </li>
           </ul>
         </UIAccordionItem>
-
-        <UIAccordionItem :title="t('support')">
-          <ul :class="$style.list">
-            <li :class="$style.link">
-              <NuxtLink :to="{ name: 'contact' }">
-                {{ t('contact_us') }}
-              </NuxtLink>
-            </li>
-          </ul>
-        </UIAccordionItem>
       </div>
 
       <div
@@ -259,21 +245,6 @@ const { isMobileOrTablet } = useDevice();
             >
               <NuxtLink :to="link.route">
                 {{ link.name }}
-              </NuxtLink>
-            </li>
-          </ul>
-        </div>
-
-        <div :class="$style.item">
-          <h4
-            :class="$style.title"
-            v-text="t('support')"
-          />
-
-          <ul :class="$style.list">
-            <li :class="$style.link">
-              <NuxtLink :to="{ name: 'contact' }">
-                {{ t('contact_us') }}
               </NuxtLink>
             </li>
           </ul>
@@ -392,7 +363,7 @@ const { isMobileOrTablet } = useDevice();
 .itemDouble {
   @include ui-col-ready;
   @include ui-col-vertical-gutter;
-  @include ui-col(4);
+  @include ui-col(6);
 
   @include sm {
     @include ui-col(12);
@@ -416,10 +387,17 @@ const { isMobileOrTablet } = useDevice();
 }
 
 .categoryList {
-  column-count: 2;
   column-gap: 20px;
   list-style: none;
   padding: 0;
+
+  @include sm {
+    column-count: 2;
+  }
+
+  @include exclude-sm {
+    column-count: 3;
+  }
 }
 
 .categoryLink {
