@@ -52,13 +52,11 @@ const emit = defineEmits([
   'close',
   'closePost',
   'showNumber',
-  'createChatRoom',
 ]);
 
 const closeModal = () => emit('close');
 const closePost = () => emit('closePost');
 const showNumber = () => emit('showNumber');
-const createChatRoom = () => emit('createChatRoom');
 
 
 const isScrollLocked = ref(false);
@@ -190,14 +188,6 @@ onBeforeUnmount(unlockScroll);
               v-text="post.title"
             />
           </div>
-
-          <UIButton
-            v-if="false"
-            :isLoading="isChatLoading"
-            :text="t('contact_seller')"
-            :class="$style.mobileCardButton"
-            @click="createChatRoom"
-          />
         </div>
       </div>
 
@@ -213,12 +203,10 @@ onBeforeUnmount(unlockScroll);
           :isOwner="isOwner"
           :isSafeDeal="isSafeDeal"
           :isNumberLoading="isNumberLoading"
-          :isChatLoading="isChatLoading"
           :isClosePostLoading="isClosePostLoading"
           :class="$style.contacts"
           @close-post="closePost"
           @show-number="showNumber"
-          @create-chat-room="createChatRoom"
         />
 
         <UserInfo

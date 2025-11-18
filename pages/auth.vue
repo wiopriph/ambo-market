@@ -117,8 +117,6 @@ const authPromptMessage = computed(() => {
       return t('sign_for_chat');
     case 'call':
       return t('sign_for_call');
-    case 'order':
-      return t('sign_for_order');
     default:
       return t('sign_in');
   }
@@ -133,7 +131,6 @@ const authPromptMessage = computed(() => {
     "sign_in_to_add_favorites": "Log in to save this item and keep track of your favorites.",
     "sign_for_chat": "Log in to ask questions and chat with the seller.",
     "sign_for_call": "Log in to see the seller’s phone number.",
-    "sign_for_order": "Log in to complete your order safely.",
     "continue_with_facebook": "Log in with Facebook",
     "continue_with_google": "Log in with Google",
     "continue_with_email": "Log in with E-mail",
@@ -145,7 +142,6 @@ const authPromptMessage = computed(() => {
     "sign_in_to_add_favorites": "Faça login para salvar este item e acompanhar seus favoritos.",
     "sign_for_chat": "Faça login para tirar dúvidas e conversar com o vendedor.",
     "sign_for_call": "Faça login para ver o número de telefone do vendedor.",
-    "sign_for_order": "Faça login para concluir seu pedido com segurança.",
     "continue_with_facebook": "Entrar com Facebook",
     "continue_with_google": "Entrar com Google",
     "continue_with_email": "Entrar com E-mail",

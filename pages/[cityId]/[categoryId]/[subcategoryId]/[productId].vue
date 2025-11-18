@@ -9,7 +9,7 @@ import { formatFullDate } from '~/utils/formatDate';
 import { useUser } from '~/composables/useUser';
 import { getPostRoute } from '~/utils/getPostRoute';
 import { AUTH_ACTIONS } from '~/constants/auth-actions';
-import { CLICK_AD_PHOTO, CLICK_CALL, CLICK_CHAT, CLICK_SHOW_ON_MAP } from '~/constants/analytics-events';
+import { CLICK_AD_PHOTO, CLICK_CALL, CLICK_SHOW_ON_MAP } from '~/constants/analytics-events';
 
 
 definePageMeta({
@@ -256,46 +256,6 @@ const showNumber = () => {
   getPhoneNumber();
   showShowNumberModal();
 };
-
-
-const isChatLoading = ref(false);
-
-const createChatRoom = async () => {
-  pushEvent(CLICK_CHAT, { product_id: postId.value });
-
-  if (isLoggedIn.value) {
-    try {
-      isChatLoading.value = true;
-
-      const chat = await $fire.https('createChat', {
-        senderId: uid.value,
-        receiverId: seller.value?.id,
-        postId: postId.value,
-      });
-
-      if (chat && chat.chatId) {
-        await navigateTo({
-          name: 'im-chat-chatId',
-          params: { chatId: chat.chatId },
-        });
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-    } finally {
-      isChatLoading.value = false;
-    }
-  } else {
-    await navigateTo({
-      name: 'auth',
-      query: {
-        action: AUTH_ACTIONS.CHAT,
-        redirect: route.path,
-      },
-    });
-  }
-};
-
 
 const isClosePostModalVisible = ref(false);
 
@@ -614,10 +574,8 @@ const { isDesktopOrTablet } = useDevice();
             :isSafeDeal="post.isSafeDeal"
             :isOwner="isOwnerUser"
             :isNumberLoading="isNumberLoading"
-            :isChatLoading="isChatLoading"
             @close-post="showClosePostModal"
             @show-number="showNumber"
-            @create-chat-room="createChatRoom"
             @close="hideGalleryModal"
           />
         </transition>
@@ -628,11 +586,9 @@ const { isDesktopOrTablet } = useDevice();
           :isSafeDeal="post.isSafeDeal"
           :isOwner="isOwnerUser"
           :isNumberLoading="isNumberLoading"
-          :isChatLoading="isChatLoading"
           :class="[$style.contacts, $style.hideOnDesktop]"
           @close-post="showClosePostModal"
           @show-number="showNumber"
-          @create-chat-room="createChatRoom"
         />
 
         <ul>
@@ -721,11 +677,9 @@ const { isDesktopOrTablet } = useDevice();
             :isOwner="isOwnerUser"
             :isSafeDeal="post.isSafeDeal"
             :isNumberLoading="isNumberLoading"
-            :isChatLoading="isChatLoading"
             :class="$style.contacts"
             @close-post="showClosePostModal"
             @show-number="showNumber"
-            @create-chat-room="createChatRoom"
           />
 
           <UserInfo

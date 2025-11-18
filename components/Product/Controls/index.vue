@@ -10,7 +10,6 @@ const { t } = useI18n();
 const emit = defineEmits([
   'closePost',
   'showNumber',
-  'createChatRoom',
 ]);
 
 const closePost = () => {
@@ -19,10 +18,6 @@ const closePost = () => {
 
 const showNumber = () => {
   emit('showNumber');
-};
-
-const createChatRoom = () => {
-  emit('createChatRoom');
 };
 </script>
 
@@ -62,15 +57,6 @@ const createChatRoom = () => {
         :text="t('show_number')"
         :class="$style.button"
         @click="showNumber"
-      />
-
-      <UIButton
-        v-if="false"
-        :isLoading="isChatLoading"
-        :text="t('contact_seller')"
-        :class="$style.button"
-        type="secondary"
-        @click="createChatRoom"
       />
     </template>
   </div>

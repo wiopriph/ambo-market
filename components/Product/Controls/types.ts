@@ -4,5 +4,4 @@ export interface ControlsProps {
   isSafeDeal: boolean,
   isClosePostLoading?: boolean,
   isNumberLoading: boolean,
-  isChatLoading: boolean,
 }

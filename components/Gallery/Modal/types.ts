@@ -10,5 +10,4 @@ export interface GalleryModalProps {
   isSafeDeal: boolean;
   isNumberLoading: boolean;
   isClosePostLoading?: boolean;
-  isChatLoading: boolean;
 }
