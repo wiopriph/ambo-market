@@ -624,12 +624,6 @@ const { isDesktopOrTablet } = useDevice();
             :user="seller"
             :class="$style.profileInfo"
           />
-
-          <AD
-            v-if="false"
-            :class="$style.ad"
-            type="vertical"
-          />
         </div>
       </div>
 
@@ -672,13 +666,6 @@ const { isDesktopOrTablet } = useDevice();
         :productList="[]"
       />
     </UITextRoll>
-
-    <AD
-      v-if="false"
-      :class="$style.ad"
-      isMobile
-      type="horizontal"
-    />
   </div>
 </template>
 
@@ -831,10 +818,6 @@ const { isDesktopOrTablet } = useDevice();
 }
 
 .profileInfoMobile {
-  margin-top: 20px;
-}
-
-.ad {
   margin-top: 20px;
 }
 

@@ -241,10 +241,4 @@ const setPage = (pageNumber: number) => {
   flex: 1 1;
   min-width: 0;
 }
-
-.ad {
-  position: sticky;
-  top: (64px + 10px);
-  margin-top: 20px;
-}
 </style>

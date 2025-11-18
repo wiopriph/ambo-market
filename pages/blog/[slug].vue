@@ -182,12 +182,6 @@ const breadcrumbs = computed(() => [
   min-width: 0;
 }
 
-.ad {
-  position: sticky;
-  top: (64px + 10px);
-  margin-top: 20px;
-}
-
 
 // для content
 .prose {
