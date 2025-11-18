@@ -192,7 +192,7 @@ onBeforeUnmount(unlockScroll);
           </div>
 
           <UIButton
-            v-if="!isOwner"
+            v-if="false"
             :isLoading="isChatLoading"
             :text="t('contact_seller')"
             :class="$style.mobileCardButton"

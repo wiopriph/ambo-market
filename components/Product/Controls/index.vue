@@ -72,6 +72,7 @@ const createOrder = () => {
       />
 
       <UIButton
+        v-if="false"
         :isLoading="isChatLoading"
         :text="t('contact_seller')"
         :class="$style.button"
@@ -80,7 +81,7 @@ const createOrder = () => {
       />
 
       <UIButton
-        v-if="isSafeDeal"
+        v-if="false"
         :text="t('buy')"
         :class="$style.button"
         type="tertiary"
