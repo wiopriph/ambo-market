@@ -11,7 +11,6 @@ interface User {
   name: string,
   photoURL: string,
   disabled: boolean,
-  rating: number,
 }
 
 interface PostByIdResponse {

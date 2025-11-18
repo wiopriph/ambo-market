@@ -57,7 +57,6 @@ export default defineEventHandler(async (event) => {
     name: null as string | null,
     photoURL: null as string | null,
     disabled: null as boolean | null, // нет аналога — оставим null
-    rating: null as number | null,
     email: null as string | null,
     phone: null as string | null,
   };
@@ -65,7 +64,7 @@ export default defineEventHandler(async (event) => {
   if (post.authorId) {
     const { data: profile, error: profErr } = await client
       .from('profiles')
-      .select('display_name, avatar_url, phone, email, rating, created_at')
+      .select('display_name, avatar_url, phone, email, created_at')
       .eq('id', post.authorId)
       .maybeSingle();
 
@@ -79,7 +78,6 @@ export default defineEventHandler(async (event) => {
       user.email = profile.email ?? null;
       user.phone = profile.phone ?? null;
       user.creationTime = profile.created_at ?? null;
-      user.rating = typeof profile.rating === 'number' ? profile.rating : null;
     }
   }
 

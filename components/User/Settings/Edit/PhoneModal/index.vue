@@ -53,7 +53,7 @@ const savePhone = handleSubmit.withControlled(async () => {
   try {
     const formattedPhone = phone.value.replace(/\s+/g, '');
 
-    await updateProfile({ phoneNumber: formattedPhone });
+    await updateProfile({ phone: formattedPhone });
 
     closeModal();
   } catch (error) {

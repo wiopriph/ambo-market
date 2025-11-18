@@ -42,8 +42,8 @@ const saveProfileInformation = async () => {
     isLoading.value = true;
 
     await updateProfile({
-      image: uploadedPhoto.value,
-      displayName: innerName.value,
+      avatar_url: uploadedPhoto.value,
+      display_name: innerName.value,
     });
 
     closeModal();

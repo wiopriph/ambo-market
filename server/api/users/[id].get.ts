@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
 
   const { data: profile, error } = await client
     .from('profiles')
-    .select('id, display_name, avatar_url, rating, email, phone, created_at')
+    .select('id, display_name, avatar_url, email, phone, created_at')
     .eq('id', userId)
     .maybeSingle();
 
@@ -37,7 +37,6 @@ export default defineEventHandler(async (event) => {
     emailVerified: false,
     photoURL: profile.avatar_url ?? null,
     disabled: false,
-    rating: profile.rating ?? 0,
     ...(isSelf ? { email: profile.email ?? null, phone: profile.phone ?? null } : {}),
   };
 });

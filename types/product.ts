@@ -30,7 +30,6 @@ export type User = {
   phone?: string;
   photoURL: string;
   disabled: boolean;
-  rating: number;
 };
 
 export type ProductApiResponse = {

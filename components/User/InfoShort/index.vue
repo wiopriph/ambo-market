@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { UserInfoProps } from './types';
-import IconStar from '~/assets/images/icon-star.svg?component';
 
 
 const props = defineProps<UserInfoProps>();
@@ -18,18 +17,7 @@ const userName = computed(() => {
 
   return name || `User_${userId.slice(0, 4)}`;
 });
-
-const rating = computed(() => {
-  const userRating = props.user?.rating || 0;
-
-  if (userRating) {
-    return userRating.toFixed(1);
-  }
-
-  return userRating;
-});
 </script>
-
 
 <template>
   <div :class="$style.root">
@@ -47,18 +35,6 @@ const rating = computed(() => {
     >
       {{ userName }}
     </NuxtLink>
-
-    <div
-      v-if="rating"
-      :class="$style.rating"
-    >
-      <span
-        :class="$style.ratingText"
-        v-text="rating"
-      />
-
-      <IconStar :class="$style.ratingIcon" />
-    </div>
   </div>
 </template>
 
@@ -87,22 +63,5 @@ const rating = computed(() => {
   &:hover {
     text-decoration: underline;
   }
-}
-
-.rating {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-right: 10px;
-}
-
-.ratingText {
-  @include ui-typo-15-bold;
-}
-
-.ratingIcon {
-  width: 18px;
-  height: 18px;
-  margin-left: 8px;
 }
 </style>
