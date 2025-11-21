@@ -16,18 +16,16 @@ const indexRoute = inject<RouteLocationRaw>('indexRoute');
 
 const { pushEvent } = useAnalyticsEvent();
 
-const isAuthModalVisible = ref(false);
+const route = useRoute();
 
-const showAuthModal = () => {
+const goToLogin = () => {
   pushEvent(CLICK_LOGIN_BUTTON);
 
-  isAuthModalVisible.value = true;
+  navigateTo({
+    name: 'auth',
+    query: { redirect: route.fullPath as string },
+  });
 };
-
-const hideAuthModal = () => {
-  isAuthModalVisible.value = false;
-};
-
 
 const isCategoryModalVisible = ref(false);
 
@@ -130,7 +128,7 @@ const { t } = useI18n();
       :class="$style.button"
       :aria-label="t('account')"
       type="button"
-      @click="showAuthModal"
+      @click="goToLogin"
     >
       <IconProfile />
     </button>
@@ -138,11 +136,6 @@ const { t } = useI18n();
     <LazyGeolocationModal
       v-if="isMapModalVisible"
       @close="hideMapModal"
-    />
-
-    <LazyAuthModal
-      v-if="isAuthModalVisible"
-      @close="hideAuthModal"
     />
 
     <LazyUIModal

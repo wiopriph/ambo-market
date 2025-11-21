@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['@wiopriph/nuxt3-stylelint-config'],
+  extends: ['@wiopriph/stylelint-config'],
 };

@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useUser } from '~/composables/useUser';
-
-
 const head = useLocaleHead({
   seo: true,
   key: 'key',
@@ -34,57 +31,6 @@ const meta = computed(() => [
 
 
 useHead({ meta: meta.value });
-
-
-const { $fire } = useNuxtApp();
-
-const {
-  isAuthChecking,
-  fetchProfile,
-  setCurrentUser,
-} = useUser();
-
-let unsubscribeAuthState: (() => void) | null = null;
-
-onMounted(() => {
-  unsubscribeAuthState = $fire.auth.onAuthStateChanged(async (user) => {
-    isAuthChecking.value = true;
-
-    if (user) {
-      try {
-        await fetchProfile();
-
-        setTimeout(() => {
-          isAuthChecking.value = false;
-        }, 1000);
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('Error while fetching user profile:', error);
-      }
-    } else {
-      setCurrentUser(null);
-
-      isAuthChecking.value = false;
-    }
-  });
-});
-
-onUnmounted(() => {
-  if (unsubscribeAuthState) {
-    unsubscribeAuthState();
-  }
-});
-
-const style = useCssModule();
-const route = useRoute();
-const ROUTES_WITHOUT_FOOTER = [
-  'im',
-  'im-chat-chatId',
-];
-
-const footerClassNames = computed(() => ({
-  [style.hide]: ROUTES_WITHOUT_FOOTER.includes(route.name as string),
-}));
 </script>
 
 <i18n lang="json">
@@ -135,7 +81,7 @@ const footerClassNames = computed(() => ({
 
         <slot />
 
-        <Footer :class="footerClassNames" />
+        <Footer />
       </Body>
     </Html>
   </div>

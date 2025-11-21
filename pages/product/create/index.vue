@@ -193,8 +193,6 @@ const clearFields = () => {
   });
 };
 
-const { $fire } = useNuxtApp();
-
 const isLoading = ref(false);
 const hasAPIError = ref(false);
 const createdProduct = ref<{ title: string; route: RouteLocationRaw } | null>(null);
@@ -207,7 +205,7 @@ const createPost = handleSubmit.withControlled(async () => {
   isLoading.value = true;
 
   try {
-    const post = await $fire.https('createPost', {
+    const post = await console('createPost', {
       title: productName.value,
       description: description.value,
       price: +price.value,

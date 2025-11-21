@@ -28,8 +28,8 @@ const { data: user, error: orderError } = await useAsyncData(
   async () => {
     try {
       return await $fetch(`/api/users/${route.params.userUid}`);
-    } catch (error) {
-      if (error?.code === 'functions/not-found') {
+    } catch (error_: any) {
+      if (error_?.statusCode === 404 || error_?.message === 'User not found') {
         throw createError({
           statusCode: 404,
           statusMessage: 'Not found',

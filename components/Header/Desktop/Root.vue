@@ -39,20 +39,17 @@ const toggleCategory = () => {
 };
 
 
-const isAuthModalVisible = ref(false);
-
-const showAuthModal = () => {
-  isAuthModalVisible.value = true;
-
-  pushEvent(CLICK_LOGIN_BUTTON);
-};
-
-const hideAuthModal = () => {
-  isAuthModalVisible.value = false;
-};
-
-
 const route = useRoute();
+
+const goToLogin = () => {
+  pushEvent(CLICK_LOGIN_BUTTON);
+
+  navigateTo({
+    name: 'auth',
+    query: { redirect: route.fullPath as string },
+  });
+};
+
 
 const searchPlaceholder = computed(() => {
   const { categoryId } = route.params;
@@ -231,7 +228,7 @@ const { t } = useI18n();
       v-else
       :text="t('sign_in')"
       type="secondary"
-      @click="showAuthModal"
+      @click="goToLogin"
     />
 
     <transition name="fade">
@@ -251,11 +248,6 @@ const { t } = useI18n();
         <LazyHeaderMenu @close="closeMenu" />
       </div>
     </transition>
-
-    <LazyAuthModal
-      v-if="isAuthModalVisible"
-      @close="hideAuthModal"
-    />
   </div>
 </template>
 

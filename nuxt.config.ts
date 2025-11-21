@@ -14,15 +14,6 @@ export default defineNuxtConfig({
     public: {
       appBaseUrl: '',
 
-      firebase: {
-        apiKey: '',
-        authDomain: '',
-        projectId: '',
-        storageBucket: '',
-        messagingSenderId: undefined,
-        appId: '',
-      },
-
       supabase: {
         url: '',
         key: '',
@@ -45,17 +36,6 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxtjs/supabase',
   ],
-
-  app: {
-    head: {
-      link: [
-        { rel: 'preconnect', href: 'https://www.googleapis.com', crossorigin: '' },
-        { rel: 'dns-prefetch', href: 'https://www.googleapis.com' },
-        { rel: 'preconnect', href: 'https://youlangol.firebaseapp.com', crossorigin: '' },
-        { rel: 'dns-prefetch', href: 'https://youlangol.firebaseapp.com' },
-      ],
-    },
-  },
 
   // https://i18n.nuxtjs.org/docs/getting-started/usage
   i18n: {
@@ -104,7 +84,7 @@ export default defineNuxtConfig({
     excludeAppSources: true,
     cacheMaxAgeSeconds: 3600,
     sources: [
-      '/api/sitemap',
+      // '/api/sitemap',
       '/api/sitemap-blog',
     ],
   },
@@ -152,17 +132,14 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/auth': { ssr: false },
-    '/im': { ssr: false },
     '/product/create': { ssr: false },
   },
 
   plugins: [
     '~/plugins/location.server.ts',
-    '~/plugins/firebase.ts',
   ],
 
   experimental: {
-    // asyncContext: true,
     defaults: {
       nuxtLink: {
         prefetch: false,

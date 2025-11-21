@@ -69,7 +69,7 @@ const availableLocales = computed(() => locales.value.filter(({ code }) => code 
 const setNewLocale = (newLocale: string) => setLocale(newLocale);
 
 
-const hasAdButton = typeof route.name === 'string' && ['index', 'cityId', 'cityId-categoryId'].includes(route.name);
+const hasAdButton = computed(() => typeof route.name === 'string' && ['index', 'cityId', 'cityId-categoryId'].includes(route.name));
 
 
 const goToCreatePage = () => {

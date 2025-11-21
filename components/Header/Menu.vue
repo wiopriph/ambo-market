@@ -18,14 +18,13 @@ const menuClick = (event: string) => {
   close();
 };
 
-
-const { $fire } = useNuxtApp();
+const { signOut } = useAuth();
 
 const logout = async () => {
   try {
     await navigateTo({ name: 'auth' });
 
-    await $fire.auth.signOut();
+    await signOut();
 
     close();
   } catch (error) {
