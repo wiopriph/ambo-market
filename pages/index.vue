@@ -193,7 +193,7 @@ const setPage = (pageNumber: number) => {
 }
 
 .category {
-  margin-bottom: 36px;
+  margin-bottom: 24px;
 }
 
 .content {

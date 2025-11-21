@@ -51,7 +51,7 @@ const { data: product, error } = await useAsyncData<ProductApiResponse>(
         user,
       };
     } catch (error) {
-      if (error?.code === 'functions/not-found') {
+      if (error?.statusCode === 404 || error?.message === 'Post not found') {
         throw createError({
           statusCode: 404,
           statusMessage: 'Not found',

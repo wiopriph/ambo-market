@@ -7,30 +7,46 @@ import { PHONE_REG_EXP } from '~/constants/reg-exps';
 
 
 const { t } = useI18n();
+const { currentUser, updateProfile } = useUser();
 
 const {
   errors,
   handleSubmit,
+  setFieldValue,
 } = useForm({
   initialValues: {
+    name: '',
     phone: '',
   },
   validationSchema: object({
+    name: string()
+      .required(t('validation.required')),
     phone: string()
       .required(t('validation.required'))
       .matches(PHONE_REG_EXP, t('validation.phone')),
   }),
 });
 
+const { value: name } = useField<string>('name');
 const { value: phone } = useField<string>('phone');
 
+watch(
+  currentUser,
+  (user) => {
+    if (!user) {
+      return;
+    }
 
-const isLoading = ref<boolean>(false);
-const backendError = ref<string>('');
+    setFieldValue('name', user.name ?? '');
+    setFieldValue('phone', user.phone ?? '');
+  },
+  { immediate: true },
+);
 
-const { updateProfile } = useUser();
+const isLoading = ref(false);
+const backendError = ref('');
 
-const savePhone = handleSubmit.withControlled(async () => {
+const saveProfile = handleSubmit.withControlled(async () => {
   if (isLoading.value) {
     return;
   }
@@ -41,27 +57,39 @@ const savePhone = handleSubmit.withControlled(async () => {
   try {
     const formattedPhone = phone.value.replace(/\s+/g, '');
 
-    await updateProfile({ phone: formattedPhone });
-  } catch (error) {
-    backendError.value = error?.message;
+    await updateProfile({
+      display_name: name.value.trim(),
+      phone: formattedPhone,
+    });
+  } catch (error: any) {
+    backendError.value = error?.message || 'Error';
   } finally {
     isLoading.value = false;
   }
 });
 </script>
 
-<i18n>
+<i18n lang="json">
 {
   "en": {
-    "your_phone_number": "Your phone number",
-    "description": "Before posting your ad, please enter your phone number. This number will be available to other users, so they can contact you."
+    "your_phone_number": "Contact details",
+    "your_name": "Your name",
+    "description": "Before you publish your first ad, please tell us how buyers can contact you. Your name and phone number will be shown to other users next to your ads.",
+    "phone_number": "Phone number",
+    "name": "Name",
+    "save": "Save and continue"
   },
   "pt": {
-    "your_phone_number": "Seu número de telefone",
-    "description": "Antes de publicar seu anúncio, por favor, insira seu número de telefone. Este número estará disponível para outros usuários para que eles possam entrar em contato com você."
+    "your_phone_number": "Dados de contacto",
+    "your_name": "Seu nome",
+    "description": "Antes de publicar o seu primeiro anúncio, diga-nos como os compradores podem falar com você. O seu nome e número de telefone serão mostrados aos outros utilizadores junto aos seus anúncios.",
+    "phone_number": "Número de telefone",
+    "name": "Nome",
+    "save": "Guardar e continuar"
   }
 }
 </i18n>
+
 
 <template>
   <div :class="$style.root">
@@ -77,12 +105,25 @@ const savePhone = handleSubmit.withControlled(async () => {
 
     <form
       :class="$style.list"
-      @submit.prevent="savePhone"
+      @submit.prevent="saveProfile"
     >
-      <div>
+      <div :class="$style.inputWrapper">
+        <UIInput
+          v-model="name"
+          :label="t('your_name')"
+          :error="errors.name"
+          name="name"
+          type="text"
+        />
+
+        <UIError :text="errors.name" />
+      </div>
+
+      <div :class="$style.inputWrapper">
         <UIInputPhone
           v-model="phone"
           v-maska="'+244 ### ### ###'"
+          :label="t('phone_number')"
           :placeholder="t('phone_number')"
           :error="errors.phone"
           name="phone"
@@ -92,13 +133,13 @@ const savePhone = handleSubmit.withControlled(async () => {
       </div>
     </form>
 
-    <UIError :error="backendError" />
+    <UIError :text="backendError" />
 
     <UIButton
       :text="t('save')"
       :isLoading="isLoading"
       :class="$style.button"
-      @click="savePhone"
+      @click="saveProfile"
     />
   </div>
 </template>
@@ -107,11 +148,10 @@ const savePhone = handleSubmit.withControlled(async () => {
 .root {
 
   @include exclude-md {
-
     @include ui-round-content-blocks;
 
-    padding: 20px;
     background-color: $ui-color-white;
+    padding: 24px 24px 20px;
     box-shadow: $box-shadow;
   }
 }
@@ -127,6 +167,13 @@ const savePhone = handleSubmit.withControlled(async () => {
 
 .list {
   margin-top: 20px;
+}
+
+.inputWrapper {
+
+  & + & {
+    margin-top: 16px;
+  }
 }
 
 .button {

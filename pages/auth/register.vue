@@ -96,7 +96,10 @@ const register = handleSubmit.withControlled(async () => {
     "confirm_password": "Confirm password",
     "register": "Create an account",
     "login_text": "Already have an account?",
-    "login_link": "Log in"
+    "login_link": "Log in",
+    "terms_privacy_agreement": "By creating an account, you agree to our {terms} and {policy}.",
+    "terms_of_service": "Terms of Service",
+    "privacy_policy": "Privacy Policy"
   },
   "pt": {
     "title": "Criar uma conta",
@@ -106,7 +109,10 @@ const register = handleSubmit.withControlled(async () => {
     "confirm_password": "Confirmar senha",
     "register": "Criar conta",
     "login_text": "Já tem uma conta?",
-    "login_link": "Entrar"
+    "login_link": "Entrar",
+    "terms_privacy_agreement": "Ao criar uma conta, você concorda com nossos {terms} e {policy}.",
+    "terms_of_service": "Termos de Serviço",
+    "privacy_policy": "Política de Privacidade"
   }
 }
 </i18n>
@@ -193,6 +199,32 @@ const register = handleSubmit.withControlled(async () => {
         </NuxtLink>
       </div>
     </div>
+
+    <div :class="$style.footer">
+      <I18nT
+        :class="$style.footerText"
+        keypath="terms_privacy_agreement"
+        tag="p"
+      >
+        <template #terms>
+          <NuxtLink
+            :to="{ name: 'terms' }"
+            target="_blank"
+          >
+            {{ t('terms_of_service') }}
+          </NuxtLink>
+        </template>
+
+        <template #policy>
+          <NuxtLink
+            :to="{ name: 'privacy' }"
+            target="_blank"
+          >
+            {{ t('privacy_policy') }}
+          </NuxtLink>
+        </template>
+      </I18nT>
+    </div>
   </div>
 </template>
 
@@ -257,5 +289,22 @@ const register = handleSubmit.withControlled(async () => {
   @include ui-typo-14;
   padding: 0;
   text-decoration: underline;
+}
+
+.footer {
+  @include ui-typo-12;
+  margin-top: 20px;
+  color: $ui-color-black;
+  text-align: center;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.footerText {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: $ui-color-text-main;
 }
 </style>

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate';
 import { boolean, object, array, string } from 'yup';
-import type { RouteLocationRaw } from 'vue-router';
 import { useUser } from '~/composables/useUser';
 import { CATEGORIES } from '~/constants/categories';
 import { CURRENCY } from '~/constants/currency';
@@ -169,16 +168,6 @@ const progress = computed(() => [
   { active: hasLocation.value, label: t('location') },
 ]);
 
-const isModalVisible = ref(false);
-
-const showSuccessModal = () => {
-  isModalVisible.value = true;
-};
-
-const hideSuccessModal = () => {
-  isModalVisible.value = false;
-};
-
 const clearFields = () => {
   resetForm({
     values: {
@@ -195,7 +184,6 @@ const clearFields = () => {
 
 const isLoading = ref(false);
 const hasAPIError = ref(false);
-const createdProduct = ref<{ title: string; route: RouteLocationRaw } | null>(null);
 
 const createPost = handleSubmit.withControlled(async () => {
   if (isLoading.value) {
@@ -205,29 +193,28 @@ const createPost = handleSubmit.withControlled(async () => {
   isLoading.value = true;
 
   try {
-    const post = await console('createPost', {
-      title: productName.value,
-      description: description.value,
-      price: +price.value,
-      categoryId: category.value,
-      subcategoryId: subcategory.value,
-      brandId: brand.value,
-      images: images.value,
-      location: location.value,
-      isSafeDeal: hasSafeDeal.value && isSafeDeal.value,
+    const { id } = await $fetch<{ id: string }>('/api/posts', {
+      method: 'POST',
+      body: {
+        title: productName.value,
+        description: description.value,
+        price: +price.value,
+        categoryId: category.value,
+        subcategoryId: subcategory.value,
+        brandId: brand.value,
+        images: images.value,
+        location: location.value,
+        isSafeDeal: hasSafeDeal.value && isSafeDeal.value,
+      },
     });
 
-    createdProduct.value = {
-      title: productName.value,
-      route: {
-        name: 'product-productId',
-        params: { productId: post?.id },
-      },
-    };
+    navigateTo({
+      name: 'product-productId',
+      params: { productId: id },
+    });
 
     isLoading.value = false;
 
-    showSuccessModal();
     clearFields();
   } catch (error) {
     isLoading.value = false;
@@ -259,9 +246,9 @@ watch(subcategory, () => {
     "photos": "Photos",
     "photos_notice": {
       "first": "The first photo will be displayed in search results, choose the most suitable one.",
-      "second": "You can upload up to 4 photos in JPG or PNG format."
+      "second": "You can upload up to four photos in JPG or PNG format."
     },
-    "add_photo": "Add photo",
+    "add_photo": "Add a photo",
     "location": "Location",
     "enter_your_address": "Enter your address or select a location on the map below",
     "safe_deal": "Safe deal",
@@ -296,9 +283,7 @@ watch(subcategory, () => {
   <div :class="$style.root">
     <div :class="$style.content">
       <div :class="$style.main">
-        <div v-if="needPhoneNumber">
-          <UserPhone />
-        </div>
+        <LazyUserPhone v-if="needPhoneNumber" />
 
         <form
           v-else
@@ -553,15 +538,6 @@ watch(subcategory, () => {
               @click="createPost"
             />
           </UILineDescription>
-
-          <transition name="fade">
-            <LazyProductCreateModal
-              v-if="isModalVisible"
-              :title="createdProduct?.title"
-              :route="createdProduct?.route"
-              @close="hideSuccessModal"
-            />
-          </transition>
         </form>
       </div>
 

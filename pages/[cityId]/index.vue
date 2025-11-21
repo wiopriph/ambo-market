@@ -200,15 +200,17 @@ const setPage = (pageNumber: number) => {
 .root {
   @include ui-simple-container;
 
-  padding: 10px 20px;
+  padding: 24px 20px;
 }
 
 .title {
   @include ui-typo-32-bold;
+
+  margin-bottom: 24px;
 }
 
 .category {
-  margin-top: 20px;
+  margin-bottom: 24px;
 }
 
 .content {
