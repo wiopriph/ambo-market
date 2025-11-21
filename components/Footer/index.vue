@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { CITIES } from '~/constants/cities';
 import { CATEGORIES } from '~/constants/categories';
 import { usePosts } from '~/composables/usePosts';
 
@@ -13,36 +12,7 @@ const {
 
 
 const route = useRoute();
-const cities = computed(() => CITIES.filter(city => city.id !== 'all'));
 
-const cityLinks = computed(() => {
-  const categoryId = route.params.categoryId;
-
-  if (categoryId) {
-    return cities.value.map(city => ({
-      id: city.id,
-      name: city.name,
-      route: {
-        name: 'cityId-categoryId',
-        params: {
-          cityId: city.id,
-          categoryId,
-        },
-      },
-    }));
-  }
-
-  return cities.value.map(city => ({
-    id: city.id,
-    name: city.name,
-    route: {
-      name: 'cityId',
-      params: {
-        cityId: city.id,
-      },
-    },
-  }));
-});
 
 const companyLinks = computed(() => ([
   {
@@ -145,20 +115,6 @@ const { isMobileOrTablet } = useDevice();
       type="tertiary"
       @click="goToCreatePage"
     />
-
-    <div :class="[$style.container, $style.content]">
-      <ul :class="$style.cityWrap">
-        <li
-          v-for="city in cityLinks"
-          :key="city.id"
-          :class="$style.item"
-        >
-          <NuxtLink :to="city.route">
-            {{ city.name }}
-          </NuxtLink>
-        </li>
-      </ul>
-    </div>
 
     <div :class="[$style.container, $style.content]">
       <div
@@ -343,11 +299,6 @@ const { isMobileOrTablet } = useDevice();
 .wrap {
   @include ui-row;
   padding: 30px 20px 0;
-}
-
-.cityWrap {
-  @include ui-row;
-  padding: 30px 20px;
 }
 
 .item {
