@@ -145,14 +145,14 @@ const setPage = (pageNumber: number) => {
 
 <template>
   <div :class="$style.root">
-    <h1
-      :class="$style.title"
-      v-text="seo.h1"
-    />
-
     <CategoryList
       :list="categories"
       :class="$style.category"
+    />
+
+    <h1
+      :class="$style.title"
+      v-text="seo.h1"
     />
 
     <div :class="$style.content">
