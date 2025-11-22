@@ -2,6 +2,7 @@
 import { usePosts } from '~/composables/usePosts';
 import { MAX_POSTS_PER_PAGE } from '~/composables/usePosts/constants';
 import { getCityById } from '~/constants/cities';
+import { CATEGORIES } from '~/constants/categories';
 
 
 definePageMeta({
@@ -12,6 +13,24 @@ definePageMeta({
     'set-filters-middleware',
   ],
 });
+
+const subcategories = computed(() => {
+  const list = CATEGORIES.find(category => category.id === categoryId.value)?.subcategories || [];
+
+  return list.map(sub => ({
+    title: t(sub.key),
+    img: sub.img,
+    route: {
+      name: 'cityId-categoryId-subcategoryId',
+      params: {
+        categoryId: categoryId.value,
+        subcategoryId: sub.id,
+        cityId: cityId.value,
+      },
+    },
+  }));
+});
+
 
 const {
   cityId,
@@ -128,7 +147,8 @@ const setPage = (pageNumber: number) => {
 
 const top3Post = computed(() => {
   if (posts.value?.posts) {
-    return posts.value?.posts.slice(0, 3).map(item => item.title);
+    return posts.value?.posts.slice(0, 3)
+      .map(item => item.title);
   }
 
   return [];
@@ -412,6 +432,11 @@ const top3Post = computed(() => {
 
 <template>
   <div :class="$style.root">
+    <CategoryList
+      :list="subcategories"
+      :class="$style.subcategories"
+    />
+
     <UIBreadcrumbs :items="breadcrumbs" />
 
     <h1
@@ -456,13 +481,17 @@ const top3Post = computed(() => {
 .root {
   @include ui-simple-container;
 
-  padding: 10px 20px;
+  padding: 24px 20px;
 }
 
 .title {
   @include ui-typo-32-bold;
 
-  margin-top: 10px;
+  margin-bottom: 24px;
+}
+
+.subcategories {
+  margin-bottom: 24px;
 }
 
 .content {

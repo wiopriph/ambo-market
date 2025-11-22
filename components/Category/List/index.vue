@@ -39,13 +39,12 @@ $parent-padding: 20px; // fix: компенсация бокового padding �
 
 .wrap {
   display: grid;
-  grid-gap: 8px;
-  grid-template-rows: repeat(2, 100px);
-  grid-template-columns: repeat(5, minmax(160px, 300px));
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 
   @include md {
-    width: max-content;
     padding: 0 $parent-padding;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   }
 }
 
@@ -53,3 +52,4 @@ $parent-padding: 20px; // fix: компенсация бокового padding �
   grid-column: span 1;
 }
 </style>
+

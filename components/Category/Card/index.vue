@@ -19,7 +19,7 @@ const props = defineProps<CategoryCard>();
       :src="props.img"
       :class="$style.icon"
       loading="lazy"
-      width="83"
+      width="70"
       height="70"
       quality="80"
       format="webp"
@@ -61,5 +61,6 @@ const props = defineProps<CategoryCard>();
 
 .icon {
   z-index: 1;
+  border-radius: 50%;
 }
 </style>
