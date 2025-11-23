@@ -123,7 +123,7 @@ export default defineEventHandler(async (event) => {
       title,
       description,
       price: parsedPrice,
-      status: 'OPEN',
+      status: 'open',
       brand_id: brandId || null,
       category_id: categoryId,
       subcategory_id: subcategoryId || null,
