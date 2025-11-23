@@ -12,9 +12,7 @@ export function useAuth() {
 
   // 👉 отправка письма для сброса пароля
   const resetPassword = (email: string) =>
-    client.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/reset-password`,
-    });
+    client.auth.resetPasswordForEmail(email);
 
   const updateUser = (payload: {
     email?: string;

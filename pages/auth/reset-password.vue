@@ -16,7 +16,7 @@ const backendError = ref('');
 const successMessage = ref('');
 
 onMounted(async () => {
-  const { data, error } = await client.auth.getUser();
+  const { data, error } = await client.auth.verifyOtp({ token_hash: route.query.token, type: route.query.type });
 
   if (error || !data.user) {
     isTokenInvalid.value = true;
