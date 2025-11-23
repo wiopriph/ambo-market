@@ -56,6 +56,7 @@ const nameClassNames = computed(() => ({
 }
 
 .line {
+  width: 100%;
   display: flex;
   flex: 1;
   flex-direction: row;

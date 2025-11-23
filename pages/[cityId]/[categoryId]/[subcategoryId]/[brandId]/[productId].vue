@@ -811,7 +811,7 @@ const { isDesktopOrTablet } = useDevice();
 .locationAddress {
   display: flex;
   align-items: center;
-  width: calc(100% - 140px);
+  width: calc(100% - 210px);
   margin-right: 10px;
 }
 
