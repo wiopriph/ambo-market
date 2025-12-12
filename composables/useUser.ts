@@ -1,4 +1,3 @@
-// как лежит в Supabase (таблица profiles)
 export type DbProfile = {
   id: string;
   display_name: string | null;
@@ -9,7 +8,6 @@ export type DbProfile = {
   updated_at: string | null;
 };
 
-// как ожидает остальной фронт (старый формат)
 export type User = {
   id: string;
   name: string | null;
@@ -18,12 +16,19 @@ export type User = {
   email: string | null;
 };
 
-export type ProfileUpdateInput = Partial<
-  Pick<DbProfile, 'display_name' | 'avatar_url' | 'phone' | 'email'>
->;
+export type ProfileImageInput = {
+  base64: string;
+  mimeType: string;
+};
+
+export type ProfileUpdateInput = {
+  display_name?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  image?: ProfileImageInput | null;
+};
 
 export function useUser() {
-  const client = useSupabaseClient();
   const supaUser = useSupabaseUser();
 
   const isAuthChecking = useState<boolean>('isAuthChecking', () => false);
@@ -41,15 +46,17 @@ export function useUser() {
     email: profile.email,
   });
 
-  const setCurrentUser = (user: DbProfile | null) => {
-    if (!user) {
+
+  const setCurrentUser = (profile: DbProfile | null) => {
+    if (!profile) {
       currentUser.value = null;
 
       return;
     }
 
-    currentUser.value = mapDbProfileToUser(user);
+    currentUser.value = mapDbProfileToUser(profile);
   };
+
 
   const fetchProfile = async () => {
     if (!uid.value) {
@@ -66,20 +73,12 @@ export function useUser() {
       return;
     }
 
-    const { data, error } = await client
-      .from('profiles')
-      .update(profileData)
-      .eq('id', uid.value)
-      .select()
-      .single();
-
-    if (error) {
-      console.error('Error while updating profile:', error);
-      throw error;
-    }
-
-    setCurrentUser(data as DbProfile);
+    currentUser.value = await $fetch<User>(`/api/users/${uid.value}`, {
+      method: 'PATCH',
+      body: profileData,
+    });
   };
+
 
   if (import.meta.client && !isInitialized.value) {
     isInitialized.value = true;

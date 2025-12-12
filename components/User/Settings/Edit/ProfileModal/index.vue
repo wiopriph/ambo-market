@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { UserSettingsEditProfileProps } from './types';
-import { useUser } from '~/composables/useUser';
+import { useUser, type ProfileImageInput, type ProfileUpdateInput } from '~/composables/useUser';
 
 
 const props = withDefaults(defineProps<UserSettingsEditProfileProps>(), {
@@ -13,22 +13,17 @@ const { t } = useI18n();
 const innerName = ref(props.name);
 const formattedName = computed(() => innerName.value || t('your_name'));
 
-
 const innerPhotoUrl = ref(props.photoUrl);
-const uploadedPhoto = ref('');
+const uploadedPhoto = ref<ProfileImageInput | null>(null);
 
 const isLoading = ref(false);
 const backendError = ref('');
 
 
 const emit = defineEmits(['close']);
+const closeModal = () => emit('close');
 
-const closeModal = () => {
-  emit('close');
-};
-
-
-const handleFileUpload = (imgObj) => {
+const handleFileUpload = (imgObj: ProfileImageInput) => {
   uploadedPhoto.value = imgObj;
   innerPhotoUrl.value = imgObj.base64;
 };
@@ -41,14 +36,19 @@ const saveProfileInformation = async () => {
   try {
     isLoading.value = true;
 
-    await updateProfile({
-      avatar_url: uploadedPhoto.value,
+    const payload: ProfileUpdateInput = {
       display_name: innerName.value,
-    });
+    };
+
+    if (uploadedPhoto.value) {
+      payload.image = uploadedPhoto.value;
+    }
+
+    await updateProfile(payload);
 
     closeModal();
-  } catch (error) {
-    backendError.value = error?.message;
+  } catch (error: any) {
+    backendError.value = error?.message || 'Error';
   } finally {
     isLoading.value = false;
   }
