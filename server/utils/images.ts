@@ -22,11 +22,21 @@ type SupabaseLikeClient = {
   };
 };
 
+type ProcessImageOptions = {
+  width?: number;
+  height?: number;
+  quality?: number;
+};
+
 export async function processImageBuffer(
   buffer: Buffer,
-  opts: { width?: number; height?: number } = {},
+  opts: ProcessImageOptions = {},
 ) {
-  const { width = 1920, height = 1080 } = opts;
+  const {
+    width = 1920,
+    height = 1080,
+    quality = 80,
+  } = opts;
 
   try {
     return await sharp(buffer)
@@ -36,6 +46,7 @@ export async function processImageBuffer(
         fit: 'inside',
       })
       .rotate()
+      .webp({ quality })
       .toBuffer();
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -49,7 +60,7 @@ export async function processImageBuffer(
 
 /**
  * Загрузить фотку поста в бакет и вернуть public URL
- * path: post/<postId>/<uuid>.<ext>
+ * path: post/<postId>/<uuid>.webp
  */
 export async function uploadPostImage(
   client: SupabaseLikeClient,
@@ -59,9 +70,7 @@ export async function uploadPostImage(
 ): Promise<string> {
   const bucketName = opts?.bucketName ?? 'media';
 
-  const ext = image.mimeType.split('/')[1] || 'jpg';
-  const fileName = `${randomUUID()}.${ext}`;
-  const filePath = `post/${postId}/${fileName}`;
+  const filePath = `post/${postId}/${randomUUID()}.webp`;
 
   const base64 = image.base64.replace(/^data:image\/[^;]+;base64,/, '');
   const buffer = Buffer.from(base64, 'base64');
@@ -69,12 +78,13 @@ export async function uploadPostImage(
   const processed = await processImageBuffer(buffer, {
     width: opts?.small ? 360 : 1920,
     height: opts?.small ? 360 : 1080,
+    quality: opts?.small ? 75 : 80,
   });
 
   const { error: uploadError } = await client.storage
     .from(bucketName)
     .upload(filePath, processed, {
-      contentType: image.mimeType,
+      contentType: 'image/webp',
       cacheControl: '31536000',
       upsert: false,
     });
@@ -93,6 +103,10 @@ export async function uploadPostImage(
   return data.publicUrl;
 }
 
+/**
+ * Загрузить аватар пользователя в бакет и вернуть public URL
+ * path: user/<userId>/<uuid>.webp
+ */
 export async function uploadProfileImage(
   client: SupabaseLikeClient,
   image: ImageInput,
@@ -101,9 +115,7 @@ export async function uploadProfileImage(
 ): Promise<string> {
   const bucketName = opts?.bucketName ?? 'media';
 
-  const ext = image.mimeType.split('/')[1] || 'jpg';
-  const fileName = `${randomUUID()}.${ext}`;
-  const filePath = `user/${userId}/${fileName}`;
+  const filePath = `user/${userId}/${randomUUID()}.webp`;
 
   const base64 = image.base64.replace(/^data:image\/[^;]+;base64,/, '');
   const buffer = Buffer.from(base64, 'base64');
@@ -111,17 +123,19 @@ export async function uploadProfileImage(
   const processed = await processImageBuffer(buffer, {
     width: 360,
     height: 360,
+    quality: 80,
   });
 
   const { error: uploadError } = await client.storage
     .from(bucketName)
     .upload(filePath, processed, {
-      contentType: image.mimeType,
+      contentType: 'image/webp',
       cacheControl: '31536000',
       upsert: true,
     });
 
   if (uploadError) {
+    // eslint-disable-next-line no-console
     console.error('Upload error', uploadError);
     throw createError({
       statusCode: 500,
