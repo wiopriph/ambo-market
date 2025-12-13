@@ -7,9 +7,7 @@ import { CURRENCY } from '~/constants/currency';
 import type { Option } from '~/components/UI/Select/types';
 
 
-definePageMeta({
-  middleware: 'auth',
-});
+definePageMeta({ middleware: 'auth' });
 
 const { currentUser } = useUser();
 
@@ -92,7 +90,6 @@ const { value: description } = useField<string>('description');
 const { value: isSafeDeal } = useField<boolean>('isSafeDeal');
 const { value: images } = useField<Image[]>('images');
 const { value: location } = useField<Location>('location');
-
 
 const toOptions = (arr?: Array<{ id: string; key: string }>): Option[] =>
   (arr ?? []).map(({ id, key }) => ({ value: id, text: t(key) }));
@@ -184,6 +181,7 @@ const clearFields = () => {
 
 const isLoading = ref(false);
 const hasAPIError = ref(false);
+const apiErrorMessage = ref('');
 
 const createPost = handleSubmit.withControlled(async () => {
   if (isLoading.value) {
@@ -191,6 +189,8 @@ const createPost = handleSubmit.withControlled(async () => {
   }
 
   isLoading.value = true;
+  hasAPIError.value = false;
+  apiErrorMessage.value = '';
 
   try {
     const { id } = await $fetch<{ id: string }>('/api/posts', {
@@ -208,17 +208,28 @@ const createPost = handleSubmit.withControlled(async () => {
       },
     });
 
-    navigateTo({
-      name: 'product-productId',
-      params: { productId: id },
-    });
-
-    isLoading.value = false;
-
+    navigateTo({ name: 'product-productId', params: { productId: id } });
     clearFields();
-  } catch (error) {
-    isLoading.value = false;
+  } catch (error: any) {
+    const statusCode = error?.statusCode ?? error?.status ?? error?.response?.status;
+    const statusMessage =
+      error?.statusMessage ??
+      error?.data?.statusMessage ??
+      error?.message ??
+      '';
+
+    if (statusCode === 400 && statusMessage === 'Phone number is required to create a post') {
+      if (currentUser.value) {
+        currentUser.value = { ...currentUser.value, phone: null };
+      }
+
+      return;
+    }
+
     hasAPIError.value = true;
+    apiErrorMessage.value = statusMessage || 'Something went wrong';
+  } finally {
+    isLoading.value = false;
   }
 });
 
@@ -499,7 +510,7 @@ watch(subcategory, () => {
           </UILineDescription>
 
           <UILineDescription
-            v-if="hasSafeDeal"
+            v-if="false && hasSafeDeal"
             :title="t('safe_deal')"
             :class="$style.line"
             boldTitle
@@ -527,6 +538,11 @@ watch(subcategory, () => {
               </I18nT>
             </div>
           </UILineDescription>
+
+          <UIError
+            v-if="hasAPIError"
+            :text="apiErrorMessage"
+          />
 
           <UILineDescription
             :class="$style.line"

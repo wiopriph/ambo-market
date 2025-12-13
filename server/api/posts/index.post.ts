@@ -57,6 +57,26 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  const { data: profile, error: profileError } = await client
+    .from('profiles')
+    .select('phone')
+    .eq('id', user.id)
+    .single();
+
+  if (profileError) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Failed to load user profile',
+    });
+  }
+
+  if (!profile?.phone) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Phone number is required to create a post',
+    });
+  }
+
   const body = await readBody<{
     categoryId: string;
     subcategoryId?: string;
