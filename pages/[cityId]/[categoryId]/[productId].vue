@@ -208,6 +208,10 @@ const hideClosePostModal = () => {
   isClosePostModalVisible.value = false;
 };
 
+const closePost = () => {
+  product.value.post.status = 'closed';
+};
+
 
 const currentSlideIndex = ref(0);
 const isGalleryModalVisible = ref(false);
@@ -623,13 +627,12 @@ const { isDesktopOrTablet } = useDevice();
         @close="hideMapModal"
       />
 
-      <transition name="fade">
-        <LazyProductBuyersModal
-          v-if="isClosePostModalVisible"
-          :postId="postId"
-          @close="hideClosePostModal"
-        />
-      </transition>
+      <LazyProductCloseModal
+        v-if="isClosePostModalVisible"
+        :postId="postId"
+        @change-status="closePost"
+        @close="hideClosePostModal"
+      />
     </section>
 
     <section
