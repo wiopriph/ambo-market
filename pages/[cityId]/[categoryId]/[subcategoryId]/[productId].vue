@@ -8,7 +8,7 @@ import type { ProductApiResponse, User } from '~/types/product';
 import { formatFullDate } from '~/utils/formatDate';
 import { useUser } from '~/composables/useUser';
 import { getPostRoute } from '~/utils/getPostRoute';
-import { CLICK_AD_PHOTO, CLICK_SHOW_ON_MAP } from '~/constants/analytics-events';
+import { CLICK_AD_PHOTO } from '~/constants/analytics-events';
 
 
 definePageMeta({
@@ -241,18 +241,6 @@ const hideGalleryModal = () => {
 };
 
 
-const isMapModalVisible = ref(false);
-
-const showMapModal = () => {
-  pushEvent(CLICK_SHOW_ON_MAP, { product_id: postId.value });
-
-  isMapModalVisible.value = true;
-};
-
-const hideMapModal = () => {
-  isMapModalVisible.value = false;
-};
-
 const { isDesktopOrTablet } = useDevice();
 </script>
 
@@ -260,7 +248,6 @@ const { isDesktopOrTablet } = useDevice();
 {
   "en": {
     "contact_seller": "Contact the Seller",
-    "show_on_map": "View Location on Map",
     "location": "Location",
     "category": "Category",
     "description": "Description",
@@ -370,7 +357,6 @@ const { isDesktopOrTablet } = useDevice();
   },
   "pt": {
     "contact_seller": "Contatar vendedor",
-    "show_on_map": "Mostrar no mapa",
     "location": "Localização",
     "category": "Categoria",
     "description": "Descrição do produto",
@@ -555,14 +541,6 @@ const { isDesktopOrTablet } = useDevice();
                     v-text="postCityName"
                   />
                 </div>
-
-                <UIButton
-                  v-if="postLocation"
-                  :text="t('show_on_map')"
-                  :class="$style.locationMapButton"
-                  type="secondary"
-                  @click="showMapModal"
-                />
               </div>
             </UILineDescription>
           </li>
@@ -630,14 +608,6 @@ const { isDesktopOrTablet } = useDevice();
           />
         </div>
       </div>
-
-      <LazyGeolocationPreviewModal
-        v-if="isMapModalVisible && postLocation"
-        :displayName="postLocation.displayName"
-        :latitude="postLocation.lat"
-        :longitude="postLocation.lon"
-        @close="hideMapModal"
-      />
 
       <LazyProductCloseModal
         v-if="isClosePostModalVisible"
@@ -797,7 +767,7 @@ const { isDesktopOrTablet } = useDevice();
 .locationAddress {
   display: flex;
   align-items: center;
-  width: calc(100% - 210px);
+  width: 100%;
   margin-right: 10px;
 }
 
@@ -814,10 +784,6 @@ const { isDesktopOrTablet } = useDevice();
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-.locationMapButton {
-  flex-shrink: 0;
 }
 
 .profileInfoMobile {

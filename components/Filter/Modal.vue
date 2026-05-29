@@ -148,7 +148,6 @@ const setBrand = (brandId: string) => {
     "from": "from",
     "to": "to",
     "safe_deal": "Safe deal",
-    "radius": "Radius",
     "clear_all": "Clear all filter",
     "update_search": "Update search"
   },
@@ -163,7 +162,6 @@ const setBrand = (brandId: string) => {
     "from": "por",
     "to": "até",
     "safe_deal": "Negócio Seguro",
-    "radius": "raio",
     "clear_all": "limpar todo o filtro",
     "update_search": "Atualizar pesquisa"
   }
@@ -348,4 +346,3 @@ const setBrand = (brandId: string) => {
   }
 }
 </style>
-

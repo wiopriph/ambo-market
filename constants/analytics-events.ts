@@ -32,7 +32,6 @@ export const CLICK_CHAT = 'click_chat'; // product_id
 export const CLICK_BUY = 'click_buy'; // product_id
 export const CLICK_AD_FAVORITE = 'click_ad_favorite'; // product_id
 export const CLICK_AD_PHOTO = 'click_ad_photo'; // product_id
-export const CLICK_SHOW_ON_MAP = 'click_show_on_map'; // product_id
 export const CLICK_SHARE_SOCIAL = 'click_share_social'; // product_link, platform
 
 // Авторизация
