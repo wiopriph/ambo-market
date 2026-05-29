@@ -2,7 +2,6 @@ interface Category {
   id: string;
   key: string;
   img: string;
-  hasSafeDeal?: boolean;
   subcategories?: {
     id: string;
     key: string;
@@ -178,7 +177,6 @@ export const CATEGORIES: Category[] = [
 
   {
     id: 'electronics',
-    hasSafeDeal: true,
     key: 'categories.electronics',
     img: '/images/categories/electronics.png',
     subcategories: [
@@ -311,7 +309,6 @@ export const CATEGORIES: Category[] = [
 
   {
     id: 'fashion',
-    hasSafeDeal: true,
     key: 'categories.fashion',
     img: '/images/categories/fashion.png',
     subcategories: [
@@ -424,7 +421,6 @@ export const CATEGORIES: Category[] = [
 
   {
     id: 'hobby',
-    hasSafeDeal: true,
     key: 'categories.hobby',
     img: '/images/categories/hobby.png',
     subcategories: [
@@ -458,7 +454,6 @@ export const CATEGORIES: Category[] = [
 
   {
     id: 'kids',
-    hasSafeDeal: true,
     key: 'categories.kids',
     img: '/images/categories/kids.png',
     subcategories: [
@@ -487,7 +482,6 @@ export const CATEGORIES: Category[] = [
 
   {
     id: 'home',
-    hasSafeDeal: true,
     key: 'categories.home',
     img: '/images/categories/home.png',
     subcategories: [
