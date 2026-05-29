@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import IconLocation from '~/assets/images/header/icon-location.svg?component';
 import IconAds from '~/assets/images/header/icon-ads.svg?component';
-import { getLabelByRadius } from '~/constants/distance';
 import { usePosts } from '~/composables/usePosts';
 import { CLICK_LOCATION_BUTTON } from '~/constants/analytics-events';
 
@@ -17,24 +16,22 @@ const links = computed(() => [
 ]);
 
 
-const { coords, locationName } = usePosts();
+const { locationName } = usePosts();
 
-const hasRadius = computed(() => locationName.value && coords.value.radius);
-const selectedRadiusLabel = computed(() => getLabelByRadius(`${coords.value?.radius || ''}`));
 const locationNameOrDefault = computed(() => locationName.value || t('everywhere'));
 
 const { pushEvent } = useAnalyticsEvent();
 
-const isMapModalVisible = ref(false);
+const isLocationModalVisible = ref(false);
 
-const showMapModal = () => {
+const showLocationModal = () => {
   pushEvent(CLICK_LOCATION_BUTTON);
 
-  isMapModalVisible.value = true;
+  isLocationModalVisible.value = true;
 };
 
-const hideMapModal = () => {
-  isMapModalVisible.value = false;
+const hideLocationModal = () => {
+  isLocationModalVisible.value = false;
 };
 </script>
 
@@ -64,7 +61,7 @@ const hideMapModal = () => {
       <button
         :class="$style.locationButton"
         type="button"
-        @click="showMapModal"
+        @click="showLocationModal"
       >
         <IconLocation :class="$style.icon" />
 
@@ -72,17 +69,12 @@ const hideMapModal = () => {
           :class="$style.text"
           v-text="locationNameOrDefault"
         />
-
-        <span
-          v-if="hasRadius"
-          :class="$style.radius"
-        >, +{{ selectedRadiusLabel }}</span>
       </button>
     </div>
 
-    <LazyGeolocationModal
-      v-if="isMapModalVisible"
-      @close="hideMapModal"
+    <LazyLocationModal
+      v-if="isLocationModalVisible"
+      @close="hideLocationModal"
     />
 
     <ul :class="$style.links">
@@ -168,10 +160,6 @@ const hideMapModal = () => {
   white-space: nowrap;
   text-decoration: underline;
   text-overflow: ellipsis;
-}
-
-.radius {
-  white-space: nowrap;
 }
 
 .links {

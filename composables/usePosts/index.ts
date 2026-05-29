@@ -2,7 +2,7 @@ import type { Filters, Location, InitializeFilters } from './types';
 import { DEFAULT_LOCATION, DEFAULT_FILTERS, MAX_POSTS_PER_PAGE } from './constants';
 import usePostApi from './hooks';
 import getObjectDifferences from '~/utils/getObjectDifferences';
-import { getCityIdByName } from '~/constants/cities';
+import { getCityById } from '~/constants/cities';
 
 
 export function usePosts() {
@@ -16,17 +16,24 @@ export function usePosts() {
   const location = useState<Location>('location', () => DEFAULT_LOCATION);
   const locationName = computed(() => location.value.displayName);
 
-  const cityId = computed(() => getCityIdByName(location.value?.city));
+  const cityId = computed(() => location.value.cityId || 'all');
   const isPriorityCity = computed(() => cityId.value !== 'all');
-  const coords = computed(() => ({
-    latitude: location.value.lat,
-    longitude: location.value.lon,
-    radius: location.value.radius,
-  }));
 
   const setLocationInfo = (locationData: Location) => {
     location.value = locationData;
     locationCookie.value = locationData;
+  };
+
+  const setCity = (nextCityId: string) => {
+    const city = getCityById(nextCityId || 'all') ?? getCityById('all');
+
+    if (city) {
+      setLocationInfo({
+        cityId: city.id,
+        city: city.name,
+        displayName: city.name,
+      });
+    }
   };
 
   const filters = useState<Filters>('filters', () => DEFAULT_FILTERS);
@@ -62,9 +69,7 @@ export function usePosts() {
         categoryId: categoryId.value,
         subcategoryId: subcategoryId.value,
         brandId: brandId.value,
-        latitude: location.value.lat,
-        longitude: location.value.lon,
-        radius: location.value.radius,
+        cityId: cityId.value,
         minPrice: filters.value.minPrice,
         maxPrice: filters.value.maxPrice,
         search: filters.value.q,
@@ -82,8 +87,8 @@ export function usePosts() {
   return {
     location,
     locationName,
-    coords,
     setLocationInfo,
+    setCity,
 
     cityId,
     isPriorityCity,

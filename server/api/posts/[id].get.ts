@@ -1,4 +1,5 @@
 import { serverSupabaseClient } from '#supabase/server';
+import { getCityIdByName } from '~/constants/cities';
 
 
 const isFirestoreId = (s: string) => /^[A-Za-z0-9_-]{20}$/.test(s);
@@ -15,8 +16,7 @@ const mapRowToPost = (row: any) => ({
   price: typeof row.price === 'number' ? row.price : null,
   description: row.description ?? null,
   location: {
-    lat: row.location_lat ?? null,
-    lon: row.location_lon ?? null,
+    cityId: getCityIdByName(row.location_city ?? ''),
     city: row.location_city ?? null,
     displayName: row.location_display_name ?? null,
   },

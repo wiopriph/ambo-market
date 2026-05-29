@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import IconLocation from '~/assets/images/header/icon-location.svg?component';
-import { getLabelByRadius } from '~/constants/distance';
 import { usePosts } from '~/composables/usePosts';
 
 
 const { t } = useI18n();
 
-const { coords, locationName } = usePosts();
-
-const hasRadius = computed(() => locationName.value && coords.value.radius);
-const selectedRadiusLabel = computed(() => getLabelByRadius(`${coords.value?.radius || ''}`));
+const { locationName } = usePosts();
 
 const locationNameOrDefault = computed(() => locationName.value || t('everywhere'));
 
@@ -49,11 +45,6 @@ const click = () => emit('click');
       :class="$style.locationName"
       v-text="locationNameOrDefault"
     />
-
-    <span
-      v-if="hasRadius"
-      :class="$style.radius"
-    >, +{{ selectedRadiusLabel }}</span>
   </button>
 </template>
 
@@ -88,9 +79,5 @@ const click = () => emit('click');
   white-space: nowrap;
   text-decoration: underline;
   text-overflow: ellipsis;
-}
-
-.radius {
-  white-space: nowrap;
 }
 </style>

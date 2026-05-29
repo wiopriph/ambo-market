@@ -2,13 +2,13 @@ import { randomUUID } from 'node:crypto';
 import { defineEventHandler, readBody, createError } from 'h3';
 import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server';
 import { uploadPostImage, type ImageInput } from '~~/server/utils/images';
+import { getCityById } from '~/constants/cities';
 
 
 type LocationInput = {
+  cityId?: string;
   city?: string;
-  displayName: string;
-  lat: number | string;
-  lon: number | string;
+  displayName?: string;
 };
 
 function parseLocation(location: LocationInput) {
@@ -19,30 +19,21 @@ function parseLocation(location: LocationInput) {
     });
   }
 
-  const { city = '', displayName, lat, lon } = location;
+  const cityInfo = getCityById(location.cityId || '');
 
-  if (!displayName.trim()) {
+  if (!cityInfo || cityInfo.id === 'all') {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Display name is required',
+      statusMessage: 'City is required',
     });
   }
 
-  const parsedLat = typeof lat === 'string' ? parseFloat(lat) : lat;
-  const parsedLon = typeof lon === 'string' ? parseFloat(lon) : lon;
-
-  if (Number.isNaN(parsedLat) || Number.isNaN(parsedLon)) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: 'Latitude and longitude must be valid numbers',
-    });
-  }
+  const displayName = location.displayName?.trim() || cityInfo.name;
 
   return {
-    city: city.trim(),
-    displayName: displayName.trim(),
-    lat: parsedLat,
-    lon: parsedLon,
+    cityId: cityInfo.id,
+    city: cityInfo.name,
+    displayName,
   };
 }
 
@@ -150,10 +141,10 @@ export default defineEventHandler(async (event) => {
       is_safe_deal: isSafeDeal,
       preview,
       images: uploadedImages,
-      location_city: locationData.city || null,
+      location_city: locationData.city,
       location_display_name: locationData.displayName,
-      location_lat: locationData.lat,
-      location_lon: locationData.lon,
+      location_lat: null,
+      location_lon: null,
     })
     .single();
 

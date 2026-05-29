@@ -6,11 +6,9 @@ export interface Filters {
 }
 
 export interface Location {
-  lat: number | null;
-  lon: number | null;
+  cityId: string;
   city: string;
   displayName: string;
-  radius: string | number | null;
 }
 
 export interface InitializeFilters {
@@ -26,9 +24,7 @@ export interface FetchPostsParams {
   categoryId: string;
   subcategoryId: string;
   brandId: string;
-  latitude: number | null;
-  longitude: number | null;
-  radius: string | number | null;
+  cityId: string;
   minPrice: number | string;
   maxPrice: number | string;
   search: string;

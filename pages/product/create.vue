@@ -4,6 +4,7 @@ import { boolean, object, array, string } from 'yup';
 import { useUser } from '~/composables/useUser';
 import { CATEGORIES } from '~/constants/categories';
 import { CURRENCY } from '~/constants/currency';
+import { CITIES } from '~/constants/cities';
 import type { Option } from '~/components/UI/Select/types';
 
 
@@ -20,15 +21,6 @@ type Image = {
   mimeType: string;
 };
 
-type Location = {
-  lat: number;
-  lon: number;
-  cityId: string;
-  city: string;
-  displayName: string;
-  address: string;
-};
-
 const {
   errors,
   handleSubmit,
@@ -43,7 +35,7 @@ const {
     description: '',
     isSafeDeal: false,
     images: [],
-    location: {},
+    cityId: '',
   },
   validationSchema: object({
     category: string().required(t('validation.required')),
@@ -77,7 +69,7 @@ const {
     description: string().required(t('validation.required')),
     isSafeDeal: boolean(),
     images: array().min(1, t('validation.imagesRequired')),
-    location: object().required(t('validation.required')),
+    cityId: string().required(t('validation.required')),
   }),
 });
 
@@ -89,7 +81,7 @@ const { value: price } = useField<string>('price');
 const { value: description } = useField<string>('description');
 const { value: isSafeDeal } = useField<boolean>('isSafeDeal');
 const { value: images } = useField<Image[]>('images');
-const { value: location } = useField<Location>('location');
+const { value: cityId } = useField<string>('cityId');
 
 const toOptions = (arr?: Array<{ id: string; key: string }>): Option[] =>
   (arr ?? []).map(({ id, key }) => ({ value: id, text: t(key) }));
@@ -103,6 +95,9 @@ const currentSubcategory = computed(() =>
 const categoriesItems = computed<Option[]>(() => toOptions(CATEGORIES));
 const subcategoriesItems = computed<Option[]>(() => toOptions(currentCategory.value?.subcategories));
 const brandsItems = computed<Option[]>(() => toOptions(currentSubcategory.value?.brands));
+const citiesItems = computed<Option[]>(() => CITIES
+  .filter(city => city.id !== 'all')
+  .map(city => ({ value: city.id, text: city.name })));
 
 
 const hasSafeDeal = computed(() => !!currentCategory.value?.hasSafeDeal);
@@ -150,19 +145,13 @@ const loadFile = () => {
   fileInput.value?.click();
 };
 
-const hasLocation = computed(() => Object.keys(location.value).length > 0);
-
-const setLocation = (payload: Location) => {
-  location.value = payload;
-};
-
 const progress = computed(() => [
   { active: !!category.value, label: t('category') },
   { active: !!productName.value, label: t('product_name') },
   { active: !!price.value, label: t('price') },
   { active: !!description.value, label: t('description') },
   { active: hasPhotos.value, label: t('photos') },
-  { active: hasLocation.value, label: t('location') },
+  { active: !!cityId.value, label: t('location') },
 ]);
 
 const clearFields = () => {
@@ -174,7 +163,7 @@ const clearFields = () => {
       description: '',
       isSafeDeal: false,
       images: [],
-      location: location.value,
+      cityId: '',
     },
   });
 };
@@ -203,7 +192,9 @@ const createPost = handleSubmit.withControlled(async () => {
         subcategoryId: subcategory.value,
         brandId: brand.value,
         images: images.value,
-        location: location.value,
+        location: {
+          cityId: cityId.value,
+        },
         isSafeDeal: hasSafeDeal.value && isSafeDeal.value,
       },
     });
@@ -261,7 +252,7 @@ watch(subcategory, () => {
     },
     "add_photo": "Add a photo",
     "location": "Location",
-    "enter_your_address": "Enter your address or select a location on the map below",
+    "select_city": "Select a city",
     "safe_deal": "Safe deal",
     "safe_deal_description": "Your items are available for sale under {deal}.",
     "place_ad": "Place Ad"
@@ -282,7 +273,7 @@ watch(subcategory, () => {
     },
     "add_photo": "Adicionar foto",
     "location": "Localização",
-    "enter_your_address": "Insira o seu endereço ou selecione um local no mapa abaixo",
+    "select_city": "Selecione uma cidade",
     "safe_deal": "Negócio Seguro",
     "safe_deal_description": "Seus itens estão disponíveis para venda no {deal}.",
     "place_ad": "Publicar Anúncio"
@@ -486,26 +477,17 @@ watch(subcategory, () => {
             requiredTitle
             boldTitle
           >
-            <div :class="$style.currentAddress">
-              <strong
-                v-if="location?.displayName"
-                v-text="location.displayName"
+            <div>
+              <UISelect
+                v-model="cityId"
+                :options="citiesItems"
+                :placeholder="t('select_city')"
+                :error="errors.cityId"
+                isRequired
+                name="city"
               />
 
-              <span
-                v-else
-                v-text="t('enter_your_address')"
-              />
-            </div>
-
-            <div :class="$style.addressCol">
-              <ClientOnly>
-                <GeolocationSelector
-                  :class="$style.map"
-                  hideRadius
-                  @select="setLocation"
-                />
-              </ClientOnly>
+              <UIError :text="errors.cityId" />
             </div>
           </UILineDescription>
 
@@ -653,24 +635,6 @@ watch(subcategory, () => {
 
   margin-left: 10px;
   color: $ui-color-black;
-}
-
-.currentAddress {
-  margin-bottom: 20px;
-}
-
-.addressCol {
-  display: flex;
-  flex-direction: column;
-  height: 400px;
-}
-
-.map {
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  min-height: 400px;
-  max-height: 600px;
 }
 
 .safeDeal {

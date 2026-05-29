@@ -14,9 +14,7 @@ export const DEFAULT_FILTERS: Filters = {
 };
 
 export const DEFAULT_LOCATION: Location = {
-  lat: null,
-  lon: null,
+  cityId: 'all',
   city: '',
   displayName: '',
-  radius: '',
 };

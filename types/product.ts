@@ -1,6 +1,5 @@
 type Location = {
-  lon: number;
-  lat: number;
+  cityId: string;
   displayName: string;
   city: string;
 };

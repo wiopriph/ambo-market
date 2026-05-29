@@ -53,16 +53,16 @@ const hideMenuModal = () => {
 };
 
 
-const isMapModalVisible = ref(false);
+const isLocationModalVisible = ref(false);
 
-const showMapModal = () => {
+const showLocationModal = () => {
   pushEvent(CLICK_LOCATION_BUTTON);
 
-  isMapModalVisible.value = true;
+  isLocationModalVisible.value = true;
 };
 
-const hideMapModal = () => {
-  isMapModalVisible.value = false;
+const hideLocationModal = () => {
+  isLocationModalVisible.value = false;
 };
 
 
@@ -133,9 +133,9 @@ const { t } = useI18n();
       <IconProfile />
     </button>
 
-    <LazyGeolocationModal
-      v-if="isMapModalVisible"
-      @close="hideMapModal"
+    <LazyLocationModal
+      v-if="isLocationModalVisible"
+      @close="hideLocationModal"
     />
 
     <LazyUIModal
@@ -143,7 +143,7 @@ const { t } = useI18n();
       :title="t('categories')"
       @close="hideCategoryModal"
     >
-      <LazyHeaderMobileLocation @click="showMapModal" />
+      <LazyHeaderMobileLocation @click="showLocationModal" />
 
       <LazyHeaderMobileCategories
         :class="$style.categories"

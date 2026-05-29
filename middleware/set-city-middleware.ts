@@ -5,22 +5,14 @@ import { usePosts } from '~/composables/usePosts';
 export default defineNuxtRouteMiddleware((to) => {
   const {
     cityId,
-    setLocationInfo,
+    setCity,
   } = usePosts();
 
   const routeCityId = to.params.cityId as string;
 
   if (routeCityId !== cityId.value) {
-    const defaultCityInfo = getCityById(routeCityId);
-
-    if (defaultCityInfo) {
-      return setLocationInfo({
-        city: defaultCityInfo.name,
-        displayName: defaultCityInfo.name,
-        lat: defaultCityInfo.lat,
-        lon: defaultCityInfo.lon,
-        radius: null,
-      });
+    if (getCityById(routeCityId)) {
+      return setCity(routeCityId);
     }
   }
 });

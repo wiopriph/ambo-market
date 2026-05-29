@@ -1,32 +1,8 @@
 import { serverSupabaseClient } from '#supabase/server';
+import { getCityById, getCityIdByName } from '~/constants/cities';
 
 
 const isNum = (v: any): v is number => typeof v === 'number' && !Number.isNaN(v);
-
-function metersToKilometers(m: number | string) {
-  const n = parseFloat(String(m));
-
-  return !Number.isNaN(n) && n >= 0 ? n / 1000 : null;
-}
-
-function calculateBoundingBox(latitude?: number, longitude?: number, radius?: number) {
-  if (!isNum(latitude) || !isNum(longitude)) {
-    return null;
-  }
-
-  const EARTH_RADIUS = 6371;
-  const DEFAULT_RADIUS = 60;
-  const rKm = radius ? metersToKilometers(radius) ?? DEFAULT_RADIUS : DEFAULT_RADIUS;
-  const radLat = (Math.PI / 180) * latitude;
-  const deg = (rKm / EARTH_RADIUS) * (180 / Math.PI);
-
-  return {
-    minLat: latitude - deg,
-    maxLat: latitude + deg,
-    minLon: longitude - deg / Math.cos(radLat),
-    maxLon: longitude + deg / Math.cos(radLat),
-  };
-}
 
 // маппим snake_case из БД -> camelCase API + вложенность
 function mapRowToPost(row: any) {
@@ -47,8 +23,7 @@ function mapRowToPost(row: any) {
     images: Array.isArray(row.images) ? row.images : [],
 
     location: {
-      lat: isNum(row.location_lat) ? row.location_lat : null,
-      lon: isNum(row.location_lon) ? row.location_lon : null,
+      cityId: getCityIdByName(row.location_city ?? ''),
       city: row.location_city ?? null,
       displayName: row.location_display_name ?? null,
     },
@@ -72,12 +47,10 @@ export default defineEventHandler(async (event) => {
   const categoryId = q.categoryId as string | undefined;
   const subcategoryId = q.subcategoryId as string | undefined;
   const brandId = q.brandId as string | undefined;
+  const cityId = q.cityId as string | undefined;
   const search = (q.search as string) || '';
   const minPrice = q.minPrice ? Number(q.minPrice) : undefined;
   const maxPrice = q.maxPrice ? Number(q.maxPrice) : undefined;
-  const lat = q.latitude ? Number(q.latitude) : undefined;
-  const lon = q.longitude ? Number(q.longitude) : undefined;
-  const radius = q.radius ? Number(q.radius) : undefined;
   const page = Number(q.page || 1);
   const limit = Math.min(Number(q.limit || 10), 100);
   const offset = (page - 1) * limit;
@@ -106,14 +79,10 @@ export default defineEventHandler(async (event) => {
     s = s.lte('price', maxPrice);
   }
 
-  const box = calculateBoundingBox(lat, lon, radius);
+  const city = cityId ? getCityById(cityId) : undefined;
 
-  if (box) {
-    s = s
-      .gte('location_lat', box.minLat)
-      .lte('location_lat', box.maxLat)
-      .gte('location_lon', box.minLon)
-      .lte('location_lon', box.maxLon);
+  if (city?.id && city.id !== 'all') {
+    s = s.eq('location_city', city.name);
   }
 
   if (search) {

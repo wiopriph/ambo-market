@@ -28,7 +28,6 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/i18n',
     '@nuxtjs/device',
-    '@nuxtjs/leaflet',
     'nuxt-swiper',
     '@nuxt/image',
     '@zadigetvoltaire/nuxt-gtm',
