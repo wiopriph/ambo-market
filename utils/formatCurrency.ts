@@ -1,5 +1,3 @@
-import { CURRENCY } from '~/constants/currency';
-
 /**
  * Форматирование денежной суммы под локаль и валюту
  *
@@ -18,10 +16,9 @@ export default function(
   const fraction: number = Number.isInteger(fractionDigits) && fractionDigits >= 0 ? fractionDigits : 2;
 
   const options: Intl.NumberFormatOptions = {
-    currency: CURRENCY,
     minimumFractionDigits: fraction,
     maximumFractionDigits: fraction,
-    style,
+    style: style === 'currency' ? 'decimal' : style,
   };
 
   const numericValue = typeof value === 'string' ? parseFloat(value) : value;
@@ -31,6 +28,7 @@ export default function(
   }
 
   const numberFormat = new Intl.NumberFormat(locale, options);
+  const formattedValue = numberFormat.format(numericValue);
 
-  return numberFormat.format(numericValue);
+  return style === 'currency' ? `${formattedValue} kz` : formattedValue;
 }

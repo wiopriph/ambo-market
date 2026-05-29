@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate';
-import { boolean, object, array, string } from 'yup';
+import { object, array, string } from 'yup';
 import { useUser } from '~/composables/useUser';
 import { CATEGORIES } from '~/constants/categories';
-import { CURRENCY } from '~/constants/currency';
 import { CITIES } from '~/constants/cities';
 import type { Option } from '~/components/UI/Select/types';
 
@@ -33,43 +32,49 @@ const {
     productName: '',
     price: '',
     description: '',
-    isSafeDeal: false,
     images: [],
     cityId: '',
   },
   validationSchema: object({
-    category: string().required(t('validation.required')),
-    subcategory: string().test('subcategory-required', t('validation.required'), function(value) {
-      const categoryId = this.parent.category;
-      const category = CATEGORIES.find(c => c.id === categoryId);
+    category: string()
+      .required(t('validation.required')),
+    subcategory: string()
+      .test('subcategory-required', t('validation.required'), function(value) {
+        const categoryId = this.parent.category;
+        const category = CATEGORIES.find(c => c.id === categoryId);
 
-      if (category?.subcategories?.length) {
-        return !!value;
-      }
+        if (category?.subcategories?.length) {
+          return !!value;
+        }
 
-      return true;
-    }),
+        return true;
+      }),
 
-    brand: string().test('brand-required', t('validation.required'), function(value) {
-      const categoryId = this.parent.category;
-      const subcategoryId = this.parent.subcategory;
-      const category = CATEGORIES.find(c => c.id === categoryId);
-      const subcategory = category?.subcategories?.find(sc => sc.id === subcategoryId);
+    brand: string()
+      .test('brand-required', t('validation.required'), function(value) {
+        const categoryId = this.parent.category;
+        const subcategoryId = this.parent.subcategory;
+        const category = CATEGORIES.find(c => c.id === categoryId);
+        const subcategory = category?.subcategories?.find(sc => sc.id === subcategoryId);
 
-      if (subcategory?.brands?.length) {
-        return !!value;
-      }
+        if (subcategory?.brands?.length) {
+          return !!value;
+        }
 
-      return true;
-    }),
+        return true;
+      }),
 
-    productName: string().required(t('validation.required'))
+    productName: string()
+      .required(t('validation.required'))
       .max(50, t('validation.productNameMaxLength')),
-    price: string().required(t('validation.required')),
-    description: string().required(t('validation.required')),
-    isSafeDeal: boolean(),
-    images: array().min(1, t('validation.imagesRequired')),
-    cityId: string().required(t('validation.required')),
+    price: string()
+      .required(t('validation.required')),
+    description: string()
+      .required(t('validation.required')),
+    images: array()
+      .min(1, t('validation.imagesRequired')),
+    cityId: string()
+      .required(t('validation.required')),
   }),
 });
 
@@ -79,7 +84,6 @@ const { value: brand } = useField<string>('brand');
 const { value: productName } = useField<string>('productName');
 const { value: price } = useField<string>('price');
 const { value: description } = useField<string>('description');
-const { value: isSafeDeal } = useField<boolean>('isSafeDeal');
 const { value: images } = useField<Image[]>('images');
 const { value: cityId } = useField<string>('cityId');
 
@@ -99,8 +103,6 @@ const citiesItems = computed<Option[]>(() => CITIES
   .filter(city => city.id !== 'all')
   .map(city => ({ value: city.id, text: city.name })));
 
-
-const hasSafeDeal = computed(() => !!currentCategory.value?.hasSafeDeal);
 
 const hasPhotos = computed(() => images.value.length > 0);
 
@@ -146,12 +148,12 @@ const loadFile = () => {
 };
 
 const progress = computed(() => [
+  { active: !!cityId.value, label: t('city') },
   { active: !!category.value, label: t('category') },
   { active: !!productName.value, label: t('product_name') },
   { active: !!price.value, label: t('price') },
   { active: !!description.value, label: t('description') },
   { active: hasPhotos.value, label: t('photos') },
-  { active: !!cityId.value, label: t('location') },
 ]);
 
 const clearFields = () => {
@@ -161,7 +163,6 @@ const clearFields = () => {
       productName: '',
       price: '',
       description: '',
-      isSafeDeal: false,
       images: [],
       cityId: '',
     },
@@ -195,7 +196,7 @@ const createPost = handleSubmit.withControlled(async () => {
         location: {
           cityId: cityId.value,
         },
-        isSafeDeal: hasSafeDeal.value && isSafeDeal.value,
+        isSafeDeal: false,
       },
     });
 
@@ -251,10 +252,8 @@ watch(subcategory, () => {
       "second": "You can upload up to four photos in JPG or PNG format."
     },
     "add_photo": "Add a photo",
-    "location": "Location",
+    "city": "City",
     "select_city": "Select a city",
-    "safe_deal": "Safe deal",
-    "safe_deal_description": "Your items are available for sale under {deal}.",
     "place_ad": "Place Ad"
   },
   "pt": {
@@ -272,10 +271,8 @@ watch(subcategory, () => {
       "second": "Você pode fazer upload de até 4 fotos no formato JPG ou PNG."
     },
     "add_photo": "Adicionar foto",
-    "location": "Localização",
+    "city": "Cidade",
     "select_city": "Selecione uma cidade",
-    "safe_deal": "Negócio Seguro",
-    "safe_deal_description": "Seus itens estão disponíveis para venda no {deal}.",
     "place_ad": "Publicar Anúncio"
   }
 }
@@ -292,6 +289,27 @@ watch(subcategory, () => {
           :class="$style.form"
           @submit.prevent="createPost"
         >
+          <UILineDescription
+            :title="t('city')"
+            :class="$style.line"
+            requiredTitle
+            boldTitle
+          >
+            <div>
+              <UISelect
+                v-model="cityId"
+                :options="citiesItems"
+                :placeholder="t('select_city')"
+                :error="errors.cityId"
+                isRequired
+                name="city"
+              />
+
+              <UIError :text="errors.cityId" />
+            </div>
+          </UILineDescription>
+
+
           <UILineDescription
             :title="t('category')"
             :class="$style.line"
@@ -386,20 +404,13 @@ watch(subcategory, () => {
             boldTitle
           >
             <div>
-              <div :class="$style.price">
-                <UIInput
-                  v-model="price"
-                  :error="errors.price"
-                  isRequired
-                  name="price"
-                  type="number"
-                />
-
-                <span
-                  :class="$style.currency"
-                  v-text="CURRENCY"
-                />
-              </div>
+              <UIInput
+                v-model="price"
+                :error="errors.price"
+                isRequired
+                name="price"
+                type="number"
+              />
 
               <UIError :text="errors.price" />
             </div>
@@ -468,56 +479,6 @@ watch(subcategory, () => {
               </div>
 
               <UIError :text="errors.images" />
-            </div>
-          </UILineDescription>
-
-          <UILineDescription
-            :title="t('location')"
-            :class="$style.line"
-            requiredTitle
-            boldTitle
-          >
-            <div>
-              <UISelect
-                v-model="cityId"
-                :options="citiesItems"
-                :placeholder="t('select_city')"
-                :error="errors.cityId"
-                isRequired
-                name="city"
-              />
-
-              <UIError :text="errors.cityId" />
-            </div>
-          </UILineDescription>
-
-          <UILineDescription
-            v-if="false && hasSafeDeal"
-            :title="t('safe_deal')"
-            :class="$style.line"
-            boldTitle
-          >
-            <div :class="$style.safeDeal">
-              <UICheckbox
-                v-model="isSafeDeal"
-                name="isSafeDeal"
-                isRequired
-              />
-
-              <I18nT
-                :class="$style.safeDealText"
-                keypath="safe_deal_description"
-                tag="span"
-              >
-                <template #deal>
-                  <NuxtLink
-                    :to="{ name: 'blog-slug', params: { slug: 'como-comprar-com-seguranca-dos-vendedores' } }"
-                    target="_blank"
-                  >
-                    {{ t('safe_deal') }}
-                  </NuxtLink>
-                </template>
-              </I18nT>
             </div>
           </UILineDescription>
 
@@ -622,28 +583,6 @@ watch(subcategory, () => {
 
   margin-top: 8px;
   color: $ui-color-text-main;
-}
-
-.price {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.currency {
-  @include ui-typo-18;
-
-  margin-left: 10px;
-  color: $ui-color-black;
-}
-
-.safeDeal {
-  display: flex;
-  align-items: center;
-}
-
-.safeDealText {
-  margin-left: 10px;
 }
 
 .placeButton {

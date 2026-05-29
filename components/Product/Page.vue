@@ -2,7 +2,6 @@
 import type { RouteLocationRaw } from 'vue-router';
 import IconLocation from '~/assets/images/header/icon-location.svg?component';
 import formatCurrency from '~/utils/formatCurrency';
-import { CURRENCY } from '~/constants/currency';
 import { POST_STATUSES } from '~/constants/post-statuses';
 import type { ProductApiResponse, User } from '~/types/product';
 import { formatFullDate } from '~/utils/formatDate';
@@ -166,7 +165,7 @@ const script = computed(() => [{
     offers: {
       '@type': 'Offer',
       price: post.value?.price || 0,
-      priceCurrency: CURRENCY,
+      priceCurrency: 'AOA',
       availability: 'https://schema.org/InStock',
       priceValidUntil: '2099-12-31T23:59:59Z',
       seller: {
