@@ -1,19 +1,9 @@
 @use "media" as *;
 @use "colors" as *;
 
-$ui-ff-default: 'Arial Nova', sans-serif;
+$ui-ff-default: 'Arial', sans-serif;
 $font-medium-weight: 500;
 $font-bold-weight: 700;
-
-@font-face {
-  font-family: 'Arial Nova';
-  src: url('~/assets/fonts/ArialNova.eot');
-  src: url('~/assets/fonts/ArialNova.eot?#iefix') format('embedded-opentype'),
-    url('~/assets/fonts/ArialNova.woff2') format('woff2'),
-    url('~/assets/fonts/ArialNova.woff') format('woff'),
-    url('~/assets/fonts/ArialNova.ttf') format('truetype');
-  font-display: swap;
-}
 
 // Text
 @mixin ui-typo-8 {
