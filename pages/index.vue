@@ -12,7 +12,6 @@ const {
   cityId,
   isPriorityCity,
   locationName,
-  coords,
   page,
   getFilter,
   fetchPosts,
@@ -69,7 +68,7 @@ const route = useRoute();
 const { data: posts } = await useAsyncData(
   () => `posts:${route.fullPath}`,
   () => fetchPosts(),
-  { watch: [coords, () => route.query] },
+  { watch: [() => route.query] },
 );
 
 

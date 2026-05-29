@@ -16,7 +16,6 @@ definePageMeta({
 const {
   cityId,
   locationName,
-  coords,
   isPriorityCity,
   page,
   getFilter,
@@ -85,7 +84,7 @@ const route = useRoute();
 const { data: posts } = await useAsyncData(
   () => `posts:${route.fullPath}`,
   () => fetchPosts(),
-  { watch: [() => [coords, route.query, route.params]] },
+  { watch: [() => [route.query, route.params]] },
 );
 
 
