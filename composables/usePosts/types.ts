@@ -7,8 +7,7 @@ export interface Filters {
 
 export interface Location {
   cityId: string;
-  city: string;
-  displayName: string;
+  cityName: string;
 }
 
 export interface InitializeFilters {

@@ -6,8 +6,7 @@ import type { Location } from '~/composables/usePosts/types';
  *
  * @param {Object} data - Объект с данными о локации
  * @param {string} data.cityId - Slug/id города
- * @param {string} data.city - Название города
- * @param {string} data.displayName - Отображаемое название
+ * @param {string} data.cityName - Название города
  *
  * @returns {boolean} - true, если данные о локации валидны, в противном случае - false.
  */
@@ -15,8 +14,7 @@ function isValidLocationData(data: any): boolean {
   return (
     data &&
         typeof data.cityId === 'string' &&
-        typeof data.city === 'string' &&
-        typeof data.displayName === 'string'
+        typeof data.cityName === 'string'
   );
 }
 

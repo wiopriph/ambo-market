@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { getCityIdByName } from '~/constants/cities';
 import type { Post } from '~/composables/usePosts/types';
 import { getPostRoute } from '~/utils/getPostRoute';
 
@@ -30,7 +29,7 @@ definePageMeta({
         brandId: post?.brandId,
         subcategoryId: post?.subcategoryId,
         categoryId: post?.categoryId,
-        cityId: getCityIdByName(post.location?.city),
+        cityId: post.location?.cityId ?? 'all',
       });
 
       return navigateTo(route, { redirectCode: 301 });

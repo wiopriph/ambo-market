@@ -2,7 +2,6 @@
 import IconLocation from '~/assets/images/header/icon-location.svg?component';
 import formatCurrency from '~/utils/formatCurrency';
 import { CURRENCY } from '~/constants/currency';
-import { getCityIdByName } from '~/constants/cities';
 import { POST_STATUSES } from '~/constants/post-statuses';
 import type { ProductApiResponse, User } from '~/types/product';
 import { formatFullDate } from '~/utils/formatDate';
@@ -29,7 +28,7 @@ const { data: product, error } = await useAsyncData<ProductApiResponse>(
 
       const { post, user } = response as ProductApiResponse;
 
-      const postCityId = getCityIdByName(post?.location?.city);
+      const postCityId = post?.location?.cityId ?? 'all';
 
       if (postCityId !== route.params.cityId ||
         post?.categoryId !== route.params.categoryId ||
@@ -104,8 +103,8 @@ const brandId = computed(() => post.value?.brandId);
 const postBrandName = computed(() => t(`brands.${brandId.value}`));
 
 const postLocation = computed(() => post.value?.location);
-const postCityId = computed(() => getCityIdByName(postLocation.value?.city ?? ''));
-const postCityName = computed(() => postLocation.value?.displayName);
+const postCityId = computed(() => postLocation.value?.cityId ?? 'all');
+const postCityName = computed(() => postLocation.value?.cityName);
 
 const formattedPrice = computed(() => formatCurrency(`${post.value?.price}`));
 const formattedDate = computed(() => post.value?.createdAt ? formatFullDate(post.value?.createdAt, locale.value) : '');

@@ -16,8 +16,7 @@ const mapRowToPost = (row: any) => ({
   description: row.description ?? null,
   location: {
     cityId: getCityIdByName(row.location_city ?? ''),
-    city: row.location_city ?? null,
-    displayName: row.location_display_name ?? null,
+    cityName: row.location_city ?? row.location_display_name ?? null,
   },
   isSafeDeal: typeof row.is_safe_deal === 'boolean' ? row.is_safe_deal : null,
   title: row.title ?? null,

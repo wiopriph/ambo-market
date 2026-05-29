@@ -1,63 +1,51 @@
 export interface City {
   id: string;
-  slug: string;
   name: string;
 }
 
 export const CITIES: City[] = [
   {
     id: 'all',
-    slug: 'all',
     name: '',
   },
   {
     id: 'luanda',
-    slug: 'luanda',
     name: 'Luanda',
   },
   {
     id: 'benguela',
-    slug: 'benguela',
     name: 'Benguela',
   },
   {
     id: 'huambo',
-    slug: 'huambo',
     name: 'Huambo',
   },
   {
     id: 'lobito',
-    slug: 'lobito',
     name: 'Lobito',
   },
   {
     id: 'lubango',
-    slug: 'lubango',
     name: 'Lubango',
   },
   {
     id: 'malanje',
-    slug: 'malanje',
     name: 'Malanje',
   },
   {
     id: 'cabinda',
-    slug: 'cabinda',
     name: 'Cabinda',
   },
   {
     id: 'namibe',
-    slug: 'namibe',
     name: 'Namibe',
   },
   {
     id: 'soyo',
-    slug: 'soyo',
     name: 'Soyo',
   },
   {
     id: 'kuito',
-    slug: 'kuito',
     name: 'Kuito',
   },
 ];

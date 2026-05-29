@@ -7,8 +7,7 @@ import { getCityById } from '~/constants/cities';
 
 type LocationInput = {
   cityId?: string;
-  city?: string;
-  displayName?: string;
+  cityName?: string;
 };
 
 function parseLocation(location: LocationInput) {
@@ -28,12 +27,11 @@ function parseLocation(location: LocationInput) {
     });
   }
 
-  const displayName = location.displayName?.trim() || cityInfo.name;
+  const cityName = location.cityName?.trim() || cityInfo.name;
 
   return {
     cityId: cityInfo.id,
-    city: cityInfo.name,
-    displayName,
+    cityName,
   };
 }
 
@@ -141,8 +139,8 @@ export default defineEventHandler(async (event) => {
       is_safe_deal: isSafeDeal,
       preview,
       images: uploadedImages,
-      location_city: locationData.city,
-      location_display_name: locationData.displayName,
+      location_city: locationData.cityName,
+      location_display_name: locationData.cityName,
       location_lat: null,
       location_lon: null,
     })

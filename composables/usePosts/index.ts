@@ -14,7 +14,7 @@ export function usePosts() {
   });
 
   const location = useState<Location>('location', () => DEFAULT_LOCATION);
-  const locationName = computed(() => location.value.displayName);
+  const locationName = computed(() => location.value.cityName);
 
   const cityId = computed(() => location.value.cityId || 'all');
   const isPriorityCity = computed(() => cityId.value !== 'all');
@@ -30,8 +30,7 @@ export function usePosts() {
     if (city) {
       setLocationInfo({
         cityId: city.id,
-        city: city.name,
-        displayName: city.name,
+        cityName: city.name,
       });
     }
   };

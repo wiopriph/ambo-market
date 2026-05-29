@@ -1,7 +1,6 @@
 type Location = {
   cityId: string;
-  displayName: string;
-  city: string;
+  cityName: string;
 };
 
 export type Post = {

@@ -15,6 +15,5 @@ export const DEFAULT_FILTERS: Filters = {
 
 export const DEFAULT_LOCATION: Location = {
   cityId: 'all',
-  city: '',
-  displayName: '',
+  cityName: '',
 };

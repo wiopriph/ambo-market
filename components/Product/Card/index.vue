@@ -2,7 +2,6 @@
 import type { CardProps } from './types';
 import IconShield from '~/assets/images/product/icon-shield.svg?component';
 import formatCurrency from '~/utils/formatCurrency';
-import { getCityIdByName } from '~/constants/cities';
 import { POST_STATUSES } from '~/constants/post-statuses';
 import { getPostRoute } from '~/utils/getPostRoute';
 import { CLICK_PRODUCT_CARD } from '~/constants/analytics-events';
@@ -11,14 +10,14 @@ import { CLICK_PRODUCT_CARD } from '~/constants/analytics-events';
 const props = defineProps<CardProps>();
 
 const formattedPrice = computed(() => formatCurrency(props.product?.price));
-const city = computed(() => props.product?.location?.displayName || '');
+const city = computed(() => props.product?.location?.cityName || '');
 const previewImage = computed(() => props.product?.preview || '');
 const productTitle = computed(() => props.product?.title || '\u00A0');
 
 const hasStatus = computed(() => props.product?.status !== POST_STATUSES.OPEN);
 
 const link = computed(() => getPostRoute({
-  cityId: getCityIdByName(props.product?.location?.city),
+  cityId: props.product?.location?.cityId ?? 'all',
   categoryId: props.product?.categoryId,
   subcategoryId: props.product?.subcategoryId,
   brandId: props.product?.brandId,

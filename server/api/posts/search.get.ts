@@ -24,8 +24,7 @@ function mapRowToPost(row: any) {
 
     location: {
       cityId: getCityIdByName(row.location_city ?? ''),
-      city: row.location_city ?? null,
-      displayName: row.location_display_name ?? null,
+      cityName: row.location_city ?? row.location_display_name ?? null,
     },
 
     createdAt: row.created_at ?? null,
