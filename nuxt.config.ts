@@ -12,6 +12,9 @@ export default defineNuxtConfig({
     },
 
     public: {
+      gtmId: '',
+      gtmEnabled: false,
+
       appBaseUrl: '',
 
       supabase: {
@@ -30,7 +33,6 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
     'nuxt-swiper',
     '@nuxt/image',
-    '@zadigetvoltaire/nuxt-gtm',
     '@nuxtjs/sitemap',
     '@nuxt/content',
     '@nuxtjs/supabase',
