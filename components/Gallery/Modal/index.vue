@@ -29,18 +29,38 @@ const slideCountInfo = computed(() => {
 const containerRef = ref(null);
 const swiper = useSwiper(containerRef);
 
-onMounted(() => {
-  swiper.instance.value?.on('slideChange', () => {
-    currentSlideIndex.value = swiper.instance.value?.activeIndex || 0;
-  });
+const syncSlideIndex = () => {
+  currentSlideIndex.value = swiper.instance.value?.activeIndex || 0;
+};
+
+onMounted(async () => {
+  await nextTick();
+
+  syncSlideIndex();
+  swiper.instance.value?.on('slideChange', syncSlideIndex);
+});
+
+onBeforeUnmount(() => {
+  swiper.instance.value?.off('slideChange', syncSlideIndex);
 });
 
 const hasPrevButton = computed(() => currentSlideIndex.value > 0);
 const hasNextButton = computed(() => currentSlideIndex.value < images.value.length - 1);
 
-const setCurrentImage = (index: number) => swiper.to(index);
-const nextSlide = () => swiper.next();
-const prevSlide = () => swiper.prev();
+const setCurrentImage = (index: number) => {
+  currentSlideIndex.value = index;
+  swiper.to(index);
+};
+
+const nextSlide = () => {
+  swiper.next();
+  syncSlideIndex();
+};
+
+const prevSlide = () => {
+  swiper.prev();
+  syncSlideIndex();
+};
 
 
 const hasControlButtons = computed(() => props.post?.status === POST_STATUSES.OPEN);
