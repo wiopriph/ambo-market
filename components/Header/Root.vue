@@ -101,7 +101,7 @@ const mobileClassNames = computed(() => ({
 
 const desktopClassNames = computed(() => ({
   [style.desktop]: true,
-  [style.pinned]: currentScrollPosition.value >= 44,
+  [style.pinned]: currentScrollPosition.value > 0,
 }));
 
 
@@ -152,10 +152,6 @@ const { isDesktopOrTablet } = useDevice();
     :class="$style.desktopWrap"
   >
     <header :class="desktopClassNames">
-      <div :class="$style.wrap">
-        <HeaderDesktopNavigation :class="$style.container" />
-      </div>
-
       <HeaderDesktopRoot :class="$style.container" />
     </header>
   </div>
@@ -191,7 +187,7 @@ const { isDesktopOrTablet } = useDevice();
 
 .desktopWrap {
   width: 100%;
-  min-height: 108px;
+  min-height: 64px;
 }
 
 .desktop {
@@ -199,7 +195,7 @@ const { isDesktopOrTablet } = useDevice();
   top: 0;
   z-index: $z-idx-popup;
   width: 100%;
-  height: 108px;
+  min-height: 64px;
   margin: 0 auto;
   background-color: #FAFAFA;
   transition: .2s transform linear, .2s box-shadow linear;
@@ -207,10 +203,6 @@ const { isDesktopOrTablet } = useDevice();
 
 .container {
   @include ui-simple-container;
-}
-
-.wrap {
-  background-color: #FAFAFA;
 }
 
 .mobile {
@@ -227,7 +219,6 @@ const { isDesktopOrTablet } = useDevice();
 
   @include exclude-md {
     background-color: $ui-color-white;
-    transform: translateY(-44px);
   }
 }
 

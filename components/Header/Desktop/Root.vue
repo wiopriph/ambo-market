@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import type { RouteLocationRaw } from '#vue-router';
-import IconHamburger from '~/assets/images/header/icon-hamburger.svg?component';
-import IconClose from '~/assets/images/header/icon-close.svg?component';
 import { usePosts } from '~/composables/usePosts';
 import { useUser } from '~/composables/useUser';
 import {
-  CLICK_CATEGORY_BUTTON,
   CLICK_LOGIN_BUTTON,
   CLICK_POST_AD_BUTTON,
   CLICK_USER_BUTTON, SEARCH_SUBMIT,
@@ -27,15 +24,6 @@ const openMenu = () => {
 
 const closeMenu = () => {
   isMenuOpen.value = false;
-};
-
-
-const isCategoryOpen = ref(false);
-
-const toggleCategory = () => {
-  isCategoryOpen.value = !isCategoryOpen.value;
-
-  pushEvent(CLICK_CATEGORY_BUTTON);
 };
 
 
@@ -111,7 +99,6 @@ const find = () => {
   return navigateTo({ name, params, query });
 };
 
-
 const goToCreatePage = () => {
   pushEvent(CLICK_POST_AD_BUTTON);
 
@@ -136,7 +123,6 @@ const { t } = useI18n();
     "find": "Search",
     "place_ad": "Post an Ad",
     "account": "My Account",
-    "categories": "All Categories",
     "sign_in": "Sign In"
   },
   "pt": {
@@ -147,7 +133,6 @@ const { t } = useI18n();
     "find": "Buscar",
     "place_ad": "Publicar Anúncio",
     "account": "Minha Conta",
-    "categories": "Todas as Categorias",
     "sign_in": "Entrar"
   }
 }
@@ -167,24 +152,6 @@ const { t } = useI18n();
         height="44px"
       />
     </NuxtLink>
-
-    <button
-      :class="$style.categoriesButton"
-      type="button"
-      @click="toggleCategory"
-    >
-      <IconClose
-        v-if="isCategoryOpen"
-        :class="$style.categoriesIcon"
-      />
-
-      <IconHamburger
-        v-else
-        :class="$style.categoriesIcon"
-      />
-
-      <span v-text="t('categories')" />
-    </button>
 
     <div :class="$style.findWrap">
       <UIInput
@@ -232,14 +199,6 @@ const { t } = useI18n();
     />
 
     <transition name="fade">
-      <LazyHeaderDesktopCategories
-        v-if="isCategoryOpen"
-        :class="$style.categories"
-        @close="toggleCategory"
-      />
-    </transition>
-
-    <transition name="fade">
       <div
         v-if="isMenuOpen"
         v-click-outside="closeMenu"
@@ -265,24 +224,6 @@ const { t } = useI18n();
   width: 120px;
   height: 44px;
   margin-right: 20px;
-}
-
-.categoriesButton {
-  @include ui-button-primary;
-
-  height: 44px;
-  margin-right: 10px;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.categoriesIcon {
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
 }
 
 .findWrap {
@@ -312,13 +253,6 @@ const { t } = useI18n();
   flex-direction: row;
   align-items: center;
   justify-content: center;
-}
-
-.categories {
-  position: absolute;
-  top: 70px;
-  left: 20px;
-  z-index: $z-idx-dropdown;
 }
 
 .menu {
