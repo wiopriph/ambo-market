@@ -1,10 +1,13 @@
 import svgLoader from 'vite-svg-loader';
-import StylelintPlugin from 'vite-plugin-stylelint';
 
 
 export default defineNuxtConfig({
-  compatibilityDate: '2024-04-03',
+  compatibilityDate: '2025-07-15',
   ssr: true,
+
+  alias: {
+    cookie: 'cookie-es',
+  },
 
   runtimeConfig: {
     supabase: {
@@ -31,6 +34,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/i18n',
     '@nuxtjs/device',
+    '@nuxt/ui',
     'nuxt-swiper',
     '@nuxt/image',
     '@nuxtjs/sitemap',
@@ -90,8 +94,13 @@ export default defineNuxtConfig({
   ],
 
   vite: {
+    resolve: {
+      alias: {
+        cookie: 'cookie-es',
+      },
+    },
+
     plugins: [
-      StylelintPlugin(),
       svgLoader({
         svgo: false,
       }),
@@ -108,6 +117,12 @@ export default defineNuxtConfig({
 
     optimizeDeps: {
       exclude: ['@sqlite.org/sqlite-wasm'],
+      include: [
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+        'cookie-es',
+        'swiper/element',
+      ],
     },
 
     ssr: {

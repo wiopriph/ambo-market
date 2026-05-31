@@ -88,8 +88,3 @@ $ui-container-padding: 20px;
     max-width: math.percentage(math.div($size, $columns));
   }
 }
-
-@mixin ui-col-offset($size, $columns: $grid-cols-num) {
-  $num: $size / $columns;
-  margin-left: if($num == 0, 0, math.percentage($num));
-}
