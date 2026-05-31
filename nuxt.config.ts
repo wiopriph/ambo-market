@@ -75,11 +75,6 @@ export default defineNuxtConfig({
     bundled: false,
   },
 
-  gtm: {
-    id: process.env.NUXT_PUBLIC_GTAG_ID || 'GTM-PZLNCCVG',
-    enabled: process.env.NODE_ENV === 'production',
-  },
-
   sitemap: {
     xsl: false,
     excludeAppSources: true,
