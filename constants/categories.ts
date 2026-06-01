@@ -1,11 +1,11 @@
 interface Category {
   id: string;
   key: string;
-  img: string;
+  icon: string;
   subcategories?: {
     id: string;
     key: string;
-    img: string;
+    icon: string;
     brands?: {
       id: string;
       key: string
@@ -16,13 +16,13 @@ interface Category {
 export const CATEGORIES: Category[] = [
   {
     id: 'vehicles',
-    img: '/images/categories/vehicles.png',
+    icon: 'i-lucide-car',
     key: 'categories.vehicles',
     subcategories: [
       {
         id: 'cars',
         key: 'subcategories.cars',
-        img: '/images/categories/cars.png',
+        icon: 'i-lucide-car',
         brands: [
           {
             id: 'other',
@@ -85,7 +85,7 @@ export const CATEGORIES: Category[] = [
       {
         id: 'motorcycles',
         key: 'subcategories.motorcycles',
-        img: '/images/categories/motorcycles.png',
+        icon: 'i-lucide-bike',
         brands: [
           {
             id: 'other',
@@ -132,17 +132,17 @@ export const CATEGORIES: Category[] = [
       {
         id: 'commercial',
         key: 'subcategories.commercial',
-        img: '/images/categories/commercial.png',
+        icon: 'i-lucide-truck',
       },
       {
         id: 'boats',
         key: 'subcategories.boats',
-        img: '/images/categories/boats.png',
+        icon: 'i-lucide-ship',
       },
       {
         id: 'parts',
         key: 'subcategories.parts',
-        img: '/images/categories/parts.png',
+        icon: 'i-lucide-cog',
       },
     ],
   },
@@ -150,27 +150,27 @@ export const CATEGORIES: Category[] = [
   {
     id: 'real-estate',
     key: 'categories.real-estate',
-    img: '/images/categories/real-estate.png',
+    icon: 'i-lucide-house',
     subcategories: [
       {
         id: 'rent',
         key: 'subcategories.rent',
-        img: '/images/categories/rent.png',
+        icon: 'i-lucide-key-round',
       },
       {
         id: 'sale',
         key: 'subcategories.sale',
-        img: '/images/categories/sale.png',
+        icon: 'i-lucide-badge-dollar-sign',
       },
       {
         id: 'commercial-property',
         key: 'subcategories.commercial-property',
-        img: '/images/categories/commercial-property.png',
+        icon: 'i-lucide-building-2',
       },
       {
         id: 'land',
         key: 'subcategories.land',
-        img: '/images/categories/land.png',
+        icon: 'i-lucide-map',
       },
     ],
   },
@@ -178,12 +178,12 @@ export const CATEGORIES: Category[] = [
   {
     id: 'electronics',
     key: 'categories.electronics',
-    img: '/images/categories/electronics.png',
+    icon: 'i-lucide-smartphone',
     subcategories: [
       {
         id: 'phones',
         key: 'subcategories.phones',
-        img: '/images/categories/phones.png',
+        icon: 'i-lucide-smartphone',
         brands: [
           {
             id: 'other',
@@ -222,7 +222,7 @@ export const CATEGORIES: Category[] = [
       {
         id: 'computers',
         key: 'subcategories.computers',
-        img: '/images/categories/computers.png',
+        icon: 'i-lucide-laptop',
         brands: [
           {
             id: 'other',
@@ -265,7 +265,7 @@ export const CATEGORIES: Category[] = [
       {
         id: 'gaming',
         key: 'subcategories.gaming',
-        img: '/images/categories/gaming.png',
+        icon: 'i-lucide-gamepad-2',
         brands: [
           {
             id: 'sony',
@@ -292,17 +292,17 @@ export const CATEGORIES: Category[] = [
       {
         id: 'tv-audio-photo',
         key: 'subcategories.tv-audio-photo',
-        img: '/images/categories/tv-audio-photo.png',
+        icon: 'i-lucide-tv',
       },
       {
         id: 'appliances',
         key: 'subcategories.appliances',
-        img: '/images/categories/appliances.png',
+        icon: 'i-lucide-washing-machine',
       },
       {
         id: 'accessories-electronics',
         key: 'subcategories.accessories-electronics',
-        img: '/images/categories/accessories-electronics.png',
+        icon: 'i-lucide-cable',
       },
     ],
   },
@@ -310,37 +310,37 @@ export const CATEGORIES: Category[] = [
   {
     id: 'fashion',
     key: 'categories.fashion',
-    img: '/images/categories/fashion.png',
+    icon: 'i-lucide-shirt',
     subcategories: [
       {
         id: 'men',
         key: 'subcategories.men',
-        img: '/images/categories/men.png',
+        icon: 'i-lucide-user-round',
       },
       {
         id: 'women',
         key: 'subcategories.women',
-        img: '/images/categories/women.png',
+        icon: 'i-lucide-users-round',
       },
       {
         id: 'shoes',
         key: 'subcategories.shoes',
-        img: '/images/categories/shoes.png',
+        icon: 'i-lucide-footprints',
       },
       {
         id: 'bags',
         key: 'subcategories.bags',
-        img: '/images/categories/bags.png',
+        icon: 'i-lucide-shopping-bag',
       },
       {
         id: 'accessories-fashion',
         key: 'subcategories.accessories-fashion',
-        img: '/images/categories/accessories-fashion.png',
+        icon: 'i-lucide-watch',
       },
       {
         id: 'beauty-products',
         key: 'subcategories.beauty-products',
-        img: '/images/categories/beauty-products.png',
+        icon: 'i-lucide-sparkles',
       },
     ],
   },
@@ -348,17 +348,17 @@ export const CATEGORIES: Category[] = [
   {
     id: 'jobs',
     key: 'categories.jobs',
-    img: '/images/categories/jobs.png',
+    icon: 'i-lucide-briefcase-business',
     subcategories: [
       {
         id: 'vacancies',
         key: 'subcategories.vacancies',
-        img: '/images/categories/vacancies.png',
+        icon: 'i-lucide-clipboard-list',
       },
       {
         id: 'resumes',
         key: 'subcategories.resumes',
-        img: '/images/categories/resumes.png',
+        icon: 'i-lucide-file-user',
       },
     ],
   },
@@ -366,32 +366,32 @@ export const CATEGORIES: Category[] = [
   {
     id: 'services',
     key: 'categories.services',
-    img: '/images/categories/services.png',
+    icon: 'i-lucide-wrench',
     subcategories: [
       {
         id: 'construction',
         key: 'subcategories.construction',
-        img: '/images/categories/construction.png',
+        icon: 'i-lucide-hard-hat',
       },
       {
         id: 'it-dev',
         key: 'subcategories.it-dev',
-        img: '/images/categories/it-dev.png',
+        icon: 'i-lucide-code',
       },
       {
         id: 'education',
         key: 'subcategories.education',
-        img: '/images/categories/education.png',
+        icon: 'i-lucide-graduation-cap',
       },
       {
         id: 'beauty',
         key: 'subcategories.beauty',
-        img: '/images/categories/beauty.png',
+        icon: 'i-lucide-scissors',
       },
       {
         id: 'other-services',
         key: 'subcategories.other-services',
-        img: '/images/categories/other-services.png',
+        icon: 'i-lucide-ellipsis',
       },
     ],
   },
@@ -399,22 +399,22 @@ export const CATEGORIES: Category[] = [
   {
     id: 'animals',
     key: 'categories.animals',
-    img: '/images/categories/animals.png',
+    icon: 'i-lucide-paw-print',
     subcategories: [
       {
         id: 'pets',
         key: 'subcategories.pets',
-        img: '/images/categories/pets.png',
+        icon: 'i-lucide-paw-print',
       },
       {
         id: 'other-animals',
         key: 'subcategories.other-animals',
-        img: '/images/categories/other-animals.png',
+        icon: 'i-lucide-bone',
       },
       {
         id: 'supplies',
         key: 'subcategories.supplies',
-        img: '/images/categories/supplies.png',
+        icon: 'i-lucide-package',
       },
     ],
   },
@@ -422,32 +422,32 @@ export const CATEGORIES: Category[] = [
   {
     id: 'hobby',
     key: 'categories.hobby',
-    img: '/images/categories/hobby.png',
+    icon: 'i-lucide-palette',
     subcategories: [
       {
         id: 'sport',
         key: 'subcategories.sport',
-        img: '/images/categories/sport.png',
+        icon: 'i-lucide-dumbbell',
       },
       {
         id: 'music',
         key: 'subcategories.music',
-        img: '/images/categories/music.png',
+        icon: 'i-lucide-music',
       },
       {
         id: 'games',
         key: 'subcategories.games',
-        img: '/images/categories/games.png',
+        icon: 'i-lucide-dice-5',
       },
       {
         id: 'collectibles',
         key: 'subcategories.collectibles',
-        img: '/images/categories/collectibles.png',
+        icon: 'i-lucide-trophy',
       },
       {
         id: 'other-hobby',
         key: 'subcategories.other-hobby',
-        img: '/images/categories/other-hobby.png',
+        icon: 'i-lucide-puzzle',
       },
     ],
   },
@@ -455,27 +455,27 @@ export const CATEGORIES: Category[] = [
   {
     id: 'kids',
     key: 'categories.kids',
-    img: '/images/categories/kids.png',
+    icon: 'i-lucide-baby',
     subcategories: [
       {
         id: 'clothes',
         key: 'subcategories.clothes',
-        img: '/images/categories/clothes.png',
+        icon: 'i-lucide-shirt',
       },
       {
         id: 'toys',
         key: 'subcategories.toys',
-        img: '/images/categories/toys.png',
+        icon: 'i-lucide-blocks',
       },
       {
         id: 'furniture',
         key: 'subcategories.furniture',
-        img: '/images/categories/furniture.png',
+        icon: 'i-lucide-armchair',
       },
       {
         id: 'other-kids',
         key: 'subcategories.other-kids',
-        img: '/images/categories/other-kids.png',
+        icon: 'i-lucide-baby',
       },
     ],
   },
@@ -483,32 +483,32 @@ export const CATEGORIES: Category[] = [
   {
     id: 'home',
     key: 'categories.home',
-    img: '/images/categories/home.png',
+    icon: 'i-lucide-house',
     subcategories: [
       {
         id: 'furniture',
         key: 'subcategories.furniture',
-        img: '/images/categories/furniture.png',
+        icon: 'i-lucide-sofa',
       },
       {
         id: 'appliances',
         key: 'subcategories.appliances',
-        img: '/images/categories/appliances.png',
+        icon: 'i-lucide-washing-machine',
       },
       {
         id: 'tools',
         key: 'subcategories.tools',
-        img: '/images/categories/tools.png',
+        icon: 'i-lucide-hammer',
       },
       {
         id: 'decor',
         key: 'subcategories.decor',
-        img: '/images/categories/decor.png',
+        icon: 'i-lucide-lamp',
       },
       {
         id: 'other-home',
         key: 'subcategories.other-home',
-        img: '/images/categories/other-home.png',
+        icon: 'i-lucide-boxes',
       },
     ],
   },

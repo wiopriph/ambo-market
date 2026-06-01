@@ -19,7 +19,7 @@ const subcategories = computed(() => {
 
   return list.map(sub => ({
     title: t(sub.key),
-    img: sub.img,
+    icon: sub.icon,
     route: {
       name: 'cityId-categoryId-subcategoryId',
       params: {
@@ -431,7 +431,7 @@ const top3Post = computed(() => {
 
 <template>
   <div :class="$style.root">
-    <CategoryList
+    <CategoryPills
       :list="subcategories"
       :class="$style.subcategories"
     />

@@ -204,7 +204,7 @@ const onAccountClick = () => {
         </ULink>
 
         <form
-          class="col-span-2 row-start-2 flex min-w-0 items-center rounded-lg border border-primary/25 bg-primary/5 md:col-span-1 md:col-start-2 md:row-start-1"
+          class="col-span-2 row-start-2 flex min-w-0 items-center rounded-lg border border-primary/25 md:col-span-1 md:col-start-2 md:row-start-1"
           @submit.prevent="find"
         >
           <UInput
@@ -227,7 +227,7 @@ const onAccountClick = () => {
             color="primary"
             icon="i-lucide-plus"
             size="md"
-            class="rounded-lg px-2 font-semibold"
+            class="rounded-lg px-3 font-semibold"
             @click="goToCreatePage"
           >
             <span

@@ -52,7 +52,7 @@ useHead({ title: title.value, meta: meta.value });
 
 const categories = computed(() => CATEGORIES.map(category => ({
   title: t(category.key),
-  img: category.img,
+  icon: category.icon,
   route: {
     name: 'cityId-categoryId',
     params: {
@@ -144,7 +144,7 @@ const setPage = (pageNumber: number) => {
 
 <template>
   <div :class="$style.root">
-    <CategoryList
+    <CategoryPills
       :list="categories"
       :class="$style.category"
     />
