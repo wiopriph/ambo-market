@@ -4,7 +4,7 @@ import type { RouteLocationRaw } from '#vue-router';
 
 interface CategoryCard {
   title: string;
-  icon: string;
+  icon?: string;
   route: RouteLocationRaw;
 }
 

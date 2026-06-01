@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { usePosts } from '~/composables/usePosts';
 import { getCityById } from '~/constants/cities';
+import { CATEGORIES } from '~/constants/categories';
 import { MAX_POSTS_PER_PAGE } from '~/composables/usePosts/constants';
 
 
@@ -26,6 +27,26 @@ const {
 
 const { t } = useI18n();
 const route = useRoute();
+
+const brands = computed(() => {
+  const categoryId = route.params.categoryId;
+  const subcategoryId = route.params.subcategoryId;
+  const category = CATEGORIES.find(category => category.id === categoryId);
+  const subcategory = category?.subcategories?.find(subcategory => subcategory.id === subcategoryId);
+
+  return (subcategory?.brands || []).map(brand => ({
+    title: t(brand.key),
+    route: {
+      name: 'cityId-categoryId-subcategoryId-brandId',
+      params: {
+        cityId: cityId.value,
+        categoryId,
+        subcategoryId,
+        brandId: brand.id,
+      },
+    },
+  }));
+});
 
 const breadcrumbs = computed(() => {
   const breadcrumbs = [];
@@ -1299,6 +1320,11 @@ const setPage = (pageNumber: number) => {
 
 <template>
   <div :class="$style.root">
+    <CategoryPills
+      :list="brands"
+      class="mb-3"
+    />
+
     <UIBreadcrumbs :items="breadcrumbs" />
 
     <h1
