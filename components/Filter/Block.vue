@@ -71,6 +71,7 @@ const setCity = (city: string) => {
   const query = { ...currentFilters.value };
   const cityId = city || 'all';
 
+  // eslint-disable-next-line camelcase
   pushEvent(SELECT_CITY, { city_id: cityId });
 
   const params: Record<string, string> = { cityId };
@@ -95,6 +96,7 @@ const setCity = (city: string) => {
 const setCategory = (categoryId: string) => {
   const query = { ...currentFilters.value };
 
+  // eslint-disable-next-line camelcase
   pushEvent(SELECT_CATEGORY, { category_id: categoryId });
 
   if (categoryId) {
@@ -120,6 +122,7 @@ const setCategory = (categoryId: string) => {
 const setSubcategory = (subcategoryId: string) => {
   const query = { ...currentFilters.value };
 
+  // eslint-disable-next-line camelcase
   pushEvent(SELECT_SUBCATEGORY, { subcategory_id: subcategoryId });
 
   return navigateTo({
@@ -136,6 +139,7 @@ const setSubcategory = (subcategoryId: string) => {
 const setBrand = (brandId: string) => {
   const query = { ...currentFilters.value };
 
+  // eslint-disable-next-line camelcase
   pushEvent(SELECT_BRAND, { brand_id: brandId });
 
   return navigateTo({
@@ -170,11 +174,6 @@ const maxPrice = computed({
   }, 1000),
 });
 
-const changeSafeDeal = (value: boolean) => {
-  setFilter('safeTransaction', value);
-};
-
-
 const removeFilter = (filterType: keyof Filters) => {
   const filters = { ...currentFilters.value };
 
@@ -205,8 +204,7 @@ const clearAllFilters = () => {
     "select": "Select",
     "price": "Price",
     "from": "from",
-    "to": "to",
-    "safe_deal": "Safe deal"
+    "to": "to"
   },
   "pt": {
     "clear_all": "limpar todo o filtro",
@@ -217,8 +215,7 @@ const clearAllFilters = () => {
     "select": "Selecione",
     "price": "Preço",
     "from": "por",
-    "to": "até",
-    "safe_deal": "Negócio Seguro"
+    "to": "até"
   }
 }
 </i18n>
@@ -323,23 +320,6 @@ const clearAllFilters = () => {
           :class="$style.price"
           name="to"
           type="number"
-        />
-      </div>
-    </li>
-
-    <li
-      v-if="false"
-      :class="$style.block"
-    >
-      <div :class="$style.check">
-        <span
-          :class="$style.title"
-          v-text="t('safe_deal')"
-        />
-
-        <UICheckbox
-          :modelValue="getFilter('safeTransaction')"
-          @update:model-value="changeSafeDeal"
         />
       </div>
     </li>

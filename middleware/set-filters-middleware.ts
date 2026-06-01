@@ -17,13 +17,11 @@ export default defineNuxtRouteMiddleware((to) => {
 
   const minPrice = parseInt(query.minPrice as string) || DEFAULT_FILTERS.minPrice;
   const maxPrice = parseInt(query.maxPrice as string) || DEFAULT_FILTERS.maxPrice;
-  const safeTransaction = query.safeTransaction === 'true';
 
   const filters = {
     q: query.q as string || '',
     minPrice,
     maxPrice,
-    safeTransaction,
   };
 
   return initializeFilters({

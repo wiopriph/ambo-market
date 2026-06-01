@@ -8,7 +8,6 @@ const props = withDefaults(defineProps<CriterionProps>(), {
 });
 
 const FILTERS = {
-  SAFE_TRANSACTION: 'safeTransaction',
   MIN_PRICE: 'minPrice',
   MAX_PRICE: 'maxPrice',
   Q: 'q',
@@ -18,8 +17,6 @@ const { t } = useI18n();
 
 const displayText = computed(() => {
   switch (props.type) {
-    case FILTERS.SAFE_TRANSACTION:
-      return t('safe_deal');
     case FILTERS.MIN_PRICE:
       return t('from', { value: props.value });
     case FILTERS.MAX_PRICE:
@@ -44,14 +41,12 @@ const click = () => {
   "en": {
     "search": "Search: {value}",
     "from": "From {value} $",
-    "to": "To {value} $",
-    "safe_deal": "Safe deal"
+    "to": "To {value} $"
   },
   "pt": {
     "search": "Consulta de pesquisa: {value}",
     "from": "Por {value} $",
-    "to": "Até {value} $",
-    "safe_deal": "Negócio Seguro"
+    "to": "Até {value} $"
   }
 }
 </i18n>

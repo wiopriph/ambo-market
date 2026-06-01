@@ -18,7 +18,6 @@ const mapRowToPost = (row: any) => ({
     cityId: getCityIdByName(row.location_city ?? ''),
     cityName: row.location_city ?? row.location_display_name ?? null,
   },
-  isSafeDeal: typeof row.is_safe_deal === 'boolean' ? row.is_safe_deal : null,
   title: row.title ?? null,
   userId: row.user_id ?? null,
   authorId: row.author_id ?? null,
@@ -96,21 +95,21 @@ export default defineEventHandler(async (event) => {
 
   // 2) та же подкатегория + тот же бренд
   if (sub && brand && out.length < limit) {
-    const rows = await fetchBatch({ subcategory_id: sub, brand_id: brand }, limit - out.length);
+    const rows = await fetchBatch({ 'subcategory_id': sub, 'brand_id': brand }, limit - out.length);
 
     pushUnique(rows, out);
   }
 
   // 3) та же подкатегория (без бренда / или докинуть если не хватило)
   if (sub && out.length < limit) {
-    const rows = await fetchBatch({ subcategory_id: sub }, limit - out.length);
+    const rows = await fetchBatch({ 'subcategory_id': sub }, limit - out.length);
 
     pushUnique(rows, out);
   }
 
   // 4) та же категория
   if (cat && out.length < limit) {
-    const rows = await fetchBatch({ category_id: cat }, limit - out.length);
+    const rows = await fetchBatch({ 'category_id': cat }, limit - out.length);
 
     pushUnique(rows, out);
   }

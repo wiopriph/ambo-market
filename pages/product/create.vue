@@ -196,7 +196,6 @@ const createPost = handleSubmit.withControlled(async () => {
         location: {
           cityId: cityId.value,
         },
-        isSafeDeal: false,
       },
     });
 

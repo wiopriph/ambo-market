@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { CardProps } from './types';
-import IconShield from '~/assets/images/product/icon-shield.svg?component';
 import formatCurrency from '~/utils/formatCurrency';
 import { POST_STATUSES } from '~/constants/post-statuses';
 import { getPostRoute } from '~/utils/getPostRoute';
@@ -36,13 +35,6 @@ const { pushEvent } = useAnalyticsEvent();
   >
     <div :class="$style.photoWrap">
       <div :class="$style.line">
-        <div
-          v-if="product.isSafeDeal"
-          :class="$style.safeDeal"
-        >
-          <IconShield />
-        </div>
-
         <span
           v-if="city"
           :class="$style.address"
@@ -139,20 +131,6 @@ $card-indent: 10px;
   z-index: 1;
   display: flex;
   align-items: center;
-}
-
-.safeDeal {
-  @include badge;
-
-  min-width: 22px;
-  margin-right: 4px;
-  padding: 3px;
-  line-height: 0;
-
-  svg {
-    width: 16px;
-    height: 16px;
-  }
 }
 
 .address {

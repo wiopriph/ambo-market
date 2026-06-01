@@ -4,7 +4,7 @@ import { getCityIdByName } from '~/constants/cities';
 
 const POST_STATUSES = ['open', 'hold', 'closed'] as const;
 
-type PostStatus = typeof POST_STATUSES[number]
+type PostStatus = typeof POST_STATUSES[number];
 
 const isStatus = (v: any): v is PostStatus => POST_STATUSES.includes(v);
 
@@ -19,7 +19,6 @@ const mapRowToPost = (row: any) => ({
     cityId: getCityIdByName(row.location_city ?? ''),
     cityName: row.location_city ?? row.location_display_name ?? null,
   },
-  isSafeDeal: typeof row.is_safe_deal === 'boolean' ? row.is_safe_deal : null,
   title: row.title ?? null,
   userId: row.user_id ?? null, // для совместимости
   authorId: row.author_id ?? null, // Supabase UUID автора

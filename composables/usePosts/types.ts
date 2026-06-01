@@ -2,7 +2,6 @@ export interface Filters {
   q: string;
   minPrice: number | string;
   maxPrice: number | string;
-  safeTransaction: boolean;
 }
 
 export interface Location {
@@ -39,7 +38,6 @@ export interface Post {
   price: number;
   description: string;
   location: Location;
-  isSafeDeal: boolean;
   title: string;
   userId: string;
   categoryId: string;

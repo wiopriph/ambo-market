@@ -18,7 +18,6 @@ function mapRowToPost(row: any) {
     price: isNum(row.price) ? row.price : null,
     status: row.status ?? null,
 
-    isSafeDeal: typeof row.is_safe_deal === 'boolean' ? row.is_safe_deal : null,
     preview: row.preview ?? null,
     images: Array.isArray(row.images) ? row.images : [],
 

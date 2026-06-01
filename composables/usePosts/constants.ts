@@ -10,7 +10,6 @@ export const DEFAULT_FILTERS: Filters = {
   q: '',
   minPrice: '',
   maxPrice: '',
-  safeTransaction: false,
 };
 
 export const DEFAULT_LOCATION: Location = {

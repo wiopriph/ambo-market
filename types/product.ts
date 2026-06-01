@@ -8,7 +8,6 @@ export type Post = {
   createdAt: number;
   price: number;
   description: string;
-  isSafeDeal: boolean;
   title: string;
   userId: string;
   categoryId: string;

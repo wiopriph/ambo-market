@@ -75,7 +75,6 @@ export default defineEventHandler(async (event) => {
     price: number | string;
     location: LocationInput;
     images: ImageInput[];
-    isSafeDeal?: boolean;
   }>(event);
 
   const {
@@ -87,7 +86,6 @@ export default defineEventHandler(async (event) => {
     price,
     location,
     images,
-    isSafeDeal = false,
   } = body || {};
 
   if (!title || !description || !price || !categoryId || !location || !images?.length) {
@@ -126,23 +124,22 @@ export default defineEventHandler(async (event) => {
     .from('posts')
     .insert({
       id: postId,
-      fs_id: null,
-      user_id: user.id,
-      author_id: user.id,
+      'fs_id': null,
+      'user_id': user.id,
+      'author_id': user.id,
       title,
       description,
       price: parsedPrice,
       status: 'open',
-      brand_id: brandId || null,
-      category_id: categoryId,
-      subcategory_id: subcategoryId || null,
-      is_safe_deal: isSafeDeal,
+      'brand_id': brandId || null,
+      'category_id': categoryId,
+      'subcategory_id': subcategoryId || null,
       preview,
       images: uploadedImages,
-      location_city: locationData.cityName,
-      location_display_name: locationData.cityName,
-      location_lat: null,
-      location_lon: null,
+      'location_city': locationData.cityName,
+      'location_display_name': locationData.cityName,
+      'location_lat': null,
+      'location_lon': null,
     })
     .single();
 

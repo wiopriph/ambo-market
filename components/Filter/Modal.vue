@@ -34,7 +34,6 @@ const newBrandId = ref('');
 
 const minPrice = ref<string | number>('');
 const maxPrice = ref<string | number>('');
-const safeTransaction = ref<boolean>(false);
 
 const subcategoriesItems = computed(() => {
   const category = CATEGORIES.find(cat => cat.id === newCategoryId.value);
@@ -59,7 +58,6 @@ onMounted(() => {
 
   minPrice.value = getFilter('minPrice');
   maxPrice.value = getFilter('maxPrice');
-  safeTransaction.value = getFilter('safeTransaction');
 });
 
 
@@ -68,7 +66,6 @@ const updateFilters = () => {
     ...currentFilters.value,
     minPrice: minPrice.value,
     maxPrice: maxPrice.value,
-    safeTransaction: safeTransaction.value,
   };
 
   const query = getObjectDifferences(filters, DEFAULT_FILTERS);
@@ -119,18 +116,22 @@ const { pushEvent } = useAnalyticsEvent();
 
 
 const setCity = (cityId: string) => {
+  // eslint-disable-next-line camelcase
   pushEvent(SELECT_CITY, { city_id: cityId });
 };
 
 const setCategory = (categoryId: string) => {
+  // eslint-disable-next-line camelcase
   pushEvent(SELECT_CATEGORY, { category_id: categoryId });
 };
 
 const setSubcategory = (subcategoryId: string) => {
+  // eslint-disable-next-line camelcase
   pushEvent(SELECT_SUBCATEGORY, { subcategory_id: subcategoryId });
 };
 
 const setBrand = (brandId: string) => {
+  // eslint-disable-next-line camelcase
   pushEvent(SELECT_BRAND, { brand_id: brandId });
 };
 </script>
@@ -147,7 +148,6 @@ const setBrand = (brandId: string) => {
     "price": "Price",
     "from": "from",
     "to": "to",
-    "safe_deal": "Safe deal",
     "clear_all": "Clear all filter",
     "update_search": "Update search"
   },
@@ -161,7 +161,6 @@ const setBrand = (brandId: string) => {
     "price": "Preço",
     "from": "por",
     "to": "até",
-    "safe_deal": "Negócio Seguro",
     "clear_all": "limpar todo o filtro",
     "update_search": "Atualizar pesquisa"
   }
@@ -249,20 +248,6 @@ const setBrand = (brandId: string) => {
               name="max_price"
               type="number"
             />
-          </div>
-        </li>
-
-        <li
-          v-if="false"
-          :class="$style.block"
-        >
-          <div :class="$style.check">
-            <span
-              :class="$style.title"
-              v-text="t('safe_deal')"
-            />
-
-            <UICheckbox v-model="safeTransaction" />
           </div>
         </li>
       </ul>
