@@ -91,7 +91,6 @@ export default defineNuxtConfig({
 
   css: [
     '~/assets/css/nuxt-ui.css',
-    '~/assets/scss/global.scss',
   ],
 
   vite: {
@@ -161,5 +160,9 @@ export default defineNuxtConfig({
 
   supabase: {
     redirect: false,
+  },
+
+  ui: {
+    colorMode: false,
   },
 });
