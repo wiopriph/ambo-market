@@ -15,6 +15,21 @@ definePageMeta({
 });
 
 const { t } = useI18n();
+
+const title = computed(() => t('meta_title'));
+
+const description = computed(() => t('meta_description'));
+
+const meta = computed(() => [
+  { key: 'og:title', property: 'og:title', content: title.value },
+  { key: 'twitter:title', property: 'twitter:title', content: title.value },
+  { key: 'description', name: 'description', content: description.value },
+  { key: 'og:description', property: 'og:description', content: description.value },
+  { key: 'twitter:description', property: 'twitter:description', content: description.value },
+]);
+
+useHead({ title: title.value, meta: meta.value });
+
 const route = useRoute();
 const { resetPassword } = useAuth();
 const { isAuthChecking } = useUser();
@@ -72,6 +87,8 @@ const goToLogin = () => {
 <i18n lang="json">
 {
   "en": {
+    "meta_title": "Recover your Ambo Market password",
+    "meta_description": "Request a password reset link for your Ambo Market account and get back to managing your classifieds.",
     "title": "Password recovery",
     "subtitle": "We will send a link to reset your password to your e-mail.",
     "email": "E-mail",
@@ -80,6 +97,8 @@ const goToLogin = () => {
     "success_message": "If this e-mail is registered, we have sent a link to reset your password."
   },
   "pt": {
+    "meta_title": "Recuperar senha do Ambo Market",
+    "meta_description": "Solicite um link para redefinir a senha da sua conta Ambo Market e volte a gerir seus classificados.",
     "title": "Recuperação de senha",
     "subtitle": "Enviaremos um link para redefinir sua senha para o seu e-mail.",
     "email": "E-mail",
@@ -95,114 +114,68 @@ const goToLogin = () => {
 
   <div
     v-else
-    :class="$style.root"
+    class="mx-auto flex w-full max-w-md px-0 py-4 sm:py-12"
   >
-    <div :class="$style.card">
-      <h2
-        :class="$style.title"
-        v-text="t('title')"
-      />
-
-      <p
-        :class="$style.subtitle"
-        v-text="t('subtitle')"
-      />
-
+    <UCard
+      :title="t('title')"
+      :description="t('subtitle')"
+      class="w-full"
+    >
       <form
-        :class="$style.form"
+        class="space-y-4"
         @submit.prevent="resetPasswordForEmail"
       >
-        <UIInput
-          v-model="email"
+        <UFormField
           :label="t('email')"
           :error="errors.email"
-          isRequired
           name="email"
-          type="email"
+          required
+        >
+          <UInput
+            v-model="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            size="lg"
+            class="w-full"
+          />
+        </UFormField>
+
+        <UAlert
+          v-if="backendError"
+          color="error"
+          variant="soft"
+          icon="i-lucide-circle-alert"
+          :description="backendError"
         />
 
-        <UIError :text="errors.email" />
-
-        <UIError :text="backendError" />
-
-        <p
+        <UAlert
           v-if="successMessage"
-          :class="$style.success"
-          v-text="successMessage"
+          color="success"
+          variant="soft"
+          icon="i-lucide-circle-check"
+          :description="successMessage"
         />
 
-        <UIButton
-          :text="t('reset_password')"
-          :class="$style.submitButton"
-          :isLoading="isLoading"
-          @click="resetPasswordForEmail"
+        <UButton
+          type="submit"
+          :label="t('reset_password')"
+          :loading="isLoading"
+          size="lg"
+          block
         />
       </form>
 
-      <button
+      <UButton
         type="button"
-        :class="$style.backButton"
+        color="primary"
+        variant="link"
+        class="mt-5 justify-center px-0"
+        block
         @click="goToLogin"
       >
         {{ t('back_to_login') }}
-      </button>
-    </div>
+      </UButton>
+    </UCard>
   </div>
 </template>
-
-<style lang="scss" module>
-.root {
-  width: 100%;
-  max-width: 480px;
-  padding: 20px;
-
-  @include exclude-md {
-    margin-top: 80px;
-    margin-bottom: 60px;
-  }
-}
-
-.card {
-  @include exclude-md {
-    @include ui-round-content-blocks;
-
-    background-color: $ui-color-white;
-    padding: 24px 24px 20px;
-    box-shadow: $box-shadow;
-  }
-}
-
-.title {
-  @include ui-typo-24-medium;
-}
-
-.subtitle {
-  @include ui-typo-14;
-  margin-top: 8px;
-  margin-bottom: 20px;
-  color: $ui-color-text-main;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-}
-
-.submitButton {
-  margin-top: 20px;
-}
-
-.success {
-  @include ui-typo-12;
-  margin-top: 10px;
-  color: $ui-color-add;
-}
-
-.backButton {
-  @include ui-button-link-view;
-  @include ui-typo-14;
-  margin-top: 12px;
-  padding: 0;
-  text-decoration: underline;
-}
-</style>

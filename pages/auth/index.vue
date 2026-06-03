@@ -41,6 +41,20 @@ watch(
 
 const { t } = useI18n();
 
+const title = computed(() => t('meta_title'));
+
+const description = computed(() => t('meta_description'));
+
+const meta = computed(() => [
+  { key: 'og:title', property: 'og:title', content: title.value },
+  { key: 'twitter:title', property: 'twitter:title', content: title.value },
+  { key: 'description', name: 'description', content: description.value },
+  { key: 'og:description', property: 'og:description', content: description.value },
+  { key: 'twitter:description', property: 'twitter:description', content: description.value },
+]);
+
+useHead({ title: title.value, meta: meta.value });
+
 const {
   errors,
   handleSubmit,
@@ -140,6 +154,8 @@ const createAccount = () => {
 <i18n lang="json">
 {
   "en": {
+    "meta_title": "Log in to Ambo Market",
+    "meta_description": "Access your Ambo Market account to manage ads, messages, and saved listings.",
     "title": "Log in",
     "subtitle": "Log in to continue and manage your ads.",
     "email": "E-mail",
@@ -151,6 +167,8 @@ const createAccount = () => {
     "create_one": "Create one now"
   },
   "pt": {
+    "meta_title": "Entrar no Ambo Market",
+    "meta_description": "Acesse sua conta Ambo Market para gerir anúncios, mensagens e favoritos.",
     "title": "Entrar",
     "subtitle": "Entre para continuar e gerenciar seus anúncios.",
     "email": "E-mail",
@@ -169,218 +187,131 @@ const createAccount = () => {
 
   <div
     v-else
-    :class="$style.root"
+    class="mx-auto flex w-full max-w-md px-0 py-4 sm:py-12"
   >
-    <div :class="$style.card">
-      <h2
-        :class="$style.title"
-        v-text="t('title')"
-      />
-
-      <p
-        :class="$style.description"
-        v-text="t('subtitle')"
-      />
-
+    <UCard
+      :title="t('title')"
+      :description="t('subtitle')"
+      class="w-full"
+    >
       <form
-        :class="$style.form"
+        class="space-y-4"
         @submit.prevent="authByEmail"
       >
-        <div :class="$style.inputWrapper">
-          <UIInput
+        <UFormField
+          :label="t('email')"
+          :error="errors.email"
+          name="email"
+          required
+        >
+          <UInput
             v-model="email"
-            :label="t('email')"
-            :error="errors.email"
-            isRequired
             name="email"
             type="email"
+            autocomplete="email"
+            size="lg"
+            class="w-full"
           />
+        </UFormField>
 
-          <UIError :text="errors.email" />
-        </div>
-
-        <div :class="$style.inputWrapper">
-          <UIInput
+        <UFormField
+          :label="t('password')"
+          :error="errors.password"
+          name="password"
+          required
+        >
+          <UInput
             v-model="password"
-            :label="t('password')"
-            :error="errors.password"
-            isRequired
             name="password"
             type="password"
+            autocomplete="current-password"
+            size="lg"
+            class="w-full"
           />
+        </UFormField>
 
-          <UIError :text="errors.password" />
-        </div>
+        <UAlert
+          v-if="backendError"
+          color="error"
+          variant="soft"
+          icon="i-lucide-circle-alert"
+          :description="backendError"
+        />
 
-        <UIError :text="backendError" />
-
-        <div :class="$style.row">
-          <button
+        <div class="flex justify-end">
+          <UButton
             type="button"
-            :class="$style.forgot"
+            color="primary"
+            variant="link"
+            class="px-0"
             @click="goToForgotPassword"
-            v-text="t('forgot_password')"
-          />
+          >
+            {{ t('forgot_password') }}
+          </UButton>
         </div>
 
 
-        <UIButton
-          :text="t('login')"
-          :class="$style.submitButton"
-          :isLoading="isLoading"
-          @click="authByEmail"
+        <UButton
+          type="submit"
+          :label="t('login')"
+          :loading="isLoading"
+          size="lg"
+          block
         />
       </form>
 
-      <div :class="$style.panel">
-        <p :class="$style.panelTitle">
-          {{ t('social_block_title') }}
-        </p>
+      <template #footer>
+        <div class="space-y-5">
+          <USeparator :label="t('social_block_title')" />
 
-        <div :class="$style.socials">
-          <button
-            type="button"
-            :class="$style.socialButton"
-            @click="authByFb"
-          >
-            <IconFb :class="$style.socialIcon" />
-          </button>
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <UButton
+              type="button"
+              color="neutral"
+              variant="outline"
+              size="lg"
+              block
+              @click="authByFb"
+            >
+              <template #leading>
+                <IconFb class="size-5" />
+              </template>
 
-          <button
-            type="button"
-            :class="$style.socialButton"
-            @click="authByGoogle"
-          >
-            <IconGoogle :class="$style.socialIcon" />
-          </button>
+              Facebook
+            </UButton>
+
+            <UButton
+              type="button"
+              color="neutral"
+              variant="outline"
+              size="lg"
+              block
+              @click="authByGoogle"
+            >
+              <template #leading>
+                <IconGoogle class="size-5" />
+              </template>
+
+              Google
+            </UButton>
+          </div>
+
+          <div class="flex flex-col items-center gap-2 text-center text-sm sm:flex-row sm:justify-center">
+            <span class="text-muted">{{ t('no_account') }}</span>
+
+            <UButton
+              type="button"
+              color="primary"
+              variant="link"
+              size="sm"
+              class="justify-center px-0"
+              @click="createAccount"
+            >
+              {{ t('create_one') }}
+            </UButton>
+          </div>
         </div>
-      </div>
-
-      <div :class="$style.registerRow">
-        <span v-text="t('no_account')" />
-
-        <button
-          type="button"
-          :class="$style.registerLink"
-          @click="createAccount"
-          v-text="t('create_one')"
-        />
-      </div>
-    </div>
+      </template>
+    </UCard>
   </div>
 </template>
-
-<style lang="scss" module>
-.root {
-  width: 100%;
-  max-width: 480px;
-  padding: 20px;
-
-  @include exclude-md {
-    margin-top: 80px;
-    margin-bottom: 60px;
-  }
-}
-
-.card {
-  @include exclude-md {
-    @include ui-round-content-blocks;
-
-    background-color: $ui-color-white;
-    padding: 24px 24px 20px;
-    box-shadow: $box-shadow;
-  }
-}
-
-.title {
-  @include ui-typo-24-medium;
-}
-
-.description {
-  @include ui-typo-14;
-
-  margin-top: 8px;
-  margin-bottom: 20px;
-  color: $ui-color-text-main;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-}
-
-.inputWrapper {
-
-  & + & {
-    margin-top: 16px;
-  }
-}
-
-.row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 12px;
-}
-
-.forgot {
-  @include ui-button-link-view;
-  text-decoration: underline;
-}
-
-.submitButton {
-  margin-top: 16px;
-  padding: 12px;
-}
-
-.panel {
-  margin-top: 20px;
-
-  @include exclude-md {
-    padding: 16px 16px 14px;
-    border-radius: 16px;
-    background-color: #FAFAFA;
-  }
-}
-
-.panelTitle {
-  margin-bottom: 12px;
-}
-
-.socials {
-  display: flex;
-  gap: 8px;
-}
-
-.socialButton {
-  @include ui-button-secondary;
-
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.socialIcon {
-  width: 24px;
-  height: 24px;
-}
-
-.registerRow {
-  @include ui-typo-14;
-
-  margin-top: 20px;
-  display: flex;
-  gap: 6px;
-}
-
-.registerLink {
-  @include ui-button-link-view;
-  @include ui-typo-14;
-  padding: 0;
-  text-decoration: underline;
-}
-</style>

@@ -15,6 +15,21 @@ definePageMeta({
 });
 
 const { t } = useI18n();
+
+const title = computed(() => t('meta_title'));
+
+const description = computed(() => t('meta_description'));
+
+const meta = computed(() => [
+  { key: 'og:title', property: 'og:title', content: title.value },
+  { key: 'twitter:title', property: 'twitter:title', content: title.value },
+  { key: 'description', name: 'description', content: description.value },
+  { key: 'og:description', property: 'og:description', content: description.value },
+  { key: 'twitter:description', property: 'twitter:description', content: description.value },
+]);
+
+useHead({ title: title.value, meta: meta.value });
+
 const route = useRoute();
 const { signUp } = useAuth();
 const { isLoggedIn, isAuthChecking } = useUser();
@@ -89,6 +104,8 @@ const register = handleSubmit.withControlled(async () => {
 <i18n lang="json">
 {
   "en": {
+    "meta_title": "Create an Ambo Market account",
+    "meta_description": "Sign up for Ambo Market to post free classifieds, manage your ads, and connect with buyers in Angola.",
     "title": "Create an account",
     "subtitle": "Sign up with your e-mail and start using the platform.",
     "email": "E-mail",
@@ -102,6 +119,8 @@ const register = handleSubmit.withControlled(async () => {
     "privacy_policy": "Privacy Policy"
   },
   "pt": {
+    "meta_title": "Criar conta no Ambo Market",
+    "meta_description": "Crie uma conta no Ambo Market para publicar classificados grátis, gerir anúncios e falar com compradores em Angola.",
     "title": "Criar uma conta",
     "subtitle": "Cadastre-se com seu e-mail e comece a usar a plataforma.",
     "email": "E-mail",
@@ -122,189 +141,123 @@ const register = handleSubmit.withControlled(async () => {
 
   <div
     v-else
-    :class="$style.root"
+    class="mx-auto flex w-full max-w-md px-0 py-4 sm:py-12"
   >
-    <div :class="$style.card">
-      <h2
-        :class="$style.title"
-        v-text="t('title')"
-      />
-
-      <p
-        :class="$style.subtitle"
-        v-text="t('subtitle')"
-      />
-
+    <UCard
+      :title="t('title')"
+      :description="t('subtitle')"
+      class="w-full"
+    >
       <form
-        :class="$style.form"
+        class="space-y-4"
         @submit.prevent="register"
       >
-        <div :class="$style.inputWrapper">
-          <UIInput
+        <UFormField
+          :label="t('email')"
+          :error="errors.email"
+          name="email"
+          required
+        >
+          <UInput
             v-model="email"
-            :label="t('email')"
-            :error="errors.email"
-            isRequired
             name="email"
             type="email"
+            autocomplete="email"
+            size="lg"
+            class="w-full"
           />
+        </UFormField>
 
-          <UIError :text="errors.email" />
-        </div>
-
-        <div :class="$style.inputWrapper">
-          <UIInput
+        <UFormField
+          :label="t('password')"
+          :error="errors.password"
+          name="password"
+          required
+        >
+          <UInput
             v-model="password"
-            :label="t('password')"
-            :error="errors.password"
-            isRequired
             name="password"
             type="password"
+            autocomplete="new-password"
+            size="lg"
+            class="w-full"
           />
+        </UFormField>
 
-          <UIError :text="errors.password" />
-        </div>
-
-        <div :class="$style.inputWrapper">
-          <UIInput
+        <UFormField
+          :label="t('confirm_password')"
+          :error="errors.confirmPassword"
+          name="confirmPassword"
+          required
+        >
+          <UInput
             v-model="confirmPassword"
-            :label="t('confirm_password')"
-            :error="errors.confirmPassword"
-            isRequired
             name="confirmPassword"
             type="password"
+            autocomplete="new-password"
+            size="lg"
+            class="w-full"
           />
+        </UFormField>
 
-          <UIError :text="errors.confirmPassword" />
-        </div>
+        <UAlert
+          v-if="backendError"
+          color="error"
+          variant="soft"
+          icon="i-lucide-circle-alert"
+          :description="backendError"
+        />
 
-        <UIError :text="backendError" />
-
-        <UIButton
-          :text="t('register')"
-          :class="$style.submitButton"
-          :isLoading="isLoading"
-          @click="register"
+        <UButton
+          type="submit"
+          :label="t('register')"
+          :loading="isLoading"
+          size="lg"
+          block
         />
       </form>
 
-      <div :class="$style.bottom">
-        <span>{{ t('login_text') }}</span>
+      <div class="mt-5 flex flex-col items-center gap-2 text-center text-sm sm:flex-row sm:justify-center">
+        <span class="text-muted">{{ t('login_text') }}</span>
 
-        <NuxtLink
+        <UButton
           :to="{ name: 'auth', query: { redirect: route.query.redirect as string } }"
-          :class="$style.loginLink"
+          color="primary"
+          variant="link"
+          size="sm"
+          class="justify-center px-0"
         >
           {{ t('login_link') }}
-        </NuxtLink>
+        </UButton>
       </div>
-    </div>
 
-    <div :class="$style.footer">
+      <USeparator class="my-5" />
+
       <I18nT
-        :class="$style.footerText"
         keypath="terms_privacy_agreement"
         tag="p"
+        class="text-center text-xs leading-relaxed text-muted"
       >
         <template #terms>
-          <NuxtLink
+          <ULink
             :to="{ name: 'terms' }"
             target="_blank"
+            class="font-medium text-primary"
           >
             {{ t('terms_of_service') }}
-          </NuxtLink>
+          </ULink>
         </template>
 
         <template #policy>
-          <NuxtLink
+          <ULink
             :to="{ name: 'privacy' }"
             target="_blank"
+            class="font-medium text-primary"
           >
             {{ t('privacy_policy') }}
-          </NuxtLink>
+          </ULink>
         </template>
       </I18nT>
-    </div>
+    </UCard>
   </div>
 </template>
-
-<style lang="scss" module>
-.root {
-  width: 100%;
-  max-width: 480px;
-  padding: 20px;
-
-  @include exclude-md {
-    margin-top: 80px;
-    margin-bottom: 60px;
-  }
-}
-
-.card {
-  @include exclude-md {
-    @include ui-round-content-blocks;
-
-    background-color: $ui-color-white;
-    padding: 24px 24px 20px;
-    box-shadow: $box-shadow;
-  }
-}
-
-.title {
-  @include ui-typo-24-medium;
-}
-
-.subtitle {
-  @include ui-typo-14;
-  margin-top: 8px;
-  margin-bottom: 20px;
-  color: $ui-color-text-main;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-}
-
-.inputWrapper {
-
-  & + & {
-    margin-top: 16px;
-  }
-}
-
-.submitButton {
-  margin-top: 20px;
-}
-
-.bottom {
-  margin-top: 20px;
-  display: flex;
-  gap: 6px;
-  font-size: 14px;
-}
-
-.loginLink {
-  @include ui-button-link-view;
-  @include ui-typo-14;
-  padding: 0;
-  text-decoration: underline;
-}
-
-.footer {
-  @include ui-typo-12;
-  margin-top: 20px;
-  color: $ui-color-black;
-  text-align: center;
-
-  a {
-    text-decoration: none;
-  }
-}
-
-.footerText {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  color: $ui-color-text-main;
-}
-</style>

@@ -4,6 +4,21 @@ import { object, string } from 'yup';
 
 
 const { t } = useI18n();
+
+const title = computed(() => t('meta_title'));
+
+const description = computed(() => t('meta_description'));
+
+const meta = computed(() => [
+  { key: 'og:title', property: 'og:title', content: title.value },
+  { key: 'twitter:title', property: 'twitter:title', content: title.value },
+  { key: 'description', name: 'description', content: description.value },
+  { key: 'og:description', property: 'og:description', content: description.value },
+  { key: 'twitter:description', property: 'twitter:description', content: description.value },
+]);
+
+useHead({ title: title.value, meta: meta.value });
+
 const route = useRoute();
 const client = useSupabaseClient();
 const { updateUser } = useAuth();
@@ -16,7 +31,10 @@ const backendError = ref('');
 const successMessage = ref('');
 
 onMounted(async () => {
-  const { data, error } = await client.auth.verifyOtp({ token_hash: route.query.token, type: route.query.type });
+  const { data, error } = await client.auth.verifyOtp({
+    ['token_hash']: route.query.token,
+    type: route.query.type,
+  });
 
   if (error || !data.user) {
     isTokenInvalid.value = true;
@@ -86,6 +104,8 @@ const goToLogin = () => {
 <i18n lang="json">
 {
   "en": {
+    "meta_title": "Set a new Ambo Market password",
+    "meta_description": "Create a new password for your Ambo Market account and restore secure access to your classifieds.",
     "title": "Set a new password",
     "subtitle": "Enter a new password for your account.",
     "password": "New password",
@@ -97,6 +117,8 @@ const goToLogin = () => {
     "success_message": "Your password has been updated. You can now log in with the new password."
   },
   "pt": {
+    "meta_title": "Definir nova senha do Ambo Market",
+    "meta_description": "Crie uma nova senha para sua conta Ambo Market e recupere o acesso seguro aos seus classificados.",
     "title": "Definir uma nova senha",
     "subtitle": "Digite uma nova senha para sua conta.",
     "password": "Nova senha",
@@ -115,158 +137,109 @@ const goToLogin = () => {
 
   <div
     v-else
-    :class="$style.root"
+    class="mx-auto flex w-full max-w-md px-0 py-4 sm:py-12"
   >
-    <div :class="$style.card">
-      <template v-if="isTokenInvalid">
-        <h2
-          :class="$style.title"
-          v-text="t('invalid_link_title')"
+    <UCard
+      :title="isTokenInvalid ? t('invalid_link_title') : t('title')"
+      :description="isTokenInvalid ? undefined : t('subtitle')"
+      class="w-full"
+    >
+      <div
+        v-if="isTokenInvalid"
+        class="space-y-4"
+      >
+        <UAlert
+          color="warning"
+          variant="soft"
+          icon="i-lucide-triangle-alert"
+          :description="t('invalid_link_text')"
         />
 
-        <p
-          :class="$style.subtitle"
-          v-text="t('invalid_link_text')"
-        />
-
-        <button
+        <UButton
           type="button"
-          :class="$style.backButton"
+          color="primary"
+          variant="link"
+          class="justify-center px-0"
+          block
           @click="goToLogin"
         >
           {{ t('back_to_login') }}
-        </button>
-      </template>
+        </UButton>
+      </div>
 
       <template v-else>
-        <h2
-          :class="$style.title"
-          v-text="t('title')"
-        />
-
-        <p
-          :class="$style.subtitle"
-          v-text="t('subtitle')"
-        />
-
         <form
-          :class="$style.form"
+          class="space-y-4"
           @submit.prevent="submitNewPassword"
         >
-          <div :class="$style.inputWrapper">
-            <UIInput
+          <UFormField
+            :label="t('password')"
+            :error="errors.password"
+            name="password"
+            required
+          >
+            <UInput
               v-model="password"
-              :label="t('password')"
-              :error="errors.password"
-              isRequired
               name="password"
               type="password"
+              autocomplete="new-password"
+              size="lg"
+              class="w-full"
             />
+          </UFormField>
 
-            <UIError :text="errors.password" />
-          </div>
-
-          <div :class="$style.inputWrapper">
-            <UIInput
+          <UFormField
+            :label="t('confirm_password')"
+            :error="errors.confirmPassword"
+            name="confirmPassword"
+            required
+          >
+            <UInput
               v-model="confirmPassword"
-              :label="t('confirm_password')"
-              :error="errors.confirmPassword"
-              isRequired
               name="confirmPassword"
               type="password"
+              autocomplete="new-password"
+              size="lg"
+              class="w-full"
             />
+          </UFormField>
 
-            <UIError :text="errors.confirmPassword" />
-          </div>
+          <UAlert
+            v-if="backendError"
+            color="error"
+            variant="soft"
+            icon="i-lucide-circle-alert"
+            :description="backendError"
+          />
+
+          <UAlert
+            v-if="successMessage"
+            color="success"
+            variant="soft"
+            icon="i-lucide-circle-check"
+            :description="successMessage"
+          />
+
+          <UButton
+            type="submit"
+            :label="t('save')"
+            :loading="isLoading"
+            size="lg"
+            block
+          />
         </form>
 
-        <UIError :text="backendError" />
-
-        <p
-          v-if="successMessage"
-          :class="$style.success"
-          v-text="successMessage"
-        />
-
-        <UIButton
-          :text="t('save')"
-          :class="$style.submitButton"
-          :isLoading="isLoading"
-          @click="submitNewPassword"
-        />
-
-        <button
+        <UButton
           type="button"
-          :class="$style.backButton"
+          color="primary"
+          variant="link"
+          class="mt-5 justify-center px-0"
+          block
           @click="goToLogin"
         >
           {{ t('back_to_login') }}
-        </button>
+        </UButton>
       </template>
-    </div>
+    </UCard>
   </div>
 </template>
-
-<style lang="scss" module>
-.root {
-  width: 100%;
-  max-width: 480px;
-  padding: 20px;
-
-  @include exclude-md {
-    margin-top: 80px;
-    margin-bottom: 60px;
-  }
-}
-
-.card {
-  @include exclude-md {
-    @include ui-round-content-blocks;
-
-    background-color: $ui-color-white;
-    padding: 24px 24px 20px;
-    box-shadow: $box-shadow;
-  }
-}
-
-.title {
-  @include ui-typo-24-medium;
-}
-
-.subtitle {
-  @include ui-typo-14;
-  margin-top: 8px;
-  margin-bottom: 20px;
-  color: $ui-color-text-main;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-}
-
-.inputWrapper {
-
-  & + & {
-    margin-top: 16px;
-  }
-}
-
-.submitButton {
-  margin-top: 20px;
-}
-
-.success {
-  @include ui-typo-12;
-  margin-top: 10px;
-  color: $ui-color-add;
-}
-
-.backButton {
-  @include ui-button-link-view;
-  @include ui-typo-14;
-  margin-top: 12px;
-  padding: 0;
-  text-decoration: underline;
-}
-</style>
