@@ -7,6 +7,10 @@ const { t } = useI18n();
 
 const items = computed<NavigationMenuItem[]>(() => ([
   {
+    label: t('about'),
+    to: { name: 'about' },
+  },
+  {
     label: t('terms_of_use'),
     to: { name: 'terms' },
   },
@@ -38,12 +42,14 @@ const socialLinks = [
 <i18n lang="json">
 {
   "en": {
+    "about": "About",
     "terms_of_use": "Terms of Use",
     "privacy_policy": "Privacy Policy",
     "follow_us": "Follow Us",
     "seo_text": "Ambo Market - free classifieds in Angola. Buy and sell online in Luanda, Benguela, Huambo, Lobito, Cabinda and across Angola. Cars, real estate, mobile phones, electronics and services."
   },
   "pt": {
+    "about": "Sobre",
     "terms_of_use": "Termos de Uso",
     "privacy_policy": "Política de Privacidade",
     "follow_us": "Siga-nos",

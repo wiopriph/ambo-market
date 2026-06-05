@@ -1,12 +1,17 @@
 <template>
-  <div :class="$style.root">
-    <h1 :class="$style.bigTitle">
+  <article class="mx-auto max-w-4xl space-y-5 py-4 text-sm leading-7 text-default sm:py-8 sm:text-base [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold">
+    <h1 class="text-3xl font-bold text-highlighted sm:text-4xl">
       Platform Terms of Use
     </h1>
 
-    <p :class="$style.date">
-      Effective Date:&nbsp;<strong>15 March 2025</strong>
-    </p>
+    <div>
+      <UBadge
+        color="neutral"
+        variant="soft"
+      >
+        Effective Date:&nbsp;<strong>15 March 2025</strong>
+      </UBadge>
+    </div>
 
     <div>
       <p>
@@ -28,9 +33,12 @@
       </p>
     </div>
 
-    <ol start="1">
+    <ol
+      start="1"
+      class="list-decimal space-y-5 pl-5 marker:font-semibold"
+    >
       <li id="who-we-are">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           WHO WE ARE AND HOW TO CONTACT US.
         </p>
 
@@ -58,7 +66,7 @@
       </li>
 
       <li id="accept-terms-of-use">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           BY USING THE PLATFORM, YOU ACCEPT THESE TERMS OF USE.
         </p>
 
@@ -84,7 +92,7 @@
       </li>
 
       <li id="change-terms-of-use">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           WE MAY MAKE CHANGES TO THESE TERMS OF USE.
         </p>
 
@@ -102,7 +110,7 @@
       </li>
 
       <li id="change-to-platform">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           WE MAY MAKE CHANGES TO THE PLATFORM.
         </p>
 
@@ -114,7 +122,7 @@
       </li>
 
       <li id="suspend-withdraw-platform">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           WE MAY SUSPEND OR WITHDRAW THE PLATFORM.
         </p>
 
@@ -126,7 +134,7 @@
       </li>
 
       <li id="your-privacy">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           YOUR PRIVACY.
         </p>
 
@@ -141,7 +149,7 @@
       </li>
 
       <li id="right-to-use-platform">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           YOUR RIGHT TO USE THE PLATFORM AND THE CONTENT.
         </p>
 
@@ -174,7 +182,7 @@
       </li>
 
       <li id="restrictions">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           RESTRICTIONS.
         </p>
 
@@ -182,7 +190,7 @@
           You must not:
         </p>
 
-        <ul :class="$style.list">
+        <ul class="list-disc space-y-2 pl-5">
           <li>
             use the Platform if you are under the age of eighteen (18);
           </li>
@@ -244,7 +252,7 @@
       </li>
 
       <li id="account-creation">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           ACCOUNT CREATION.
         </p>
 
@@ -292,7 +300,7 @@
       </li>
 
       <li id="paid-services">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           PAID SERVICES.
         </p>
 
@@ -304,7 +312,7 @@
           You acknowledge and agree that, in respect of each Paid Service:
         </p>
 
-        <ul :class="$style.list">
+        <ul class="list-disc space-y-2 pl-5">
           <li>
             any fee paid by you for a Paid Service is non-refundable in all circumstances;
           </li>
@@ -312,7 +320,7 @@
       </li>
 
       <li id="listings">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           LISTINGS.
         </p>
 
@@ -328,7 +336,7 @@
           If you are a Seller, you must:
         </p>
 
-        <ul :class="$style.list">
+        <ul class="list-disc space-y-2 pl-5">
           <li>
             be legally permitted to sell the item or service on the Platform;
           </li>
@@ -374,7 +382,7 @@
           If you are a Buyer, you must:
         </p>
 
-        <ul :class="$style.list">
+        <ul class="list-disc space-y-2 pl-5">
           <li>
             be legally permitted to purchase the item or service through the Platform; and
           </li>
@@ -386,7 +394,7 @@
       </li>
 
       <li id="responsible-for-listings">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           AMBO MARKET IS NOT RESPONSIBLE FOR LISTINGS.
         </p>
 
@@ -402,7 +410,7 @@
       </li>
 
       <li id="reviews-and-ratings">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           REVIEWS AND RATINGS.
         </p>
 
@@ -415,7 +423,7 @@
           Any Review posted on the Platform must comply fully with these Terms of Use. In addition, Reviews must:
         </p>
 
-        <ul :class="$style.list">
+        <ul class="list-disc space-y-2 pl-5">
           <li>
             be factual, accurate and represent the genuine opinion of the reviewer;
           </li>
@@ -448,7 +456,7 @@
       </li>
 
       <li id="uploading-content-to-platform">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           UPLOADING CONTENT TO THE PLATFORM.
         </p>
 
@@ -485,7 +493,7 @@
         v-if="false"
         id="acceptable-use-policy"
       >
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           ACCEPTABLE USE POLICY
         </p>
 
@@ -506,7 +514,7 @@
       </li>
 
       <li id="processing-payments">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           PROCESSING PAYMENTS.
         </p>
 
@@ -528,7 +536,7 @@
       </li>
 
       <li id="our-liability-to-you">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           OUR LIABILITY TO YOU.
         </p>
 
@@ -540,7 +548,7 @@
           Subject to the above, our liability to you is limited as follows:
         </p>
 
-        <ul :class="$style.list">
+        <ul class="list-disc space-y-2 pl-5">
           <li>
             <strong>If you are using the Platform in a business or commercial capacity:</strong> We provide the Platform and
             the Content to you ‘as is’ and ‘as available’. We exclude all implied conditions, warranties,
@@ -573,7 +581,7 @@
       </li>
 
       <li id="breach-of-these-terms-of-use">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           BREACH OF THESE TERMS OF USE.
         </p>
 
@@ -586,7 +594,7 @@
       </li>
 
       <li id="reporting-illegal-content">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           REPORTING ILLEGAL OR INFRINGING CONTENT.
         </p>
 
@@ -606,7 +614,7 @@
       </li>
 
       <li id="general">
-        <p :class="$style.title">
+        <p class="font-semibold uppercase tracking-wide text-highlighted">
           GENERAL.
         </p>
 
@@ -705,51 +713,5 @@
         </p>
       </li>
     </ol>
-  </div>
+  </article>
 </template>
-
-<style lang="scss" module>
-.root {
-  @include ui-simple-container;
-
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 20px;
-
-  ol {
-    padding-left: 16px;
-  }
-
-  li {
-    margin: 16px 0;
-
-    &::marker {
-      font-weight: $font-bold-weight;
-    }
-  }
-
-  p {
-    line-height: 2;
-  }
-}
-
-.bigTitle {
-  @include ui-typo-32-bold;
-  margin-bottom: 24px;
-}
-
-.date {
-  margin-bottom: 24px;
-}
-
-.title {
-  font-weight: $font-bold-weight;
-  text-transform: uppercase;
-}
-
-.list {
-  padding-left: 16px;
-  list-style-type: disc;
-}
-</style>

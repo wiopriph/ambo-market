@@ -1,17 +1,19 @@
-<script setup lang="ts">
-</script>
-
 <template>
-  <div :class="$style.root">
-    <h1 :class="$style.bigTitle">
+  <article class="mx-auto max-w-4xl space-y-5 py-4 text-sm leading-7 text-default sm:py-8 sm:text-base [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_table]:w-full [&_table]:min-w-[650px] [&_table]:border-collapse [&_td]:border [&_td]:border-default [&_td]:p-3 [&_td]:align-top [&_th]:border [&_th]:border-default [&_th]:bg-muted/40 [&_th]:p-3 [&_th]:text-left [&_th]:align-top [&_th]:font-semibold">
+    <h1 class="text-3xl font-bold text-highlighted sm:text-4xl">
       Privacy Policy
     </h1>
 
-    <p :class="$style.date">
-      Effective Date:&nbsp;<strong>15 March 2025</strong>
-    </p>
+    <div>
+      <UBadge
+        color="neutral"
+        variant="soft"
+      >
+        Effective Date:&nbsp;<strong>15 March 2025</strong>
+      </UBadge>
+    </div>
 
-    <p :class="$style.title">
+    <p class="font-semibold uppercase tracking-wide text-highlighted">
       What does this privacy policy cover?
     </p>
 
@@ -42,50 +44,82 @@
       With that in mind, this Privacy Policy covers the following:
     </p>
 
-    <ul>
+    <ul class="grid list-none gap-2 rounded-md border border-default bg-muted/30 p-3 sm:grid-cols-2">
       <li>
-        <a href="#how-to-contact-us"><p :class="$style.link">Who we are and how to contact us</p></a>
+        <a
+          href="#how-to-contact-us"
+          class="block font-semibold uppercase"
+        >Who we are and how to contact us</a>
       </li>
 
       <li>
-        <a href="#personal-data"><p :class="$style.link">Personal data we collect from you</p></a>
+        <a
+          href="#personal-data"
+          class="block font-semibold uppercase"
+        >Personal data we collect from you</a>
       </li>
 
       <li>
-        <a href="#personal-data-usage"><p :class="$style.link">How we use your personal data and why</p></a>
+        <a
+          href="#personal-data-usage"
+          class="block font-semibold uppercase"
+        >How we use your personal data and why</a>
       </li>
 
       <li>
-        <a href="#personal-data-share"><p :class="$style.link">Who we share your personal data with</p></a>
+        <a
+          href="#personal-data-share"
+          class="block font-semibold uppercase"
+        >Who we share your personal data with</a>
       </li>
 
       <li>
-        <a href="#personal-data-secure"><p :class="$style.link">How we keep your personal data secure</p></a>
+        <a
+          href="#personal-data-secure"
+          class="block font-semibold uppercase"
+        >How we keep your personal data secure</a>
       </li>
 
       <li>
-        <a href="#store-personal-data"><p :class="$style.link">How long we store your personal data</p></a>
+        <a
+          href="#store-personal-data"
+          class="block font-semibold uppercase"
+        >How long we store your personal data</a>
       </li>
 
       <li>
-        <a href="#rights-to-personal-data"><p :class="$style.link">Your rights in relation to your personal data</p>
-        </a>
+        <a
+          href="#rights-to-personal-data"
+          class="block font-semibold uppercase"
+        >Your rights in relation to your personal data</a>
       </li>
 
       <li>
-        <a href="#marketing-communications"><p :class="$style.link">Marketing Communications</p></a>
+        <a
+          href="#marketing-communications"
+          class="block font-semibold uppercase"
+        >Marketing Communications</a>
       </li>
 
       <li>
-        <a href="#policy-on-minor"><p :class="$style.link">Our policy on minors</p></a>
+        <a
+          href="#policy-on-minor"
+          class="block font-semibold uppercase"
+        >Our policy on minors</a>
       </li>
 
       <li>
-        <a href="#third-party-links"><p :class="$style.link">Third party links</p></a>
+        <a
+          href="#third-party-links"
+          class="block font-semibold uppercase"
+        >Third party links</a>
       </li>
 
       <li>
-        <a href="#changes-to-privacy-policy"><p :class="$style.link">Changes to this privacy policy</p></a>
+        <a
+          href="#changes-to-privacy-policy"
+          class="block font-semibold uppercase"
+        >Changes to this privacy policy</a>
       </li>
     </ul>
 
@@ -102,13 +136,13 @@
 
     <div
       id="how-to-contact-us"
-      :class="$style.block"
+      class="scroll-mt-24 space-y-3 border-t border-default pt-5"
     >
-      <p :class="$style.title">
+      <p class="font-semibold uppercase tracking-wide text-highlighted">
         Who we are and how to contact us
       </p>
 
-      <p :class="$style.subtitle">
+      <p class="font-semibold text-highlighted">
         Who we are
       </p>
 
@@ -126,7 +160,7 @@
         Zaire Angola.
       </p>
 
-      <p :class="$style.subtitle">
+      <p class="font-semibold text-highlighted">
         How to contact us
       </p>
 
@@ -137,9 +171,9 @@
 
     <div
       id="personal-data"
-      :class="$style.block"
+      class="scroll-mt-24 space-y-3 border-t border-default pt-5"
     >
-      <p :class="$style.title">
+      <p class="font-semibold uppercase tracking-wide text-highlighted">
         Personal data we collect from you
       </p>
 
@@ -158,7 +192,7 @@
         identify an individual but, when combined with additional information, could be used to identify an individual).
       </p>
 
-      <div :class="$style.scrollTable">
+      <div class="overflow-x-auto rounded-md border border-default">
         <table>
           <thead>
             <tr>
@@ -289,7 +323,7 @@
         </table>
       </div>
 
-      <p :class="$style.subtitle">
+      <p class="font-semibold text-highlighted">
         Aggregated data
       </p>
 
@@ -303,7 +337,7 @@
         Policy.
       </p>
 
-      <p :class="$style.subtitle">
+      <p class="font-semibold text-highlighted">
         Special categories of personal data
       </p>
 
@@ -320,7 +354,7 @@
         Privacy Policy.
       </p>
 
-      <p :class="$style.subtitle">
+      <p class="font-semibold text-highlighted">
         What happens if you refuse to provide necessary Personal Data?
       </p>
 
@@ -335,9 +369,9 @@
 
     <div
       id="personal-data-usage"
-      :class="$style.block"
+      class="scroll-mt-24 space-y-3 border-t border-default pt-5"
     >
-      <p :class="$style.title">
+      <p class="font-semibold uppercase tracking-wide text-highlighted">
         How we use your personal data and why
       </p>
 
@@ -349,7 +383,7 @@
         section further below).
       </p>
 
-      <p :class="$style.subtitle">
+      <p class="font-semibold text-highlighted">
         What is our ‘legal basis’ for processing your Personal Data?
       </p>
 
@@ -379,7 +413,7 @@
         We have set out below, in a table format, the legal bases we rely on when processing your Personal Data.
       </p>
 
-      <div :class="$style.scrollTable">
+      <div class="overflow-x-auto rounded-md border border-default">
         <table>
           <thead>
             <tr>
@@ -611,9 +645,9 @@
 
     <div
       id="personal-data-share"
-      :class="$style.block"
+      class="scroll-mt-24 space-y-3 border-t border-default pt-5"
     >
-      <p :class="$style.title">
+      <p class="font-semibold uppercase tracking-wide text-highlighted">
         Who we share your personal data with
       </p>
 
@@ -628,7 +662,7 @@
         only permit them to process your Personal Data for specified purposes in accordance with our instructions.
       </p>
 
-      <div :class="$style.scrollTable">
+      <div class="overflow-x-auto rounded-md border border-default">
         <table>
           <thead>
             <tr>
@@ -715,7 +749,7 @@
         </table>
       </div>
 
-      <p :class="$style.subtitle">
+      <p class="font-semibold text-highlighted">
         Data transfers
       </p>
 
@@ -729,9 +763,9 @@
 
     <div
       id="personal-data-secure"
-      :class="$style.block"
+      class="scroll-mt-24 space-y-3 border-t border-default pt-5"
     >
-      <p :class="$style.title">
+      <p class="font-semibold uppercase tracking-wide text-highlighted">
         How we keep your personal data secure
       </p>
 
@@ -754,9 +788,9 @@
 
     <div
       id="store-personal-data"
-      :class="$style.block"
+      class="scroll-mt-24 space-y-3 border-t border-default pt-5"
     >
-      <p :class="$style.title">
+      <p class="font-semibold uppercase tracking-wide text-highlighted">
         How long we store your personal data
       </p>
 
@@ -778,13 +812,13 @@
 
     <div
       id="rights-to-personal-data"
-      :class="$style.block"
+      class="scroll-mt-24 space-y-3 border-t border-default pt-5"
     >
-      <p :class="$style.title">
+      <p class="font-semibold uppercase tracking-wide text-highlighted">
         Your rights in relation to your personal data
       </p>
 
-      <p :class="$style.subtitle">
+      <p class="font-semibold text-highlighted">
         Your rights
       </p>
 
@@ -834,7 +868,7 @@
         exercisable in specific circumstances.
       </p>
 
-      <p :class="$style.subtitle">
+      <p class="font-semibold text-highlighted">
         How to exercise your rights
       </p>
 
@@ -861,7 +895,7 @@
         excessive number of requests).
       </p>
 
-      <p :class="$style.subtitle">
+      <p class="font-semibold text-highlighted">
         Complaints
       </p>
 
@@ -878,9 +912,9 @@
 
     <div
       id="marketing-communications"
-      :class="$style.block"
+      class="scroll-mt-24 space-y-3 border-t border-default pt-5"
     >
-      <p :class="$style.title">
+      <p class="font-semibold uppercase tracking-wide text-highlighted">
         Marketing Communications
       </p>
 
@@ -893,9 +927,9 @@
 
     <div
       id="policy-on-minor"
-      :class="$style.block"
+      class="scroll-mt-24 space-y-3 border-t border-default pt-5"
     >
-      <p :class="$style.title">
+      <p class="font-semibold uppercase tracking-wide text-highlighted">
         Our policy on minors
       </p>
 
@@ -911,9 +945,9 @@
 
     <div
       id="third-party-links"
-      :class="$style.block"
+      class="scroll-mt-24 space-y-3 border-t border-default pt-5"
     >
-      <p :class="$style.title">
+      <p class="font-semibold uppercase tracking-wide text-highlighted">
         Third party links
       </p>
 
@@ -927,9 +961,9 @@
 
     <div
       id="changes-to-privacy-policy"
-      :class="$style.block"
+      class="scroll-mt-24 space-y-3 border-t border-default pt-5"
     >
-      <p :class="$style.title">
+      <p class="font-semibold uppercase tracking-wide text-highlighted">
         Changes to this privacy policy
       </p>
 
@@ -946,91 +980,5 @@
         Any revisions to this Privacy Policy will be effective immediately once posted on this page.
       </p>
     </div>
-  </div>
+  </article>
 </template>
-
-<style lang="scss" module>
-.root {
-  @include ui-simple-container;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 20px;
-
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
-
-    display: table;
-    width: 100%;
-    min-width: 650px;
-  }
-
-  tr {
-    display: table-row;
-    vertical-align: middle;
-    outline: 0;
-  }
-
-  tbody {
-    display: table-row-group;
-  }
-
-  th {
-    width: 300px;
-    background-color: $ui-color-transparent;
-    border: 1px solid;
-    padding: 12px 6px;
-    text-align: start;
-  }
-
-  td {
-    border: 1px solid;
-    padding: 12px 6px;
-    vertical-align: top;
-  }
-
-  li {
-    margin: 10px 0;
-  }
-
-  p {
-    line-height: 2;
-  }
-}
-
-.bigTitle {
-  @include ui-typo-32-bold;
-  margin-bottom: 24px;
-}
-
-.date {
-  margin-bottom: 24px;
-}
-
-.block {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-top: 16px;
-  padding-bottom: 16px;
-}
-
-.link {
-  text-transform: uppercase;
-}
-
-.title {
-  font-weight: $font-bold-weight;
-  text-transform: uppercase;
-}
-
-.subtitle {
-  font-weight: $font-bold-weight;
-}
-
-.scrollTable {
-  width: 100%;
-  overflow-x: auto;
-}
-</style>
