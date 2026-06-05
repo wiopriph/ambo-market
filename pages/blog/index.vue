@@ -3,21 +3,36 @@ const route = useRoute();
 
 const PER_PAGE = 20;
 
+const selectedTag = computed(() => {
+  const tags = route.query.tags;
+
+  if (typeof tags === 'string') {
+    return tags;
+  }
+
+  if (Array.isArray(tags) && typeof tags[0] === 'string') {
+    return tags[0];
+  }
+
+  return '';
+});
+
+const createBlogQuery = () => {
+  const query = queryCollection('blog');
+
+  if (selectedTag.value) {
+    query.where('tags', 'LIKE', `%${selectedTag.value}%`);
+  }
+
+  return query;
+};
+
 const { data: posts } = await useAsyncData(
-  () => `blog-${route.query.tags || 'all'}-${route.query.page || 1}`,
-  () => {
-    const tagsQuery = route.query.tags || '';
-
-    const query = queryCollection('blog')
-      .limit(PER_PAGE)
-      .skip(((Number(route.query.page) || 1) - 1) * PER_PAGE);
-
-    if (tagsQuery) {
-      query.where('tags', 'LIKE', `%${tagsQuery}%`);
-    }
-
-    return query.all();
-  },
+  () => `blog-${selectedTag.value || 'all'}-${route.query.page || 1}`,
+  () => createBlogQuery()
+    .limit(PER_PAGE)
+    .skip(((Number(route.query.page) || 1) - 1) * PER_PAGE)
+    .all(),
   { watch: [() => route.query] },
 );
 
@@ -29,17 +44,21 @@ const TAGS = [
   'Negócios',
 ];
 
-const currentTag = computed(() => route.query.tags || 'Todos os temas');
+const { t } = useI18n();
+
+const currentTag = computed(() => selectedTag.value);
 
 const tagsList = computed(() => {
   const list = [{
-    title: 'Todos os temas',
+    title: t('all_topics'),
+    value: '',
     route: { name: 'blog' },
   }];
 
   TAGS.forEach((tag) => {
     list.push({
       title: tag,
+      value: tag,
       route: {
         name: 'blog',
         query: {
@@ -54,9 +73,9 @@ const tagsList = computed(() => {
 
 
 const { data: postCount } = await useAsyncData(
-  () => `blog-count-${route.query.tags || 'all'}-${route.query.page || 1}`,
-  () => queryCollection('blog').count(),
-  { watch: [() => route.params] },
+  () => `blog-count-${selectedTag.value || 'all'}`,
+  () => createBlogQuery().count(),
+  { watch: [() => route.query] },
 );
 
 
@@ -66,10 +85,13 @@ const currentPage = computed(() => Number(route.query.page) || 1);
 const hasPagination = computed(() => totalPages.value && totalPages.value > 1);
 
 const setPage = (pageNumber: number) => {
-  navigateTo({ query: { ...route.query, page: pageNumber } });
+  navigateTo({
+    query: {
+      ...route.query,
+      page: pageNumber > 1 ? pageNumber : undefined,
+    },
+  });
 };
-
-const { t } = useI18n();
 
 const title = computed(() => t('title'));
 const description = computed(() => t('description'));
@@ -87,11 +109,11 @@ useHead({ title: title.value, meta: meta.value });
 
 const breadcrumbs = computed(() => [
   {
-    title: t('main_page'),
+    label: t('main_page'),
     to: { name: 'index' },
   },
   {
-    title: t('blog'),
+    label: t('blog'),
   },
 ]);
 </script>
@@ -101,151 +123,104 @@ const breadcrumbs = computed(() => [
   "en": {
     "main_page": "Home",
     "blog": "Blog",
+    "all_topics": "All topics",
     "title": "Ambo Market Blog – Expert Tips, Guides & Market Insights from Angola",
     "h1": "Ambo Market Blog",
     "description": "Stay ahead with expert tips, step-by-step guides, and the latest market trends on the Ambo Market blog. Whether you're buying or selling in Angola, our blog helps you succeed!",
+    "not_found_title": "No articles found",
     "not_found": "Sorry, no articles match your search. Try another topic!"
   },
   "pt": {
     "main_page": "Página Inicial",
     "blog": "Blog",
+    "all_topics": "Todos os temas",
     "title": "Blog da Ambo Market – Dicas, Guias e Insights do Mercado Angolano",
     "h1": "Blog da Ambo Market",
     "description": "Fique à frente com dicas de especialistas, guias passo a passo e as últimas tendências do mercado no blog da Ambo Market. Se você compra ou vende em Angola, nosso blog é seu parceiro para o sucesso!",
+    "not_found_title": "Nenhum artigo encontrado",
     "not_found": "Desculpe, nenhum artigo encontrado para essa pesquisa. Tente outro tema!"
   }
 }
 </i18n>
 
 <template>
-  <div :class="$style.root">
-    <div :class="$style.content">
-      <div :class="$style.main">
-        <UIBreadcrumbs :items="breadcrumbs" />
+  <section class="space-y-6 py-4 sm:py-8">
+    <UBreadcrumb :items="breadcrumbs" />
 
-        <h1
-          :class="$style.title"
-          v-text="t('h1')"
-        />
+    <div class="space-y-3">
+      <h1
+        class="text-3xl font-bold text-highlighted sm:text-4xl"
+        v-text="t('h1')"
+      />
 
-        <ul :class="$style.tags">
-          <li
-            v-for="tag in tagsList"
-            :key="tag.title"
-          >
-            <BlogTag
-              :value="tag.title"
-              :route="tag.route"
-              :isActive="tag.title === currentTag"
-            />
-          </li>
-        </ul>
-
-        <ul
-          v-if="posts?.length"
-          :class="$style.list"
-        >
-          <li
-            v-for="post in posts"
-            :key="post.path"
-            :class="$style.post"
-          >
-            <BlogCard
-              :route="post.path"
-              :title="post.title"
-              :img="post?.image"
-              :date="post.date"
-              :tags="post.tags"
-            />
-          </li>
-        </ul>
-
-        <div
-          v-else
-          v-text="t('not_found')"
-        />
-
-        <UIPagination
-          v-if="hasPagination"
-          :view="3"
-          :value="currentPage"
-          :max="totalPages"
-          :class="$style.pagination"
-          @input="setPage"
-        />
-      </div>
-
-      <div :class="$style.left" />
+      <p
+        class="max-w-3xl text-base leading-7 text-muted"
+        v-text="t('description')"
+      />
     </div>
-  </div>
+
+    <div class="flex flex-wrap gap-2">
+      <UButton
+        v-for="tag in tagsList"
+        :key="tag.title"
+        :to="tag.route"
+        :label="tag.title"
+        color="neutral"
+        :variant="tag.value === currentTag ? 'solid' : 'soft'"
+        size="sm"
+      />
+    </div>
+
+    <div
+      v-if="posts?.length"
+      class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+    >
+      <UBlogPost
+        v-for="post in posts"
+        :key="post.path"
+        :to="post.path"
+        :title="post.title"
+        :description="post.description"
+        :image="post.image"
+        variant="outline"
+      >
+        <template
+          v-if="post.tags?.length"
+          #authors
+        >
+          <div class="flex flex-wrap gap-1.5">
+            <UBadge
+              v-for="tag in post.tags"
+              :key="tag"
+              :label="tag"
+              color="neutral"
+              variant="soft"
+            />
+          </div>
+        </template>
+      </UBlogPost>
+    </div>
+
+    <UEmpty
+      v-else
+      icon="i-lucide-search-x"
+      :title="t('not_found_title')"
+      :description="t('not_found')"
+      variant="naked"
+      size="lg"
+    />
+
+    <div
+      v-if="hasPagination"
+      class="flex justify-center"
+    >
+      <UPagination
+        :page="currentPage"
+        :total="postCount || 0"
+        :itemsPerPage="PER_PAGE"
+        size="sm"
+        @update:page="setPage"
+      />
+    </div>
+  </section>
 </template>
-
-<style lang="scss" module>
-.root {
-  @include ui-simple-container;
-
-  padding: 24px 20px;
-}
-
-.title {
-  @include ui-typo-32-bold;
-
-  margin-top: 18px;
-  margin-bottom: 24px;
-}
-
-.content {
-  display: flex;
-}
-
-.pagination {
-  margin-top: 20px;
-}
-
-.left {
-  position: relative;
-  flex: 280px 0;
-  max-width: 280px;
-  margin-left: 20px;
-
-  @include md {
-    display: none;
-  }
-}
-
-.filter {
-  position: sticky;
-  top: (64px + 10px);
-  margin: 6px 0;
-}
-
-.main {
-  flex: 1 1;
-  min-width: 0;
-}
-
-.list {
-  @include ui-row;
-}
-
-.post {
-  @include ui-col-ready;
-  @include ui-col-vertical-gutter;
-  @include ui-col(4);
-
-  @include md {
-    @include ui-col(6);
-  }
-
-  @include sm {
-    @include ui-col(12);
-  }
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-</style>
