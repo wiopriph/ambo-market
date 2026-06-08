@@ -58,7 +58,7 @@ const saveProfile = handleSubmit.withControlled(async () => {
     const formattedPhone = phone.value.replace(/\s+/g, '');
 
     await updateProfile({
-      display_name: name.value.trim(),
+      'display_name': name.value.trim(),
       phone: formattedPhone,
     });
   } catch (error: any) {
@@ -72,112 +72,96 @@ const saveProfile = handleSubmit.withControlled(async () => {
 <i18n lang="json">
 {
   "en": {
-    "your_phone_number": "Contact details",
-    "your_name": "Your name",
-    "description": "Before you publish your first ad, please tell us how buyers can contact you. Your name and phone number will be shown to other users next to your ads.",
+    "title": "Add contact details",
+    "description": "Buyers need your name and phone number before you can publish an ad.",
     "phone_number": "Phone number",
+    "phone_placeholder": "+244 900 000 000",
     "name": "Name",
+    "name_placeholder": "Your name",
     "save": "Save and continue"
   },
   "pt": {
-    "your_phone_number": "Dados de contacto",
-    "your_name": "Seu nome",
-    "description": "Antes de publicar o seu primeiro anúncio, diga-nos como os compradores podem falar com você. O seu nome e número de telefone serão mostrados aos outros utilizadores junto aos seus anúncios.",
+    "title": "Adicionar dados de contacto",
+    "description": "Os compradores precisam do seu nome e número de telefone antes de você publicar um anúncio.",
     "phone_number": "Número de telefone",
+    "phone_placeholder": "+244 900 000 000",
     "name": "Nome",
+    "name_placeholder": "Seu nome",
     "save": "Guardar e continuar"
   }
 }
 </i18n>
 
-
 <template>
-  <div :class="$style.root">
-    <h2
-      :class="$style.title"
-      v-text="t('your_phone_number')"
-    />
+  <div class="space-y-5">
+    <div class="space-y-2">
+      <h2
+        class="text-xl font-semibold text-highlighted"
+        v-text="t('title')"
+      />
 
-    <p
-      :class="$style.description"
-      v-text="t('description')"
-    />
+      <p
+        class="text-sm leading-6 text-muted"
+        v-text="t('description')"
+      />
+    </div>
 
     <form
-      :class="$style.list"
+      class="space-y-4"
       @submit.prevent="saveProfile"
     >
-      <div :class="$style.inputWrapper">
-        <UIInput
+      <UFormField
+        :label="t('name')"
+        :error="errors.name"
+        name="name"
+        required
+      >
+        <UInput
           v-model="name"
-          :label="t('your_name')"
-          :error="errors.name"
           name="name"
           type="text"
+          autocomplete="name"
+          :placeholder="t('name_placeholder')"
+          size="lg"
+          class="w-full"
         />
+      </UFormField>
 
-        <UIError :text="errors.name" />
-      </div>
-
-      <div :class="$style.inputWrapper">
-        <UIInputPhone
+      <UFormField
+        :label="t('phone_number')"
+        :error="errors.phone"
+        name="phone"
+        required
+      >
+        <UInput
           v-model="phone"
           v-maska="'+244 ### ### ###'"
-          :label="t('phone_number')"
-          :placeholder="t('phone_number')"
-          :error="errors.phone"
           name="phone"
+          type="tel"
+          autocomplete="tel-national"
+          inputmode="tel"
+          :placeholder="t('phone_placeholder')"
+          size="lg"
+          class="w-full"
         />
+      </UFormField>
 
-        <UIError :text="errors.phone" />
-      </div>
+      <UAlert
+        v-if="backendError"
+        color="error"
+        variant="soft"
+        :description="backendError"
+      />
+
+      <UButton
+        type="submit"
+        color="primary"
+        size="lg"
+        block
+        :loading="isLoading"
+      >
+        {{ t('save') }}
+      </UButton>
     </form>
-
-    <UIError :text="backendError" />
-
-    <UIButton
-      :text="t('save')"
-      :isLoading="isLoading"
-      :class="$style.button"
-      @click="saveProfile"
-    />
   </div>
 </template>
-
-<style lang="scss" module>
-.root {
-
-  @include exclude-md {
-    @include ui-round-content-blocks;
-
-    background-color: $ui-color-white;
-    padding: 24px 24px 20px;
-    box-shadow: $box-shadow;
-  }
-}
-
-.title {
-  @include ui-typo-24-bold;
-}
-
-.description {
-  margin-top: 24px;
-  color: $ui-color-text-main;
-}
-
-.list {
-  margin-top: 20px;
-}
-
-.inputWrapper {
-
-  & + & {
-    margin-top: 16px;
-  }
-}
-
-.button {
-  width: 100%;
-  margin-top: 30px;
-}
-</style>
