@@ -4,7 +4,6 @@ import { object, array, string } from 'yup';
 import { useUser } from '~/composables/useUser';
 import { CATEGORIES } from '~/constants/categories';
 import { CITIES } from '~/constants/cities';
-import type { Option } from '~/components/UI/Select/types';
 
 
 definePageMeta({ middleware: 'auth' });
@@ -19,6 +18,24 @@ type Image = {
   base64: string;
   mimeType: string;
 };
+
+type SelectItem = {
+  label: string;
+  value: string;
+};
+
+const title = computed(() => t('meta_title'));
+const descriptionMeta = computed(() => t('meta_description'));
+
+const meta = computed(() => [
+  { key: 'og:title', property: 'og:title', content: title.value },
+  { key: 'twitter:title', property: 'twitter:title', content: title.value },
+  { key: 'description', name: 'description', content: descriptionMeta.value },
+  { key: 'og:description', property: 'og:description', content: descriptionMeta.value },
+  { key: 'twitter:description', property: 'twitter:description', content: descriptionMeta.value },
+]);
+
+useHead({ title: title.value, meta: meta.value });
 
 const {
   errors,
@@ -87,8 +104,8 @@ const { value: description } = useField<string>('description');
 const { value: images } = useField<Image[]>('images');
 const { value: cityId } = useField<string>('cityId');
 
-const toOptions = (arr?: Array<{ id: string; key: string }>): Option[] =>
-  (arr ?? []).map(({ id, key }) => ({ value: id, text: t(key) }));
+const toOptions = (arr?: Array<{ id: string; key: string }>): SelectItem[] =>
+  (arr ?? []).map(({ id, key }) => ({ value: id, label: t(key) }));
 
 
 const currentCategory = computed(() => CATEGORIES.find(c => c.id === category.value));
@@ -96,27 +113,18 @@ const currentSubcategory = computed(() =>
   currentCategory.value?.subcategories?.find(sc => sc.id === subcategory.value) ?? null,
 );
 
-const categoriesItems = computed<Option[]>(() => toOptions(CATEGORIES));
-const subcategoriesItems = computed<Option[]>(() => toOptions(currentCategory.value?.subcategories));
-const brandsItems = computed<Option[]>(() => toOptions(currentSubcategory.value?.brands));
-const citiesItems = computed<Option[]>(() => CITIES
+const categoriesItems = computed<SelectItem[]>(() => toOptions(CATEGORIES));
+const subcategoriesItems = computed<SelectItem[]>(() => toOptions(currentCategory.value?.subcategories));
+const brandsItems = computed<SelectItem[]>(() => toOptions(currentSubcategory.value?.brands));
+const citiesItems = computed<SelectItem[]>(() => CITIES
   .filter(city => city.id !== 'all')
-  .map(city => ({ value: city.id, text: city.name })));
-
-
-const hasPhotos = computed(() => images.value.length > 0);
-
-const availableImages = computed(() => {
-  const MAX_IMAGES = 4;
-
-  return Math.max(0, MAX_IMAGES - images.value.length);
-});
+  .map(city => ({ value: city.id, label: city.name })));
 
 const deletePhoto = (index: number) => {
   images.value.splice(index, 1);
 };
 
-const fileInput = ref(null);
+const fileInput = ref<HTMLInputElement | null>(null);
 
 const handleFileUpload = (event: Event) => {
   const input = event.target as HTMLInputElement;
@@ -138,28 +146,21 @@ const handleFileUpload = (event: Event) => {
     };
 
     reader.readAsDataURL(file);
-
-    fileInput.value = null;
   });
+
+  input.value = '';
 };
 
 const loadFile = () => {
   fileInput.value?.click();
 };
 
-const progress = computed(() => [
-  { active: !!cityId.value, label: t('city') },
-  { active: !!category.value, label: t('category') },
-  { active: !!productName.value, label: t('product_name') },
-  { active: !!price.value, label: t('price') },
-  { active: !!description.value, label: t('description') },
-  { active: hasPhotos.value, label: t('photos') },
-]);
-
 const clearFields = () => {
   resetForm({
     values: {
       category: '',
+      subcategory: '',
+      brand: '',
       productName: '',
       price: '',
       description: '',
@@ -237,359 +238,313 @@ watch(subcategory, () => {
 <i18n>
 {
   "en": {
+    "meta_title": "Post a free ad - Ambo Market",
+    "meta_description": "Create a free classified ad on Ambo Market. Add the city, category, price, description and photos in a few simple steps.",
+    "h1": "Post an ad",
+    "intro": "Fill in the details, add photos, and publish your listing.",
     "category": "Category",
     "subcategory": "Subcategory",
     "brand": "Brand",
     "select": "Select",
     "product_name": "Product name",
+    "product_name_placeholder": "Example: iPhone 13 Pro 128 GB",
     "product_name_length": "The name must not exceed 50 characters.",
     "price": "Price",
+    "price_placeholder": "Enter the price",
     "description": "Description",
+    "description_placeholder": "Add condition, accessories, delivery options and other useful details.",
     "photos": "Photos",
     "photos_notice": {
-      "first": "The first photo will be displayed in search results, choose the most suitable one.",
-      "second": "You can upload up to four photos in JPG or PNG format."
+      "first": "The first photo will be displayed in search results.",
+      "second": "Use clear JPG or PNG photos."
     },
-    "add_photo": "Add a photo",
+    "add_photo": "Add photos",
+    "remove_photo": "Remove photo",
     "city": "City",
     "select_city": "Select a city",
-    "place_ad": "Place Ad"
+    "place_ad": "Place ad",
+    "clear_form": "Clear form",
+    "api_error_title": "Could not create the ad"
   },
   "pt": {
+    "meta_title": "Publicar anúncio grátis - Ambo Market",
+    "meta_description": "Crie um anúncio classificado grátis na Ambo Market. Adicione cidade, categoria, preço, descrição e fotos em poucos passos.",
+    "h1": "Publicar anúncio",
+    "intro": "Preencha os detalhes, adicione fotos e publique o anúncio.",
     "category": "Categoria",
     "subcategory": "Subcategoria",
     "brand": "Marca",
     "select": "Selecione",
     "product_name": "Nome do produto",
+    "product_name_placeholder": "Exemplo: iPhone 13 Pro 128 GB",
     "product_name_length": "O nome não deve exceder os 50 caracteres.",
     "price": "Preço",
+    "price_placeholder": "Digite o preço",
     "description": "Descrição",
+    "description_placeholder": "Adicione estado, acessórios, opções de entrega e outros detalhes úteis.",
     "photos": "Fotos",
     "photos_notice": {
-      "first": "A primeira foto será exibida nos resultados da pesquisa, escolha a mais adequada.",
-      "second": "Você pode fazer upload de até 4 fotos no formato JPG ou PNG."
+      "first": "A primeira foto será exibida nos resultados da pesquisa.",
+      "second": "Use fotos claras em JPG ou PNG."
     },
-    "add_photo": "Adicionar foto",
+    "add_photo": "Adicionar fotos",
+    "remove_photo": "Remover foto",
     "city": "Cidade",
     "select_city": "Selecione uma cidade",
-    "place_ad": "Publicar Anúncio"
+    "place_ad": "Publicar anúncio",
+    "clear_form": "Limpar formulário",
+    "api_error_title": "Não foi possível criar o anúncio"
   }
 }
 </i18n>
 
 <template>
-  <div :class="$style.root">
-    <div :class="$style.content">
-      <div :class="$style.main">
-        <LazyUserPhone v-if="needPhoneNumber" />
+  <section class="space-y-6 py-4 sm:py-8">
+    <div class="space-y-3">
+      <h1
+        class="text-3xl font-bold text-highlighted sm:text-4xl"
+        v-text="t('h1')"
+      />
 
-        <form
-          v-else
-          :class="$style.form"
-          @submit.prevent="createPost"
-        >
-          <UILineDescription
-            :title="t('city')"
-            :class="$style.line"
-            requiredTitle
-            boldTitle
-          >
-            <div>
-              <UISelect
-                v-model="cityId"
-                :options="citiesItems"
-                :placeholder="t('select_city')"
-                :error="errors.cityId"
-                isRequired
-                name="city"
-              />
-
-              <UIError :text="errors.cityId" />
-            </div>
-          </UILineDescription>
-
-
-          <UILineDescription
-            :title="t('category')"
-            :class="$style.line"
-            requiredTitle
-            boldTitle
-          >
-            <div>
-              <UISelect
-                v-model="category"
-                :options="categoriesItems"
-                :placeholder="t('select')"
-                :error="errors.category"
-                isRequired
-                name="category"
-              />
-
-              <UIError :text="errors.category" />
-            </div>
-          </UILineDescription>
-
-          <UILineDescription
-            v-if="subcategoriesItems.length"
-            :title="t('subcategory')"
-            :class="$style.line"
-            requiredTitle
-            boldTitle
-          >
-            <div>
-              <UISelect
-                v-model="subcategory"
-                :options="subcategoriesItems"
-                :placeholder="t('select')"
-                :error="errors.subcategory"
-                isRequired
-                name="subcategory"
-              />
-
-              <UIError :text="errors.subcategory" />
-            </div>
-          </UILineDescription>
-
-          <UILineDescription
-            v-if="brandsItems.length"
-            :title="t('brand')"
-            :class="$style.line"
-            requiredTitle
-            boldTitle
-          >
-            <div>
-              <UISelect
-                v-model="brand"
-                :options="brandsItems"
-                :placeholder="t('select')"
-                :error="errors.brand"
-                isRequired
-                name="brand"
-              />
-
-              <UIError :text="errors.brand" />
-            </div>
-          </UILineDescription>
-
-          <UILineDescription
-            :title="t('product_name')"
-            :class="$style.line"
-            requiredTitle
-            boldTitle
-          >
-            <div>
-              <UIInput
-                v-model="productName"
-                :error="errors.productName"
-                isRequired
-                name="productName"
-                type="text"
-              />
-
-              <UIError :text="errors.productName" />
-
-              <p
-                v-if="!errors.productName"
-                :class="$style.notice"
-                v-text="t('product_name_length')"
-              />
-            </div>
-          </UILineDescription>
-
-          <UILineDescription
-            :title="t('price')"
-            :class="$style.line"
-            requiredTitle
-            boldTitle
-          >
-            <div>
-              <UIInput
-                v-model="price"
-                :error="errors.price"
-                isRequired
-                name="price"
-                type="number"
-              />
-
-              <UIError :text="errors.price" />
-            </div>
-          </UILineDescription>
-
-          <UILineDescription
-            :title="t('description')"
-            :class="$style.line"
-            requiredTitle
-            boldTitle
-          >
-            <div>
-              <UIInputTextArea
-                v-model="description"
-                :error="errors.description"
-                isRequired
-                name="text"
-              />
-
-              <UIError :text="errors.description" />
-            </div>
-          </UILineDescription>
-
-          <UILineDescription
-            :title="t('photos')"
-            :class="$style.line"
-            requiredTitle
-            boldTitle
-          >
-            <div>
-              <input
-                v-show="false"
-                ref="fileInput"
-                accept="image/jpg,image/jpeg,image/png,image/bmp"
-                type="file"
-                multiple
-                @change="handleFileUpload"
-              >
-
-              <ul :class="$style.imagesList">
-                <li
-                  v-for="(image, index) in images"
-                  :key="`product_image_${index}`"
-                  :class="$style.imageItem"
-                >
-                  <ProductUploadPhoto
-                    :image="image.base64"
-                    @delete="deletePhoto(index)"
-                  />
-                </li>
-
-                <li
-                  v-for="(_, index) of availableImages"
-                  :key="`available_${index}`"
-                  :class="$style.imageItem"
-                  @click="loadFile"
-                >
-                  <ProductUploadPhoto />
-                </li>
-              </ul>
-
-              <div :class="$style.notice">
-                <p v-text="t('photos_notice.first')" />
-
-                <p v-text="t('photos_notice.second')" />
-              </div>
-
-              <UIError :text="errors.images" />
-            </div>
-          </UILineDescription>
-
-          <UIError
-            v-if="hasAPIError"
-            :text="apiErrorMessage"
-          />
-
-          <UILineDescription
-            :class="$style.line"
-          >
-            <UIButton
-              :text="t('place_ad')"
-              :isLoading="isLoading"
-              :class="$style.placeButton"
-              @click="createPost"
-            />
-          </UILineDescription>
-        </form>
-      </div>
-
-      <div :class="$style.right">
-        <UIProgressBar
-          v-if="!needPhoneNumber"
-          :list="progress"
-          :class="$style.progress"
-        />
-      </div>
+      <p
+        class="max-w-3xl text-base leading-7 text-muted"
+        v-text="t('intro')"
+      />
     </div>
-  </div>
+
+    <UCard v-if="needPhoneNumber">
+      <LazyUserPhone />
+    </UCard>
+
+    <form
+      v-else
+      class="max-w-3xl space-y-5"
+      @submit.prevent="createPost"
+    >
+      <UCard>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <UFormField
+            :label="t('city')"
+            :error="errors.cityId"
+            name="city"
+            required
+          >
+            <USelect
+              v-model="cityId"
+              :items="citiesItems"
+              valueKey="value"
+              labelKey="label"
+              :placeholder="t('select_city')"
+              size="lg"
+              class="w-full"
+            />
+          </UFormField>
+
+          <UFormField
+            :label="t('category')"
+            :error="errors.category"
+            name="category"
+            required
+          >
+            <USelect
+              v-model="category"
+              :items="categoriesItems"
+              valueKey="value"
+              labelKey="label"
+              :placeholder="t('select')"
+              size="lg"
+              class="w-full"
+            />
+          </UFormField>
+
+          <UFormField
+            v-if="subcategoriesItems.length"
+            :label="t('subcategory')"
+            :error="errors.subcategory"
+            name="subcategory"
+            required
+          >
+            <USelect
+              v-model="subcategory"
+              :items="subcategoriesItems"
+              valueKey="value"
+              labelKey="label"
+              :placeholder="t('select')"
+              size="lg"
+              class="w-full"
+            />
+          </UFormField>
+
+          <UFormField
+            v-if="brandsItems.length"
+            :label="t('brand')"
+            :error="errors.brand"
+            name="brand"
+            required
+          >
+            <USelect
+              v-model="brand"
+              :items="brandsItems"
+              valueKey="value"
+              labelKey="label"
+              :placeholder="t('select')"
+              size="lg"
+              class="w-full"
+            />
+          </UFormField>
+
+          <UFormField
+            :label="t('product_name')"
+            :help="t('product_name_length')"
+            :error="errors.productName"
+            name="productName"
+            required
+            class="sm:col-span-2"
+          >
+            <UInput
+              v-model="productName"
+              name="productName"
+              type="text"
+              :placeholder="t('product_name_placeholder')"
+              maxlength="50"
+              size="lg"
+              class="w-full"
+            />
+          </UFormField>
+
+          <UFormField
+            :label="t('price')"
+            :error="errors.price"
+            name="price"
+            required
+          >
+            <UInput
+              v-model="price"
+              name="price"
+              type="number"
+              min="0"
+              inputmode="decimal"
+              :placeholder="t('price_placeholder')"
+              size="lg"
+              class="w-full"
+            />
+          </UFormField>
+
+          <UFormField
+            :label="t('description')"
+            :error="errors.description"
+            name="description"
+            required
+            class="sm:col-span-2"
+          >
+            <UTextarea
+              v-model="description"
+              name="description"
+              :placeholder="t('description_placeholder')"
+              :rows="5"
+              :maxrows="10"
+              autoresize
+              size="lg"
+              class="w-full"
+            />
+          </UFormField>
+
+          <UFormField
+            :label="t('photos')"
+            :error="errors.images"
+            name="images"
+            required
+            class="sm:col-span-2"
+          >
+            <input
+              ref="fileInput"
+              class="hidden"
+              accept="image/jpg,image/jpeg,image/png,image/bmp"
+              type="file"
+              multiple
+              @change="handleFileUpload"
+            >
+
+            <div
+              v-if="images.length"
+              class="mb-3 grid grid-cols-2 gap-3 sm:grid-cols-4"
+            >
+              <div
+                v-for="(image, index) in images"
+                :key="`product_image_${index}`"
+                class="space-y-2"
+              >
+                <div class="aspect-square overflow-hidden rounded-lg border border-default bg-muted">
+                  <img
+                    :src="image.base64"
+                    :alt="`${t('photos')} ${index + 1}`"
+                    class="size-full object-cover"
+                  >
+                </div>
+
+                <UButton
+                  type="button"
+                  color="neutral"
+                  variant="ghost"
+                  size="xs"
+                  block
+                  @click="deletePhoto(index)"
+                >
+                  {{ t('remove_photo') }}
+                </UButton>
+              </div>
+            </div>
+
+            <UButton
+              type="button"
+              color="neutral"
+              variant="soft"
+              size="lg"
+              @click="loadFile"
+            >
+              {{ t('add_photo') }}
+            </UButton>
+
+            <div class="mt-3 space-y-1 text-sm leading-6 text-muted">
+              <p v-text="t('photos_notice.first')" />
+
+              <p v-text="t('photos_notice.second')" />
+            </div>
+          </UFormField>
+        </div>
+
+        <UAlert
+          v-if="hasAPIError"
+          color="error"
+          variant="soft"
+          :title="t('api_error_title')"
+          :description="apiErrorMessage"
+          class="mt-5"
+        />
+      </UCard>
+
+      <div class="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+        <UButton
+          type="button"
+          color="neutral"
+          variant="ghost"
+          size="lg"
+          class="justify-center"
+          @click="clearFields"
+        >
+          {{ t('clear_form') }}
+        </UButton>
+
+        <UButton
+          type="submit"
+          color="primary"
+          size="lg"
+          :loading="isLoading"
+          class="justify-center sm:min-w-48"
+        >
+          {{ t('place_ad') }}
+        </UButton>
+      </div>
+    </form>
+  </section>
 </template>
-
-<style lang="scss" module>
-.root {
-  @include ui-simple-container;
-
-  padding: 24px 20px;
-}
-
-.content {
-  display: flex;
-}
-
-.main {
-  flex: 1 1;
-  min-width: 0;
-}
-
-.right {
-  @include md {
-    display: none;
-  }
-
-  position: relative;
-  flex: 0 300px;
-  max-width: 300px;
-  margin-left: 10px;
-}
-
-.form {
-
-  @include exclude-md {
-    @include ui-round-content-blocks;
-
-    padding: 10px 20px;
-    background-color: $ui-color-white;
-    box-shadow: $box-shadow;
-  }
-}
-
-.line {
-
-  & + & {
-    border-top: 1px solid $ui-color-transparent;
-  }
-}
-
-.imagesList {
-  @include ui-row;
-
-  width: 100%;
-  height: 100%;
-}
-
-.imageItem {
-  @include ui-col-ready;
-  @include ui-col-vertical-gutter;
-
-  position: relative;
-
-  @include md {
-    @include ui-col(6);
-  }
-
-  @include exclude-md {
-    @include ui-col(3);
-  }
-}
-
-.notice {
-  @include ui-typo-12;
-
-  margin-top: 8px;
-  color: $ui-color-text-main;
-}
-
-.placeButton {
-  width: 100%;
-}
-
-.progress {
-  position: sticky;
-  top: (64px + 10px);
-}
-</style>
