@@ -5,8 +5,8 @@ import { CITIES } from '~/constants/cities';
 const { t } = useI18n();
 
 const title = computed(() => t('title'));
-
 const description = computed(() => t('description'));
+
 
 const meta = computed(() => [
   { key: 'og:title', property: 'og:title', content: title.value },
@@ -18,10 +18,13 @@ const meta = computed(() => [
 
 useHead({ title: title.value, meta: meta.value });
 
-
 const cities = computed(() => CITIES.map(city => ({
   id: city.id,
   name: city.name || t('everywhere'),
+  description: city.id === 'all' ?
+    t('all_city_description') :
+    t('city_description', { city: city.name }),
+  icon: city.id === 'all' ? 'i-lucide-map' : 'i-lucide-map-pin',
   route: {
     name: 'cityId',
     params: {
@@ -30,91 +33,75 @@ const cities = computed(() => CITIES.map(city => ({
   },
 })));
 
-const style = useCssModule();
-
-const getCityClassNames = (id: string) => ({
-  [style.link]: true,
-  [style.strong]: id === 'all',
-});
+const allCityRoute = computed(() => ({
+  name: 'cityId',
+  params: {
+    cityId: 'all',
+  },
+}));
 </script>
 
 <i18n lang="json">
 {
   "en": {
     "title": "All Cities - Ambo Market Free Classifieds Website",
-    "description": "Discover all cities in Angola on the Ambo Market free classifieds website. Choose a classifieds board in your city!",
-    "all": "All Cities"
+    "h1": "Choose a city",
+    "description": "Find classifieds across Angola or jump straight to listings near you.",
+    "everywhere": "Everywhere",
+    "all_city_description": "See listings from every city on Ambo Market.",
+    "city_description": "Browse classifieds in {city}."
   },
   "pt": {
     "title": "Todas as Cidades - Site de Classificados Grátis Ambo Market",
-    "description": "Descubra todas as cidades em Angola no site de classificados grátis Ambo Market. Escolha um quadro de classificados em sua cidade!",
-    "all": "Todas as Cidades"
+    "h1": "Escolha uma cidade",
+    "description": "Encontre classificados em Angola ou vá direto para anúncios perto de você.",
+    "everywhere": "Em todos os lugares",
+    "all_city_description": "Veja anúncios de todas as cidades na Ambo Market.",
+    "city_description": "Veja classificados em {city}."
   }
 }
 </i18n>
 
 <template>
-  <div :class="$style.root">
-    <h1
-      :class="$style.title"
-      v-text="t('all')"
-    />
+  <section class="space-y-6 py-4 sm:py-8">
+    <div class="space-y-3">
+      <h1
+        class="text-3xl font-bold text-highlighted sm:text-4xl"
+        v-text="t('h1')"
+      />
 
-    <ul :class="$style.list">
-      <li
-        v-for="(city, index) in cities"
-        :key="`${city.id}_${index}`"
-        :class="$style.item"
+      <p
+        class="max-w-3xl text-base leading-7 text-muted"
+        v-text="t('description')"
+      />
+    </div>
+
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <ULink
+        v-for="city in cities"
+        :key="city.id"
+        :to="city.route"
+        class="block rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-primary"
       >
-        <NuxtLink
-          :to="city.route"
-          :class="getCityClassNames(city.id)"
-        >
-          {{ city.name }}
-        </NuxtLink>
-      </li>
-    </ul>
-  </div>
+        <UCard class="h-full transition hover:border-primary hover:bg-muted/30">
+          <div class="flex items-start gap-3">
+            <UIcon
+              :name="city.icon"
+              class="mt-1 size-5 shrink-0 text-primary"
+            />
+
+            <div class="min-w-0 space-y-1">
+              <p class="font-semibold text-highlighted">
+                {{ city.name }}
+              </p>
+
+              <p class="text-sm leading-6 text-muted">
+                {{ city.description }}
+              </p>
+            </div>
+          </div>
+        </UCard>
+      </ULink>
+    </div>
+  </section>
 </template>
-
-<style lang="scss" module>
-.root {
-  @include ui-simple-container;
-
-  padding: 24px 20px;
-}
-
-.title {
-  margin-bottom: 36px;
-}
-
-.list {
-  list-style: none;
-}
-
-.item {
-  @include exclude-sm {
-    margin-top: 24px;
-  }
-
-  @include sm {
-    margin-top: 16px;
-  }
-}
-
-.link {
-  text-decoration: none;
-
-  @include exclude-sm {
-    @include ui-typo-24-medium;
-  }
-
-  @include sm {
-    @include ui-typo-16-medium;
-  }
-}
-
-.strong {
-  font-weight: $font-bold-weight;
-}
-</style>
