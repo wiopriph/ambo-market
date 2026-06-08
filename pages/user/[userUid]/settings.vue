@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { useUser } from '~/composables/useUser';
+import { useField, useForm } from 'vee-validate';
+import { object, string } from 'yup';
+import { useUser, type ProfileImageInput, type ProfileUpdateInput } from '~/composables/useUser';
+import { PHONE_REG_EXP } from '~/constants/reg-exps';
 
 
 definePageMeta({
@@ -23,139 +26,305 @@ definePageMeta({
 
 
 const { t } = useI18n();
+const { currentUser, updateProfile } = useUser();
 
-const { currentUser } = useUser();
+const {
+  errors,
+  handleSubmit,
+  setFieldValue,
+} = useForm({
+  initialValues: {
+    name: '',
+    phone: '',
+  },
+  validationSchema: object({
+    name: string()
+      .required(t('validation.required')),
+    phone: string()
+      .required(t('validation.required'))
+      .matches(PHONE_REG_EXP, t('validation.phone')),
+  }),
+});
 
+const { value: name } = useField<string>('name');
+const { value: phone } = useField<string>('phone');
 
-const isEditProfileModalVisible = ref(false);
+const photoFile = ref<File | null>(null);
+const photoInputRef = ref<HTMLInputElement | null>(null);
+const photoPreviewUrl = ref('');
+const uploadedPhoto = ref<ProfileImageInput | null>(null);
 
-function openEditProfileModal() {
-  isEditProfileModalVisible.value = true;
-}
+const formatPhone = (value: string) => {
+  let digits = value.replace(/\D/g, '');
 
-function hideEditProfileModal() {
-  isEditProfileModalVisible.value = false;
-}
+  if (!digits) {
+    return '';
+  }
 
+  if (digits.startsWith('244')) {
+    digits = digits.slice(3);
+  }
 
-const isEditPhoneModalVisible = ref(false);
+  digits = digits.slice(0, 9);
 
-function openEditPhoneModal() {
-  isEditPhoneModalVisible.value = true;
-}
+  const parts = [
+    digits.slice(0, 3),
+    digits.slice(3, 6),
+    digits.slice(6, 9),
+  ].filter(Boolean);
 
-function hideEditPhoneModal() {
-  isEditPhoneModalVisible.value = false;
-}
+  return ['+244', ...parts].join(' ');
+};
+
+const fileToImage = (file: File) => new Promise<ProfileImageInput>((resolve, reject) => {
+  const reader = new FileReader();
+
+  reader.onload = (event_) => {
+    resolve({
+      base64: event_.target?.result as string,
+      mimeType: file.type,
+    });
+  };
+
+  reader.onerror = () => reject(reader.error);
+  reader.readAsDataURL(file);
+});
+
+watch(
+  currentUser,
+  (user) => {
+    if (!user) {
+      return;
+    }
+
+    setFieldValue('name', user.name ?? '');
+    setFieldValue('phone', formatPhone(user.phone ?? ''));
+    photoPreviewUrl.value = user.photoURL ?? '';
+  },
+  { immediate: true },
+);
+
+watch(phone, (value) => {
+  const formattedPhone = formatPhone(value);
+
+  if (formattedPhone !== value) {
+    phone.value = formattedPhone;
+  }
+});
+
+watch(photoFile, async (file) => {
+  if (!file) {
+    uploadedPhoto.value = null;
+    photoPreviewUrl.value = currentUser.value?.photoURL ?? '';
+
+    return;
+  }
+
+  const image = await fileToImage(file);
+
+  uploadedPhoto.value = image;
+  photoPreviewUrl.value = image.base64;
+});
+
+const openPhotoDialog = () => {
+  photoInputRef.value?.click();
+};
+
+const selectPhoto = (event: Event) => {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0];
+
+  if (!file) {
+    return;
+  }
+
+  photoFile.value = file;
+  input.value = '';
+};
+
+const isLoading = ref(false);
+const backendError = ref('');
+
+const saveSettings = handleSubmit.withControlled(async () => {
+  if (isLoading.value) {
+    return;
+  }
+
+  isLoading.value = true;
+  backendError.value = '';
+
+  try {
+    const payload: ProfileUpdateInput = {
+      'display_name': name.value.trim(),
+      phone: phone.value.replace(/\s+/g, ''),
+    };
+
+    if (uploadedPhoto.value) {
+      payload.image = uploadedPhoto.value;
+    }
+
+    await updateProfile(payload);
+    photoFile.value = null;
+  } catch (error: any) {
+    backendError.value = error?.message || 'Error';
+  } finally {
+    isLoading.value = false;
+  }
+});
 </script>
 
 <i18n>
 {
   "en": {
-    "personal_data": "Personal data",
-    "profile": "Profile",
-    "enter_phone_number": "Enter a phone number for buyers to contact you",
-    "enter_email": "Enter your email",
-    "add": "Add"
+    "title": "Settings",
+    "description": "Edit the contact details buyers see next to your ads.",
+    "photo": "Photo",
+    "change_photo": "Change photo",
+    "name": "Name",
+    "name_placeholder": "Your name",
+    "phone_number": "Phone number",
+    "phone_placeholder": "+244 900 000 000",
+    "save": "Save changes",
+    "error_title": "Could not save settings"
   },
   "pt": {
-    "personal_data": "Dados pessoais",
-    "profile": "Perfil",
-    "enter_phone_number": "Digite o número de telefone para que os compradores possam entrar em contato com você",
-    "enter_email": "Digite seu email",
-    "add": "Adicionar"
+    "title": "Configurações",
+    "description": "Edite os dados de contacto que os compradores veem nos seus anúncios.",
+    "photo": "Foto",
+    "change_photo": "Alterar foto",
+    "name": "Nome",
+    "name_placeholder": "Seu nome",
+    "phone_number": "Número de telefone",
+    "phone_placeholder": "+244 900 000 000",
+    "save": "Guardar alterações",
+    "error_title": "Não foi possível guardar as configurações"
   }
 }
 </i18n>
 
 <template>
-  <div
+  <section
     v-if="currentUser"
-    :class="$style.root"
+    class="max-w-3xl space-y-6 py-4 sm:py-8"
   >
-    <div :class="$style.block">
-      <h2
-        :class="$style.title"
-        v-text="t('personal_data')"
+    <div class="space-y-3">
+      <h1
+        class="text-3xl font-bold text-highlighted sm:text-4xl"
+        v-text="t('title')"
       />
 
-      <ul :class="$style.list">
-        <li :class="$style.item">
-          <UserSettingsItem
-            :isFilled="!!(currentUser.name || currentUser.photoURL)"
-            :title="t('profile')"
-            @click="openEditProfileModal"
-          >
-            <UserProfile
-              :userId="currentUser.id"
-              :name="currentUser.name"
-              :photo="currentUser.photoURL"
-            />
-          </UserSettingsItem>
-
-          <LazyUserSettingsEditProfileModal
-            v-if="isEditProfileModalVisible"
-            :name="currentUser.name"
-            :photoUrl="currentUser.photoURL"
-            @close="hideEditProfileModal"
-          />
-        </li>
-
-        <li :class="$style.item">
-          <UserSettingsItem
-            :isFilled="!!currentUser.phone"
-            :title="t('phone_number')"
-            :placeholder="t('enter_phone_number')"
-            @click="openEditPhoneModal"
-          >
-            {{ currentUser.phone }}
-          </UserSettingsItem>
-
-          <LazyUserSettingsEditPhoneModal
-            v-if="isEditPhoneModalVisible"
-            :phone="currentUser.phone"
-            @close="hideEditPhoneModal"
-          />
-        </li>
-
-        <li :class="$style.item">
-          <UserSettingsItem
-            :isFilled="!!currentUser.email"
-            :title="'Email'"
-            :placeholder="t('enter_email')"
-            disabled
-          >
-            {{ currentUser.email }}
-          </UserSettingsItem>
-        </li>
-      </ul>
+      <p
+        class="max-w-2xl text-base leading-7 text-muted"
+        v-text="t('description')"
+      />
     </div>
-  </div>
+
+    <form
+      class="space-y-5"
+      @submit.prevent="saveSettings"
+    >
+      <UCard>
+        <div class="space-y-6">
+          <UFormField
+            name="photo"
+          >
+            <input
+              ref="photoInputRef"
+              class="hidden"
+              type="file"
+              accept="image/jpg,image/jpeg,image/png,image/bmp"
+              @change="selectPhoto"
+            >
+
+            <div class="flex justify-center">
+              <div class="relative">
+                <button
+                  type="button"
+                  :aria-label="t('change_photo')"
+                  class="block rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  @click="openPhotoDialog"
+                >
+                  <UAvatar
+                    :src="photoPreviewUrl || undefined"
+                    :alt="name || t('photo')"
+                    :text="name"
+                    size="3xl"
+                    class="size-28"
+                  />
+                </button>
+
+                <UButton
+                  type="button"
+                  color="primary"
+                  variant="solid"
+                  size="sm"
+                  icon="i-lucide-camera"
+                  :aria-label="t('change_photo')"
+                  class="absolute bottom-0 right-0 rounded-full shadow"
+                  @click="openPhotoDialog"
+                />
+              </div>
+            </div>
+          </UFormField>
+
+          <div class="space-y-4">
+            <UFormField
+              :label="t('name')"
+              :error="errors.name"
+              name="name"
+              required
+            >
+              <UInput
+                v-model="name"
+                name="name"
+                type="text"
+                autocomplete="name"
+                :placeholder="t('name_placeholder')"
+                size="lg"
+                class="w-full"
+              />
+            </UFormField>
+
+            <UFormField
+              :label="t('phone_number')"
+              :error="errors.phone"
+              name="phone"
+              required
+            >
+              <UInput
+                v-model="phone"
+                name="phone"
+                type="tel"
+                autocomplete="tel-national"
+                inputmode="tel"
+                :placeholder="t('phone_placeholder')"
+                size="lg"
+                class="w-full"
+              />
+            </UFormField>
+          </div>
+
+          <UAlert
+            v-if="backendError"
+            color="error"
+            variant="soft"
+            :title="t('error_title')"
+            :description="backendError"
+          />
+        </div>
+      </UCard>
+
+      <div>
+        <UButton
+          type="submit"
+          color="primary"
+          size="lg"
+          :loading="isLoading"
+          class="w-full justify-center"
+        >
+          {{ t('save') }}
+        </UButton>
+      </div>
+    </form>
+  </section>
 </template>
-
-<style lang="scss" module>
-.root {
-
-  @include exclude-md {
-    @include ui-round-content-blocks;
-    padding: 20px;
-    background-color: $ui-color-white;
-    box-shadow: $box-shadow;
-  }
-}
-
-.title {
-  @include ui-typo-24-bold;
-}
-
-.list {
-  margin-top: 20px;
-}
-
-.item {
-
-  &:not(:last-child) {
-    border-bottom: 1px solid $ui-color-transparent;
-  }
-}
-</style>
