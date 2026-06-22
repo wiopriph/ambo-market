@@ -430,25 +430,25 @@ const top3Post = computed(() => {
 </i18n>
 
 <template>
-  <div :class="$style.root">
-    <CategoryPills
-      :list="subcategories"
-      :class="$style.subcategories"
-    />
-
+  <div class="w-full max-w-[1280px] mx-auto px-5 py-6">
     <UIBreadcrumbs :items="breadcrumbs" />
 
     <h1
-      :class="$style.title"
+      class="text-3xl font-bold my-6"
       v-text="seo.h1"
     />
 
-    <div :class="$style.content">
-      <div :class="$style.left">
-        <FilterBlock :class="$style.filter" />
-      </div>
+    <CategoryPills
+      :list="subcategories"
+      class="mb-6"
+    />
 
-      <div :class="$style.main">
+    <div class="flex gap-5">
+      <aside class="hidden md:block w-[280px] shrink-0">
+        <FilterBlock class="sticky top-[74px]" />
+      </aside>
+
+      <div class="flex-1 min-w-0">
         <ProductList
           :list="posts?.posts"
           :isLoading="isLoading"
@@ -456,10 +456,9 @@ const top3Post = computed(() => {
 
         <UIPagination
           v-if="hasPagination"
-          :view="3"
           :value="page"
           :max="totalPages"
-          :class="$style.pagination"
+          class="mt-5"
           @input="setPage"
         />
 
@@ -475,52 +474,3 @@ const top3Post = computed(() => {
     </div>
   </div>
 </template>
-
-<style lang="scss" module>
-.root {
-  @include ui-simple-container;
-
-  padding: 24px 20px;
-}
-
-.title {
-  @include ui-typo-32-bold;
-
-  margin-bottom: 24px;
-}
-
-.subcategories {
-  margin-bottom: 24px;
-}
-
-.content {
-  margin-top: 14px; // 20 - 6
-  display: flex;
-}
-
-.left {
-  position: relative;
-  flex: 280px 0;
-  max-width: 280px;
-  margin-right: 20px;
-
-  @include md {
-    display: none;
-  }
-}
-
-.filter {
-  position: sticky;
-  top: (64px + 10px);
-  margin: 6px 0;
-}
-
-.main {
-  flex: 1 1;
-  min-width: 0;
-}
-
-.pagination {
-  margin-top: 20px;
-}
-</style>
