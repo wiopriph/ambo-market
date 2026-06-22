@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import type { RouteLocationRaw } from 'vue-router';
-import IconLocation from '~/assets/images/header/icon-location.svg?component';
 import formatCurrency from '~/utils/formatCurrency';
 import { POST_STATUSES } from '~/constants/post-statuses';
-import type { ProductApiResponse, User } from '~/types/product';
+import type { Post as ProductPost, ProductApiResponse, User } from '~/types/product';
 import { formatFullDate } from '~/utils/formatDate';
 import { useUser } from '~/composables/useUser';
 import { getPostRoute } from '~/utils/getPostRoute';
@@ -15,6 +14,12 @@ type Breadcrumb = {
   title: string;
   to?: RouteLocationRaw;
 };
+type CarouselApi = {
+  scrollTo: (index: number) => void;
+};
+type CarouselInstance = {
+  emblaApi?: CarouselApi | { value?: CarouselApi };
+};
 
 const props = withDefaults(defineProps<{
   breadcrumbDepth?: BreadcrumbDepth;
@@ -25,6 +30,8 @@ const props = withDefaults(defineProps<{
 const { pushEvent } = useAnalyticsEvent();
 
 const route = useRoute();
+const runtimeConfig = useRuntimeConfig();
+const toast = useToast();
 
 const postId = computed(() => `${route.params.productId}`);
 
@@ -76,10 +83,12 @@ if (error && error?.value) {
   throw createError(error?.value);
 }
 
-const { data: recommendedPosts } = await useAsyncData(
+const { data: recommendedPosts } = await useAsyncData<ProductPost[]>(
   () => `recommendedPosts-${route.params.productId}`,
   async () => {
-    const response = await $fetch<{ posts: [] }>(`/api/posts/${postId.value}/recommended`, { params: { limit: 4 } });
+    const response = await $fetch<{
+      posts: ProductPost[]
+    }>(`/api/posts/${postId.value}/recommended`, { params: { limit: 4 } });
 
     return response?.posts || [];
   },
@@ -113,6 +122,167 @@ const postCityName = computed(() => postLocation.value?.cityName);
 
 const formattedPrice = computed(() => formatCurrency(`${post.value?.price}`));
 const formattedDate = computed(() => post.value?.createdAt ? formatFullDate(post.value?.createdAt, locale.value) : '');
+const productImages = computed(() => {
+  const images = post.value?.images?.filter(Boolean) ?? [];
+
+  if (images.length) {
+    return images;
+  }
+
+  return post.value?.preview ? [post.value.preview] : [];
+});
+
+const carousel = ref<CarouselInstance | null>(null);
+const activeImageIndex = ref(0);
+const fallbackImage = '/blog-placeholder.png';
+const carouselSlides = computed(() => productImages.value.map((url, index) => ({
+  url,
+  index,
+  alt: `${post.value?.title || t('photos')} ${index + 1}`,
+})));
+const hasGalleryImages = computed(() => carouselSlides.value.length > 0);
+
+watch(carouselSlides, () => {
+  activeImageIndex.value = 0;
+});
+
+const setActiveImage = (index: number) => {
+  activeImageIndex.value = index;
+};
+
+const scrollCarouselTo = (index: number) => {
+  const emblaApi = carousel.value?.emblaApi;
+
+  if (!emblaApi) {
+    return;
+  }
+
+  if ('value' in emblaApi) {
+    emblaApi.value?.scrollTo(index);
+
+    return;
+  }
+
+  emblaApi.scrollTo(index);
+};
+
+const selectImage = (index: number) => {
+  // eslint-disable-next-line camelcase
+  pushEvent(CLICK_AD_PHOTO, { product_id: postId.value });
+
+  activeImageIndex.value = index;
+  scrollCarouselTo(index);
+};
+
+const breadcrumbItems = computed(() => breadcrumbsList.value.map((item) => ({
+  label: item.title,
+  to: item.to,
+})));
+
+const productDetails = computed(() => [
+  {
+    label: t('location'),
+    value: postCityName.value,
+    icon: 'i-lucide-map-pin',
+  },
+  {
+    label: t('category'),
+    value: postCategoryName.value,
+    icon: 'i-lucide-layout-grid',
+  },
+  {
+    label: t('subcategory'),
+    value: postSubcategoryName.value,
+    icon: 'i-lucide-list-tree',
+  },
+  {
+    label: t('brand'),
+    value: brandId.value ? postBrandName.value : '',
+    icon: 'i-lucide-tag',
+  },
+  {
+    label: t('posted'),
+    value: formattedDate.value,
+    icon: 'i-lucide-calendar-days',
+  },
+].filter((item) => item.value));
+
+const sellerDescription = computed(() => {
+  if (seller.value?.phone) {
+    return seller.value.phone;
+  }
+
+  return t('seller');
+});
+
+const sellerAvatar = computed(() => ({
+  src: seller.value?.photoURL,
+  alt: seller.value?.name,
+  text: seller.value?.name?.slice(0, 2).toUpperCase(),
+}));
+
+const phoneLink = computed(() => seller.value?.phone ? `tel:${seller.value.phone}` : undefined);
+const isPostOpen = computed(() => post.value?.status === POST_STATUSES.OPEN);
+const isPostUnavailable = computed(() => !isPostOpen.value);
+const statusLabel = computed(() => {
+  if (post.value?.status === POST_STATUSES.CLOSED) {
+    return t('status_closed');
+  }
+
+  if (post.value?.status === 'archived') {
+    return t('status_archived');
+  }
+
+  if (post.value?.status === POST_STATUSES.HOLD) {
+    return t('status_hold');
+  }
+
+  return t('status_open');
+});
+
+const statusColor = computed(() => {
+  if (post.value?.status === POST_STATUSES.HOLD) {
+    return 'warning';
+  }
+
+  return isPostOpen.value ? 'success' : 'neutral';
+});
+const shareUrl = computed(() => {
+  const baseUrl = runtimeConfig.public.appBaseUrl;
+
+  if (!baseUrl) {
+    return route.fullPath;
+  }
+
+  return new URL(route.fullPath, baseUrl).toString();
+});
+
+const encodedShareUrl = computed(() => encodeURIComponent(shareUrl.value));
+const encodedShareText = computed(() => encodeURIComponent(`${post.value?.title || ''} ${shareUrl.value}`.trim()));
+
+const copyShareLink = async () => {
+  if (!import.meta.client || !navigator.clipboard) {
+    return;
+  }
+
+  await navigator.clipboard.writeText(shareUrl.value);
+
+  toast.add({
+    title: t('link_copied'),
+    color: 'success',
+    icon: 'i-lucide-check',
+  });
+};
+
+const recommendedPostsList = computed(() => recommendedPosts.value ?? []);
+
+const getRecommendedPostTo = (product: ProductPost) => getPostRoute({
+  cityId: product.location?.cityId ?? 'all',
+  categoryId: product.categoryId,
+  subcategoryId: product.subcategoryId,
+  brandId: product.brandId,
+  productId: product.id,
+});
 
 const seo = computed(() => {
   const translationKey = postCityId.value && postCityName.value ? 'city' : 'everywhere';
@@ -241,35 +411,11 @@ const hasControlButtons = computed(() => post.value?.status === POST_STATUSES.OP
 
 const isClosePostModalVisible = ref(false);
 
-const showClosePostModal = () => {
-  isClosePostModalVisible.value = true;
-};
-
-const hideClosePostModal = () => {
-  isClosePostModalVisible.value = false;
-};
-
 const closePost = () => {
-  product.value.post.status = 'closed';
+  if (product.value?.post) {
+    product.value.post.status = POST_STATUSES.CLOSED;
+  }
 };
-
-
-const currentSlideIndex = ref(0);
-const isGalleryModalVisible = ref(false);
-
-const showGalleryModal = (index: number) => {
-  pushEvent(CLICK_AD_PHOTO, { product_id: postId.value });
-
-  currentSlideIndex.value = index;
-  isGalleryModalVisible.value = true;
-};
-
-const hideGalleryModal = () => {
-  isGalleryModalVisible.value = false;
-};
-
-
-const { isDesktopOrTablet } = useDevice();
 </script>
 
 <i18n lang="json">
@@ -282,6 +428,19 @@ const { isDesktopOrTablet } = useDevice();
     "posted": "Posted On",
     "share": "Share Listing",
     "related_listings": "Related Listings",
+    "seller": "Seller",
+    "subcategory": "Subcategory",
+    "brand": "Brand",
+    "photos": "Photos",
+    "details": "Details",
+    "call_seller": "Call seller",
+    "close_post": "Close ad",
+    "no_photo": "No photo",
+    "status_open": "Active",
+    "status_hold": "On hold",
+    "status_closed": "Closed",
+    "status_archived": "Archived",
+    "link_copied": "Link copied",
     "vehicles": {
       "city": {
         "title": "Buy {title} in {city} {'|'} Vehicles {'|'} Ambo Market",
@@ -391,6 +550,19 @@ const { isDesktopOrTablet } = useDevice();
     "posted": "Publicado em",
     "share": "Compartilhar anúncio",
     "related_listings": "Anúncios Relacionados",
+    "seller": "Vendedor",
+    "subcategory": "Subcategoria",
+    "brand": "Marca",
+    "photos": "Fotos",
+    "details": "Detalhes",
+    "call_seller": "Ligar ao vendedor",
+    "close_post": "Fechar anúncio",
+    "no_photo": "Sem foto",
+    "status_open": "Ativo",
+    "status_hold": "Em espera",
+    "status_closed": "Fechado",
+    "status_archived": "Arquivado",
+    "link_copied": "Link copiado",
     "vehicles": {
       "city": {
         "title": "Comprar {title} em {city} {'|'} Veículos {'|'} Ambo Market",
@@ -496,144 +668,330 @@ const { isDesktopOrTablet } = useDevice();
 </i18n>
 
 <template>
-  <div :class="$style.root">
-    <UIBreadcrumbs
-      v-if="isDesktopOrTablet"
-      :items="breadcrumbsList"
-      :class="$style.breadcrumbs"
+  <div class="space-y-5 pb-24 pt-4 sm:py-6 lg:pb-6">
+    <!-- Breadcrumbs -->
+    <UBreadcrumb
+      :items="breadcrumbItems"
+      class="hidden sm:flex"
     />
 
-    <section
-      v-if="post && seller"
-      :class="$style.product"
-    >
-      <div :class="$style.main">
-        <div :class="$style.header">
-          <div :class="$style.headerContent">
+    <section v-if="post && seller">
+      <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <!-- Left: gallery + info -->
+        <div class="space-y-5">
+          <!-- Gallery -->
+          <div>
+            <div class="relative overflow-hidden rounded-xl bg-muted">
+              <UCarousel
+                v-if="hasGalleryImages"
+                ref="carousel"
+                v-slot="{ item: slide }"
+                :items="carouselSlides"
+                :arrows="carouselSlides.length > 1"
+                :prev="{ color: 'neutral', variant: 'soft', size: 'lg' }"
+                :next="{ color: 'neutral', variant: 'soft', size: 'lg' }"
+                :ui="{ container: 'flex w-full ms-0', item: 'basis-full shrink-0 ps-0' }"
+                fade
+                loop
+                class="w-full overflow-hidden"
+                @select="setActiveImage"
+              >
+                <div class="aspect-square w-full overflow-hidden sm:aspect-[4/3]">
+                  <NuxtImg
+                    :src="slide.url"
+                    :alt="slide.alt"
+                    class="h-full w-full object-cover"
+                    sizes="sm:100vw md:720px lg:860px"
+                    @click="selectImage(slide.index)"
+                  />
+                </div>
+              </UCarousel>
+
+              <div
+                v-else
+                class="aspect-square w-full overflow-hidden sm:aspect-[4/3]"
+              >
+                <NuxtImg
+                  :src="fallbackImage"
+                  :alt="post.title"
+                  class="h-full w-full object-cover"
+                />
+              </div>
+
+              <!-- Overlays -->
+              <div class="absolute bottom-3 left-3 flex gap-2">
+                <UBadge
+                  v-if="carouselSlides.length > 1"
+                  color="neutral"
+                  variant="solid"
+                  class="bg-black/60 text-white backdrop-blur-sm"
+                >
+                  {{ activeImageIndex + 1 }} / {{ carouselSlides.length }}
+                </UBadge>
+
+                <UBadge
+                  v-if="isPostUnavailable"
+                  :color="statusColor"
+                  variant="subtle"
+                  class="backdrop-blur-sm"
+                >
+                  {{ statusLabel }}
+                </UBadge>
+              </div>
+            </div>
+
+            <!-- Thumbnails -->
             <div
-              :class="$style.mobilePrice"
+              v-if="carouselSlides.length > 1"
+              class="mt-2 hidden gap-2 overflow-x-auto md:flex"
+            >
+              <button
+                v-for="(thumb, i) in carouselSlides"
+                :key="i"
+                type="button"
+                class="size-14 shrink-0 overflow-hidden rounded-lg border-2 transition"
+                :class="activeImageIndex === i ? 'border-primary' : 'border-transparent opacity-60 hover:opacity-100'"
+                @click="selectImage(i)"
+              >
+                <NuxtImg
+                  :src="thumb.url"
+                  :alt="thumb.alt"
+                  class="h-full w-full object-cover"
+                  loading="lazy"
+                  sizes="56px"
+                />
+              </button>
+            </div>
+          </div>
+
+          <!-- Title + meta (mobile: shows here, before sidebar) -->
+          <div class="lg:hidden">
+            <h1
+              class="text-2xl font-bold text-highlighted"
+              v-text="post.title"
+            />
+
+            <p
+              class="mt-1 text-2xl font-bold text-primary"
               v-text="formattedPrice"
             />
 
-            <h1
-              :class="$style.headerTitle"
-              v-text="post.title"
-            />
+            <div class="mt-2 flex flex-wrap gap-3 text-sm text-muted">
+              <span
+                v-if="postCityName"
+                class="flex items-center gap-1"
+              >
+                <UIcon
+                  name="i-lucide-map-pin"
+                  class="size-4"
+                />
+                {{ postCityName }}
+              </span>
+
+              <span
+                v-if="formattedDate"
+                class="flex items-center gap-1"
+              >
+                <UIcon
+                  name="i-lucide-calendar-days"
+                  class="size-4"
+                />
+                {{ formattedDate }}
+              </span>
+            </div>
           </div>
+
+          <!-- Description -->
+          <UCard v-if="post.description">
+            <template #header>
+              <p
+                class="text-sm font-semibold text-highlighted"
+                v-text="t('description')"
+              />
+            </template>
+
+            <p
+              class="whitespace-pre-line text-sm leading-relaxed text-toned"
+              v-text="post.description"
+            />
+          </UCard>
+
+          <!-- Details -->
+          <UCard v-if="productDetails.length">
+            <template #header>
+              <p
+                class="text-sm font-semibold text-highlighted"
+                v-text="t('details')"
+              />
+            </template>
+
+            <dl class="divide-y divide-default -mx-4 -my-3">
+              <div
+                v-for="item in productDetails"
+                :key="item.label"
+                class="flex items-center gap-3 px-4 py-2.5"
+              >
+                <UIcon
+                  :name="item.icon"
+                  class="size-4 shrink-0 text-muted"
+                />
+
+                <dt
+                  class="w-28 shrink-0 text-sm text-muted"
+                  v-text="item.label"
+                />
+
+                <dd
+                  class="truncate text-sm font-medium text-highlighted"
+                  v-text="item.value"
+                />
+              </div>
+            </dl>
+          </UCard>
         </div>
 
-        <GalleryRoot
-          :images="post.images"
-          :status="post.status"
-          :class="$style.gallery"
-          @open-modal="showGalleryModal"
-        />
+        <!-- Right: sticky contact card -->
+        <aside class="space-y-4 lg:sticky lg:top-[74px] lg:self-start">
+          <!-- Title + meta (desktop only) -->
+          <div class="hidden lg:block">
+            <h1
+              class="text-2xl font-bold text-highlighted"
+              v-text="post.title"
+            />
 
-        <transition name="fade">
-          <LazyGalleryModal
-            v-if="isGalleryModalVisible"
-            :post="post"
-            :seller="seller"
-            :currentIndex="currentSlideIndex"
-            :phoneNumber="seller.phone"
-            :isOwner="isOwnerUser"
-            @close-post="showClosePostModal"
-            @close="hideGalleryModal"
-          />
-        </transition>
+            <div class="mt-2 flex flex-wrap gap-3 text-sm text-muted">
+              <span
+                v-if="postCityName"
+                class="flex items-center gap-1"
+              >
+                <UIcon
+                  name="i-lucide-map-pin"
+                  class="size-4"
+                />
+                {{ postCityName }}
+              </span>
 
-        <ProductControls
-          v-if="hasControlButtons"
-          :phoneNumber="seller.phone"
-          :isSafeDeal="post.isSafeDeal"
-          :isOwner="isOwnerUser"
-          :class="[$style.contacts, $style.hideOnDesktop]"
-          @close-post="showClosePostModal"
-        />
+              <span
+                v-if="formattedDate"
+                class="flex items-center gap-1"
+              >
+                <UIcon
+                  name="i-lucide-calendar-days"
+                  class="size-4"
+                />
+                {{ formattedDate }}
+              </span>
+            </div>
+          </div>
 
-        <ul>
-          <li
-            v-if="postLocation"
-            :class="$style.descriptionItem"
-          >
-            <UILineDescription
-              :title="t('location')"
-              position="center"
-              hideTitle
-            >
-              <div :class="$style.location">
-                <div :class="$style.locationAddress">
-                  <IconLocation :class="$style.locationIcon" />
-
-                  <span
-                    :class="$style.locationName"
-                    v-text="postCityName"
-                  />
-                </div>
-              </div>
-            </UILineDescription>
-          </li>
-
-          <li :class="$style.descriptionItem">
-            <UILineDescription :title="t('description')">
+          <!-- Contact card -->
+          <UCard>
+            <div class="space-y-4">
               <p
-                :class="$style.productDescription"
-                v-text="post.description"
+                class="text-3xl font-bold text-highlighted"
+                v-text="formattedPrice"
               />
-            </UILineDescription>
-          </li>
 
-          <li :class="$style.descriptionItem">
-            <UILineDescription
-              :title="t('category')"
-              :description="postCategoryName"
-              position="center"
-            />
-          </li>
+              <USeparator />
 
-          <li :class="$style.descriptionItem">
-            <UILineDescription
-              :title="t('posted')"
-              :description="formattedDate"
-              position="center"
-            />
-          </li>
-
-          <li :class="$style.descriptionItem">
-            <UILineDescription :title="t('share')">
-              <ProductSharingButtons
-                :title="post.title"
-                :link="route.fullPath"
+              <UUser
+                :name="seller.name"
+                :description="sellerDescription"
+                :avatar="sellerAvatar"
+                size="lg"
               />
-            </UILineDescription>
-          </li>
-        </ul>
 
-        <UserInfo
-          v-if="!isDesktopOrTablet"
-          :user="seller"
-          :class="[$style.profileInfoMobile, $style.hideOnDesktop]"
-        />
+              <UButton
+                v-if="hasControlButtons && isOwnerUser"
+                :label="t('close_post')"
+                icon="i-lucide-lock"
+                color="neutral"
+                variant="soft"
+                block
+                @click="isClosePostModalVisible = true"
+              />
+
+              <UButton
+                v-else
+                :label="t('call_seller')"
+                :href="phoneLink"
+                icon="i-lucide-phone"
+                color="primary"
+                block
+                :disabled="!phoneLink || isPostUnavailable"
+              />
+
+              <USeparator :label="t('share')" />
+
+              <div class="flex justify-center gap-2">
+                <UButton
+                  icon="i-simple-icons-whatsapp"
+                  color="neutral"
+                  variant="ghost"
+                  :href="`https://wa.me/?text=${encodedShareText}`"
+                  target="_blank"
+                  aria-label="WhatsApp"
+                />
+
+                <UButton
+                  icon="i-simple-icons-facebook"
+                  color="neutral"
+                  variant="ghost"
+                  :href="`https://www.facebook.com/sharer/sharer.php?u=${encodedShareUrl}`"
+                  target="_blank"
+                  aria-label="Facebook"
+                />
+
+                <UButton
+                  icon="i-lucide-link"
+                  color="neutral"
+                  variant="ghost"
+                  aria-label="Copy link"
+                  @click="copyShareLink"
+                />
+              </div>
+            </div>
+          </UCard>
+        </aside>
       </div>
 
-      <div :class="$style.rightColumn">
-        <div :class="$style.rails">
-          <span
-            :class="$style.price"
+      <!-- Mobile sticky CTA -->
+      <div
+        class="fixed inset-x-0 bottom-0 z-20 border-t border-default bg-default/95 px-4 py-3 backdrop-blur-sm lg:hidden"
+      >
+        <div class="flex items-center gap-3">
+          <p
+            class="text-lg font-bold text-highlighted"
             v-text="formattedPrice"
           />
 
-          <ProductControls
-            v-if="hasControlButtons"
-            :phoneNumber="seller.phone"
-            :isOwner="isOwnerUser"
-            :class="$style.contacts"
-            @close-post="showClosePostModal"
+          <UButton
+            v-if="hasControlButtons && isOwnerUser"
+            :label="t('close_post')"
+            icon="i-lucide-lock"
+            color="neutral"
+            variant="soft"
+            class="ml-auto"
+            @click="isClosePostModalVisible = true"
           />
 
-          <UserInfo
-            :user="seller"
-            :class="$style.profileInfo"
+          <UButton
+            v-else
+            :label="t('call_seller')"
+            :href="phoneLink"
+            icon="i-lucide-phone"
+            color="primary"
+            class="ml-auto flex-1"
+            :disabled="!phoneLink || isPostUnavailable"
+          />
+
+          <UButton
+            icon="i-simple-icons-whatsapp"
+            color="neutral"
+            variant="soft"
+            :href="`https://wa.me/?text=${encodedShareText}`"
+            target="_blank"
+            aria-label="WhatsApp"
           />
         </div>
       </div>
@@ -642,213 +1000,67 @@ const { isDesktopOrTablet } = useDevice();
         v-if="isClosePostModalVisible"
         :postId="postId"
         @change-status="closePost"
-        @close="hideClosePostModal"
+        @close="isClosePostModalVisible = false"
       />
     </section>
 
-    <section
-      v-if="recommendedPosts?.length"
-      :class="$style.block"
-    >
-      <h3
-        :class="$style.listingTitle"
+    <!-- Related listings -->
+    <div v-if="recommendedPostsList.length">
+      <h2
+        class="mb-4 text-lg font-semibold text-highlighted"
         v-text="t('related_listings')"
       />
 
-      <ProductList :list="recommendedPosts" />
-    </section>
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <NuxtLink
+          v-for="recommendedPost in recommendedPostsList"
+          :key="recommendedPost.id"
+          :to="getRecommendedPostTo(recommendedPost)"
+          class="group overflow-hidden rounded-xl border border-default bg-default transition hover:border-primary/40 hover:shadow-sm"
+        >
+          <div class="relative aspect-square overflow-hidden bg-muted">
+            <NuxtImg
+              v-if="recommendedPost.preview"
+              :src="recommendedPost.preview"
+              :alt="recommendedPost.title"
+              class="size-full object-cover transition group-hover:scale-105"
+              loading="lazy"
+              sizes="sm:50vw lg:220px"
+            />
 
-    <UITextRoll :class="$style.block">
+            <UEmpty
+              v-else
+              icon="i-lucide-image-off"
+              :title="t('no_photo')"
+              class="h-full"
+            />
+          </div>
+
+          <div class="space-y-1 p-3">
+            <p
+              class="truncate text-sm font-semibold text-highlighted"
+              v-text="formatCurrency(recommendedPost.price)"
+            />
+
+            <p
+              class="line-clamp-2 min-h-10 text-sm text-toned"
+              v-text="recommendedPost.title"
+            />
+          </div>
+        </NuxtLink>
+      </div>
+    </div>
+
+    <!-- SEO text -->
+    <UCard v-if="post">
       <SeoProductText
-        :productTitle="post?.title"
+        :productTitle="post.title"
         :category="postCategoryName"
         :price="formattedPrice"
         :city="postCityName"
         :seller="seller?.name"
         :productList="[]"
       />
-    </UITextRoll>
+    </UCard>
   </div>
 </template>
-
-
-<style lang="scss" module>
-.hideOnDesktop {
-
-  @include exclude-md {
-    display: none !important;
-  }
-}
-
-.root {
-  @include ui-simple-container;
-
-  padding: 10px 20px;
-}
-
-.breadcrumbs {
-
-  @include md {
-    display: none;
-  }
-}
-
-.product {
-  display: flex;
-
-  @include exclude-md {
-    @include ui-round-content-blocks;
-
-    margin-top: 10px;
-    padding: 20px;
-    background-color: $ui-color-white;
-    box-shadow: $box-shadow;
-  }
-}
-
-.main {
-  display: flex;
-  flex-direction: column;
-
-  @include md {
-    width: 100%;
-  }
-
-  @include exclude-md {
-    width: 75%;
-    padding-right: 20px;
-  }
-}
-
-.header {
-  display: flex;
-  flex-direction: row;
-
-  @include md {
-    margin-top: 20px;
-  }
-}
-
-.headerContent {
-  flex-grow: 1;
-}
-
-.mobilePrice {
-  @include ui-typo-24-bold;
-
-  margin-bottom: 8px;
-
-  @include exclude-md {
-    display: none;
-  }
-}
-
-.headerTitle {
-  overflow-wrap: anywhere;
-
-  @include md {
-    @include ui-typo-20-medium;
-  }
-
-  @include exclude-md {
-    @include ui-typo-32-medium;
-  }
-}
-
-.gallery {
-
-  @include md {
-    $fix-mobile-padding: -20px;
-
-    order: -1;
-    margin-right: $fix-mobile-padding;
-    margin-left: $fix-mobile-padding;
-  }
-
-  @include exclude-md {
-    margin-top: 20px;
-  }
-}
-
-.price {
-  @include ui-typo-32-bold;
-}
-
-.descriptionItem {
-
-  & + & {
-    border-top: 1px solid $ui-color-transparent;
-  }
-}
-
-.productDescription {
-  white-space: break-spaces;
-}
-
-.location {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.locationAddress {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin-right: 10px;
-}
-
-.locationIcon {
-  flex-shrink: 0;
-  margin-right: 10px;
-
-  @include exclude-md {
-    display: none;
-  }
-}
-
-.locationName {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.profileInfoMobile {
-  margin-top: 20px;
-}
-
-.rightColumn {
-  width: 25%;
-  min-width: 0;
-  margin: 0;
-
-  @include md {
-    display: none;
-  }
-}
-
-.rails {
-  position: sticky;
-  top: (64px + 10px);
-}
-
-.contacts {
-  margin-top: 20px;
-}
-
-.profileInfo {
-  margin-top: 20px;
-}
-
-.block {
-  margin-top: 20px;
-}
-
-.listingTitle {
-  @include ui-typo-24-bold;
-
-  margin-bottom: 20px;
-}
-</style>

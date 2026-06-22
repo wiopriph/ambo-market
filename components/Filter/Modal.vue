@@ -7,16 +7,9 @@ import getObjectDifferences from '~/utils/getObjectDifferences';
 import { SELECT_BRAND, SELECT_CATEGORY, SELECT_CITY, SELECT_SUBCATEGORY } from '~/constants/analytics-events';
 
 
+const open = defineModel<boolean>({ default: false });
+
 const { t } = useI18n();
-
-
-const categoriesItems = computed(() => CATEGORIES.map(({ id, key }) => ({ value: id, text: t(key) })));
-
-const citiesList = computed(() => CITIES.map(city => ({
-  value: city.id,
-  text: city.name ? city.name : t('everywhere'),
-})));
-
 
 const {
   cityId,
@@ -31,108 +24,70 @@ const newCityId = ref('');
 const newCategoryId = ref('');
 const newSubcategoryId = ref('');
 const newBrandId = ref('');
+const minPrice = ref('');
+const maxPrice = ref('');
 
-const minPrice = ref<string | number>('');
-const maxPrice = ref<string | number>('');
+const citiesList = computed(() => CITIES.map(city => ({
+  value: city.id,
+  label: city.name || t('everywhere'),
+})));
+
+const categoriesItems = computed(() => CATEGORIES.map(({ id, key }) => ({
+  value: id,
+  label: t(key),
+})));
 
 const subcategoriesItems = computed(() => {
   const category = CATEGORIES.find(cat => cat.id === newCategoryId.value);
 
-  return category?.subcategories?.map(({ id, key }) => ({ value: id, text: t(key) })) || [];
+  return category?.subcategories?.map(({ id, key }) => ({ value: id, label: t(key) })) ?? [];
 });
-
 
 const brandsItems = computed(() => {
   const category = CATEGORIES.find(cat => cat.id === newCategoryId.value);
   const subcategory = category?.subcategories?.find(sc => sc.id === newSubcategoryId.value);
 
-  return subcategory?.brands?.map(({ id, key }) => ({ value: id, text: t(key) })) || [];
+  return subcategory?.brands?.map(({ id, key }) => ({ value: id, label: t(key) })) ?? [];
 });
 
-
-onMounted(() => {
-  newCityId.value = cityId.value;
-  newCategoryId.value = categoryId.value;
-  newSubcategoryId.value = subcategoryId.value;
-  newBrandId.value = brandId.value;
-
-  minPrice.value = getFilter('minPrice');
-  maxPrice.value = getFilter('maxPrice');
+watch(open, (val) => {
+  if (val) {
+    newCityId.value = cityId.value;
+    newCategoryId.value = categoryId.value;
+    newSubcategoryId.value = subcategoryId.value;
+    newBrandId.value = brandId.value;
+    minPrice.value = getFilter('minPrice');
+    maxPrice.value = getFilter('maxPrice');
+  }
 });
 
+const route = useRoute();
+const { pushEvent } = useAnalyticsEvent();
 
 const updateFilters = () => {
-  const filters = {
-    ...currentFilters.value,
-    minPrice: minPrice.value,
-    maxPrice: maxPrice.value,
-  };
+  const query = getObjectDifferences(
+    { ...currentFilters.value, minPrice: minPrice.value, maxPrice: maxPrice.value },
+    DEFAULT_FILTERS,
+  );
 
-  const query = getObjectDifferences(filters, DEFAULT_FILTERS);
+  const params: Record<string, string> = { cityId: newCityId.value || 'all' };
 
-  close();
-
-  const params: Record<string, string> = {
-    cityId: newCityId.value || 'all',
-  };
-
-  const valuesMap = {
-    categoryId: newCategoryId.value,
-    subcategoryId: newSubcategoryId.value,
-    brandId: newBrandId.value,
-  };
-
-  const keys = ['categoryId', 'subcategoryId', 'brandId'];
-
-  for (const key of keys) {
-    const value = valuesMap[key as keyof typeof valuesMap];
-
-    if (value) {
-      params[key] = value;
-    } else {
-      break;
-    }
+  for (const [key, value] of [
+    ['categoryId', newCategoryId.value],
+    ['subcategoryId', newSubcategoryId.value],
+    ['brandId', newBrandId.value],
+  ]) {
+    if (value) params[key] = value;
+    else break;
   }
 
-  const name = Object.keys(params).join('-');
-
-  return navigateTo({ name, params, query });
-};
-
-
-const emit = defineEmits(['close']);
-
-const close = () => {
-  emit('close');
+  open.value = false;
+  navigateTo({ name: Object.keys(params).join('-'), params, query });
 };
 
 const clearAllFilters = () => {
-  navigateTo({ query: { q: getFilter('q') } });
-
-  close();
-};
-
-const { pushEvent } = useAnalyticsEvent();
-
-
-const setCity = (cityId: string) => {
-  // eslint-disable-next-line camelcase
-  pushEvent(SELECT_CITY, { city_id: cityId });
-};
-
-const setCategory = (categoryId: string) => {
-  // eslint-disable-next-line camelcase
-  pushEvent(SELECT_CATEGORY, { category_id: categoryId });
-};
-
-const setSubcategory = (subcategoryId: string) => {
-  // eslint-disable-next-line camelcase
-  pushEvent(SELECT_SUBCATEGORY, { subcategory_id: subcategoryId });
-};
-
-const setBrand = (brandId: string) => {
-  // eslint-disable-next-line camelcase
-  pushEvent(SELECT_BRAND, { brand_id: brandId });
+  open.value = false;
+  navigateTo({ query: getObjectDifferences({ q: getFilter('q') }, DEFAULT_FILTERS) });
 };
 </script>
 
@@ -141,193 +96,149 @@ const setBrand = (brandId: string) => {
   "en": {
     "filters": "Filters",
     "everywhere": "Everywhere",
+    "city": "City",
     "category": "Category",
     "subcategory": "Subcategory",
     "brand": "Brand",
     "select": "Select",
     "price": "Price",
-    "from": "from",
-    "to": "to",
-    "clear_all": "Clear all filter",
-    "update_search": "Update search"
+    "from": "From",
+    "to": "To",
+    "clear_all": "Clear all",
+    "apply": "Apply"
   },
   "pt": {
     "filters": "Filtros",
     "everywhere": "Em todos os lugares",
+    "city": "Cidade",
     "category": "Categoria",
     "subcategory": "Subcategoria",
     "brand": "Marca",
     "select": "Selecione",
     "price": "Preço",
-    "from": "por",
-    "to": "até",
-    "clear_all": "limpar todo o filtro",
-    "update_search": "Atualizar pesquisa"
+    "from": "Por",
+    "to": "Até",
+    "clear_all": "Limpar tudo",
+    "apply": "Aplicar"
   }
 }
 </i18n>
 
 <template>
-  <UIModal
+  <UDrawer
+    v-model:open="open"
     :title="t('filters')"
-    @close="close"
+    direction="bottom"
   >
-    <div :class="$style.root">
-      <ul :class="$style.wrap">
-        <li :class="$style.block">
-          <UISelect
-            v-model="newCityId"
-            :options="citiesList"
-            :label="t('city')"
-            :placeholder="t('select')"
-            :class="$style.selector"
-            name="city"
-            @update:model-value="setCity"
+    <template #header>
+      <div class="flex items-center justify-between px-4 py-3">
+        <span
+          class="font-semibold"
+          v-text="t('filters')"
+        />
+
+        <UButton
+          icon="i-lucide-x"
+          color="neutral"
+          variant="ghost"
+          size="sm"
+          @click="open = false"
+        />
+      </div>
+    </template>
+
+    <div class="flex flex-col gap-4 px-4 pb-4 overflow-y-auto max-h-[70vh]">
+      <UFormField :label="t('city')">
+        <USelect
+          v-model="newCityId"
+          :items="citiesList"
+          :placeholder="t('select')"
+          valueKey="value"
+          labelKey="label"
+          class="w-full"
+          @update:model-value="pushEvent(SELECT_CITY, { city_id: $event })"
+        />
+      </UFormField>
+
+      <UFormField :label="t('category')">
+        <USelect
+          v-model="newCategoryId"
+          :items="categoriesItems"
+          :placeholder="t('select')"
+          valueKey="value"
+          labelKey="label"
+          class="w-full"
+          @update:model-value="pushEvent(SELECT_CATEGORY, { category_id: $event })"
+        />
+      </UFormField>
+
+      <UFormField
+        v-if="subcategoriesItems.length"
+        :label="t('subcategory')"
+      >
+        <USelect
+          v-model="newSubcategoryId"
+          :items="subcategoriesItems"
+          :placeholder="t('select')"
+          valueKey="value"
+          labelKey="label"
+          class="w-full"
+          @update:model-value="pushEvent(SELECT_SUBCATEGORY, { subcategory_id: $event })"
+        />
+      </UFormField>
+
+      <UFormField
+        v-if="brandsItems.length"
+        :label="t('brand')"
+      >
+        <USelect
+          v-model="newBrandId"
+          :items="brandsItems"
+          :placeholder="t('select')"
+          valueKey="value"
+          labelKey="label"
+          class="w-full"
+          @update:model-value="pushEvent(SELECT_BRAND, { brand_id: $event })"
+        />
+      </UFormField>
+
+      <UFormField :label="t('price')">
+        <div class="flex gap-2">
+          <UInput
+            v-model="minPrice"
+            :placeholder="t('from')"
+            name="minPrice"
+            type="number"
+            class="w-full"
           />
-        </li>
 
-        <li :class="$style.block">
-          <UISelect
-            v-model="newCategoryId"
-            :options="categoriesItems"
-            :label="t('category')"
-            :placeholder="t('select')"
-            name="category"
-            @update:model-value="setCategory"
+          <UInput
+            v-model="maxPrice"
+            :placeholder="t('to')"
+            name="maxPrice"
+            type="number"
+            class="w-full"
           />
-        </li>
+        </div>
+      </UFormField>
+    </div>
 
-        <li
-          v-if="subcategoriesItems.length"
-          :class="$style.block"
-        >
-          <UISelect
-            v-model="newSubcategoryId"
-            :options="subcategoriesItems"
-            :label="t('subcategory')"
-            :placeholder="t('select')"
-            :class="$style.selector"
-            name="subcategory"
-            @update:model-value="setSubcategory"
-          />
-        </li>
-
-        <li
-          v-if="brandsItems.length"
-          :class="$style.block"
-        >
-          <UISelect
-            v-model="newBrandId"
-            :options="brandsItems"
-            :label="t('brand')"
-            :placeholder="t('select')"
-            name="brand"
-            @update:model-value="setBrand"
-          />
-        </li>
-
-        <li :class="$style.block">
-          <span
-            :class="$style.title"
-            v-text="t('price')"
-          />
-
-          <div :class="$style.priceRange">
-            <UIInput
-              v-model="minPrice"
-              :placeholder="t('from')"
-              :class="$style.price"
-              name="min_price"
-              type="number"
-            />
-
-            <UIInput
-              v-model="maxPrice"
-              :placeholder="t('to')"
-              :class="$style.price"
-              name="max_price"
-              type="number"
-            />
-          </div>
-        </li>
-      </ul>
-
-      <div :class="$style.bottom">
-        <UIButton
-          :text="t('clear_all')"
-          :class="$style.button"
-          type="secondary"
+    <template #footer>
+      <div class="flex gap-2 px-4 pb-4">
+        <UButton
+          :label="t('clear_all')"
+          color="neutral"
+          variant="soft"
+          class="flex-1"
           @click="clearAllFilters"
         />
 
-        <UIButton
-          :text="t('update_search')"
-          :class="$style.button"
+        <UButton
+          :label="t('apply')"
+          class="flex-1"
           @click="updateFilters"
         />
       </div>
-    </div>
-  </UIModal>
+    </template>
+  </UDrawer>
 </template>
-
-<style lang="scss" module>
-.root {
-  width: 100%;
-  height: calc(100% - 44px);
-  padding: 0 20px;
-}
-
-.wrap {
-  height: calc(100vh - 44px - 138px);
-  overflow: auto scroll;
-}
-
-.block {
-  padding: 8px 0;
-}
-
-.title {
-  @include ui-typo-15-bold;
-}
-
-.priceRange {
-  display: flex;
-  flex-direction: row;
-  margin-top: 8px;
-}
-
-.price {
-
-  & + & {
-    margin-left: 4px;
-  }
-}
-
-.check {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.selector {
-  margin-top: 8px;
-}
-
-.bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 20px;
-  background-color: $ui-color-white;
-}
-
-.button {
-  width: 100%;
-
-  & + & {
-    margin-top: 8px;
-  }
-}
-</style>
