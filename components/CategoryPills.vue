@@ -21,7 +21,7 @@ const props = defineProps<CategoryPillsProps>();
     v-if="props.list?.length"
     aria-label="Category navigation"
   >
-    <div class="flex flex-wrap gap-2 sm:gap-2">
+    <div class="flex flex-wrap gap-1">
       <UButton
         v-for="category in props.list"
         :key="category.title"
@@ -32,7 +32,7 @@ const props = defineProps<CategoryPillsProps>();
       >
         <span
           v-if="category.icon"
-          class="flex size-6 shrink-0 items-center justify-center rounded-full text-primary"
+          class="flex size-5 shrink-0 items-center justify-center rounded-full text-primary"
         >
           <UIcon
             :name="category.icon"

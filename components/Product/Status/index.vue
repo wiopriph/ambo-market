@@ -1,73 +1,40 @@
 <script setup lang="ts">
-import type { StatusProps } from './types';
 import { POST_STATUSES } from '~/constants/post-statuses';
 
 
-const props = defineProps<StatusProps>();
+const props = defineProps<{ status: string }>();
 
 const { t } = useI18n();
 
-const isValidStatus = computed(() => Object.values(POST_STATUSES).includes(props.status));
+const colorMap: Record<string, 'success' | 'info' | 'error'> = {
+  [POST_STATUSES.HOLD]: 'info',
+  [POST_STATUSES.CLOSED]: 'success',
+};
 
-const style = useCssModule();
-const rootClassNames = computed(() => ({
-  [style.root]: true,
-  [style[props.status]]: isValidStatus.value,
-}));
+const color = computed(() => colorMap[props.status] ?? 'error');
+const isValidStatus = computed(() => Object.values(POST_STATUSES).includes(props.status));
 </script>
 
-<i18n>
+<i18n lang="json">
 {
   "en": {
     "open": "Published",
     "hold": "Reserved",
-    "closed": "Sold",
-    "blocked": "Blocked"
+    "closed": "Sold"
   },
   "pt": {
-    "open": "Abrir",
+    "open": "Publicado",
     "hold": "Reservado",
-    "closed": "Fechado",
-    "blocked": "Bloqueado"
+    "closed": "Vendido"
   }
 }
 </i18n>
 
 <template>
-  <span
-    v-show="isValidStatus"
-    :class="rootClassNames"
+  <UBadge
+    v-if="isValidStatus"
+    :color="color"
+    variant="subtle"
     v-text="t(status)"
   />
 </template>
-
-<style lang="scss" module>
-.root {
-  @include ui-typo-10;
-  @include ui-round-ui-elements;
-
-  display: inline-block;
-  padding: 4px 8px;
-  overflow: hidden;
-  color: $ui-color-white;
-  white-space: nowrap;
-  text-transform: uppercase;
-  text-overflow: ellipsis;
-}
-
-.open {
-  background-color: $ui-color-add;
-}
-
-.hold {
-  background-color: $ui-color-blue;
-}
-
-.closed {
-  background-color: $ui-color-add;
-}
-
-.blocked {
-  background-color: $ui-color-system-red;
-}
-</style>

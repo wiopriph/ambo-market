@@ -29,7 +29,7 @@ const closePost = async () => {
 
     emit('changeStatus');
   } catch (error: any) {
-    // eslint-disable-next-line no-console
+
     console.error(error);
 
     const statusMessage =
@@ -69,136 +69,81 @@ const closePost = async () => {
 </i18n>
 
 <template>
-  <UIModal
+  <UModal
+    open
     :title="t('title')"
-    maxWidth="500px"
-    @close="close"
+    :ui="{ content: 'max-w-md' }"
+    @update:open="(value) => !value && close()"
   >
-    <div :class="$style.root">
-      <UILoader
-        v-if="isLoading"
-        :class="$style.loader"
-      />
-
-      <template v-else>
+    <template #body>
+      <div class="space-y-4">
         <div
-          v-if="isSuccess"
-          :class="$style.content"
+          v-if="isLoading"
+          class="flex items-center justify-center py-8"
         >
-          <p
-            :class="$style.text"
-            v-text="t('closed')"
-          />
-
-          <UIButton
-            :class="$style.button"
-            :text="t('ok')"
-            @click="close"
+          <UIcon
+            name="i-lucide-loader-circle"
+            class="size-6 animate-spin text-primary"
           />
         </div>
 
-        <div
-          v-else
-          :class="$style.content"
-        >
+        <UAlert
+          v-else-if="isSuccess"
+          color="success"
+          variant="soft"
+          icon="i-lucide-check-circle"
+          :title="t('closed')"
+        />
+
+        <template v-else>
           <p
-            :class="$style.text"
+            class="text-sm text-toned"
             v-text="t('question')"
           />
 
-          <UIError
+          <UAlert
             v-if="backendError"
-            :text="backendError"
+            color="error"
+            variant="soft"
+            icon="i-lucide-circle-alert"
+            :title="backendError"
+          />
+        </template>
+      </div>
+    </template>
+
+    <template #footer>
+      <div class="grid w-full gap-2 sm:flex sm:justify-end">
+        <UButton
+          v-if="isSuccess"
+          :label="t('ok')"
+          color="primary"
+          block
+          class="sm:w-auto"
+          @click="close"
+        />
+
+        <template v-else>
+          <UButton
+            :label="t('yes')"
+            :loading="isLoading"
+            color="primary"
+            block
+            class="sm:w-auto"
+            @click="closePost"
           />
 
-          <div :class="$style.buttons">
-            <UIButton
-              :class="$style.buttonPrimary"
-              :text="t('yes')"
-              :isLoading="isLoading"
-              @click="closePost"
-            />
-
-            <UIButton
-              :class="$style.buttonSecondary"
-              :text="t('no')"
-              :isDisabled="isLoading"
-              type="secondary"
-              @click="close"
-            />
-          </div>
-        </div>
-      </template>
-    </div>
-  </UIModal>
+          <UButton
+            :label="t('no')"
+            :disabled="isLoading"
+            color="neutral"
+            variant="soft"
+            block
+            class="sm:w-auto"
+            @click="close"
+          />
+        </template>
+      </div>
+    </template>
+  </UModal>
 </template>
-
-<style lang="scss" module>
-.root {
-  position: relative;
-  height: calc(100% - 44px);
-  padding: 20px;
-}
-
-.loader {
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-
-  @include md {
-    justify-content: space-between;
-    height: 100%;
-  }
-}
-
-.text {
-  @include ui-typo-18-bold;
-
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.buttons {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-
-  @include md {
-    flex-direction: column;
-
-    justify-content: center;
-  }
-}
-
-.buttonPrimary,
-.buttonSecondary {
-  width: 100%;
-
-  @include md {
-    width: auto;
-    min-width: 140px;
-  }
-}
-
-.buttonPrimary + .buttonSecondary {
-
-  @include md {
-    margin-top: 8px;
-  }
-
-  @include exclude-md {
-    margin-left: 10px;
-  }
-}
-
-.button {
-  width: 100%;
-  margin-top: 10px;
-}
-</style>

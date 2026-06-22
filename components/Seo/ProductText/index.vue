@@ -109,14 +109,20 @@ const { t } = useI18n();
 </i18n>
 
 <template>
-  <div :class="$style.root">
-    <h3 v-text="t('title', { title: props.productTitle })" />
+  <div class="space-y-4 text-sm leading-6 text-toned">
+    <h3
+      class="text-base font-semibold text-highlighted"
+      v-text="t('title', { title: props.productTitle })"
+    />
 
     <p v-text="t('intro', { title: productTitle, city: city, category: category })" />
 
-    <h3 v-text="t('listing_details')" />
+    <h3
+      class="text-base font-semibold text-highlighted"
+      v-text="t('listing_details')"
+    />
 
-    <ul>
+    <ul class="list-disc space-y-2 pl-5">
       <li>
         <p v-text="t('details.category', { category: category })" />
       </li>
@@ -134,11 +140,17 @@ const { t } = useI18n();
       </li>
     </ul>
 
-    <h3 v-text="t('why_buy.title', { category: category })" />
+    <h3
+      class="text-base font-semibold text-highlighted"
+      v-text="t('why_buy.title', { category: category })"
+    />
 
-    <ol>
+    <ol class="list-decimal space-y-3 pl-5">
       <li>
-        <p v-text="t('why_buy.point_1.title')" />
+        <p
+          class="font-medium text-highlighted"
+          v-text="t('why_buy.point_1.title')"
+        />
 
         <p v-text="t('why_buy.point_1.desc')" />
 
@@ -149,33 +161,48 @@ const { t } = useI18n();
       </li>
 
       <li>
-        <p v-text="t('why_buy.point_2.title')" />
+        <p
+          class="font-medium text-highlighted"
+          v-text="t('why_buy.point_2.title')"
+        />
 
         <p v-text="t('why_buy.point_2.desc')" />
       </li>
 
       <li>
-        <p v-text="t('why_buy.point_3.title')" />
+        <p
+          class="font-medium text-highlighted"
+          v-text="t('why_buy.point_3.title')"
+        />
 
         <p v-text="t('why_buy.point_3.desc', { title: productTitle, city: city })" />
       </li>
 
       <li>
-        <p v-text="t('why_buy.point_4.title')" />
+        <p
+          class="font-medium text-highlighted"
+          v-text="t('why_buy.point_4.title')"
+        />
 
         <p v-text="t('why_buy.point_4.desc')" />
       </li>
     </ol>
 
-    <h3 v-text="t('contact_seller.title')" />
+    <h3
+      class="text-base font-semibold text-highlighted"
+      v-text="t('contact_seller.title')"
+    />
 
     <p v-text="t('contact_seller.desc', { title: productTitle })" />
 
-    <h3 v-text="t('sell_your_items.title')" />
+    <h3
+      class="text-base font-semibold text-highlighted"
+      v-text="t('sell_your_items.title')"
+    />
 
     <p v-text="t('sell_your_items.desc', { category: category })" />
 
-    <ol>
+    <ol class="list-decimal space-y-2 pl-5">
       <li>
         <p v-text="t('sell_your_items.steps.step_1')" />
       </li>
@@ -202,27 +229,3 @@ const { t } = useI18n();
     <p v-text="t('start_now', { category: category, city: city })" />
   </div>
 </template>
-
-<style lang="scss" module>
-.root {
-  @include ui-typo-14;
-
-  h3 {
-    @include ui-typo-18-bold;
-
-    margin-top: 16px;
-  }
-
-  p {
-    margin-top: 8px;
-  }
-
-  ol {
-    padding-left: 16px;
-  }
-
-  ul {
-    padding-left: 16px;
-  }
-}
-</style>
