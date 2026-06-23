@@ -141,123 +141,139 @@ const register = handleSubmit.withControlled(async () => {
 
   <div
     v-else
-    class="mx-auto flex w-full max-w-md px-0 py-4 sm:py-12"
+    class="mx-auto w-full max-w-md px-4 py-8 sm:py-16 space-y-3"
   >
-    <UCard
-      :title="t('title')"
-      :description="t('subtitle')"
-      class="w-full"
+    <div class="rounded-2xl border border-default bg-default px-5 py-4">
+      <h1
+        class="text-lg font-bold text-highlighted"
+        v-text="t('title')"
+      />
+
+      <p
+        class="mt-0.5 text-sm text-muted"
+        v-text="t('subtitle')"
+      />
+    </div>
+
+    <form
+      class="space-y-3"
+      @submit.prevent="register"
     >
-      <form
-        class="space-y-4"
-        @submit.prevent="register"
-      >
-        <UFormField
-          :label="t('email')"
-          :error="errors.email"
-          name="email"
-          required
-        >
-          <UInput
-            v-model="email"
+      <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
+        <div class="px-5 py-4">
+          <UFormField
+            :label="t('email')"
+            :error="errors.email"
             name="email"
-            type="email"
-            autocomplete="email"
-            size="lg"
-            class="w-full"
-          />
-        </UFormField>
+            required
+          >
+            <UInput
+              v-model="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              size="lg"
+              class="w-full"
+            />
+          </UFormField>
+        </div>
 
-        <UFormField
-          :label="t('password')"
-          :error="errors.password"
-          name="password"
-          required
-        >
-          <UInput
-            v-model="password"
+        <div class="px-5 py-4">
+          <UFormField
+            :label="t('password')"
+            :error="errors.password"
             name="password"
-            type="password"
-            autocomplete="new-password"
-            size="lg"
-            class="w-full"
-          />
-        </UFormField>
+            required
+          >
+            <UInput
+              v-model="password"
+              name="password"
+              type="password"
+              autocomplete="new-password"
+              size="lg"
+              class="w-full"
+            />
+          </UFormField>
+        </div>
 
-        <UFormField
-          :label="t('confirm_password')"
-          :error="errors.confirmPassword"
-          name="confirmPassword"
-          required
-        >
-          <UInput
-            v-model="confirmPassword"
+        <div class="px-5 py-4">
+          <UFormField
+            :label="t('confirm_password')"
+            :error="errors.confirmPassword"
             name="confirmPassword"
-            type="password"
-            autocomplete="new-password"
-            size="lg"
-            class="w-full"
-          />
-        </UFormField>
-
-        <UAlert
-          v-if="backendError"
-          color="error"
-          variant="soft"
-          icon="i-lucide-circle-alert"
-          :description="backendError"
-        />
-
-        <UButton
-          type="submit"
-          :label="t('register')"
-          :loading="isLoading"
-          size="lg"
-          block
-        />
-      </form>
-
-      <div class="mt-5 flex flex-col items-center gap-2 text-center text-sm sm:flex-row sm:justify-center">
-        <span class="text-muted">{{ t('login_text') }}</span>
-
-        <UButton
-          :to="{ name: 'auth', query: { redirect: route.query.redirect as string } }"
-          color="primary"
-          variant="link"
-          size="sm"
-          class="justify-center px-0"
-        >
-          {{ t('login_link') }}
-        </UButton>
+            required
+          >
+            <UInput
+              v-model="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              autocomplete="new-password"
+              size="lg"
+              class="w-full"
+            />
+          </UFormField>
+        </div>
       </div>
 
-      <USeparator class="my-5" />
+      <UAlert
+        v-if="backendError"
+        color="error"
+        variant="soft"
+        icon="i-lucide-circle-alert"
+        :description="backendError"
+      />
 
-      <I18nT
-        keypath="terms_privacy_agreement"
-        tag="p"
-        class="text-center text-xs leading-relaxed text-muted"
+      <UButton
+        type="submit"
+        :label="t('register')"
+        :loading="isLoading"
+        size="lg"
+        block
+      />
+    </form>
+
+    <I18nT
+      keypath="terms_privacy_agreement"
+      tag="p"
+      class="text-center text-xs leading-relaxed text-muted"
+    >
+      <template #terms>
+        <ULink
+          :to="{ name: 'terms' }"
+          target="_blank"
+          class="font-medium text-primary"
+        >
+          {{
+            t('terms_of_service')
+          }}
+        </ULink>
+      </template>
+
+      <template #policy>
+        <ULink
+          :to="{ name: 'privacy' }"
+          target="_blank"
+          class="font-medium text-primary"
+        >
+          {{
+            t('privacy_policy')
+          }}
+        </ULink>
+      </template>
+    </I18nT>
+
+    <div class="flex items-center justify-center gap-2 text-sm">
+      <span class="text-muted">{{ t('login_text') }}</span>
+
+      <UButton
+        :to="{ name: 'auth', query: { redirect: route.query.redirect as string } }"
+        color="primary"
+        variant="link"
+        size="sm"
+        class="px-0"
       >
-        <template #terms>
-          <ULink
-            :to="{ name: 'terms' }"
-            target="_blank"
-            class="font-medium text-primary"
-          >
-            {{ t('terms_of_service') }}
-          </ULink>
-        </template>
-
-        <template #policy>
-          <ULink
-            :to="{ name: 'privacy' }"
-            target="_blank"
-            class="font-medium text-primary"
-          >
-            {{ t('privacy_policy') }}
-          </ULink>
-        </template>
-      </I18nT>
-    </UCard>
+        {{ t('login_link') }}
+      </UButton>
+    </div>
   </div>
 </template>

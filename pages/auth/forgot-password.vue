@@ -114,68 +114,80 @@ const goToLogin = () => {
 
   <div
     v-else
-    class="mx-auto flex w-full max-w-md px-0 py-4 sm:py-12"
+    class="mx-auto w-full max-w-md px-4 py-8 sm:py-16 space-y-3"
   >
-    <UCard
-      :title="t('title')"
-      :description="t('subtitle')"
-      class="w-full"
+    <div class="rounded-2xl border border-default bg-default px-5 py-4">
+      <h1
+        class="text-lg font-bold text-highlighted"
+        v-text="t('title')"
+      />
+
+      <p
+        class="mt-0.5 text-sm text-muted"
+        v-text="t('subtitle')"
+      />
+    </div>
+
+    <form
+      class="space-y-3"
+      @submit.prevent="resetPasswordForEmail"
     >
-      <form
-        class="space-y-4"
-        @submit.prevent="resetPasswordForEmail"
-      >
-        <UFormField
-          :label="t('email')"
-          :error="errors.email"
-          name="email"
-          required
-        >
-          <UInput
-            v-model="email"
+      <div class="rounded-2xl border border-default bg-default overflow-hidden">
+        <div class="px-5 py-4">
+          <UFormField
+            :label="t('email')"
+            :error="errors.email"
             name="email"
-            type="email"
-            autocomplete="email"
-            size="lg"
-            class="w-full"
-          />
-        </UFormField>
+            required
+          >
+            <UInput
+              v-model="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              size="lg"
+              class="w-full"
+            />
+          </UFormField>
+        </div>
+      </div>
 
-        <UAlert
-          v-if="backendError"
-          color="error"
-          variant="soft"
-          icon="i-lucide-circle-alert"
-          :description="backendError"
-        />
+      <UAlert
+        v-if="backendError"
+        color="error"
+        variant="soft"
+        icon="i-lucide-circle-alert"
+        :description="backendError"
+      />
 
-        <UAlert
-          v-if="successMessage"
-          color="success"
-          variant="soft"
-          icon="i-lucide-circle-check"
-          :description="successMessage"
-        />
+      <UAlert
+        v-if="successMessage"
+        color="success"
+        variant="soft"
+        icon="i-lucide-circle-check"
+        :description="successMessage"
+      />
 
-        <UButton
-          type="submit"
-          :label="t('reset_password')"
-          :loading="isLoading"
-          size="lg"
-          block
-        />
-      </form>
+      <UButton
+        type="submit"
+        :label="t('reset_password')"
+        :loading="isLoading"
+        size="lg"
+        block
+      />
+    </form>
 
+    <div class="flex justify-center">
       <UButton
         type="button"
         color="primary"
         variant="link"
-        class="mt-5 justify-center px-0"
-        block
+        size="sm"
+        class="px-0"
         @click="goToLogin"
       >
         {{ t('back_to_login') }}
       </UButton>
-    </UCard>
+    </div>
   </div>
 </template>

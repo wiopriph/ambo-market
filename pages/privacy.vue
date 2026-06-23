@@ -1,5 +1,19 @@
+<script setup lang="ts">
+useHead({
+  title: 'Privacy Policy – Ambo Market',
+  meta: [
+    { key: 'description', name: 'description', content: 'Learn how Ambo Market collects, uses, and protects your personal data in accordance with our Privacy Policy.' },
+    { key: 'og:title', property: 'og:title', content: 'Privacy Policy – Ambo Market' },
+    { key: 'og:description', property: 'og:description', content: 'Learn how Ambo Market collects, uses, and protects your personal data in accordance with our Privacy Policy.' },
+    { key: 'robots', name: 'robots', content: 'noindex, follow' },
+  ],
+});
+</script>
+
 <template>
-  <article class="mx-auto max-w-4xl space-y-5 py-4 text-sm leading-7 text-default sm:py-8 sm:text-base [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_table]:w-full [&_table]:min-w-[650px] [&_table]:border-collapse [&_td]:border [&_td]:border-default [&_td]:p-3 [&_td]:align-top [&_th]:border [&_th]:border-default [&_th]:bg-muted/40 [&_th]:p-3 [&_th]:text-left [&_th]:align-top [&_th]:font-semibold">
+  <article
+    class="mx-auto max-w-3xl space-y-5 py-6 text-sm leading-7 text-default sm:py-10 sm:text-base [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_table]:w-full [&_table]:min-w-[500px] [&_table]:border-collapse [&_td]:border [&_td]:border-default [&_td]:p-3 [&_td]:align-top [&_th]:border [&_th]:border-default [&_th]:bg-muted/40 [&_th]:p-3 [&_th]:text-left [&_th]:align-top [&_th]:font-semibold [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-highlighted"
+  >
     <h1 class="text-3xl font-bold text-highlighted sm:text-4xl">
       Privacy Policy
     </h1>

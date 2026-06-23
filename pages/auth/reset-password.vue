@@ -137,109 +137,123 @@ const goToLogin = () => {
 
   <div
     v-else
-    class="mx-auto flex w-full max-w-md px-0 py-4 sm:py-12"
+    class="mx-auto w-full max-w-md px-4 py-8 sm:py-16 space-y-3"
   >
-    <UCard
-      :title="isTokenInvalid ? t('invalid_link_title') : t('title')"
-      :description="isTokenInvalid ? undefined : t('subtitle')"
-      class="w-full"
-    >
-      <div
-        v-if="isTokenInvalid"
-        class="space-y-4"
-      >
-        <UAlert
-          color="warning"
-          variant="soft"
-          icon="i-lucide-triangle-alert"
-          :description="t('invalid_link_text')"
-        />
+    <div class="rounded-2xl border border-default bg-default px-5 py-4">
+      <h1
+        class="text-lg font-bold text-highlighted"
+        v-text="isTokenInvalid ? t('invalid_link_title') : t('title')"
+      />
 
+      <p
+        v-if="!isTokenInvalid"
+        class="mt-0.5 text-sm text-muted"
+        v-text="t('subtitle')"
+      />
+    </div>
+
+    <template v-if="isTokenInvalid">
+      <UAlert
+        color="warning"
+        variant="soft"
+        icon="i-lucide-triangle-alert"
+        :description="t('invalid_link_text')"
+      />
+
+      <div class="flex justify-center">
         <UButton
           type="button"
           color="primary"
           variant="link"
-          class="justify-center px-0"
-          block
+          size="sm"
+          class="px-0"
           @click="goToLogin"
         >
           {{ t('back_to_login') }}
         </UButton>
       </div>
+    </template>
 
-      <template v-else>
-        <form
-          class="space-y-4"
-          @submit.prevent="submitNewPassword"
-        >
-          <UFormField
-            :label="t('password')"
-            :error="errors.password"
-            name="password"
-            required
-          >
-            <UInput
-              v-model="password"
+    <template v-else>
+      <form
+        class="space-y-3"
+        @submit.prevent="submitNewPassword"
+      >
+        <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
+          <div class="px-5 py-4">
+            <UFormField
+              :label="t('password')"
+              :error="errors.password"
               name="password"
-              type="password"
-              autocomplete="new-password"
-              size="lg"
-              class="w-full"
-            />
-          </UFormField>
+              required
+            >
+              <UInput
+                v-model="password"
+                name="password"
+                type="password"
+                autocomplete="new-password"
+                size="lg"
+                class="w-full"
+              />
+            </UFormField>
+          </div>
 
-          <UFormField
-            :label="t('confirm_password')"
-            :error="errors.confirmPassword"
-            name="confirmPassword"
-            required
-          >
-            <UInput
-              v-model="confirmPassword"
+          <div class="px-5 py-4">
+            <UFormField
+              :label="t('confirm_password')"
+              :error="errors.confirmPassword"
               name="confirmPassword"
-              type="password"
-              autocomplete="new-password"
-              size="lg"
-              class="w-full"
-            />
-          </UFormField>
+              required
+            >
+              <UInput
+                v-model="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                autocomplete="new-password"
+                size="lg"
+                class="w-full"
+              />
+            </UFormField>
+          </div>
+        </div>
 
-          <UAlert
-            v-if="backendError"
-            color="error"
-            variant="soft"
-            icon="i-lucide-circle-alert"
-            :description="backendError"
-          />
+        <UAlert
+          v-if="backendError"
+          color="error"
+          variant="soft"
+          icon="i-lucide-circle-alert"
+          :description="backendError"
+        />
 
-          <UAlert
-            v-if="successMessage"
-            color="success"
-            variant="soft"
-            icon="i-lucide-circle-check"
-            :description="successMessage"
-          />
+        <UAlert
+          v-if="successMessage"
+          color="success"
+          variant="soft"
+          icon="i-lucide-circle-check"
+          :description="successMessage"
+        />
 
-          <UButton
-            type="submit"
-            :label="t('save')"
-            :loading="isLoading"
-            size="lg"
-            block
-          />
-        </form>
+        <UButton
+          type="submit"
+          :label="t('save')"
+          :loading="isLoading"
+          size="lg"
+          block
+        />
+      </form>
 
+      <div class="flex justify-center">
         <UButton
           type="button"
           color="primary"
           variant="link"
-          class="mt-5 justify-center px-0"
-          block
+          size="sm"
+          class="px-0"
           @click="goToLogin"
         >
           {{ t('back_to_login') }}
         </UButton>
-      </template>
-    </UCard>
+      </div>
+    </template>
   </div>
 </template>

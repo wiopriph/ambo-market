@@ -74,6 +74,6 @@ const emptyDescription = computed(() => props.emptyText || t('empty_text'));
     icon="i-lucide-package-search"
     :title="emptyTitle"
     :description="emptyDescription"
-    class="mt-5 mb-10 mx-auto max-w-sm"
+    class="mt-5 mb-10 mx-auto max-w-md"
   />
 </template>

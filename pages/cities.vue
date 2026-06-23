@@ -63,45 +63,50 @@ const allCityRoute = computed(() => ({
 </i18n>
 
 <template>
-  <section class="space-y-6 py-4 sm:py-8">
-    <div class="space-y-3">
+  <div class="mx-auto max-w-[1280px] px-4 sm:px-5 py-6 sm:py-8 space-y-3">
+    <div class="rounded-2xl border border-default bg-default px-5 py-4">
       <h1
-        class="text-3xl font-bold text-highlighted sm:text-4xl"
+        class="text-lg font-bold text-highlighted"
         v-text="t('h1')"
       />
 
       <p
-        class="max-w-3xl text-base leading-7 text-muted"
+        class="mt-0.5 text-sm text-muted"
         v-text="t('description')"
       />
     </div>
 
-    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-      <ULink
+    <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
+      <NuxtLink
         v-for="city in cities"
         :key="city.id"
         :to="city.route"
-        class="block rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        class="flex items-center gap-4 px-5 py-3.5 transition hover:bg-elevated"
       >
-        <UCard class="h-full transition hover:border-primary hover:bg-muted/30">
-          <div class="flex items-start gap-3">
-            <UIcon
-              :name="city.icon"
-              class="mt-1 size-5 shrink-0 text-primary"
-            />
+        <div class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/10">
+          <UIcon
+            :name="city.icon"
+            class="size-4.5 text-primary"
+          />
+        </div>
 
-            <div class="min-w-0 space-y-1">
-              <p class="font-semibold text-highlighted">
-                {{ city.name }}
-              </p>
+        <div class="min-w-0 flex-1">
+          <p
+            class="text-sm font-semibold text-highlighted"
+            v-text="city.name"
+          />
 
-              <p class="text-sm leading-6 text-muted">
-                {{ city.description }}
-              </p>
-            </div>
-          </div>
-        </UCard>
-      </ULink>
+          <p
+            class="text-xs text-muted"
+            v-text="city.description"
+          />
+        </div>
+
+        <UIcon
+          name="i-lucide-chevron-right"
+          class="size-4 shrink-0 text-muted"
+        />
+      </NuxtLink>
     </div>
-  </section>
+  </div>
 </template>

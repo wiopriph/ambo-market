@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate';
-import { object, array, string } from 'yup';
+import { array, object, string } from 'yup';
 import { useUser } from '~/composables/useUser';
 import { CATEGORIES } from '~/constants/categories';
 import { CITIES } from '~/constants/cities';
@@ -299,30 +299,33 @@ watch(subcategory, () => {
 </i18n>
 
 <template>
-  <section class="space-y-6 py-4 sm:py-8">
-    <div class="space-y-3">
+  <div class="w-full mx-auto max-w-3xl px-4 sm:px-5 py-4 sm:py-6 space-y-3">
+    <div class="rounded-2xl border border-default bg-default px-5 py-4">
       <h1
-        class="text-3xl font-bold text-highlighted sm:text-4xl"
+        class="text-lg font-bold text-highlighted"
         v-text="t('h1')"
       />
 
       <p
-        class="max-w-3xl text-base leading-7 text-muted"
+        class="mt-0.5 text-sm text-muted"
         v-text="t('intro')"
       />
     </div>
 
-    <UCard v-if="needPhoneNumber">
+    <div
+      v-if="needPhoneNumber"
+      class="rounded-2xl border border-default bg-default p-5"
+    >
       <LazyUserPhone />
-    </UCard>
+    </div>
 
     <form
       v-else
-      class="max-w-3xl space-y-5"
+      class="space-y-3"
       @submit.prevent="createPost"
     >
-      <UCard>
-        <div class="grid gap-4 sm:grid-cols-2">
+      <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
+        <div class="px-5 py-4">
           <UFormField
             :label="t('city')"
             :error="errors.cityId"
@@ -339,7 +342,9 @@ watch(subcategory, () => {
               class="w-full"
             />
           </UFormField>
+        </div>
 
+        <div class="px-5 py-4">
           <UFormField
             :label="t('category')"
             :error="errors.category"
@@ -356,9 +361,13 @@ watch(subcategory, () => {
               class="w-full"
             />
           </UFormField>
+        </div>
 
+        <div
+          v-if="subcategoriesItems.length"
+          class="px-5 py-4"
+        >
           <UFormField
-            v-if="subcategoriesItems.length"
             :label="t('subcategory')"
             :error="errors.subcategory"
             name="subcategory"
@@ -374,9 +383,13 @@ watch(subcategory, () => {
               class="w-full"
             />
           </UFormField>
+        </div>
 
+        <div
+          v-if="brandsItems.length"
+          class="px-5 py-4"
+        >
           <UFormField
-            v-if="brandsItems.length"
             :label="t('brand')"
             :error="errors.brand"
             name="brand"
@@ -392,14 +405,17 @@ watch(subcategory, () => {
               class="w-full"
             />
           </UFormField>
+        </div>
+      </div>
 
+      <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
+        <div class="px-5 py-4">
           <UFormField
             :label="t('product_name')"
             :help="t('product_name_length')"
             :error="errors.productName"
             name="productName"
             required
-            class="sm:col-span-2"
           >
             <UInput
               v-model="productName"
@@ -411,7 +427,9 @@ watch(subcategory, () => {
               class="w-full"
             />
           </UFormField>
+        </div>
 
+        <div class="px-5 py-4">
           <UFormField
             :label="t('price')"
             :error="errors.price"
@@ -429,13 +447,14 @@ watch(subcategory, () => {
               class="w-full"
             />
           </UFormField>
+        </div>
 
+        <div class="px-5 py-4">
           <UFormField
             :label="t('description')"
             :error="errors.description"
             name="description"
             required
-            class="sm:col-span-2"
           >
             <UTextarea
               v-model="description"
@@ -448,103 +467,126 @@ watch(subcategory, () => {
               class="w-full"
             />
           </UFormField>
+        </div>
+      </div>
 
-          <UFormField
-            :label="t('photos')"
-            :error="errors.images"
-            name="images"
-            required
-            class="sm:col-span-2"
-          >
-            <input
-              ref="fileInput"
-              class="hidden"
-              accept="image/jpg,image/jpeg,image/png,image/bmp"
-              type="file"
-              multiple
-              @change="handleFileUpload"
-            >
+      <div class="rounded-2xl border border-default bg-default p-5 space-y-4">
+        <div>
+          <p
+            class="text-sm font-semibold text-highlighted"
+            v-text="t('photos')"
+          />
 
-            <div
-              v-if="images.length"
-              class="mb-3 grid grid-cols-2 gap-3 sm:grid-cols-4"
-            >
-              <div
-                v-for="(image, index) in images"
-                :key="`product_image_${index}`"
-                class="space-y-2"
-              >
-                <div class="aspect-square overflow-hidden rounded-lg border border-default bg-muted">
-                  <img
-                    :src="image.base64"
-                    :alt="`${t('photos')} ${index + 1}`"
-                    class="size-full object-cover"
-                  >
-                </div>
-
-                <UButton
-                  type="button"
-                  color="neutral"
-                  variant="ghost"
-                  size="xs"
-                  block
-                  @click="deletePhoto(index)"
-                >
-                  {{ t('remove_photo') }}
-                </UButton>
-              </div>
-            </div>
-
-            <UButton
-              type="button"
-              color="neutral"
-              variant="soft"
-              size="lg"
-              @click="loadFile"
-            >
-              {{ t('add_photo') }}
-            </UButton>
-
-            <div class="mt-3 space-y-1 text-sm leading-6 text-muted">
-              <p v-text="t('photos_notice.first')" />
-
-              <p v-text="t('photos_notice.second')" />
-            </div>
-          </UFormField>
+          <p
+            v-if="errors.images"
+            class="mt-1 text-sm text-error"
+            v-text="errors.images"
+          />
         </div>
 
-        <UAlert
-          v-if="hasAPIError"
-          color="error"
-          variant="soft"
-          :title="t('api_error_title')"
-          :description="apiErrorMessage"
-          class="mt-5"
-        />
-      </UCard>
+        <input
+          ref="fileInput"
+          class="hidden"
+          accept="image/jpg,image/jpeg,image/png,image/bmp"
+          type="file"
+          multiple
+          @change="handleFileUpload"
+        >
 
-      <div class="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+        <div
+          v-if="images.length"
+          class="grid grid-cols-3 gap-2 sm:grid-cols-4"
+        >
+          <div
+            v-for="(image, index) in images"
+            :key="`product_image_${index}`"
+            class="group relative"
+          >
+            <div class="aspect-square overflow-hidden rounded-xl border border-default bg-muted">
+              <img
+                :src="image.base64"
+                :alt="`${t('photos')} ${index + 1}`"
+                class="size-full object-cover"
+              >
+            </div>
+
+            <button
+              type="button"
+              class="absolute right-1.5 top-1.5 flex size-6 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition hover:bg-black/80"
+              :aria-label="t('remove_photo')"
+              @click="deletePhoto(index)"
+            >
+              <UIcon
+                name="i-lucide-x"
+                class="size-3.5"
+              />
+            </button>
+
+            <span
+              v-if="index === 0"
+              class="absolute bottom-1.5 left-1.5 rounded-md bg-primary/90 px-1.5 py-0.5 text-[10px] font-semibold text-white"
+            >
+              1
+            </span>
+          </div>
+
+          <button
+            type="button"
+            class="aspect-square rounded-xl border-2 border-dashed border-default flex flex-col items-center justify-center gap-1 text-muted transition hover:border-primary hover:text-primary"
+            @click="loadFile"
+          >
+            <UIcon
+              name="i-lucide-plus"
+              class="size-5"
+            />
+          </button>
+        </div>
+
         <UButton
+          v-if="!images.length"
           type="button"
           color="neutral"
-          variant="ghost"
+          variant="soft"
           size="lg"
-          class="justify-center"
-          @click="clearFields"
-        >
-          {{ t('clear_form') }}
-        </UButton>
+          icon="i-lucide-image-plus"
+          :label="t('add_photo')"
+          block
+          @click="loadFile"
+        />
 
-        <UButton
-          type="submit"
-          color="primary"
-          size="lg"
-          :loading="isLoading"
-          class="justify-center sm:min-w-48"
-        >
-          {{ t('place_ad') }}
-        </UButton>
+        <div class="space-y-1 text-xs text-muted">
+          <p v-text="t('photos_notice.first')" />
+
+          <p v-text="t('photos_notice.second')" />
+        </div>
       </div>
+
+      <UAlert
+        v-if="hasAPIError"
+        color="error"
+        variant="soft"
+        :title="t('api_error_title')"
+        :description="apiErrorMessage"
+      />
+
+      <UButton
+        type="submit"
+        color="primary"
+        size="lg"
+        :loading="isLoading"
+        :label="t('place_ad')"
+        block
+      />
+
+      <UButton
+        type="button"
+        color="neutral"
+        variant="ghost"
+        size="lg"
+        :label="t('clear_form')"
+        block
+        @click="clearFields"
+      />
     </form>
-  </section>
+  </div>
 </template>

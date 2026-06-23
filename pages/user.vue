@@ -64,9 +64,9 @@ const userAvatar = computed(() => ({
   text: userName.value.slice(0, 2).toUpperCase(),
 }));
 
-const memberSince = computed(() => user.value?.creationTime
-  ? formatFullDate(user.value.creationTime, locale.value)
-  : '');
+const memberSince = computed(() => user.value?.creationTime ?
+  formatFullDate(user.value.creationTime, locale.value) :
+  '');
 
 const stats = computed(() => {
   const list = allPosts.value ?? [];
@@ -135,12 +135,8 @@ useHead({
 </i18n>
 
 <template>
-  <div class="w-full max-w-[1280px] mx-auto px-4 sm:px-5 py-4 sm:py-6 space-y-5">
-
-    <!-- Profile card -->
+  <div class="w-full mx-auto px-4 sm:px-5 py-4 sm:py-6 space-y-5">
     <div class="rounded-2xl border border-default bg-default p-5 space-y-5">
-
-      <!-- Top row: avatar + name + actions -->
       <div class="flex items-start gap-4">
         <UAvatar
           v-bind="userAvatar"
@@ -149,7 +145,10 @@ useHead({
         />
 
         <div class="min-w-0 flex-1 pt-0.5">
-          <h1 class="truncate text-lg font-bold text-highlighted leading-tight" v-text="userName" />
+          <h1
+            class="truncate text-lg font-bold text-highlighted leading-tight"
+            v-text="userName"
+          />
 
           <p
             v-if="memberSince"
@@ -181,28 +180,47 @@ useHead({
         </div>
       </div>
 
-      <!-- Stats row -->
       <div
         v-if="!isSettingsPage"
         class="grid grid-cols-3 divide-x divide-default rounded-xl border border-default overflow-hidden"
       >
         <div class="flex flex-col items-center py-3 px-2">
-          <span class="text-xl font-bold text-highlighted" v-text="stats.total" />
-          <span class="mt-0.5 text-xs text-muted" v-text="t('total')" />
+          <span
+            class="text-xl font-bold text-highlighted"
+            v-text="stats.total"
+          />
+
+          <span
+            class="mt-0.5 text-xs text-muted"
+            v-text="t('total')"
+          />
         </div>
 
         <div class="flex flex-col items-center py-3 px-2">
-          <span class="text-xl font-bold text-success" v-text="stats.active" />
-          <span class="mt-0.5 text-xs text-muted" v-text="t('active')" />
+          <span
+            class="text-xl font-bold text-success"
+            v-text="stats.active"
+          />
+
+          <span
+            class="mt-0.5 text-xs text-muted"
+            v-text="t('active')"
+          />
         </div>
 
         <div class="flex flex-col items-center py-3 px-2">
-          <span class="text-xl font-bold text-highlighted" v-text="stats.sold" />
-          <span class="mt-0.5 text-xs text-muted" v-text="t('sold')" />
+          <span
+            class="text-xl font-bold text-highlighted"
+            v-text="stats.sold"
+          />
+
+          <span
+            class="mt-0.5 text-xs text-muted"
+            v-text="t('sold')"
+          />
         </div>
       </div>
 
-      <!-- Create ad CTA -->
       <UButton
         v-if="isCurrentUser && !isSettingsPage"
         :label="t('create_ad')"
@@ -214,7 +232,6 @@ useHead({
       />
     </div>
 
-    <!-- Child page content -->
     <NuxtPage :userName="userName" />
   </div>
 </template>

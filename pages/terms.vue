@@ -1,5 +1,19 @@
+<script setup lang="ts">
+useHead({
+  title: 'Terms of Use – Ambo Market',
+  meta: [
+    { key: 'description', name: 'description', content: 'Read the Ambo Market Terms of Use to understand the rules and conditions for using our classifieds platform.' },
+    { key: 'og:title', property: 'og:title', content: 'Terms of Use – Ambo Market' },
+    { key: 'og:description', property: 'og:description', content: 'Read the Ambo Market Terms of Use to understand the rules and conditions for using our classifieds platform.' },
+    { key: 'robots', name: 'robots', content: 'noindex, follow' },
+  ],
+});
+</script>
+
 <template>
-  <article class="mx-auto max-w-4xl space-y-5 py-4 text-sm leading-7 text-default sm:py-8 sm:text-base [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold">
+  <article
+    class="mx-auto max-w-3xl space-y-5 py-6 text-sm leading-7 text-default sm:py-10 sm:text-base [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-highlighted [&_li>p:first-child]:font-semibold [&_li>p:first-child]:text-highlighted [&_ol]:space-y-6 [&_ol]:pl-5 [&_ol]:list-decimal [&_li]:space-y-2"
+  >
     <h1 class="text-3xl font-bold text-highlighted sm:text-4xl">
       Platform Terms of Use
     </h1>
@@ -175,7 +189,8 @@
         </p>
 
         <p>
-          All trademarks, logos, trade dress, service names and service marks ("<strong>Marks</strong>") displayed on the Platform are
+          All trademarks, logos, trade dress, service names and service marks ("<strong>Marks</strong>") displayed on
+          the Platform are
           our property or the property of certain other third-parties. You are not permitted to use these Marks without
           our prior written consent.
         </p>
@@ -259,7 +274,8 @@
         <p>
           <strong>Account creation.</strong>
           Although you can browse the Platform as a guest, you will need to create an
-          account (an "<strong>Account</strong>") in order to access certain features of the Platform. If you choose to register for an
+          account (an "<strong>Account</strong>") in order to access certain features of the Platform. If you choose to
+          register for an
           Account, you will have to provide certain information about yourself as prompted during the account
           registration process on the Platform.
         </p>
@@ -277,13 +293,15 @@
         </p>
 
         <p>
-          <strong>You are responsible for your Account.</strong> You are responsible for maintaining the confidentiality of
+          <strong>You are responsible for your Account.</strong> You are responsible for maintaining the confidentiality
+          of
           your Account log-in information (including your password). Accordingly, you are responsible for all activities
           that occur under your Account.
         </p>
 
         <p>
-          <strong>Unauthorised use of your Account.</strong> You should notify us immediately if you suspect or become aware
+          <strong>Unauthorised use of your Account.</strong> You should notify us immediately if you suspect or become
+          aware
           of any unauthorised use of your Account or any other breach of its security.
         </p>
 
@@ -329,7 +347,8 @@
           ") to advertise such item or
           service (each a "<strong>Listing</strong>
           ") to other users of the Platform. A user who is interested in such item or service
-          (the "<strong>Buyer</strong>") may then contact the Seller (via the Listing) to make an offer for such item or service.
+          (the "<strong>Buyer</strong>") may then contact the Seller (via the Listing) to make an offer for such item or
+          service.
         </p>
 
         <p>
@@ -415,7 +434,8 @@
         </p>
 
         <p>
-          Ambo Market allows users to rate and review their interactions with other users of the Platform. The purpose of Reviews is to
+          Ambo Market allows users to rate and review their interactions with other users of the Platform. The purpose
+          of Reviews is to
           build trust and transparency on the Platform and promote a respectful community.
         </p>
 
@@ -550,7 +570,8 @@
 
         <ul class="list-disc space-y-2 pl-5">
           <li>
-            <strong>If you are using the Platform in a business or commercial capacity:</strong> We provide the Platform and
+            <strong>If you are using the Platform in a business or commercial capacity:</strong> We provide the Platform
+            and
             the Content to you ‘as is’ and ‘as available’. We exclude all implied conditions, warranties,
             representations or other terms that may apply to the Platform or any Content. We will not be liable to you
             for any loss or damage, whether in contract, tort (including negligence), breach of statutory duty or
@@ -562,7 +583,8 @@
           </li>
 
           <li>
-            <strong>If you are using the Platform in a personal capacity:</strong> You acknowledge and agree that we only
+            <strong>If you are using the Platform in a personal capacity:</strong> You acknowledge and agree that we
+            only
             provide the Platform to you for domestic and private use. We do not guarantee the availability of the
             Platform, or that the Platform or any Content will be error-free or fit for any specific purpose. You agree
             not to use the Platform for any commercial or business purposes, and we have no liability to you for any
@@ -607,7 +629,8 @@
           If you are the owner of intellectual property rights, or an agent who is fully authorised to act on behalf of
           the owner of intellectual property rights, and believe that any Content infringes upon your intellectual
           property right or the intellectual property rights of the owner on whose behalf you are authorised to act,
-          please notify Ambo Market at <a href="mailto:support@ambo.market">support@ambo.market</a> with full details of the alleged infringement.
+          please notify Ambo Market at <a href="mailto:support@ambo.market">support@ambo.market</a> with full details of
+          the alleged infringement.
           We will use all reasonable efforts to remove any infringing Content from the Platform within a reasonable
           period of time.
         </p>
@@ -619,7 +642,8 @@
         </p>
 
         <p>
-          <strong>Links to third-party sites or content.</strong> Where the Platform contains links to other websites and/or
+          <strong>Links to third-party sites or content.</strong> Where the Platform contains links to other websites
+          and/or
           third-party content (including in Listings), these links are provided for your information and convenience
           only. Such links should not be interpreted as approval by us of those linked websites or any content you may
           obtain from them. We have no control over the contents of such third-party websites, and exclude all liability
@@ -637,18 +661,21 @@
         <p>
           <strong>Contact.</strong>
 
-          You may contact us by emailing <a href="mailto:support@ambo.market">support@ambo.market</a>. If we need to contact you, we will write to
+          You may contact us by emailing <a href="mailto:support@ambo.market">support@ambo.market</a>. If we need to
+          contact you, we will write to
           the email address associated with your Account (if any).
         </p>
 
         <p>
-          <strong>We are not responsible for viruses.</strong> We do not guarantee that the Platform and the Content will be
+          <strong>We are not responsible for viruses.</strong> We do not guarantee that the Platform and the Content
+          will be
           secure or free from bugs or viruses. You are responsible for configuring your device to access the Platform
           and the Content in a secure way. Where relevant, you should use your own virus protection software.
         </p>
 
         <p>
-          <strong>We are not liable for events outside our control.</strong> We will not be liable or responsible for any
+          <strong>We are not liable for events outside our control.</strong> We will not be liable or responsible for
+          any
           failure to perform, or delay in performance of, any of our obligations that is caused by events outside our
           reasonable control (each a "Force Majeure Event"). A Force Majeure Event includes any act, event,
           non-happening, omission or accident beyond our reasonable control. The performance of our obligations under
@@ -674,19 +701,22 @@
         </p>
 
         <p>
-          <strong>Nobody else has any rights under these Terms of Use.</strong> These Terms of Use are between you and Ambo
+          <strong>Nobody else has any rights under these Terms of Use.</strong> These Terms of Use are between you and
+          Ambo
           Market only, and no other person will have any rights to enforce or rely on any of its provisions.
         </p>
 
         <p>
-          <strong>Even if we delay enforcing our rights under these Terms of Use, we can still enforce them later.</strong>
+          <strong>Even if we delay enforcing our rights under these Terms of Use, we can still enforce them
+            later.</strong>
           If we do not insist immediately that you do anything you are required to do under these Terms of Use, or if we
           delay taking steps against you in respect of your breaching these Terms of Use, that will not mean that you do
           not have to do those things and it will not prevent us taking steps against you at a later date.
         </p>
 
         <p>
-          <strong>If a court finds part of these Terms of Use illegal, the rest will continue in force.</strong> Each of the
+          <strong>If a court finds part of these Terms of Use illegal, the rest will continue in force.</strong> Each of
+          the
           sections of these Terms of Use operates separately. If any court or relevant authority decides that any of
           them are unlawful, the remaining sections will remain in full force and effect.
         </p>
@@ -699,7 +729,8 @@
         </p>
 
         <p>
-          <strong>Language.</strong> If these Terms of Use are translated into any other language and there is a discrepancy
+          <strong>Language.</strong> If these Terms of Use are translated into any other language and there is a
+          discrepancy
           between the English text and the text in the other language, the English text version will prevail to the
           fullest extent permitted by applicable law.
         </p>
@@ -708,7 +739,8 @@
           <strong>Dispute resolution.</strong>
 
           If a dispute arises between you and Ambo Market, we strongly encourage you to first contact us directly to
-          seek a resolution by emailing <a href="mailto:support@ambo.market">support@ambo.market</a>. We will review your complaint and do our best
+          seek a resolution by emailing <a href="mailto:support@ambo.market">support@ambo.market</a>. We will review
+          your complaint and do our best
           to address it.
         </p>
       </li>

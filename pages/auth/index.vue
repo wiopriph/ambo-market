@@ -4,11 +4,7 @@ import { object, string } from 'yup';
 import IconFb from 'assets/images/auth/socials/icon-fb.svg?component';
 import IconGoogle from 'assets/images/auth/socials/icon-google.svg?component';
 import { useUser } from '~/composables/useUser';
-import {
-  CLICK_CREATE_ACCOUNT,
-  CLICK_EMAIL_LOGIN,
-  CLICK_SOCIAL_LOGIN,
-} from '~/constants/analytics-events';
+import { CLICK_CREATE_ACCOUNT, CLICK_EMAIL_LOGIN, CLICK_SOCIAL_LOGIN } from '~/constants/analytics-events';
 
 
 definePageMeta({
@@ -187,39 +183,81 @@ const createAccount = () => {
 
   <div
     v-else
-    class="mx-auto flex w-full max-w-md px-0 py-4 sm:py-12"
+    class="mx-auto w-full max-w-md px-4 py-8 sm:py-16 space-y-3"
   >
-    <UCard
-      :title="t('title')"
-      :description="t('subtitle')"
-      class="w-full"
-    >
-      <form
-        class="space-y-4"
-        @submit.prevent="authByEmail"
-      >
-        <UFormField
-          :label="t('email')"
-          :error="errors.email"
-          name="email"
-          required
-        >
-          <UInput
-            v-model="email"
-            name="email"
-            type="email"
-            autocomplete="email"
-            size="lg"
-            class="w-full"
-          />
-        </UFormField>
+    <div class="rounded-2xl border border-default bg-default px-5 py-4">
+      <h1
+        class="text-lg font-bold text-highlighted"
+        v-text="t('title')"
+      />
 
-        <UFormField
-          :label="t('password')"
-          :error="errors.password"
-          name="password"
-          required
-        >
+      <p
+        class="mt-0.5 text-sm text-muted"
+        v-text="t('subtitle')"
+      />
+    </div>
+
+    <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
+      <button
+        type="button"
+        class="flex w-full items-center gap-3 px-5 py-3.5 text-sm font-medium text-highlighted transition hover:bg-elevated"
+        @click="authByGoogle"
+      >
+        <IconGoogle class="size-5 shrink-0" />
+        Google
+      </button>
+
+      <button
+        type="button"
+        class="flex w-full items-center gap-3 px-5 py-3.5 text-sm font-medium text-highlighted transition hover:bg-elevated"
+        @click="authByFb"
+      >
+        <IconFb class="size-5 shrink-0" />
+        Facebook
+      </button>
+    </div>
+
+    <USeparator :label="t('social_block_title')" />
+
+    <form
+      class="space-y-3"
+      @submit.prevent="authByEmail"
+    >
+      <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
+        <div class="px-5 py-4">
+          <UFormField
+            :label="t('email')"
+            :error="errors.email"
+            name="email"
+            required
+          >
+            <UInput
+              v-model="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              size="lg"
+              class="w-full"
+            />
+          </UFormField>
+        </div>
+
+        <div class="px-5 py-4">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-sm font-medium text-highlighted">{{ t('password') }}</span>
+
+            <UButton
+              type="button"
+              color="primary"
+              variant="link"
+              size="xs"
+              class="px-0 h-auto"
+              @click="goToForgotPassword"
+            >
+              {{ t('forgot_password') }}
+            </UButton>
+          </div>
+
           <UInput
             v-model="password"
             name="password"
@@ -228,90 +266,45 @@ const createAccount = () => {
             size="lg"
             class="w-full"
           />
-        </UFormField>
 
-        <UAlert
-          v-if="backendError"
-          color="error"
-          variant="soft"
-          icon="i-lucide-circle-alert"
-          :description="backendError"
-        />
-
-        <div class="flex justify-end">
-          <UButton
-            type="button"
-            color="primary"
-            variant="link"
-            class="px-0"
-            @click="goToForgotPassword"
-          >
-            {{ t('forgot_password') }}
-          </UButton>
+          <p
+            v-if="errors.password"
+            class="mt-1 text-sm text-error"
+            v-text="errors.password"
+          />
         </div>
+      </div>
 
+      <UAlert
+        v-if="backendError"
+        color="error"
+        variant="soft"
+        icon="i-lucide-circle-alert"
+        :description="backendError"
+      />
 
-        <UButton
-          type="submit"
-          :label="t('login')"
-          :loading="isLoading"
-          size="lg"
-          block
-        />
-      </form>
+      <UButton
+        type="submit"
+        :label="t('login')"
+        :loading="isLoading"
+        size="lg"
+        block
+      />
+    </form>
 
-      <template #footer>
-        <div class="space-y-5">
-          <USeparator :label="t('social_block_title')" />
+    <div class="flex items-center justify-center gap-2 text-sm">
+      <span class="text-muted">{{ t('no_account') }}</span>
 
-          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <UButton
-              type="button"
-              color="neutral"
-              variant="outline"
-              size="lg"
-              block
-              @click="authByFb"
-            >
-              <template #leading>
-                <IconFb class="size-5" />
-              </template>
-
-              Facebook
-            </UButton>
-
-            <UButton
-              type="button"
-              color="neutral"
-              variant="outline"
-              size="lg"
-              block
-              @click="authByGoogle"
-            >
-              <template #leading>
-                <IconGoogle class="size-5" />
-              </template>
-
-              Google
-            </UButton>
-          </div>
-
-          <div class="flex flex-col items-center gap-2 text-center text-sm sm:flex-row sm:justify-center">
-            <span class="text-muted">{{ t('no_account') }}</span>
-
-            <UButton
-              type="button"
-              color="primary"
-              variant="link"
-              size="sm"
-              class="justify-center px-0"
-              @click="createAccount"
-            >
-              {{ t('create_one') }}
-            </UButton>
-          </div>
-        </div>
-      </template>
-    </UCard>
+      <UButton
+        type="button"
+        color="primary"
+        variant="link"
+        size="sm"
+        class="px-0"
+        @click="createAccount"
+      >
+        {{ t('create_one') }}
+      </UButton>
+    </div>
   </div>
 </template>
