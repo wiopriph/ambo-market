@@ -102,30 +102,85 @@ const breadcrumbs = computed(() => [
 {
   "en": {
     "main_page": "Home",
-    "blog": "Blog"
+    "blog": "Blog",
+    "tags": "Tags"
   },
   "pt": {
     "main_page": "Página Inicial",
-    "blog": "Blog"
+    "blog": "Blog",
+    "tags": "Tags"
   }
 }
 </i18n>
 
 <template>
-  <article
+  <div
     v-if="doc"
-    class="mx-auto space-y-6 py-4 sm:py-8"
+    class="mx-auto  px-4 sm:px-5 py-6 sm:py-8 space-y-4"
   >
-    <UBreadcrumb :items="breadcrumbs" />
-
-    <ContentRenderer
-      :value="doc"
-      class="max-w-none"
+    <UBreadcrumb
+      :items="breadcrumbs"
+      class="hidden sm:flex"
     />
+
+    <div class="rounded-2xl border border-default bg-default overflow-hidden">
+      <div
+        v-if="doc.image"
+        class="aspect-[16/9] overflow-hidden bg-muted"
+      >
+        <NuxtImg
+          :src="doc.image"
+          :alt="doc.title"
+          class="size-full object-cover"
+          sizes="sm:100vw lg:800px"
+        />
+      </div>
+
+      <div class="px-5 py-4 space-y-3">
+        <div
+          v-if="doc.tags?.length"
+          class="flex flex-wrap gap-1"
+        >
+          <UBadge
+            v-for="tag in doc.tags"
+            :key="tag"
+            :label="tag"
+            color="primary"
+            variant="soft"
+            size="sm"
+          />
+        </div>
+
+        <h1
+          class="text-xl font-bold text-highlighted leading-snug sm:text-2xl"
+          v-text="doc.title"
+        />
+
+        <p
+          v-if="doc.description"
+          class="text-sm text-muted leading-relaxed"
+          v-text="doc.description"
+        />
+
+        <p
+          v-if="doc.date"
+          class="text-xs text-muted"
+        >
+          {{ new Date(doc.date).toLocaleDateString('pt-AO', { year: 'numeric', month: 'long', day: 'numeric' }) }}
+        </p>
+      </div>
+    </div>
+
+    <div class="rounded-2xl border border-default bg-default px-5 py-6">
+      <ContentRenderer
+        :value="doc"
+        class="prose prose-sm dark:prose-invert max-w-none"
+      />
+    </div>
 
     <div
       v-if="doc.tags?.length"
-      class="flex flex-wrap gap-2 border-t border-default pt-5"
+      class="flex flex-wrap gap-2"
     >
       <UButton
         v-for="tag in doc.tags"
@@ -137,5 +192,5 @@ const breadcrumbs = computed(() => [
         size="sm"
       />
     </div>
-  </article>
+  </div>
 </template>

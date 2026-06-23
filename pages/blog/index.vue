@@ -127,6 +127,7 @@ const breadcrumbs = computed(() => [
     "title": "Ambo Market Blog – Expert Tips, Guides & Market Insights from Angola",
     "h1": "Ambo Market Blog",
     "description": "Stay ahead with expert tips, step-by-step guides, and the latest market trends on the Ambo Market blog. Whether you're buying or selling in Angola, our blog helps you succeed!",
+    "read_more": "Read more",
     "not_found_title": "No articles found",
     "not_found": "Sorry, no articles match your search. Try another topic!"
   },
@@ -137,6 +138,7 @@ const breadcrumbs = computed(() => [
     "title": "Blog da Ambo Market – Dicas, Guias e Insights do Mercado Angolano",
     "h1": "Blog da Ambo Market",
     "description": "Fique à frente com dicas de especialistas, guias passo a passo e as últimas tendências do mercado no blog da Ambo Market. Se você compra ou vende em Angola, nosso blog é seu parceiro para o sucesso!",
+    "read_more": "Ler mais",
     "not_found_title": "Nenhum artigo encontrado",
     "not_found": "Desculpe, nenhum artigo encontrado para essa pesquisa. Tente outro tema!"
   }
@@ -144,21 +146,17 @@ const breadcrumbs = computed(() => [
 </i18n>
 
 <template>
-  <section class="space-y-6 py-4 sm:py-8">
-    <UBreadcrumb :items="breadcrumbs" />
+  <div class="mx-auto max-w-[1280px] px-4 sm:px-5 py-6 sm:py-8 space-y-5">
 
-    <div class="space-y-3">
-      <h1
-        class="text-3xl font-bold text-highlighted sm:text-4xl"
-        v-text="t('h1')"
-      />
+    <UBreadcrumb :items="breadcrumbs" class="hidden sm:flex" />
 
-      <p
-        class="max-w-3xl text-base leading-7 text-muted"
-        v-text="t('description')"
-      />
+    <!-- Header -->
+    <div class="rounded-2xl border border-default bg-default px-5 py-4">
+      <h1 class="text-lg font-bold text-highlighted" v-text="t('h1')" />
+      <p class="mt-0.5 text-sm text-muted" v-text="t('description')" />
     </div>
 
+    <!-- Tag filters -->
     <div class="flex flex-wrap gap-2">
       <UButton
         v-for="tag in tagsList"
@@ -171,34 +169,52 @@ const breadcrumbs = computed(() => [
       />
     </div>
 
+    <!-- Posts grid -->
     <div
       v-if="posts?.length"
-      class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+      class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3"
     >
-      <UBlogPost
+      <NuxtLink
         v-for="post in posts"
         :key="post.path"
         :to="post.path"
-        :title="post.title"
-        :description="post.description"
-        :image="post.image"
-        variant="outline"
+        class="group flex flex-col overflow-hidden rounded-2xl border border-default bg-default transition hover:border-primary/40 hover:shadow-sm"
       >
-        <template
-          v-if="post.tags?.length"
-          #authors
-        >
-          <div class="flex flex-wrap gap-1.5">
+        <div class="aspect-[16/9] overflow-hidden bg-muted">
+          <NuxtImg
+            v-if="post.image"
+            :src="post.image"
+            :alt="post.title"
+            class="size-full object-cover transition group-hover:scale-105"
+            loading="lazy"
+            sizes="sm:100vw md:50vw lg:420px"
+          />
+          <div v-else class="size-full flex items-center justify-center">
+            <UIcon name="i-lucide-newspaper" class="size-10 text-muted" />
+          </div>
+        </div>
+
+        <div class="flex flex-1 flex-col gap-2 p-4">
+          <div v-if="post.tags?.length" class="flex flex-wrap gap-1">
             <UBadge
               v-for="tag in post.tags"
               :key="tag"
               :label="tag"
               color="neutral"
               variant="soft"
+              size="sm"
             />
           </div>
-        </template>
-      </UBlogPost>
+
+          <p class="text-sm font-semibold text-highlighted line-clamp-2 leading-snug" v-text="post.title" />
+          <p class="text-xs text-muted line-clamp-2 leading-relaxed flex-1" v-text="post.description" />
+
+          <div class="flex items-center gap-1 text-xs text-primary mt-1">
+            <span>{{ t('read_more') }}</span>
+            <UIcon name="i-lucide-arrow-right" class="size-3" />
+          </div>
+        </div>
+      </NuxtLink>
     </div>
 
     <UEmpty
@@ -210,10 +226,7 @@ const breadcrumbs = computed(() => [
       size="lg"
     />
 
-    <div
-      v-if="hasPagination"
-      class="flex justify-center"
-    >
+    <div v-if="hasPagination" class="flex justify-center">
       <UPagination
         :page="currentPage"
         :total="postCount || 0"
@@ -222,5 +235,5 @@ const breadcrumbs = computed(() => [
         @update:page="setPage"
       />
     </div>
-  </section>
+  </div>
 </template>
