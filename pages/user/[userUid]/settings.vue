@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate';
 import { object, string } from 'yup';
-import { useUser, type ProfileImageInput, type ProfileUpdateInput } from '~/composables/useUser';
+import { type ProfileImageInput, type ProfileUpdateInput, useUser } from '~/composables/useUser';
 import { PHONE_REG_EXP } from '~/constants/reg-exps';
 
 
@@ -203,128 +203,120 @@ const saveSettings = handleSubmit.withControlled(async () => {
 </i18n>
 
 <template>
-  <section
+  <form
     v-if="currentUser"
-    class="max-w-3xl space-y-6 py-4 sm:py-8"
+    class="space-y-3"
+    @submit.prevent="saveSettings"
   >
-    <div class="space-y-3">
-      <h1
-        class="text-3xl font-bold text-highlighted sm:text-4xl"
-        v-text="t('title')"
-      />
+    <div class="rounded-2xl border border-default bg-default p-5">
+      <input
+        ref="photoInputRef"
+        class="hidden"
+        type="file"
+        accept="image/jpg,image/jpeg,image/png,image/bmp"
+        @change="selectPhoto"
+      >
 
-      <p
-        class="max-w-2xl text-base leading-7 text-muted"
-        v-text="t('description')"
-      />
-    </div>
+      <button
+        type="button"
+        :aria-label="t('change_photo')"
+        class="flex w-full items-center gap-4 text-left"
+        @click="openPhotoDialog"
+      >
+        <div class="relative shrink-0">
+          <UAvatar
+            :src="photoPreviewUrl || undefined"
+            :alt="name || t('photo')"
+            :text="name"
+            size="2xl"
+            class="ring-2 ring-default"
+          />
 
-    <form
-      class="space-y-5"
-      @submit.prevent="saveSettings"
-    >
-      <UCard>
-        <div class="space-y-6">
-          <UFormField
-            name="photo"
+          <span
+            class="absolute bottom-0 right-0 flex size-6 items-center justify-center rounded-full bg-primary shadow-sm"
           >
-            <input
-              ref="photoInputRef"
-              class="hidden"
-              type="file"
-              accept="image/jpg,image/jpeg,image/png,image/bmp"
-              @change="selectPhoto"
-            >
+            <UIcon
+              name="i-lucide-camera"
+              class="size-3.5 text-white"
+            />
+          </span>
+        </div>
 
-            <div class="flex justify-center">
-              <div class="relative">
-                <button
-                  type="button"
-                  :aria-label="t('change_photo')"
-                  class="block rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                  @click="openPhotoDialog"
-                >
-                  <UAvatar
-                    :src="photoPreviewUrl || undefined"
-                    :alt="name || t('photo')"
-                    :text="name"
-                    size="3xl"
-                    class="size-28"
-                  />
-                </button>
+        <div class="min-w-0">
+          <p
+            class="text-sm font-semibold text-highlighted"
+            v-text="t('photo')"
+          />
 
-                <UButton
-                  type="button"
-                  color="primary"
-                  variant="solid"
-                  size="sm"
-                  icon="i-lucide-camera"
-                  :aria-label="t('change_photo')"
-                  class="absolute bottom-0 right-0 rounded-full shadow"
-                  @click="openPhotoDialog"
-                />
-              </div>
-            </div>
-          </UFormField>
-
-          <div class="space-y-4">
-            <UFormField
-              :label="t('name')"
-              :error="errors.name"
-              name="name"
-              required
-            >
-              <UInput
-                v-model="name"
-                name="name"
-                type="text"
-                autocomplete="name"
-                :placeholder="t('name_placeholder')"
-                size="lg"
-                class="w-full"
-              />
-            </UFormField>
-
-            <UFormField
-              :label="t('phone_number')"
-              :error="errors.phone"
-              name="phone"
-              required
-            >
-              <UInput
-                v-model="phone"
-                name="phone"
-                type="tel"
-                autocomplete="tel-national"
-                inputmode="tel"
-                :placeholder="t('phone_placeholder')"
-                size="lg"
-                class="w-full"
-              />
-            </UFormField>
-          </div>
-
-          <UAlert
-            v-if="backendError"
-            color="error"
-            variant="soft"
-            :title="t('error_title')"
-            :description="backendError"
+          <p
+            class="mt-0.5 text-xs text-muted"
+            v-text="t('change_photo')"
           />
         </div>
-      </UCard>
 
-      <div>
-        <UButton
-          type="submit"
-          color="primary"
-          size="lg"
-          :loading="isLoading"
-          class="w-full justify-center"
+        <UIcon
+          name="i-lucide-chevron-right"
+          class="ml-auto size-4 shrink-0 text-muted"
+        />
+      </button>
+    </div>
+
+    <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
+      <div class="px-5 py-4">
+        <UFormField
+          :label="t('name')"
+          :error="errors.name"
+          name="name"
+          required
         >
-          {{ t('save') }}
-        </UButton>
+          <UInput
+            v-model="name"
+            name="name"
+            type="text"
+            autocomplete="name"
+            :placeholder="t('name_placeholder')"
+            size="lg"
+            class="w-full"
+          />
+        </UFormField>
       </div>
-    </form>
-  </section>
+
+      <div class="px-5 py-4">
+        <UFormField
+          :label="t('phone_number')"
+          :error="errors.phone"
+          name="phone"
+          required
+        >
+          <UInput
+            v-model="phone"
+            name="phone"
+            type="tel"
+            autocomplete="tel-national"
+            inputmode="tel"
+            :placeholder="t('phone_placeholder')"
+            size="lg"
+            class="w-full"
+          />
+        </UFormField>
+      </div>
+    </div>
+
+    <UAlert
+      v-if="backendError"
+      color="error"
+      variant="soft"
+      :title="t('error_title')"
+      :description="backendError"
+    />
+
+    <UButton
+      type="submit"
+      color="primary"
+      size="lg"
+      :loading="isLoading"
+      block
+      :label="t('save')"
+    />
+  </form>
 </template>

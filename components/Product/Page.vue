@@ -898,6 +898,7 @@ const closePost = () => {
                 :name="seller.name"
                 :description="sellerDescription"
                 :avatar="sellerAvatar"
+                :to="{ name: 'user-userUid-status', params: { userUid: seller.id } }"
                 size="lg"
               />
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{ userName: string; }>();
+defineProps<{ userName?: string }>();
 
 definePageMeta({
   middleware: defineNuxtRouteMiddleware((to) => {
@@ -9,128 +9,78 @@ definePageMeta({
       return;
     }
 
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'Page Not Found',
-    });
+    throw createError({ statusCode: 404, statusMessage: 'Page Not Found' });
   }),
 });
 
 const route = useRoute();
+const { t } = useI18n();
+
+const userUid = computed(() => route.params.userUid as string);
+const currentStatus = computed(() => route.params.status as string || 'all');
 
 const { data: posts } = await useAsyncData(
-  () => `posts-${route.params.userUid}-${route.params.status || ''}`,
-  () => $fetch(`/api/users/${route.params.userUid}/posts`, { params: { status: route.params.status } }),
+  () => `posts-${userUid.value}-${currentStatus.value}`,
+  () => $fetch(`/api/users/${userUid.value}/posts`, { params: { status: route.params.status } }),
   { watch: [() => route.params] },
 );
 
+const tabs = computed(() => [
+  { label: t('all'), to: { name: 'user-userUid-status', params: { userUid: userUid.value, status: undefined } } },
+  { label: t('open'), to: { name: 'user-userUid-status', params: { userUid: userUid.value, status: 'open' } } },
+  { label: t('closed'), to: { name: 'user-userUid-status', params: { userUid: userUid.value, status: 'closed' } } },
+]);
 
-const ADS_TYPES = ['all', 'open', 'closed'];
-
-const { t } = useI18n();
-
-const menu = computed(() => {
-  const userUid = route.params.userUid;
-
-  return ADS_TYPES.map(status => ({
-    type: status,
-    text: t(status),
-    route: {
-      name: 'user-userUid-status',
-      params: {
-        status: status === 'all' ? undefined : status,
-        userUid,
-      },
-    },
-  }));
-});
-
-const h1 = computed(() => {
-  const postStatus = route.params.status as string || 'all';
-
-  return t(`h1.${postStatus}`, { name: props.userName });
-});
-
-const emptyText = computed(() => {
-  const status = route.params.status || 'all';
-
-  return t(`empty_${status}`);
-});
+const emptyText = computed(() => t(`empty_${currentStatus.value}`));
 </script>
 
-<i18n>
+<i18n lang="json">
 {
   "en": {
-    "empty_all": "All created listings will be displayed on this page.",
-    "empty_open": "All active listings will be displayed on this page.",
-    "empty_closed": "All sold listings will be displayed on this page.",
-    "empty_archive": "Blocked or inactive listings will be displayed on this page.",
+    "empty_all": "No listings yet.",
+    "empty_open": "No active listings.",
+    "empty_closed": "No sold listings.",
     "all": "All",
     "open": "Active",
-    "closed": "Sold",
-    "h1": {
-      "all": "All listings by {name}",
-      "open": "Active listings by {name}",
-      "closed": "Sold listings by {name}"
-    }
+    "closed": "Sold"
   },
   "pt": {
-    "empty_all": "Todos os anúncios criados serão exibidos nesta página.",
-    "empty_open": "Todos os anúncios ativos serão exibidos nesta página.",
-    "empty_closed": "Todos os anúncios vendidos serão exibidos nesta página.",
-    "empty_archive": "Anúncios bloqueados ou inativos serão exibidos nesta página.",
+    "empty_all": "Ainda não há anúncios.",
+    "empty_open": "Nenhum anúncio ativo.",
+    "empty_closed": "Nenhum anúncio vendido.",
     "all": "Todos",
     "open": "Ativo",
-    "closed": "Vendido",
-    "h1": {
-      "all": "Todos os anúncios de {name}",
-      "open": "Anúncios ativos de {name}",
-      "closed": "Anúncios vendidos de {name}"
-    }
+    "closed": "Vendido"
   }
 }
 </i18n>
 
 <template>
-  <div :class="$style.root">
-    <h1
-      v-if="h1"
-      :class="$style.title"
-      v-text="h1"
-    />
-
-    <UserNavigation
-      :list="menu"
-      :class="$style.menu"
-    />
-
-    <div :class="$style.products">
-      <ProductList
-        :list="posts"
-        :emptyText="emptyText"
-      />
+  <div class="space-y-5">
+    <div class="grid grid-cols-3 gap-1 rounded-xl bg-elevated p-1">
+      <NuxtLink
+        v-for="tab in tabs"
+        :key="tab.label"
+        v-slot="{ isExactActive, href, navigate }"
+        :to="tab.to"
+        custom
+      >
+        <a
+          :href="href"
+          class="flex items-center justify-center rounded-lg py-2 text-sm font-medium transition-colors"
+          :class="isExactActive
+            ? 'bg-default shadow-sm text-highlighted'
+            : 'text-muted hover:text-highlighted'"
+          @click="navigate"
+        >
+          {{ tab.label }}
+        </a>
+      </NuxtLink>
     </div>
+
+    <ProductList
+      :list="posts as any"
+      :emptyText="emptyText"
+    />
   </div>
 </template>
-
-<style lang="scss" module>
-.root {
-  height: 100%;
-}
-
-.title {
-  @include ui-typo-24-bold;
-
-  @include md {
-    margin-top: 8px;
-  }
-}
-
-.menu {
-  margin-top: 20px;
-}
-
-.products {
-  margin: 20px 5px;
-}
-</style>
