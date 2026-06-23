@@ -59,22 +59,22 @@ const { t } = useI18n();
 <template>
   <NuxtLink
     :to="link"
-    class="flex flex-col h-full overflow-hidden rounded-xl bg-white shadow transition-shadow duration-200 hover:shadow-md text-inherit no-underline"
+    class="group flex flex-col overflow-hidden rounded-2xl border border-default bg-default transition hover:border-primary/40 hover:shadow-sm"
     rel="noopener noreferrer"
     @click="pushEvent(CLICK_PRODUCT_CARD, { product_id: props.product?.id })"
   >
-    <div class="relative w-full aspect-square">
+    <div class="relative aspect-square overflow-hidden bg-muted">
       <UBadge
         v-if="hasStatus"
         :color="statusColor"
         variant="subtle"
-        class="absolute top-2.5 left-2.5 z-10"
+        class="absolute left-2.5 top-2.5 z-10"
         v-text="t(product.status)"
       />
 
       <span
         v-if="city"
-        class="absolute bottom-2.5 left-2.5 z-10 rounded-md px-1.5 py-0.5 text-xs text-white bg-black/50 backdrop-blur-sm truncate max-w-[calc(100%-20px)]"
+        class="absolute bottom-2.5 left-2.5 z-10 max-w-[calc(100%-20px)] truncate rounded-md bg-black/50 px-1.5 py-0.5 text-xs text-white backdrop-blur-sm"
         v-text="city"
       />
 
@@ -83,18 +83,18 @@ const { t } = useI18n();
         :alt="productTitle"
         :preload="{ fetchPriority: 'high' }"
         fetchPriority="high"
-        class="absolute inset-0 w-full h-full object-cover"
+        class="absolute inset-0 size-full object-cover transition group-hover:scale-105"
       />
     </div>
 
-    <div class="p-2.5">
+    <div class="p-3">
       <div
-        class="font-semibold text-base leading-6 truncate"
+        class="truncate text-sm font-bold text-highlighted"
         v-text="formattedPrice"
       />
 
       <div
-        class="text-sm mt-0.5 truncate text-gray-700"
+        class="mt-0.5 truncate text-xs text-muted"
         v-text="productTitle"
       />
     </div>

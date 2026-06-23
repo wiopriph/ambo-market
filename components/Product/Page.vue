@@ -440,6 +440,7 @@ const closePost = () => {
     "status_hold": "On hold",
     "status_closed": "Closed",
     "status_archived": "Archived",
+    "copy_link": "Copy link",
     "link_copied": "Link copied",
     "vehicles": {
       "city": {
@@ -562,6 +563,7 @@ const closePost = () => {
     "status_hold": "Em espera",
     "status_closed": "Fechado",
     "status_archived": "Arquivado",
+    "copy_link": "Copiar link",
     "link_copied": "Link copiado",
     "vehicles": {
       "city": {
@@ -668,20 +670,19 @@ const closePost = () => {
 </i18n>
 
 <template>
-  <div class="space-y-5 pb-24 pt-4 sm:py-6 lg:pb-6">
-    <!-- Breadcrumbs -->
+  <div class="space-y-4 pb-24 pt-4 sm:py-6 lg:pb-6">
     <UBreadcrumb
       :items="breadcrumbItems"
       class="hidden sm:flex"
     />
 
     <section v-if="post && seller">
-      <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
-        <!-- Left: gallery + info -->
-        <div class="space-y-5">
+      <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <!-- Left column -->
+        <div class="space-y-4">
           <!-- Gallery -->
-          <div>
-            <div class="relative overflow-hidden rounded-xl bg-muted">
+          <div class="overflow-hidden rounded-2xl border border-default bg-default">
+            <div class="relative">
               <UCarousel
                 v-if="hasGalleryImages"
                 ref="carousel"
@@ -718,7 +719,6 @@ const closePost = () => {
                 />
               </div>
 
-              <!-- Overlays -->
               <div class="absolute bottom-3 left-3 flex gap-2">
                 <UBadge
                   v-if="carouselSlides.length > 1"
@@ -743,7 +743,7 @@ const closePost = () => {
             <!-- Thumbnails -->
             <div
               v-if="carouselSlides.length > 1"
-              class="mt-2 hidden gap-2 overflow-x-auto md:flex"
+              class="hidden gap-2 overflow-x-auto px-4 py-3 md:flex"
             >
               <button
                 v-for="(thumb, i) in carouselSlides"
@@ -764,10 +764,10 @@ const closePost = () => {
             </div>
           </div>
 
-          <!-- Title + meta (mobile: shows here, before sidebar) -->
-          <div class="lg:hidden">
+          <!-- Title + meta (mobile) -->
+          <div class="rounded-2xl border border-default bg-default px-5 py-4 lg:hidden">
             <h1
-              class="text-2xl font-bold text-highlighted"
+              class="text-xl font-bold text-highlighted"
               v-text="post.title"
             />
 
@@ -802,34 +802,42 @@ const closePost = () => {
           </div>
 
           <!-- Description -->
-          <UCard v-if="post.description">
-            <template #header>
+          <div
+            v-if="post.description"
+            class="rounded-2xl border border-default bg-default overflow-hidden"
+          >
+            <div class="border-b border-default px-5 py-3">
               <p
                 class="text-sm font-semibold text-highlighted"
                 v-text="t('description')"
               />
-            </template>
+            </div>
 
-            <p
-              class="whitespace-pre-line text-sm leading-relaxed text-toned"
-              v-text="post.description"
-            />
-          </UCard>
+            <div class="px-5 py-4">
+              <p
+                class="whitespace-pre-line text-sm leading-relaxed text-toned"
+                v-text="post.description"
+              />
+            </div>
+          </div>
 
           <!-- Details -->
-          <UCard v-if="productDetails.length">
-            <template #header>
+          <div
+            v-if="productDetails.length"
+            class="rounded-2xl border border-default bg-default overflow-hidden"
+          >
+            <div class="border-b border-default px-5 py-3">
               <p
                 class="text-sm font-semibold text-highlighted"
                 v-text="t('details')"
               />
-            </template>
+            </div>
 
-            <dl class="divide-y divide-default -mx-4 -my-3">
+            <dl class="divide-y divide-default">
               <div
                 v-for="item in productDetails"
                 :key="item.label"
-                class="flex items-center gap-3 px-4 py-2.5"
+                class="flex items-center gap-3 px-5 py-3"
               >
                 <UIcon
                   :name="item.icon"
@@ -847,16 +855,39 @@ const closePost = () => {
                 />
               </div>
             </dl>
-          </UCard>
+          </div>
         </div>
 
-        <!-- Right: sticky contact card -->
+        <!-- Right: sticky sidebar -->
         <aside class="space-y-4 lg:sticky lg:top-[74px] lg:self-start">
-          <!-- Title + meta (desktop only) -->
-          <div class="hidden lg:block">
-            <h1
-              class="text-2xl font-bold text-highlighted"
-              v-text="post.title"
+          <!-- Title + meta (desktop) -->
+          <div class="hidden rounded-2xl border border-default bg-default px-5 py-4 lg:block">
+            <div class="flex items-start gap-2">
+              <h1
+                class="flex-1 text-xl font-bold text-highlighted"
+                v-text="post.title"
+              />
+
+              <UDropdownMenu
+                :items="[[
+                  { label: 'WhatsApp', icon: 'i-simple-icons-whatsapp', to: `https://wa.me/?text=${encodedShareText}`, target: '_blank' },
+                  { label: 'Facebook', icon: 'i-simple-icons-facebook', to: `https://www.facebook.com/sharer/sharer.php?u=${encodedShareUrl}`, target: '_blank' },
+                  { label: t('copy_link'), icon: 'i-lucide-link', onSelect: copyShareLink },
+                ]]"
+              >
+                <UButton
+                  icon="i-lucide-share-2"
+                  color="neutral"
+                  variant="ghost"
+                  size="sm"
+                  :aria-label="t('share')"
+                />
+              </UDropdownMenu>
+            </div>
+
+            <p
+              class="mt-1 text-2xl font-bold text-primary"
+              v-text="formattedPrice"
             />
 
             <div class="mt-2 flex flex-wrap gap-3 text-sm text-muted">
@@ -864,10 +895,7 @@ const closePost = () => {
                 v-if="postCityName"
                 class="flex items-center gap-1"
               >
-                <UIcon
-                  name="i-lucide-map-pin"
-                  class="size-4"
-                />
+                <UIcon name="i-lucide-map-pin" class="size-4" />
                 {{ postCityName }}
               </span>
 
@@ -875,25 +903,15 @@ const closePost = () => {
                 v-if="formattedDate"
                 class="flex items-center gap-1"
               >
-                <UIcon
-                  name="i-lucide-calendar-days"
-                  class="size-4"
-                />
+                <UIcon name="i-lucide-calendar-days" class="size-4" />
                 {{ formattedDate }}
               </span>
             </div>
           </div>
 
           <!-- Contact card -->
-          <UCard>
-            <div class="space-y-4">
-              <p
-                class="text-3xl font-bold text-highlighted"
-                v-text="formattedPrice"
-              />
-
-              <USeparator />
-
+          <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
+            <div class="px-5 py-4">
               <UUser
                 :name="seller.name"
                 :description="sellerDescription"
@@ -901,7 +919,9 @@ const closePost = () => {
                 :to="{ name: 'user-userUid-status', params: { userUid: seller.id } }"
                 size="lg"
               />
+            </div>
 
+            <div class="px-5 py-4">
               <UButton
                 v-if="hasControlButtons && isOwnerUser"
                 :label="t('close_post')"
@@ -921,79 +941,98 @@ const closePost = () => {
                 block
                 :disabled="!phoneLink || isPostUnavailable"
               />
-
-              <USeparator :label="t('share')" />
-
-              <div class="flex justify-center gap-2">
-                <UButton
-                  icon="i-simple-icons-whatsapp"
-                  color="neutral"
-                  variant="ghost"
-                  :href="`https://wa.me/?text=${encodedShareText}`"
-                  target="_blank"
-                  aria-label="WhatsApp"
-                />
-
-                <UButton
-                  icon="i-simple-icons-facebook"
-                  color="neutral"
-                  variant="ghost"
-                  :href="`https://www.facebook.com/sharer/sharer.php?u=${encodedShareUrl}`"
-                  target="_blank"
-                  aria-label="Facebook"
-                />
-
-                <UButton
-                  icon="i-lucide-link"
-                  color="neutral"
-                  variant="ghost"
-                  aria-label="Copy link"
-                  @click="copyShareLink"
-                />
-              </div>
             </div>
-          </UCard>
+
+          </div>
+
+          <!-- Share (mobile only) -->
+          <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden lg:hidden">
+            <div class="px-5 py-3">
+              <p class="text-xs font-medium text-muted uppercase tracking-wide" v-text="t('share')" />
+            </div>
+
+            <NuxtLink
+              :href="`https://wa.me/?text=${encodedShareText}`"
+              target="_blank"
+              class="flex items-center gap-3 px-5 py-3.5 transition hover:bg-elevated"
+            >
+              <div class="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#25D366]/10">
+                <UIcon name="i-simple-icons-whatsapp" class="size-4 text-[#25D366]" />
+              </div>
+              <span class="flex-1 text-sm text-highlighted">WhatsApp</span>
+              <UIcon name="i-lucide-chevron-right" class="size-4 text-muted" />
+            </NuxtLink>
+
+            <NuxtLink
+              :href="`https://www.facebook.com/sharer/sharer.php?u=${encodedShareUrl}`"
+              target="_blank"
+              class="flex items-center gap-3 px-5 py-3.5 transition hover:bg-elevated"
+            >
+              <div class="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#1877F2]/10">
+                <UIcon name="i-simple-icons-facebook" class="size-4 text-[#1877F2]" />
+              </div>
+              <span class="flex-1 text-sm text-highlighted">Facebook</span>
+              <UIcon name="i-lucide-chevron-right" class="size-4 text-muted" />
+            </NuxtLink>
+
+            <button
+              type="button"
+              class="flex w-full items-center gap-3 px-5 py-3.5 transition hover:bg-elevated"
+              @click="copyShareLink"
+            >
+              <div class="flex size-8 shrink-0 items-center justify-center rounded-xl bg-primary/10">
+                <UIcon name="i-lucide-link" class="size-4 text-primary" />
+              </div>
+              <span class="flex-1 text-left text-sm text-highlighted" v-text="t('copy_link')" />
+              <UIcon name="i-lucide-chevron-right" class="size-4 text-muted" />
+            </button>
+          </div>
         </aside>
       </div>
 
       <!-- Mobile sticky CTA -->
-      <div
-        class="fixed inset-x-0 bottom-0 z-20 border-t border-default bg-default/95 px-4 py-3 backdrop-blur-sm lg:hidden"
-      >
-        <div class="flex items-center gap-3">
-          <p
-            class="text-lg font-bold text-highlighted"
-            v-text="formattedPrice"
-          />
+      <div class="fixed inset-x-0 bottom-0 z-20 border-t border-default bg-default/95 backdrop-blur-sm lg:hidden">
+        <div class="px-4 py-3 space-y-2">
+          <div class="flex items-baseline justify-between">
+            <p class="text-xl font-bold text-highlighted" v-text="formattedPrice" />
+            <p v-if="postCityName" class="text-xs text-muted flex items-center gap-1">
+              <UIcon name="i-lucide-map-pin" class="size-3" />
+              {{ postCityName }}
+            </p>
+          </div>
 
-          <UButton
-            v-if="hasControlButtons && isOwnerUser"
-            :label="t('close_post')"
-            icon="i-lucide-lock"
-            color="neutral"
-            variant="soft"
-            class="ml-auto"
-            @click="isClosePostModalVisible = true"
-          />
+          <div class="flex gap-2">
+            <UButton
+              v-if="hasControlButtons && isOwnerUser"
+              :label="t('close_post')"
+              icon="i-lucide-lock"
+              color="neutral"
+              variant="soft"
+              class="flex-1"
+              @click="isClosePostModalVisible = true"
+            />
 
-          <UButton
-            v-else
-            :label="t('call_seller')"
-            :href="phoneLink"
-            icon="i-lucide-phone"
-            color="primary"
-            class="ml-auto flex-1"
-            :disabled="!phoneLink || isPostUnavailable"
-          />
+            <template v-else>
+              <UButton
+                :label="t('call_seller')"
+                :href="phoneLink"
+                icon="i-lucide-phone"
+                color="primary"
+                class="flex-1"
+                :disabled="!phoneLink || isPostUnavailable"
+              />
 
-          <UButton
-            icon="i-simple-icons-whatsapp"
-            color="neutral"
-            variant="soft"
-            :href="`https://wa.me/?text=${encodedShareText}`"
-            target="_blank"
-            aria-label="WhatsApp"
-          />
+              <UButton
+                icon="i-simple-icons-whatsapp"
+                color="neutral"
+                variant="soft"
+                size="md"
+                :href="`https://wa.me/?text=${encodedShareText}`"
+                target="_blank"
+                aria-label="WhatsApp"
+              />
+            </template>
+          </div>
         </div>
       </div>
 
@@ -1008,7 +1047,7 @@ const closePost = () => {
     <!-- Related listings -->
     <div v-if="recommendedPostsList.length">
       <h2
-        class="mb-4 text-lg font-semibold text-highlighted"
+        class="mb-3 text-sm font-semibold text-highlighted"
         v-text="t('related_listings')"
       />
 
@@ -1017,7 +1056,7 @@ const closePost = () => {
           v-for="recommendedPost in recommendedPostsList"
           :key="recommendedPost.id"
           :to="getRecommendedPostTo(recommendedPost)"
-          class="group overflow-hidden rounded-xl border border-default bg-default transition hover:border-primary/40 hover:shadow-sm"
+          class="group overflow-hidden rounded-2xl border border-default bg-default transition hover:border-primary/40 hover:shadow-sm"
         >
           <div class="relative aspect-square overflow-hidden bg-muted">
             <NuxtImg
@@ -1037,14 +1076,14 @@ const closePost = () => {
             />
           </div>
 
-          <div class="space-y-1 p-3">
+          <div class="p-3">
             <p
-              class="truncate text-sm font-semibold text-highlighted"
+              class="truncate text-sm font-bold text-highlighted"
               v-text="formatCurrency(recommendedPost.price)"
             />
 
             <p
-              class="line-clamp-2 min-h-10 text-sm text-toned"
+              class="mt-0.5 line-clamp-2 text-xs text-muted"
               v-text="recommendedPost.title"
             />
           </div>
@@ -1053,7 +1092,10 @@ const closePost = () => {
     </div>
 
     <!-- SEO text -->
-    <UCard v-if="post">
+    <div
+      v-if="post"
+      class="rounded-2xl border border-default bg-default px-5 py-4"
+    >
       <SeoProductText
         :productTitle="post.title"
         :category="postCategoryName"
@@ -1062,6 +1104,6 @@ const closePost = () => {
         :seller="seller?.name"
         :productList="[]"
       />
-    </UCard>
+    </div>
   </div>
 </template>
