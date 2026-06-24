@@ -46,7 +46,7 @@ const emptyDescription = computed(() => props.emptyText || t('empty_text'));
     <div
       v-for="index in MAX_POSTS_PER_PAGE"
       :key="index"
-      class="flex flex-col overflow-hidden rounded-xl bg-white shadow"
+      class="flex flex-col overflow-hidden rounded-2xl border border-default bg-default"
     >
       <USkeleton class="aspect-square w-full" />
 

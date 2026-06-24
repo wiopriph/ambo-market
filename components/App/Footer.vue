@@ -62,7 +62,7 @@ const socialLinks = [
   <UFooter
     class="mt-auto"
     :ui="{
-      container: 'mx-auto max-w-6xl',
+      container: 'mx-auto max-w-6xl lg:px-6',
       bottom: 'mx-auto max-w-6xl border-t border-default py-2 lg:py-2'
     }"
   >

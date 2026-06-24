@@ -41,6 +41,7 @@ const {
   isLoading,
   fetchPosts,
   getFilter,
+  currentFilters,
 } = usePosts();
 
 const { t } = useI18n();
@@ -158,6 +159,10 @@ const top3Post = computed(() => {
 {
   "en": {
     "main_page": "Main page",
+    "search_placeholder": "Search in this category...",
+    "filters": "Filters",
+    "results": "{n} listings | {n} listing | {n} listings",
+    "clear_all": "Clear all",
     "search": {
       "city": {
         "h1": "Listings for «{q}» in {city}",
@@ -293,6 +298,10 @@ const top3Post = computed(() => {
   },
   "pt": {
     "main_page": "Página inicial",
+    "search_placeholder": "Buscar nesta categoria...",
+    "filters": "Filtros",
+    "results": "{n} anúncios | {n} anúncio | {n} anúncios",
+    "clear_all": "Limpar tudo",
     "search": {
       "city": {
         "h1": "Anúncios para «{q}» em {city}",
@@ -430,47 +439,45 @@ const top3Post = computed(() => {
 </i18n>
 
 <template>
-  <div class="w-full max-w-[1280px] mx-auto px-5 py-6">
-    <UIBreadcrumbs :items="breadcrumbs" />
+  <div class="mx-auto px-4 sm:px-5 py-4 sm:py-6 space-y-4">
+    <UIBreadcrumbs
+      :items="breadcrumbs"
+      class="hidden sm:flex"
+    />
 
     <h1
-      class="text-3xl font-bold my-6"
+      class="text-lg font-bold text-highlighted"
       v-text="seo.h1"
     />
 
-    <CategoryPills
-      :list="subcategories"
-      class="mb-6"
-    />
 
-    <div class="flex gap-5">
-      <aside class="hidden md:block w-[280px] shrink-0">
-        <FilterBlock class="sticky top-[74px]" />
-      </aside>
+    <CategoryPills :list="subcategories" />
 
-      <div class="flex-1 min-w-0">
-        <ProductList
-          :list="posts?.posts"
-          :isLoading="isLoading"
-        />
+    <div class="space-y-4">
+      <ProductList
+        :list="posts?.posts"
+        :isLoading="isLoading"
+      />
 
+      <div
+        v-if="hasPagination"
+        class="flex justify-center"
+      >
         <UIPagination
-          v-if="hasPagination"
           :value="page"
           :max="totalPages"
-          class="mt-5"
           @input="setPage"
         />
-
-        <UITextRoll v-if="page === 1">
-          <SeoCategoryText
-            :title="seo.h1"
-            :cityId="cityId"
-            :categoryId="categoryId"
-            :productList="top3Post"
-          />
-        </UITextRoll>
       </div>
+
+      <UITextRoll v-if="page === 1">
+        <SeoCategoryText
+          :title="seo.h1"
+          :cityId="cityId"
+          :categoryId="categoryId"
+          :productList="top3Post"
+        />
+      </UITextRoll>
     </div>
   </div>
 </template>

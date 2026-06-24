@@ -895,7 +895,10 @@ const closePost = () => {
                 v-if="postCityName"
                 class="flex items-center gap-1"
               >
-                <UIcon name="i-lucide-map-pin" class="size-4" />
+                <UIcon
+                  name="i-lucide-map-pin"
+                  class="size-4"
+                />
                 {{ postCityName }}
               </span>
 
@@ -903,7 +906,10 @@ const closePost = () => {
                 v-if="formattedDate"
                 class="flex items-center gap-1"
               >
-                <UIcon name="i-lucide-calendar-days" class="size-4" />
+                <UIcon
+                  name="i-lucide-calendar-days"
+                  class="size-4"
+                />
                 {{ formattedDate }}
               </span>
             </div>
@@ -942,13 +948,15 @@ const closePost = () => {
                 :disabled="!phoneLink || isPostUnavailable"
               />
             </div>
-
           </div>
 
           <!-- Share (mobile only) -->
           <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden lg:hidden">
             <div class="px-5 py-3">
-              <p class="text-xs font-medium text-muted uppercase tracking-wide" v-text="t('share')" />
+              <p
+                class="text-xs font-medium text-muted uppercase tracking-wide"
+                v-text="t('share')"
+              />
             </div>
 
             <NuxtLink
@@ -957,10 +965,18 @@ const closePost = () => {
               class="flex items-center gap-3 px-5 py-3.5 transition hover:bg-elevated"
             >
               <div class="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#25D366]/10">
-                <UIcon name="i-simple-icons-whatsapp" class="size-4 text-[#25D366]" />
+                <UIcon
+                  name="i-simple-icons-whatsapp"
+                  class="size-4 text-[#25D366]"
+                />
               </div>
+
               <span class="flex-1 text-sm text-highlighted">WhatsApp</span>
-              <UIcon name="i-lucide-chevron-right" class="size-4 text-muted" />
+
+              <UIcon
+                name="i-lucide-chevron-right"
+                class="size-4 text-muted"
+              />
             </NuxtLink>
 
             <NuxtLink
@@ -969,10 +985,18 @@ const closePost = () => {
               class="flex items-center gap-3 px-5 py-3.5 transition hover:bg-elevated"
             >
               <div class="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#1877F2]/10">
-                <UIcon name="i-simple-icons-facebook" class="size-4 text-[#1877F2]" />
+                <UIcon
+                  name="i-simple-icons-facebook"
+                  class="size-4 text-[#1877F2]"
+                />
               </div>
+
               <span class="flex-1 text-sm text-highlighted">Facebook</span>
-              <UIcon name="i-lucide-chevron-right" class="size-4 text-muted" />
+
+              <UIcon
+                name="i-lucide-chevron-right"
+                class="size-4 text-muted"
+              />
             </NuxtLink>
 
             <button
@@ -981,10 +1005,21 @@ const closePost = () => {
               @click="copyShareLink"
             >
               <div class="flex size-8 shrink-0 items-center justify-center rounded-xl bg-primary/10">
-                <UIcon name="i-lucide-link" class="size-4 text-primary" />
+                <UIcon
+                  name="i-lucide-link"
+                  class="size-4 text-primary"
+                />
               </div>
-              <span class="flex-1 text-left text-sm text-highlighted" v-text="t('copy_link')" />
-              <UIcon name="i-lucide-chevron-right" class="size-4 text-muted" />
+
+              <span
+                class="flex-1 text-left text-sm text-highlighted"
+                v-text="t('copy_link')"
+              />
+
+              <UIcon
+                name="i-lucide-chevron-right"
+                class="size-4 text-muted"
+              />
             </button>
           </div>
         </aside>
@@ -994,9 +1029,19 @@ const closePost = () => {
       <div class="fixed inset-x-0 bottom-0 z-20 border-t border-default bg-default/95 backdrop-blur-sm lg:hidden">
         <div class="px-4 py-3 space-y-2">
           <div class="flex items-baseline justify-between">
-            <p class="text-xl font-bold text-highlighted" v-text="formattedPrice" />
-            <p v-if="postCityName" class="text-xs text-muted flex items-center gap-1">
-              <UIcon name="i-lucide-map-pin" class="size-3" />
+            <p
+              class="text-xl font-bold text-highlighted"
+              v-text="formattedPrice"
+            />
+
+            <p
+              v-if="postCityName"
+              class="text-xs text-muted flex items-center gap-1"
+            >
+              <UIcon
+                name="i-lucide-map-pin"
+                class="size-3"
+              />
               {{ postCityName }}
             </p>
           </div>

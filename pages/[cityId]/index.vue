@@ -111,6 +111,7 @@ const setPage = (pageNumber: number) => {
         "title": "Buy, Sell & Post Free Ads in {city} {'|'} Ambo Market",
         "description": "Buy and sell everything in {city} – from electronics and vehicles to clothing and services. Free classifieds for private sellers. Post your ad now on Ambo Market!"
       },
+      "search_placeholder": "Search ads...",
       "withoutCity": {
         "h1": "Buy and Sell Online – All Classifieds",
         "title": "Buy, Sell & Post Free Ads {'|'} Ambo Market Angola",
@@ -137,6 +138,7 @@ const setPage = (pageNumber: number) => {
         "title": "Comprar, Vender e Anunciar Grátis em {city} {'|'} Ambo Market",
         "description": "Compre e venda produtos em {city} – eletrônicos, veículos, roupas, serviços e muito mais. Anúncios grátis para todos. Publique o seu no Ambo Market agora!"
       },
+      "search_placeholder": "Buscar anúncios...",
       "withoutCity": {
         "h1": "Compre e Venda Online – Todos os Classificados",
         "title": "Comprar, Vender e Anunciar Grátis em Angola {'|'} Ambo Market",
@@ -160,9 +162,9 @@ const setPage = (pageNumber: number) => {
 </i18n>
 
 <template>
-  <div class="w-full max-w-[1280px] mx-auto px-5 py-6">
+  <div class="mx-auto px-4 sm:px-5 py-4 sm:py-6 space-y-4">
     <h1
-      class="text-3xl font-bold mb-6"
+      class="text-lg font-bold text-highlighted"
       v-text="seo.h1"
     />
 
@@ -171,25 +173,20 @@ const setPage = (pageNumber: number) => {
       class="mb-6"
     />
 
-    <div class="flex gap-5">
-      <aside class="hidden md:block w-[280px] shrink-0">
-        <FilterBlock class="sticky top-[74px]" />
-      </aside>
+    <ProductList
+      :list="posts?.posts"
+      :isLoading="isLoading"
+    />
 
-      <div class="flex-1 min-w-0">
-        <ProductList
-          :list="posts?.posts"
-          :isLoading="isLoading"
-        />
-
-        <UIPagination
-          v-if="hasPagination"
-          :value="page"
-          :max="totalPages"
-          class="mt-5"
-          @input="setPage"
-        />
-      </div>
+    <div
+      v-if="hasPagination"
+      class="flex justify-center"
+    >
+      <UIPagination
+        :value="page"
+        :max="totalPages"
+        @input="setPage"
+      />
     </div>
   </div>
 </template>

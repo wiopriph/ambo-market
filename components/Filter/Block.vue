@@ -169,10 +169,10 @@ const criterionLabel = (key: string, value: string) => {
 </i18n>
 
 <template>
-  <div class="rounded-xl bg-white shadow divide-y divide-default">
+  <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
     <div
       v-if="hasActiveFilters"
-      class="p-4"
+      class="px-5 py-4"
     >
       <div class="flex flex-wrap gap-2">
         <UBadge
@@ -201,7 +201,7 @@ const criterionLabel = (key: string, value: string) => {
       />
     </div>
 
-    <div class="p-4">
+    <div class="px-5 py-4">
       <UFormField :label="t('city')">
         <USelect
           :modelValue="cityId"
@@ -215,7 +215,7 @@ const criterionLabel = (key: string, value: string) => {
       </UFormField>
     </div>
 
-    <div class="p-4">
+    <div class="px-5 py-4">
       <UFormField :label="t('category')">
         <USelect
           :modelValue="categoryId"
@@ -229,7 +229,7 @@ const criterionLabel = (key: string, value: string) => {
       </UFormField>
     </div>
 
-    <div class="p-4">
+    <div class="px-5 py-4">
       <UFormField :label="t('subcategory')">
         <USelect
           :modelValue="subcategoryId"
@@ -245,7 +245,7 @@ const criterionLabel = (key: string, value: string) => {
 
     <div
       v-if="brandsItems.length"
-      class="p-4"
+      class="px-5 py-4"
     >
       <UFormField :label="t('brand')">
         <USelect
@@ -260,7 +260,7 @@ const criterionLabel = (key: string, value: string) => {
       </UFormField>
     </div>
 
-    <div class="p-4">
+    <div class="px-5 py-4">
       <p
         class="text-sm font-semibold mb-1"
         v-text="t('price')"

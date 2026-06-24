@@ -1316,30 +1316,30 @@ const setPage = (pageNumber: number) => {
 </i18n>
 
 <template>
-  <div class="w-full max-w-[1280px] mx-auto px-5 py-6">
-    <UIBreadcrumbs :items="breadcrumbs" />
+  <div class="mx-auto px-4 sm:px-5 py-4 sm:py-6 space-y-4">
+    <UIBreadcrumbs
+      :items="breadcrumbs"
+      class="hidden sm:flex"
+    />
 
     <h1
-      class="text-3xl font-bold my-6"
+      class="text-lg font-bold text-highlighted"
       v-text="seo.h1"
     />
 
-    <div class="flex gap-5">
-      <aside class="hidden md:block w-[280px] shrink-0">
-        <FilterBlock class="sticky top-[74px]" />
-      </aside>
+    <div class="space-y-4">
+      <ProductList
+        :list="posts?.posts"
+        :isLoading="isLoading"
+      />
 
-      <div class="flex-1 min-w-0">
-        <ProductList
-          :list="posts?.posts"
-          :isLoading="isLoading"
-        />
-
+      <div
+        v-if="hasPagination"
+        class="flex justify-center"
+      >
         <UIPagination
-          v-if="hasPagination"
           :value="page"
           :max="totalPages"
-          class="mt-5"
           @input="setPage"
         />
       </div>

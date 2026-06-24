@@ -5,7 +5,6 @@ import {
   CLICK_POST_AD_BUTTON,
   CLICK_SETTINGS_BUTTON,
   CLICK_USER_BUTTON,
-  SEARCH_SUBMIT,
 } from '~/constants/analytics-events';
 import { usePosts } from '~/composables/usePosts';
 import { useUser } from '~/composables/useUser';
@@ -15,83 +14,15 @@ const { t } = useI18n();
 const route = useRoute();
 const { pushEvent } = useAnalyticsEvent();
 
-const {
-  cityId,
-  currentFilters,
-  getFilter,
-  isPriorityCity,
-} = usePosts();
+const { cityId, isPriorityCity } = usePosts();
 
 const indexRoute = computed(() => {
   if (isPriorityCity.value) {
-    return {
-      name: 'cityId',
-      params: {
-        cityId: cityId.value,
-      },
-    };
+    return { name: 'cityId', params: { cityId: cityId.value } };
   }
 
   return { name: 'index' };
 });
-
-const searchString = ref('');
-
-onMounted(() => {
-  searchString.value = getFilter('q');
-});
-
-watch(
-  () => route.query.q,
-  () => {
-    searchString.value = getFilter('q');
-  },
-);
-
-const searchPlaceholder = computed(() => {
-  const { categoryId } = route.params;
-
-  if (categoryId) {
-    return t('search_in_category', { category: t(`${categoryId}`) });
-  }
-
-  return t('search');
-});
-
-const find = () => {
-  const query = {
-    ...currentFilters.value,
-    q: searchString.value,
-  };
-
-  const params: Record<string, string> = {
-    cityId: cityId.value || 'all',
-  };
-
-  const valuesMap = {
-    categoryId: route.params.categoryId,
-    subcategoryId: route.params.subcategoryId,
-    brandId: route.params.brandId,
-  };
-
-  const keys = ['categoryId', 'subcategoryId', 'brandId'];
-
-  for (const key of keys) {
-    const value = valuesMap[key as keyof typeof valuesMap];
-
-    if (value) {
-      params[key] = value as string;
-    } else {
-      break;
-    }
-  }
-
-  const name = Object.keys(params).join('-');
-
-  pushEvent(SEARCH_SUBMIT, { query: searchString.value });
-
-  return navigateTo({ name, params, query });
-};
 
 const {
   isLoggedIn,
@@ -162,8 +93,6 @@ const onAccountClick = () => {
 {
   "en": {
     "main_page": "Main page",
-    "search": "What are you looking for?",
-    "search_in_category": "Search in {category}",
     "place_ad": "Post ad",
     "account": "Account",
     "ads": "My ads",
@@ -173,8 +102,6 @@ const onAccountClick = () => {
   },
   "pt": {
     "main_page": "Página inicial",
-    "search": "O que procuras?",
-    "search_in_category": "Buscar em {category}",
     "place_ad": "Publicar anúncio",
     "account": "Conta",
     "ads": "Meus anúncios",
@@ -186,13 +113,13 @@ const onAccountClick = () => {
 </i18n>
 
 <template>
-  <header class="sticky top-0 z-50 border-b border-gray-100 bg-white/85 backdrop-blur supports-[backdrop-filter]:bg-white/75">
+  <header class="sticky top-0 z-50 bg-default/80 backdrop-blur">
     <div class="mx-auto max-w-6xl px-2 py-2 sm:px-2 lg:px-4">
-      <div class="grid grid-cols-[auto_auto] items-center justify-between gap-x-4 gap-y-4 md:grid-cols-[auto_minmax(240px,1fr)_auto]">
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-2 py-2 lg:h-12 lg:items-stretch lg:py-0">
         <ULink
           :to="indexRoute"
           :aria-label="t('main_page')"
-          class="col-start-1 row-start-1 flex shrink-0 items-center rounded-md outline-none transition hover:opacity-80 focus-visible:ring-2 focus-visible:ring-primary"
+          class="order-1 shrink-0 lg:flex lg:items-center"
         >
           <NuxtImg
             src="/icon-logo.svg"
@@ -203,35 +130,15 @@ const onAccountClick = () => {
           />
         </ULink>
 
-        <form
-          class="col-span-2 row-start-2 flex min-w-0 items-center rounded-lg border border-primary/25 md:col-span-1 md:col-start-2 md:row-start-1"
-          @submit.prevent="find"
-        >
-          <UInput
-            v-model="searchString"
-            :placeholder="searchPlaceholder"
-            icon="i-lucide-search"
-            name="search"
-            type="search"
-            size="sm"
-            class="min-w-0 flex-1"
-            :ui="{
-              root: 'w-full',
-              base: 'border-0 bg-transparent px-2 text-lg shadow-none ring-0 placeholder:text-slate-400 focus:ring-0 focus-visible:ring-0 md:text-base'
-            }"
-          />
-        </form>
-
-        <div class="col-start-2 row-start-1 flex shrink-0 items-center justify-end gap-2 md:col-start-3">
+        <div class="order-2 ml-auto flex shrink-0 items-center gap-2 lg:order-3 lg:ml-0 lg:self-center">
           <UButton
             color="primary"
             icon="i-lucide-plus"
             size="md"
-            class="rounded-lg px-3 font-semibold"
             @click="goToCreatePage"
           >
             <span
-              class="hidden sm:inline"
+              class="hidden md:inline"
               v-text="t('place_ad')"
             />
           </UButton>
@@ -265,6 +172,10 @@ const onAccountClick = () => {
             size="md"
             @click="goToLogin"
           />
+        </div>
+
+        <div class="order-3 w-full lg:order-2 lg:flex lg:w-auto lg:flex-1 lg:items-center">
+          <FilterSearchBar />
         </div>
       </div>
     </div>
