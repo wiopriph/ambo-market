@@ -33,9 +33,7 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxtjs/i18n', //
-    '@nuxtjs/device', //
     '@nuxt/ui',
-    'nuxt-swiper', //
     '@nuxtjs/sitemap',
     '@nuxt/content',
     '@nuxtjs/supabase',
@@ -74,10 +72,6 @@ export default defineNuxtConfig({
     },
   },
 
-  swiper: {
-    bundled: false,
-  },
-
   sitemap: {
     xsl: false,
     excludeAppSources: true,
@@ -112,7 +106,6 @@ export default defineNuxtConfig({
         '@vue/devtools-core',
         '@vue/devtools-kit',
         'cookie-es',
-        'swiper/element',
       ],
     },
 
