@@ -4,11 +4,11 @@ import { usePosts } from '~/composables/usePosts';
 import type { Filters } from '~/composables/usePosts/types';
 import { DEFAULT_FILTERS } from '~/constants/filters';
 import { CITIES } from '~/constants/cities';
+import { getCategoryName } from '~/constants/categories';
 import getObjectDifferences from '~/utils/getObjectDifferences';
 import { SEARCH_SUBMIT, SELECT_CITY } from '~/constants/analytics-events';
 
 
-const { t } = useI18n();
 const route = useRoute();
 const { pushEvent } = useAnalyticsEvent();
 
@@ -23,12 +23,12 @@ const {
 } = usePosts();
 
 const citiesList = computed(() => CITIES.map(city => ({
-  label: city.name || t('everywhere'),
+  label: city.name || 'Em todos os lugares',
   value: city.id,
 })));
 
 const currentCityLabel = computed(
-  () => citiesList.value.find(c => c.value === cityId.value)?.label || t('everywhere'),
+  () => citiesList.value.find(c => c.value === cityId.value)?.label || 'Em todos os lugares',
 );
 
 const activeFiltersCount = computed(
@@ -79,41 +79,26 @@ const clearAllFilters = () => {
 };
 
 const criterionLabel = (key: string, value: string) => {
-  if (key === 'minPrice') return t('from', { value });
+  if (key === 'minPrice') {
+    return `Por ${value} kz`;
+  }
 
-  if (key === 'maxPrice') return t('to', { value });
+  if (key === 'maxPrice') {
+    return `Até ${value} kz`;
+  }
 
   return value;
 };
 
+const searchPlaceholder = computed(() =>
+  categoryId.value ?
+    `Buscar em ${getCategoryName(categoryId.value)}...` :
+    'O que procuras?',
+);
+
 const isFilterOpen = ref(false);
 const isCityOpen = ref(false);
 </script>
-
-<i18n lang="json">
-{
-  "en": {
-    "search": "What are you looking for?",
-    "search_in": "Search in {category}...",
-    "everywhere": "Everywhere",
-    "city": "City",
-    "filters": "Filters",
-    "clear_all": "Clear all",
-    "from": "From {value} kz",
-    "to": "To {value} kz"
-  },
-  "pt": {
-    "search": "O que procuras?",
-    "search_in": "Buscar em {category}...",
-    "everywhere": "Em todos os lugares",
-    "city": "Cidade",
-    "filters": "Filtros",
-    "clear_all": "Limpar tudo",
-    "from": "Por {value} kz",
-    "to": "Até {value} kz"
-  }
-}
-</i18n>
 
 <template>
   <div class="flex w-full overflow-hidden rounded-md border border-default bg-default lg:h-8">
@@ -125,7 +110,7 @@ const isCityOpen = ref(false);
 
       <input
         :value="searchQuery"
-        :placeholder="categoryId ? t('search_in', { category: t(`categories.${categoryId}`) }) : t('search')"
+        :placeholder="searchPlaceholder"
         class="w-full bg-transparent text-sm text-highlighted placeholder:text-muted outline-none"
         @input="searchQuery = ($event.target as HTMLInputElement).value"
       >
@@ -178,10 +163,7 @@ const isCityOpen = ref(false);
         class="size-4 text-muted"
       />
 
-      <span
-        class="hidden text-sm font-medium text-highlighted sm:inline"
-        v-text="t('filters')"
-      />
+      <span class="hidden text-sm font-medium text-highlighted sm:inline">Filtros</span>
 
       <UBadge
         v-if="activeFiltersCount"
@@ -212,7 +194,7 @@ const isCityOpen = ref(false);
     </UBadge>
 
     <UButton
-      :label="t('clear_all')"
+      label="Limpar tudo"
       color="neutral"
       variant="ghost"
       size="xs"

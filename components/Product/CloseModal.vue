@@ -8,8 +8,6 @@ const emit = defineEmits(['changeStatus', 'close']);
 
 const close = () => emit('close');
 
-const { t } = useI18n();
-
 const isLoading = ref(false);
 const isSuccess = ref(false);
 const backendError = ref('');
@@ -29,7 +27,6 @@ const closePost = async () => {
 
     emit('changeStatus');
   } catch (error: any) {
-
     console.error(error);
 
     const statusMessage =
@@ -38,40 +35,17 @@ const closePost = async () => {
       error?.message ??
       '';
 
-    backendError.value = statusMessage || t('error_generic');
+    backendError.value = statusMessage || 'Não foi possível fechar o anúncio. Tente novamente.';
   } finally {
     isLoading.value = false;
   }
 };
 </script>
 
-<i18n lang="json">
-{
-  "en": {
-    "title": "Close ad",
-    "question": "Are you sure you want to close this ad?",
-    "closed": "Ad removed from publication",
-    "yes": "Yes, close",
-    "no": "No, keep it",
-    "ok": "OK",
-    "error_generic": "Failed to close the ad. Please try again."
-  },
-  "pt": {
-    "title": "Fechar anúncio",
-    "question": "Tem certeza de que deseja fechar este anúncio?",
-    "closed": "Anúncio removido da publicação",
-    "yes": "Sim, fechar",
-    "no": "Não, manter",
-    "ok": "OK",
-    "error_generic": "Não foi possível fechar o anúncio. Tente novamente."
-  }
-}
-</i18n>
-
 <template>
   <UModal
     open
-    :title="t('title')"
+    title="Fechar anúncio"
     :ui="{ content: 'max-w-md' }"
     @update:open="(value) => !value && close()"
   >
@@ -92,13 +66,13 @@ const closePost = async () => {
           color="success"
           variant="soft"
           icon="i-lucide-check-circle"
-          :title="t('closed')"
+          title="Anúncio removido da publicação"
         />
 
         <template v-else>
           <p
             class="text-sm text-toned"
-            v-text="t('question')"
+            v-text="'Tem certeza de que deseja fechar este anúncio?'"
           />
 
           <UAlert
@@ -116,7 +90,7 @@ const closePost = async () => {
       <div class="grid w-full gap-2 sm:flex sm:justify-end">
         <UButton
           v-if="isSuccess"
-          :label="t('ok')"
+          label="OK"
           color="primary"
           block
           class="sm:w-auto"
@@ -125,7 +99,7 @@ const closePost = async () => {
 
         <template v-else>
           <UButton
-            :label="t('yes')"
+            label="Sim, fechar"
             :loading="isLoading"
             color="primary"
             block
@@ -134,7 +108,7 @@ const closePost = async () => {
           />
 
           <UButton
-            :label="t('no')"
+            label="Não, manter"
             :disabled="isLoading"
             color="neutral"
             variant="soft"

@@ -32,45 +32,11 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    '@nuxtjs/i18n', //
     '@nuxt/ui',
     '@nuxtjs/sitemap',
     '@nuxt/content',
     '@nuxtjs/supabase',
   ],
-
-  // https://i18n.nuxtjs.org/docs/getting-started/usage
-  i18n: {
-    baseUrl: process.env.NUXT_PUBLIC_APP_BASE_URL,
-    strategy: 'no_prefix',
-    defaultLocale: 'pt',
-
-    locales: [
-      {
-        code: 'en',
-        language: 'en-US',
-        name: 'English',
-        shortName: 'Eng',
-      },
-      {
-        code: 'pt',
-        language: 'pt-AO',
-        name: 'Português',
-        shortName: 'Pt',
-      },
-    ],
-
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'locale',
-    },
-
-    vueI18n: '~/i18n/index.ts',
-
-    bundle: {
-      optimizeTranslationDirective: false,
-    },
-  },
 
   sitemap: {
     xsl: false,

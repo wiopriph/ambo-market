@@ -16,16 +16,13 @@ definePageMeta({
     if (uid.value !== to.params.userUid) {
       return navigateTo({
         name: 'user-userUid-settings',
-        params: {
-          userUid: uid.value,
-        },
+        params: { userUid: uid.value },
       });
     }
   }),
 });
 
 
-const { t } = useI18n();
 const { currentUser, updateProfile } = useUser();
 
 const {
@@ -33,16 +30,12 @@ const {
   handleSubmit,
   setFieldValue,
 } = useForm({
-  initialValues: {
-    name: '',
-    phone: '',
-  },
+  initialValues: { name: '', phone: '' },
   validationSchema: object({
-    name: string()
-      .required(t('validation.required')),
+    name: string().required('Este campo é obrigatório'),
     phone: string()
-      .required(t('validation.required'))
-      .matches(PHONE_REG_EXP, t('validation.phone')),
+      .required('Este campo é obrigatório')
+      .matches(PHONE_REG_EXP, 'Formato incorreto do telefone'),
   }),
 });
 
@@ -57,21 +50,13 @@ const uploadedPhoto = ref<ProfileImageInput | null>(null);
 const formatPhone = (value: string) => {
   let digits = value.replace(/\D/g, '');
 
-  if (!digits) {
-    return '';
-  }
+  if (!digits) return '';
 
-  if (digits.startsWith('244')) {
-    digits = digits.slice(3);
-  }
+  if (digits.startsWith('244')) digits = digits.slice(3);
 
   digits = digits.slice(0, 9);
 
-  const parts = [
-    digits.slice(0, 3),
-    digits.slice(3, 6),
-    digits.slice(6, 9),
-  ].filter(Boolean);
+  const parts = [digits.slice(0, 3), digits.slice(3, 6), digits.slice(6, 9)].filter(Boolean);
 
   return ['+244', ...parts].join(' ');
 };
@@ -80,10 +65,7 @@ const fileToImage = (file: File) => new Promise<ProfileImageInput>((resolve, rej
   const reader = new FileReader();
 
   reader.onload = (event_) => {
-    resolve({
-      base64: event_.target?.result as string,
-      mimeType: file.type,
-    });
+    resolve({ base64: event_.target?.result as string, mimeType: file.type });
   };
 
   reader.onerror = () => reject(reader.error);
@@ -93,9 +75,7 @@ const fileToImage = (file: File) => new Promise<ProfileImageInput>((resolve, rej
 watch(
   currentUser,
   (user) => {
-    if (!user) {
-      return;
-    }
+    if (!user) return;
 
     setFieldValue('name', user.name ?? '');
     setFieldValue('phone', formatPhone(user.phone ?? ''));
@@ -107,9 +87,7 @@ watch(
 watch(phone, (value) => {
   const formattedPhone = formatPhone(value);
 
-  if (formattedPhone !== value) {
-    phone.value = formattedPhone;
-  }
+  if (formattedPhone !== value) phone.value = formattedPhone;
 });
 
 watch(photoFile, async (file) => {
@@ -126,17 +104,13 @@ watch(photoFile, async (file) => {
   photoPreviewUrl.value = image.base64;
 });
 
-const openPhotoDialog = () => {
-  photoInputRef.value?.click();
-};
+const openPhotoDialog = () => photoInputRef.value?.click();
 
 const selectPhoto = (event: Event) => {
   const input = event.target as HTMLInputElement;
   const file = input.files?.[0];
 
-  if (!file) {
-    return;
-  }
+  if (!file) return;
 
   photoFile.value = file;
   input.value = '';
@@ -146,9 +120,7 @@ const isLoading = ref(false);
 const backendError = ref('');
 
 const saveSettings = handleSubmit.withControlled(async () => {
-  if (isLoading.value) {
-    return;
-  }
+  if (isLoading.value) return;
 
   isLoading.value = true;
   backendError.value = '';
@@ -159,9 +131,7 @@ const saveSettings = handleSubmit.withControlled(async () => {
       phone: phone.value.replace(/\s+/g, ''),
     };
 
-    if (uploadedPhoto.value) {
-      payload.image = uploadedPhoto.value;
-    }
+    if (uploadedPhoto.value) payload.image = uploadedPhoto.value;
 
     await updateProfile(payload);
     photoFile.value = null;
@@ -172,35 +142,6 @@ const saveSettings = handleSubmit.withControlled(async () => {
   }
 });
 </script>
-
-<i18n>
-{
-  "en": {
-    "title": "Settings",
-    "description": "Edit the contact details buyers see next to your ads.",
-    "photo": "Photo",
-    "change_photo": "Change photo",
-    "name": "Name",
-    "name_placeholder": "Your name",
-    "phone_number": "Phone number",
-    "phone_placeholder": "+244 900 000 000",
-    "save": "Save changes",
-    "error_title": "Could not save settings"
-  },
-  "pt": {
-    "title": "Configurações",
-    "description": "Edite os dados de contacto que os compradores veem nos seus anúncios.",
-    "photo": "Foto",
-    "change_photo": "Alterar foto",
-    "name": "Nome",
-    "name_placeholder": "Seu nome",
-    "phone_number": "Número de telefone",
-    "phone_placeholder": "+244 900 000 000",
-    "save": "Guardar alterações",
-    "error_title": "Não foi possível guardar as configurações"
-  }
-}
-</i18n>
 
 <template>
   <form
@@ -219,14 +160,14 @@ const saveSettings = handleSubmit.withControlled(async () => {
 
       <button
         type="button"
-        :aria-label="t('change_photo')"
+        aria-label="Alterar foto"
         class="flex w-full items-center gap-4 text-left"
         @click="openPhotoDialog"
       >
         <div class="relative shrink-0">
           <UAvatar
             :src="photoPreviewUrl || undefined"
-            :alt="name || t('photo')"
+            :alt="name || 'Foto'"
             :text="name"
             size="2xl"
             class="ring-2 ring-default"
@@ -243,15 +184,13 @@ const saveSettings = handleSubmit.withControlled(async () => {
         </div>
 
         <div class="min-w-0">
-          <p
-            class="text-sm font-semibold text-highlighted"
-            v-text="t('photo')"
-          />
+          <p class="text-sm font-semibold text-highlighted">
+            Foto
+          </p>
 
-          <p
-            class="mt-0.5 text-xs text-muted"
-            v-text="t('change_photo')"
-          />
+          <p class="mt-0.5 text-xs text-muted">
+            Alterar foto
+          </p>
         </div>
 
         <UIcon
@@ -264,7 +203,7 @@ const saveSettings = handleSubmit.withControlled(async () => {
     <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
       <div class="px-5 py-4">
         <UFormField
-          :label="t('name')"
+          label="Nome"
           :error="errors.name"
           name="name"
           required
@@ -274,7 +213,7 @@ const saveSettings = handleSubmit.withControlled(async () => {
             name="name"
             type="text"
             autocomplete="name"
-            :placeholder="t('name_placeholder')"
+            placeholder="Seu nome"
             size="lg"
             class="w-full"
           />
@@ -283,7 +222,7 @@ const saveSettings = handleSubmit.withControlled(async () => {
 
       <div class="px-5 py-4">
         <UFormField
-          :label="t('phone_number')"
+          label="Número de telefone"
           :error="errors.phone"
           name="phone"
           required
@@ -294,7 +233,7 @@ const saveSettings = handleSubmit.withControlled(async () => {
             type="tel"
             autocomplete="tel-national"
             inputmode="tel"
-            :placeholder="t('phone_placeholder')"
+            placeholder="+244 900 000 000"
             size="lg"
             class="w-full"
           />
@@ -306,7 +245,7 @@ const saveSettings = handleSubmit.withControlled(async () => {
       v-if="backendError"
       color="error"
       variant="soft"
-      :title="t('error_title')"
+      title="Não foi possível guardar as configurações"
       :description="backendError"
     />
 
@@ -316,7 +255,7 @@ const saveSettings = handleSubmit.withControlled(async () => {
       size="lg"
       :loading="isLoading"
       block
-      :label="t('save')"
+      label="Guardar alterações"
     />
   </form>
 </template>

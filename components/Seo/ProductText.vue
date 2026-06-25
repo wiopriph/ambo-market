@@ -7,175 +7,138 @@ const props = defineProps<{
   seller: string;
   productList?: string[];
 }>();
-
-const { t } = useI18n();
 </script>
-
-<i18n>
-{
-  "en": {
-    "title": "{title} – Buy & Sell on Ambo Market",
-    "intro": "Looking for {title} in {city}? This is your chance to get a great deal! On Ambo Market, you can easily find and purchase {title} from trusted sellers.",
-    "listing_details": "Listing Details",
-    "detail_category": "Category: {category}",
-    "detail_price": "Price: {price}",
-    "detail_location": "Location: {city}",
-    "detail_contact": "Contact: {seller}",
-    "why_buy": "Why Buy {category} from Ambo Market?",
-    "point_1_title": "Free & Convenient Marketplace",
-    "point_1_desc": "Ambo Market allows you to browse thousands of listings for free.",
-    "point_1_options": "Whether you're searching for {options} or something else, you'll find multiple options in one place.",
-    "point_2_title": "Verified & Real Sellers",
-    "point_2_desc": "Every listing is published by real users. You can communicate directly with the seller before making a decision.",
-    "point_3_title": "Local Deals & Easy Negotiation",
-    "point_3_desc": "Find {title} in {city} near you! Contact the seller, negotiate the price, and arrange a meeting at your convenience.",
-    "point_4_title": "Safe Transactions",
-    "point_4_desc": "Always meet in public places, inspect the item before payment, and confirm all details with the seller.",
-    "contact_title": "How to Contact the Seller?",
-    "contact_desc": "Interested in {title}? Reach out using the contact details in the listing or send a message directly through Ambo Market.",
-    "sell_title": "Want to Sell Your Own Items? Post a Free Ad Now!",
-    "sell_desc": "If you have a {category} item to sell, list it on Ambo Market for free in minutes.",
-    "step_1": "Sign up or log in to your Ambo Market account.",
-    "step_2": "Click 'Post an Ad' and choose the correct category.",
-    "step_3": "Upload high-quality images, write a clear description, and set a fair price.",
-    "step_4": "Provide contact details so potential buyers can reach out.",
-    "step_5": "Publish your listing and start receiving offers!",
-    "final": "Join thousands of users buying and selling {title} every day on Ambo Market.",
-    "start_now": "Start browsing today and find the best {category} deals in {city}!"
-  },
-  "pt": {
-    "title": "{title} – Compre & Venda no Ambo Market",
-    "intro": "Procurando {title} em {city}? No Ambo Market, você pode encontrar e comprar {title} de vendedores confiáveis.",
-    "listing_details": "Detalhes do Anúncio",
-    "detail_category": "Categoria: {category}",
-    "detail_price": "Preço: {price}",
-    "detail_location": "Localização: {city}",
-    "detail_contact": "Contato: {seller}",
-    "why_buy": "Por que Comprar {category} no Ambo Market?",
-    "point_1_title": "Plataforma Gratuita e Conveniente",
-    "point_1_desc": "O Ambo Market permite que você navegue por milhares de anúncios sem nenhum custo.",
-    "point_1_options": "Se você está procurando {options}, encontrará diversas alternativas em um só lugar.",
-    "point_2_title": "Vendedores Reais e Confiáveis",
-    "point_2_desc": "Todos os anúncios são publicados por usuários reais. Você pode entrar em contato diretamente com o vendedor antes de decidir.",
-    "point_3_title": "Negociação Fácil e Compras Locais",
-    "point_3_desc": "Encontre {title} em {city} perto de você! Fale com o vendedor, negocie o preço e combine um ponto de encontro.",
-    "point_4_title": "Transações Seguras",
-    "point_4_desc": "Prefira se encontrar em locais públicos, verifique o item antes de pagar e confirme todos os detalhes.",
-    "contact_title": "Como Entrar em Contato com o Vendedor?",
-    "contact_desc": "Interessado em {title}? Entre em contato pelos detalhes do anúncio ou envie uma mensagem pelo Ambo Market.",
-    "sell_title": "Quer Vender Seus Próprios Itens? Publique um Anúncio Grátis!",
-    "sell_desc": "Se você tem um item da categoria {category} para vender, publique gratuitamente em minutos.",
-    "step_1": "Cadastre-se ou faça login na sua conta do Ambo Market.",
-    "step_2": "Clique em 'Publicar Anúncio' e escolha a categoria correta.",
-    "step_3": "Envie fotos de alta qualidade, escreva uma descrição e defina um preço justo.",
-    "step_4": "Informe seus dados de contato para que os interessados possam falar com você.",
-    "step_5": "Publique o anúncio e comece a receber propostas!",
-    "final": "Junte-se a milhares de usuários que compram e vendem {title} todos os dias no Ambo Market.",
-    "start_now": "Comece agora e encontre as melhores ofertas de {category} em {city}!"
-  }
-}
-</i18n>
 
 <template>
   <div class="space-y-3 text-sm leading-6 text-muted">
-    <h3
-      class="text-base font-semibold text-highlighted"
-      v-text="t('title', { title: productTitle })"
-    />
+    <h3 class="text-base font-semibold text-highlighted">
+      {{ productTitle }} – Compre &amp; Venda no Ambo Market
+    </h3>
 
-    <p v-text="t('intro', { title: productTitle, city, category })" />
+    <p>
+      Procurando {{ productTitle }} em {{ city }}? No Ambo Market, você pode encontrar e comprar {{ productTitle }} de
+      vendedores confiáveis.
+    </p>
 
-    <h3
-      class="text-base font-semibold text-highlighted"
-      v-text="t('listing_details')"
-    />
+    <h3 class="text-base font-semibold text-highlighted">
+      Detalhes do Anúncio
+    </h3>
 
     <ul class="list-disc space-y-1 pl-5">
-      <li v-text="t('detail_category', { category })" />
+      <li>
+        Categoria: {{ category }}
+      </li>
 
-      <li v-text="t('detail_price', { price })" />
+      <li>
+        Preço: {{ price }}
+      </li>
 
-      <li v-text="t('detail_location', { city })" />
+      <li>
+        Localização: {{ city }}
+      </li>
 
-      <li v-text="t('detail_contact', { seller })" />
+      <li>
+        Contato: {{ seller }}
+      </li>
     </ul>
 
-    <h3
-      class="text-base font-semibold text-highlighted"
-      v-text="t('why_buy', { category })"
-    />
+    <h3 class="text-base font-semibold text-highlighted">
+      Por que Comprar {{ category }} no Ambo Market?
+    </h3>
 
     <ol class="list-decimal space-y-3 pl-5">
       <li>
-        <p
-          class="font-medium text-highlighted"
-          v-text="t('point_1_title')"
-        />
+        <p class="font-medium text-highlighted">
+          Plataforma Gratuita e Conveniente
+        </p>
 
-        <p v-text="t('point_1_desc')" />
+        <p>
+          O Ambo Market permite que você navegue por milhares de anúncios sem nenhum custo.
+        </p>
 
-        <p
-          v-if="productList?.length > 1"
-          v-text="t('point_1_options', { options: productList.join(', ') })"
-        />
+        <p v-if="productList?.length > 1">
+          Se você está procurando {{ productList.join(', ') }}, encontrará diversas alternativas em um só lugar.
+        </p>
       </li>
 
       <li>
-        <p
-          class="font-medium text-highlighted"
-          v-text="t('point_2_title')"
-        />
+        <p class="font-medium text-highlighted">
+          Vendedores Reais e Confiáveis
+        </p>
 
-        <p v-text="t('point_2_desc')" />
+        <p>
+          Todos os anúncios são publicados por usuários reais. Você pode entrar em contato diretamente com o vendedor
+          antes de decidir.
+        </p>
       </li>
 
       <li>
-        <p
-          class="font-medium text-highlighted"
-          v-text="t('point_3_title')"
-        />
+        <p class="font-medium text-highlighted">
+          Negociação Fácil e Compras Locais
+        </p>
 
-        <p v-text="t('point_3_desc', { title: productTitle, city })" />
+        <p>
+          Encontre {{ productTitle }} em {{ city }} perto de você! Fale com o vendedor, negocie o preço e combine um
+          ponto de encontro.
+        </p>
       </li>
 
       <li>
-        <p
-          class="font-medium text-highlighted"
-          v-text="t('point_4_title')"
-        />
+        <p class="font-medium text-highlighted">
+          Transações Seguras
+        </p>
 
-        <p v-text="t('point_4_desc')" />
+        <p>
+          Prefira se encontrar em locais públicos, verifique o item antes de pagar e confirme todos os detalhes.
+        </p>
       </li>
     </ol>
 
-    <h3
-      class="text-base font-semibold text-highlighted"
-      v-text="t('contact_title')"
-    />
+    <h3 class="text-base font-semibold text-highlighted">
+      Como Entrar em Contato com o Vendedor?
+    </h3>
 
-    <p v-text="t('contact_desc', { title: productTitle })" />
+    <p>
+      Interessado em {{ productTitle }}? Entre em contato pelos detalhes do anúncio ou envie uma mensagem pelo Ambo
+      Market.
+    </p>
 
-    <h3
-      class="text-base font-semibold text-highlighted"
-      v-text="t('sell_title')"
-    />
+    <h3 class="text-base font-semibold text-highlighted">
+      Quer Vender Seus Próprios Itens? Publique um Anúncio Grátis!
+    </h3>
 
-    <p v-text="t('sell_desc', { category })" />
+    <p>
+      Se você tem um item da categoria {{ category }} para vender, publique gratuitamente em minutos.
+    </p>
 
     <ol class="list-decimal space-y-1 pl-5">
-      <li v-text="t('step_1')" />
+      <li>
+        Cadastre-se ou faça login na sua conta do Ambo Market.
+      </li>
 
-      <li v-text="t('step_2')" />
+      <li>
+        Clique em 'Publicar Anúncio' e escolha a categoria correta.
+      </li>
 
-      <li v-text="t('step_3')" />
+      <li>
+        Envie fotos de alta qualidade, escreva uma descrição e defina um preço justo.
+      </li>
 
-      <li v-text="t('step_4')" />
+      <li>
+        Informe seus dados de contato para que os interessados possam falar com você.
+      </li>
 
-      <li v-text="t('step_5')" />
+      <li>
+        Publique o anúncio e comece a receber propostas!
+      </li>
     </ol>
 
-    <p v-text="t('final', { title: productTitle })" />
+    <p>
+      Junte-se a milhares de usuários que compram e vendem {{ productTitle }} todos os dias no Ambo Market.
+    </p>
 
-    <p v-text="t('start_now', { category, city })" />
+    <p>
+      Comece agora e encontre as melhores ofertas de {{ category }} em {{ city }}!
+    </p>
   </div>
 </template>

@@ -10,7 +10,6 @@ import { usePosts } from '~/composables/usePosts';
 import { useUser } from '~/composables/useUser';
 
 
-const { t } = useI18n();
 const route = useRoute();
 const { pushEvent } = useAnalyticsEvent();
 
@@ -59,13 +58,13 @@ const logout = async () => {
 const accountItems = computed(() => [
   [
     {
-      label: t('ads'),
+      label: 'Meus anúncios',
       icon: 'i-lucide-list',
       to: { name: 'user-ads' },
       onSelect: () => pushEvent(CLICK_MY_ADS_BUTTON),
     },
     {
-      label: t('settings'),
+      label: 'Configurações',
       icon: 'i-lucide-settings',
       to: { name: 'user-settings' },
       onSelect: () => pushEvent(CLICK_SETTINGS_BUTTON),
@@ -73,7 +72,7 @@ const accountItems = computed(() => [
   ],
   [
     {
-      label: t('logout'),
+      label: 'Sair',
       icon: 'i-lucide-log-out',
       color: 'error' as const,
       onSelect: logout,
@@ -81,7 +80,7 @@ const accountItems = computed(() => [
   ],
 ]);
 
-const profileName = computed(() => currentUser.value?.name || t('account'));
+const profileName = computed(() => currentUser.value?.name || 'Conta');
 const profileInitial = computed(() => profileName.value.charAt(0).toUpperCase());
 
 const onAccountClick = () => {
@@ -89,36 +88,13 @@ const onAccountClick = () => {
 };
 </script>
 
-<i18n lang="json">
-{
-  "en": {
-    "main_page": "Main page",
-    "place_ad": "Post ad",
-    "account": "Account",
-    "ads": "My ads",
-    "settings": "Settings",
-    "sign_in": "Login",
-    "logout": "Logout"
-  },
-  "pt": {
-    "main_page": "Página inicial",
-    "place_ad": "Publicar anúncio",
-    "account": "Conta",
-    "ads": "Meus anúncios",
-    "settings": "Configurações",
-    "sign_in": "Entrar",
-    "logout": "Sair"
-  }
-}
-</i18n>
-
 <template>
   <header class="sticky top-0 z-50 bg-default/80 backdrop-blur">
     <div class="mx-auto max-w-6xl px-2 py-2 sm:px-2 lg:px-4">
       <div class="flex flex-wrap items-center gap-x-4 gap-y-2 py-2 lg:h-12 lg:items-stretch lg:py-0">
         <ULink
           :to="indexRoute"
-          :aria-label="t('main_page')"
+          aria-label="Página inicial"
           class="order-1 shrink-0 lg:flex lg:items-center"
         >
           <img
@@ -137,10 +113,7 @@ const onAccountClick = () => {
             size="md"
             @click="goToCreatePage"
           >
-            <span
-              class="hidden md:inline"
-              v-text="t('place_ad')"
-            />
+            <span class="hidden md:inline">Publicar anúncio</span>
           </UButton>
 
           <UDropdownMenu
@@ -149,7 +122,7 @@ const onAccountClick = () => {
             :content="{ align: 'end', sideOffset: 10 }"
           >
             <UButton
-              :aria-label="t('account')"
+              aria-label="Conta"
               color="neutral"
               variant="ghost"
               class="rounded-full p-0"
@@ -166,7 +139,7 @@ const onAccountClick = () => {
 
           <UButton
             v-else
-            :label="t('sign_in')"
+            label="Entrar"
             color="neutral"
             variant="ghost"
             size="md"

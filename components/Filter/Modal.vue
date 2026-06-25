@@ -11,8 +11,6 @@ const open = defineModel<boolean>({ default: false });
 
 const emit = defineEmits<{ close: [] }>();
 
-const { t } = useI18n();
-
 const {
   cityId,
   categoryId,
@@ -30,24 +28,24 @@ const newMinPrice = ref('');
 const newMaxPrice = ref('');
 
 const citiesItems = computed(() =>
-  CITIES.map(({ id, name }) => ({ value: id, label: name || t('everywhere') })),
+  CITIES.map(({ id, name }) => ({ value: id, label: name || 'Em todos os lugares' })),
 );
 
 const categoriesItems = computed(() =>
-  CATEGORIES.map(({ id, key }) => ({ value: id, label: t(key) })),
+  CATEGORIES.map(({ id, name }) => ({ value: id, label: name })),
 );
 
 const subcategoriesItems = computed(() => {
   const category = CATEGORIES.find(cat => cat.id === newCategoryId.value);
 
-  return category?.subcategories?.map(({ id, key }) => ({ value: id, label: t(key) })) ?? [];
+  return category?.subcategories?.map(({ id, name }) => ({ value: id, label: name })) ?? [];
 });
 
 const brandsItems = computed(() => {
   const category = CATEGORIES.find(cat => cat.id === newCategoryId.value);
   const subcategory = category?.subcategories?.find(sc => sc.id === newSubcategoryId.value);
 
-  return subcategory?.brands?.map(({ id, key }) => ({ value: id, label: t(key) })) ?? [];
+  return subcategory?.brands?.map(({ id, name }) => ({ value: id, label: name })) ?? [];
 });
 
 watch(open, (val) => {
@@ -106,39 +104,6 @@ const clearAllFilters = () => {
 };
 </script>
 
-<i18n lang="json">
-{
-  "en": {
-    "filters": "Filters",
-    "city": "City",
-    "everywhere": "Everywhere",
-    "category": "Category",
-    "subcategory": "Subcategory",
-    "brand": "Brand",
-    "price": "Price",
-    "from": "From",
-    "to": "To",
-    "select": "Select",
-    "clear_all": "Clear all",
-    "apply": "Apply"
-  },
-  "pt": {
-    "filters": "Filtros",
-    "city": "Cidade",
-    "everywhere": "Em todos os lugares",
-    "category": "Categoria",
-    "subcategory": "Subcategoria",
-    "brand": "Marca",
-    "price": "Preço",
-    "from": "De",
-    "to": "Até",
-    "select": "Selecione",
-    "clear_all": "Limpar tudo",
-    "apply": "Aplicar"
-  }
-}
-</i18n>
-
 <template>
   <UDrawer
     v-model:open="open"
@@ -146,10 +111,7 @@ const clearAllFilters = () => {
   >
     <template #header>
       <div class="flex items-center justify-between px-4 py-3">
-        <span
-          class="font-semibold"
-          v-text="t('filters')"
-        />
+        <span class="font-semibold">Filtros</span>
 
         <UButton
           icon="i-lucide-x"
@@ -164,13 +126,13 @@ const clearAllFilters = () => {
     <template #body>
       <div class="flex flex-col gap-4 px-4 py-4 overflow-y-auto max-h-[60vh]">
         <UFormField
-          :label="t('city')"
+          label="Cidade"
           class="sm:hidden"
         >
           <USelect
             v-model="newCityId"
             :items="citiesItems"
-            :placeholder="t('everywhere')"
+            placeholder="Em todos os lugares"
             valueKey="value"
             labelKey="label"
             class="w-full"
@@ -178,11 +140,11 @@ const clearAllFilters = () => {
           />
         </UFormField>
 
-        <UFormField :label="t('category')">
+        <UFormField label="Categoria">
           <USelect
             v-model="newCategoryId"
             :items="categoriesItems"
-            :placeholder="t('select')"
+            placeholder="Selecione"
             valueKey="value"
             labelKey="label"
             class="w-full"
@@ -192,12 +154,12 @@ const clearAllFilters = () => {
 
         <UFormField
           v-if="subcategoriesItems.length"
-          :label="t('subcategory')"
+          label="Subcategoria"
         >
           <USelect
             v-model="newSubcategoryId"
             :items="subcategoriesItems"
-            :placeholder="t('select')"
+            placeholder="Selecione"
             valueKey="value"
             labelKey="label"
             class="w-full"
@@ -207,12 +169,12 @@ const clearAllFilters = () => {
 
         <UFormField
           v-if="brandsItems.length"
-          :label="t('brand')"
+          label="Marca"
         >
           <USelect
             v-model="newBrandId"
             :items="brandsItems"
-            :placeholder="t('select')"
+            placeholder="Selecione"
             valueKey="value"
             labelKey="label"
             class="w-full"
@@ -220,18 +182,18 @@ const clearAllFilters = () => {
           />
         </UFormField>
 
-        <UFormField :label="t('price')">
+        <UFormField label="Preço">
           <div class="flex gap-2">
             <UInput
               v-model="newMinPrice"
-              :placeholder="t('from')"
+              placeholder="De"
               type="number"
               class="w-full"
             />
 
             <UInput
               v-model="newMaxPrice"
-              :placeholder="t('to')"
+              placeholder="Até"
               type="number"
               class="w-full"
             />
@@ -243,7 +205,7 @@ const clearAllFilters = () => {
     <template #footer>
       <div class="flex gap-2 px-4 pb-4">
         <UButton
-          :label="t('clear_all')"
+          label="Limpar tudo"
           color="neutral"
           variant="soft"
           class="flex-1"
@@ -251,7 +213,7 @@ const clearAllFilters = () => {
         />
 
         <UButton
-          :label="t('apply')"
+          label="Aplicar"
           class="flex-1"
           @click="updateFilters"
         />

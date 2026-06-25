@@ -19,24 +19,9 @@ const props = withDefaults(defineProps<ListProps>(), {
 
 const hasList = computed(() => Array.isArray(props.list) && props.list.length);
 
-const { t } = useI18n();
-
-const emptyTitle = computed(() => props.emptyTitle || t('empty_title'));
-const emptyDescription = computed(() => props.emptyText || t('empty_text'));
+const emptyTitle = computed(() => props.emptyTitle || 'Nada encontrado');
+const emptyDescription = computed(() => props.emptyText || 'Não encontramos o que você estava procurando. Por favor, modifique os critérios de busca, os filtros selecionados ou a categoria.');
 </script>
-
-<i18n lang="json">
-{
-  "en": {
-    "empty_title": "Nothing found",
-    "empty_text": "We couldn't find what you were looking for. Please modify the search criteria, selected filters, or category."
-  },
-  "pt": {
-    "empty_title": "Nada encontrado",
-    "empty_text": "Não encontramos o que você estava procurando. Por favor, modifique os critérios de busca, os filtros selecionados ou a categoria."
-  }
-}
-</i18n>
 
 <template>
   <div

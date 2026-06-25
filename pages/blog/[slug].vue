@@ -81,37 +81,12 @@ useHead({
   script: script.value,
 });
 
-const { t } = useI18n();
-
 const breadcrumbs = computed(() => [
-  {
-    label: t('main_page'),
-    to: { name: 'index' },
-  },
-  {
-    label: t('blog'),
-    to: { name: 'blog' },
-  },
-  {
-    label: doc.value?.title || '',
-  },
+  { label: 'Página Inicial', to: { name: 'index' } },
+  { label: 'Blog', to: { name: 'blog' } },
+  { label: doc.value?.title || '' },
 ]);
 </script>
-
-<i18n lang="json">
-{
-  "en": {
-    "main_page": "Home",
-    "blog": "Blog",
-    "tags": "Tags"
-  },
-  "pt": {
-    "main_page": "Página Inicial",
-    "blog": "Blog",
-    "tags": "Tags"
-  }
-}
-</i18n>
 
 <template>
   <div

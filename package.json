@@ -25,7 +25,6 @@
     "vue-router": "5.1.0"
   },
   "devDependencies": {
-    "@nuxtjs/i18n": "10.4.0",
     "@types/lodash": "4.17.24",
     "@vee-validate/yup": "4.15.1",
     "@wiopriph/eslint-config": "github:wiopriph/nuxt4-eslint-config",

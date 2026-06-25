@@ -14,21 +14,19 @@ definePageMeta({
   }),
 });
 
-const { t } = useI18n();
+const title = 'Recuperar senha do Ambo Market';
+const description = 'Solicite um link para redefinir a senha da sua conta Ambo Market e volte a gerir seus classificados.';
 
-const title = computed(() => t('meta_title'));
-
-const description = computed(() => t('meta_description'));
-
-const meta = computed(() => [
-  { key: 'og:title', property: 'og:title', content: title.value },
-  { key: 'twitter:title', property: 'twitter:title', content: title.value },
-  { key: 'description', name: 'description', content: description.value },
-  { key: 'og:description', property: 'og:description', content: description.value },
-  { key: 'twitter:description', property: 'twitter:description', content: description.value },
-]);
-
-useHead({ title: title.value, meta: meta.value });
+useHead({
+  title,
+  meta: [
+    { key: 'og:title', property: 'og:title', content: title },
+    { key: 'twitter:title', property: 'twitter:title', content: title },
+    { key: 'description', name: 'description', content: description },
+    { key: 'og:description', property: 'og:description', content: description },
+    { key: 'twitter:description', property: 'twitter:description', content: description },
+  ],
+});
 
 const route = useRoute();
 const { resetPassword } = useAuth();
@@ -37,13 +35,11 @@ const {
   errors,
   handleSubmit,
 } = useForm({
-  initialValues: {
-    email: '',
-  },
+  initialValues: { email: '' },
   validationSchema: object({
     email: string()
-      .email(t('validation.email'))
-      .required(t('validation.required')),
+      .email('Formato de email incorreto')
+      .required('Este campo é obrigatório'),
   }),
 });
 
@@ -72,7 +68,7 @@ const resetPasswordForEmail = handleSubmit.withControlled(async () => {
     return;
   }
 
-  successMessage.value = t('success_message');
+  successMessage.value = 'Se este e-mail estiver cadastrado, enviamos um link para redefinir sua senha.';
 });
 
 const goToLogin = () => {
@@ -83,43 +79,16 @@ const goToLogin = () => {
 };
 </script>
 
-<i18n lang="json">
-{
-  "en": {
-    "meta_title": "Recover your Ambo Market password",
-    "meta_description": "Request a password reset link for your Ambo Market account and get back to managing your classifieds.",
-    "title": "Password recovery",
-    "subtitle": "We will send a link to reset your password to your e-mail.",
-    "email": "E-mail",
-    "reset_password": "Reset password",
-    "back_to_login": "Back to login",
-    "success_message": "If this e-mail is registered, we have sent a link to reset your password."
-  },
-  "pt": {
-    "meta_title": "Recuperar senha do Ambo Market",
-    "meta_description": "Solicite um link para redefinir a senha da sua conta Ambo Market e volte a gerir seus classificados.",
-    "title": "Recuperação de senha",
-    "subtitle": "Enviaremos um link para redefinir sua senha para o seu e-mail.",
-    "email": "E-mail",
-    "reset_password": "Redefinir senha",
-    "back_to_login": "Voltar para login",
-    "success_message": "Se este e-mail estiver cadastrado, enviamos um link para redefinir sua senha."
-  }
-}
-</i18n>
-
 <template>
   <div class="mx-auto w-full max-w-md px-4 py-8 sm:py-16 space-y-3">
     <div class="rounded-2xl border border-default bg-default px-5 py-4">
-      <h1
-        class="text-lg font-bold text-highlighted"
-        v-text="t('title')"
-      />
+      <h1 class="text-lg font-bold text-highlighted">
+        Recuperação de senha
+      </h1>
 
-      <p
-        class="mt-0.5 text-sm text-muted"
-        v-text="t('subtitle')"
-      />
+      <p class="mt-0.5 text-sm text-muted">
+        Enviaremos um link para redefinir sua senha para o seu e-mail.
+      </p>
     </div>
 
     <form
@@ -129,7 +98,7 @@ const goToLogin = () => {
       <div class="rounded-2xl border border-default bg-default overflow-hidden">
         <div class="px-5 py-4">
           <UFormField
-            :label="t('email')"
+            label="E-mail"
             :error="errors.email"
             name="email"
             required
@@ -164,7 +133,7 @@ const goToLogin = () => {
 
       <UButton
         type="submit"
-        :label="t('reset_password')"
+        label="Redefinir senha"
         :loading="isLoading"
         size="lg"
         block
@@ -180,7 +149,7 @@ const goToLogin = () => {
         class="px-0"
         @click="goToLogin"
       >
-        {{ t('back_to_login') }}
+        Voltar para login
       </UButton>
     </div>
   </div>

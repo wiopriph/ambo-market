@@ -14,7 +14,6 @@ definePageMeta({
 });
 
 const route = useRoute();
-const { t } = useI18n();
 
 const userUid = computed(() => route.params.userUid as string);
 const currentStatus = computed(() => route.params.status as string || 'all');
@@ -25,35 +24,20 @@ const { data: posts } = await useAsyncData(
   { watch: [() => route.params] },
 );
 
+const EMPTY_TEXTS: Record<string, string> = {
+  all: 'Ainda não há anúncios.',
+  open: 'Nenhum anúncio ativo.',
+  closed: 'Nenhum anúncio vendido.',
+};
+
 const tabs = computed(() => [
-  { label: t('all'), to: { name: 'user-userUid-status', params: { userUid: userUid.value, status: undefined } } },
-  { label: t('open'), to: { name: 'user-userUid-status', params: { userUid: userUid.value, status: 'open' } } },
-  { label: t('closed'), to: { name: 'user-userUid-status', params: { userUid: userUid.value, status: 'closed' } } },
+  { label: 'Todos', to: { name: 'user-userUid-status', params: { userUid: userUid.value, status: undefined } } },
+  { label: 'Ativo', to: { name: 'user-userUid-status', params: { userUid: userUid.value, status: 'open' } } },
+  { label: 'Vendido', to: { name: 'user-userUid-status', params: { userUid: userUid.value, status: 'closed' } } },
 ]);
 
-const emptyText = computed(() => t(`empty_${currentStatus.value}`));
+const emptyText = computed(() => EMPTY_TEXTS[currentStatus.value] ?? EMPTY_TEXTS.all);
 </script>
-
-<i18n lang="json">
-{
-  "en": {
-    "empty_all": "No listings yet.",
-    "empty_open": "No active listings.",
-    "empty_closed": "No sold listings.",
-    "all": "All",
-    "open": "Active",
-    "closed": "Sold"
-  },
-  "pt": {
-    "empty_all": "Ainda não há anúncios.",
-    "empty_open": "Nenhum anúncio ativo.",
-    "empty_closed": "Nenhum anúncio vendido.",
-    "all": "Todos",
-    "open": "Ativo",
-    "closed": "Vendido"
-  }
-}
-</i18n>
 
 <template>
   <div class="space-y-5">

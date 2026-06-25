@@ -7,6 +7,7 @@ import { formatFullDate } from '~/utils/formatDate';
 import { useUser } from '~/composables/useUser';
 import { getPostRoute } from '~/utils/getPostRoute';
 import { CLICK_AD_PHOTO } from '~/constants/analytics-events';
+import { getBrandName, getCategoryName, getSubcategoryName } from '~/constants/categories';
 
 
 type BreadcrumbDepth = 'category' | 'subcategory' | 'brand';
@@ -95,8 +96,6 @@ const { data: recommendedPosts } = await useAsyncData<ProductPost[]>(
   { watch: [() => route.params] },
 );
 
-const { t, locale } = useI18n();
-
 const seller = computed({
   get: () => product.value?.user,
   set: (value: User) => {
@@ -108,20 +107,20 @@ const seller = computed({
 const post = computed(() => product.value?.post);
 
 const categoryId = computed(() => post.value?.categoryId);
-const postCategoryName = computed(() => t(`categories.${categoryId.value}`));
+const postCategoryName = computed(() => getCategoryName(categoryId.value ?? ''));
 
 const subcategoryId = computed(() => post.value?.subcategoryId);
-const postSubcategoryName = computed(() => t(`subcategories.${subcategoryId.value}`));
+const postSubcategoryName = computed(() => getSubcategoryName(categoryId.value ?? '', subcategoryId.value ?? ''));
 
 const brandId = computed(() => post.value?.brandId);
-const postBrandName = computed(() => t(`brands.${brandId.value}`));
+const postBrandName = computed(() => getBrandName(categoryId.value ?? '', subcategoryId.value ?? '', brandId.value ?? ''));
 
 const postLocation = computed(() => post.value?.location);
 const postCityId = computed(() => postLocation.value?.cityId ?? 'all');
 const postCityName = computed(() => postLocation.value?.cityName);
 
 const formattedPrice = computed(() => formatCurrency(`${post.value?.price}`));
-const formattedDate = computed(() => post.value?.createdAt ? formatFullDate(post.value?.createdAt, locale.value) : '');
+const formattedDate = computed(() => post.value?.createdAt ? formatFullDate(post.value?.createdAt, 'pt') : '');
 const productImages = computed(() => {
   const images = post.value?.images?.filter(Boolean) ?? [];
 
@@ -138,7 +137,7 @@ const fallbackImage = '/blog-placeholder.png';
 const carouselSlides = computed(() => productImages.value.map((url, index) => ({
   url,
   index,
-  alt: `${post.value?.title || t('photos')} ${index + 1}`,
+  alt: `${post.value?.title || 'Fotos'} ${index + 1}`,
 })));
 const hasGalleryImages = computed(() => carouselSlides.value.length > 0);
 
@@ -181,27 +180,27 @@ const breadcrumbItems = computed(() => breadcrumbsList.value.map((item) => ({
 
 const productDetails = computed(() => [
   {
-    label: t('location'),
+    label: 'Localização',
     value: postCityName.value,
     icon: 'i-lucide-map-pin',
   },
   {
-    label: t('category'),
+    label: 'Categoria',
     value: postCategoryName.value,
     icon: 'i-lucide-layout-grid',
   },
   {
-    label: t('subcategory'),
+    label: 'Subcategoria',
     value: postSubcategoryName.value,
     icon: 'i-lucide-list-tree',
   },
   {
-    label: t('brand'),
+    label: 'Marca',
     value: brandId.value ? postBrandName.value : '',
     icon: 'i-lucide-tag',
   },
   {
-    label: t('posted'),
+    label: 'Publicado em',
     value: formattedDate.value,
     icon: 'i-lucide-calendar-days',
   },
@@ -212,7 +211,7 @@ const sellerDescription = computed(() => {
     return seller.value.phone;
   }
 
-  return t('seller');
+  return 'Vendedor';
 });
 
 const sellerAvatar = computed(() => ({
@@ -226,18 +225,18 @@ const isPostOpen = computed(() => post.value?.status === POST_STATUSES.OPEN);
 const isPostUnavailable = computed(() => !isPostOpen.value);
 const statusLabel = computed(() => {
   if (post.value?.status === POST_STATUSES.CLOSED) {
-    return t('status_closed');
+    return 'Fechado';
   }
 
   if (post.value?.status === 'archived') {
-    return t('status_archived');
+    return 'Arquivado';
   }
 
   if (post.value?.status === POST_STATUSES.HOLD) {
-    return t('status_hold');
+    return 'Em espera';
   }
 
-  return t('status_open');
+  return 'Ativo';
 });
 
 const statusColor = computed(() => {
@@ -268,7 +267,7 @@ const copyShareLink = async () => {
   await navigator.clipboard.writeText(shareUrl.value);
 
   toast.add({
-    title: t('link_copied'),
+    title: 'Link copiado',
     color: 'success',
     icon: 'i-lucide-check',
   });
@@ -284,27 +283,130 @@ const getRecommendedPostTo = (product: ProductPost) => getPostRoute({
   productId: product.id,
 });
 
+type ProductSeoEntry = { title: string; description: string };
+
+const PRODUCT_SEO: Record<string, { city: ProductSeoEntry; everywhere: ProductSeoEntry }> = {
+  vehicles: {
+    city: {
+      title: 'Comprar {title} em {city} | Veículos | Ambo Market',
+      description: 'Compre {title} em {city} – carros, motas, barcos e mais. Apenas anúncios verificados. {description}',
+    },
+    everywhere: {
+      title: 'Comprar {title} | Veículos | Ambo Market',
+      description: 'Explore {title} à venda – carros, motas e veículos comerciais. {description}',
+    },
+  },
+  'real-estate': {
+    city: {
+      title: '{title} em {city} | Imóveis | Ambo Market',
+      description: 'Encontre {title} em {city} – casas, terrenos, apartamentos e imóveis comerciais. {description}',
+    },
+    everywhere: {
+      title: '{title} | Imóveis | Ambo Market',
+      description: 'Veja {title} para venda ou aluguel – imóveis em toda Angola. {description}',
+    },
+  },
+  electronics: {
+    city: {
+      title: 'Comprar {title} em {city} | Eletrônicos | Ambo Market',
+      description: 'À procura de {title} em {city}? Veja telemóveis, computadores, TVs e mais. {description}',
+    },
+    everywhere: {
+      title: 'Comprar {title} | Eletrônicos | Ambo Market',
+      description: 'Compre {title} no Ambo Market – smartphones, gadgets, computadores e muito mais. {description}',
+    },
+  },
+  fashion: {
+    city: {
+      title: 'Comprar {title} em {city} | Moda | Ambo Market',
+      description: 'Encontre {title} em {city} – roupas, calçados e acessórios com ótimos preços. {description}',
+    },
+    everywhere: {
+      title: 'Comprar {title} | Moda | Ambo Market',
+      description: 'Compre {title} – descubra ofertas de moda em toda Angola. {description}',
+    },
+  },
+  jobs: {
+    city: {
+      title: '{title} em {city} | Empregos | Ambo Market',
+      description: 'Vaga de emprego: {title} em {city}. Candidate-se agora ou veja outras oportunidades. {description}',
+    },
+    everywhere: {
+      title: '{title} | Empregos | Ambo Market',
+      description: 'Oferta de emprego: {title}. Encontre oportunidades de carreira em Angola. {description}',
+    },
+  },
+  services: {
+    city: {
+      title: '{title} em {city} | Serviços | Ambo Market',
+      description: 'Encontre {title} em {city} – serviços confiáveis para pessoas e empresas. {description}',
+    },
+    everywhere: {
+      title: '{title} | Serviços | Ambo Market',
+      description: 'Serviço oferecido: {title}. Publique ou encontre serviços de confiança em Angola. {description}',
+    },
+  },
+  animals: {
+    city: {
+      title: 'Comprar {title} em {city} | Animais | Ambo Market',
+      description: 'Encontre {title} em {city} – animais de estimação, gado e acessórios. {description}',
+    },
+    everywhere: {
+      title: 'Comprar {title} | Animais | Ambo Market',
+      description: '{title} – animais domésticos, exóticos ou de fazenda em toda Angola. {description}',
+    },
+  },
+  hobby: {
+    city: {
+      title: 'Comprar {title} em {city} | Lazer & Passatempos | Ambo Market',
+      description: 'Encontre {title} em {city} – desporto, música, jogos, coleções e mais. {description}',
+    },
+    everywhere: {
+      title: 'Comprar {title} | Lazer & Passatempos | Ambo Market',
+      description: 'Compre {title} no Ambo Market – tudo para os seus passatempos: jogos, música, desporto e artesanato. {description}',
+    },
+  },
+  kids: {
+    city: {
+      title: 'Comprar {title} em {city} | Artigos Infantis | Ambo Market',
+      description: 'À procura de {title} em {city}? Encontre brinquedos, roupas e artigos para bebés. {description}',
+    },
+    everywhere: {
+      title: 'Comprar {title} | Artigos Infantis | Ambo Market',
+      description: 'Compre {title} – brinquedos, roupas e muito mais para crianças em toda Angola. {description}',
+    },
+  },
+  home: {
+    city: {
+      title: 'Comprar {title} em {city} | Casa & Jardim | Ambo Market',
+      description: 'Encontre {title} em {city} – móveis, eletrodomésticos, decoração e mais. {description}',
+    },
+    everywhere: {
+      title: 'Comprar {title} | Casa & Jardim | Ambo Market',
+      description: 'Explore {title} para sua casa. Compre ou venda móveis, ferramentas e acessórios. {description}',
+    },
+  },
+};
+
+const fillStr = (str: string, vars: Record<string, string>) =>
+  str.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? _);
+
 const seo = computed(() => {
-  const translationKey = postCityId.value && postCityName.value ? 'city' : 'everywhere';
+  const cityKey = postCityId.value && postCityName.value ? 'city' : 'everywhere';
+  const catSeo = PRODUCT_SEO[categoryId.value ?? ''];
+  const entry = catSeo?.[cityKey];
 
-  const title = t(`${categoryId.value}.${translationKey}.title`, {
-    title: post.value?.title,
-    city: postCityName.value,
-  });
+  const vars = {
+    title: post.value?.title ?? '',
+    city: postCityName.value ?? '',
+    description: (post.value?.description ?? '').replace(/[\r\n]+/g, ' '),
+  };
 
-  const description = t(`${categoryId.value}.${translationKey}.description`, {
-    title: post.value?.title,
-    city: postCityName.value,
-    description: post.value?.description?.replace(/[\r\n]+/g, ' '),
-  });
-
+  const title = entry ? fillStr(entry.title, vars) : (post.value?.title ?? '');
+  const description = entry ? fillStr(entry.description, vars) : (post.value?.description ?? '');
   const image = post.value?.preview || '';
 
-  return {
-    title,
-    description,
-    image,
-  };
+  return { title, description, image };
 });
 
 const title = computed(() => seo.value.title);
@@ -351,7 +453,7 @@ useHead({ title: title.value, meta: meta.value, script: script.value });
 
 const breadcrumbsList = computed(() => {
   const breadcrumbs: Breadcrumb[] = [{
-    title: 'Main',
+    title: 'Início',
     to: {
       name: 'cityId',
       params: {
@@ -417,257 +519,6 @@ const closePost = () => {
   }
 };
 </script>
-
-<i18n lang="json">
-{
-  "en": {
-    "contact_seller": "Contact the Seller",
-    "location": "Location",
-    "category": "Category",
-    "description": "Description",
-    "posted": "Posted On",
-    "share": "Share Listing",
-    "related_listings": "Related Listings",
-    "seller": "Seller",
-    "subcategory": "Subcategory",
-    "brand": "Brand",
-    "photos": "Photos",
-    "details": "Details",
-    "call_seller": "Call seller",
-    "close_post": "Close ad",
-    "no_photo": "No photo",
-    "status_open": "Active",
-    "status_hold": "On hold",
-    "status_closed": "Closed",
-    "status_archived": "Archived",
-    "copy_link": "Copy link",
-    "link_copied": "Link copied",
-    "vehicles": {
-      "city": {
-        "title": "Buy {title} in {city} {'|'} Vehicles {'|'} Ambo Market",
-        "description": "Buy {title} in {city} – cars, bikes, boats and more. Trusted listings only. {description}"
-      },
-      "everywhere": {
-        "title": "Buy {title} {'|'} Vehicles {'|'} Ambo Market",
-        "description": "Explore {title} for sale – cars, motorcycles, and commercial vehicles. {description}"
-      }
-    },
-    "real-estate": {
-      "city": {
-        "title": "{title} in {city} {'|'} Real Estate {'|'} Ambo Market",
-        "description": "Find {title} in {city} – houses, land, apartments and commercial property. {description}"
-      },
-      "everywhere": {
-        "title": "{title} {'|'} Real Estate {'|'} Ambo Market",
-        "description": "View {title} for sale or rent – real estate listings across Angola. {description}"
-      }
-    },
-    "electronics": {
-      "city": {
-        "title": "Buy {title} in {city} {'|'} Electronics {'|'} Ambo Market",
-        "description": "Looking for {title} in {city}? Browse phones, laptops, TVs and more on Ambo Market. {description}"
-      },
-      "everywhere": {
-        "title": "Buy {title} {'|'} Electronics {'|'} Ambo Market",
-        "description": "Buy {title} on Ambo Market – smartphones, gadgets, computers and more. {description}"
-      }
-    },
-    "fashion": {
-      "city": {
-        "title": "Buy {title} in {city} {'|'} Fashion {'|'} Ambo Market",
-        "description": "Find {title} in {city} – stylish clothes, shoes, and accessories at great prices. {description}"
-      },
-      "everywhere": {
-        "title": "Buy {title} {'|'} Fashion {'|'} Ambo Market",
-        "description": "Buy {title} – discover fashion deals across Angola. Clothes, shoes, and more. {description}"
-      }
-    },
-    "jobs": {
-      "city": {
-        "title": "{title} in {city} {'|'} Jobs {'|'} Ambo Market",
-        "description": "Job opening: {title} in {city}. Apply now or explore other offers. {description}"
-      },
-      "everywhere": {
-        "title": "{title} {'|'} Jobs {'|'} Ambo Market",
-        "description": "Job post: {title}. Find career opportunities across Angola. {description}"
-      }
-    },
-    "services": {
-      "city": {
-        "title": "{title} in {city} {'|'} Services {'|'} Ambo Market",
-        "description": "Find {title} in {city} – reliable personal or business services. {description}"
-      },
-      "everywhere": {
-        "title": "{title} {'|'} Services {'|'} Ambo Market",
-        "description": "Service offered: {title}. Post or explore trusted services across Angola. {description}"
-      }
-    },
-    "animals": {
-      "city": {
-        "title": "Buy {title} in {city} {'|'} Animals {'|'} Ambo Market",
-        "description": "Find {title} in {city} – pets, livestock, and supplies. {description}"
-      },
-      "everywhere": {
-        "title": "Buy {title} {'|'} Animals {'|'} Ambo Market",
-        "description": "{title} – pets, exotic animals, or farm livestock across Angola. {description}"
-      }
-    },
-    "hobby": {
-      "city": {
-        "title": "Buy {title} in {city} {'|'} Hobby & Leisure {'|'} Ambo Market",
-        "description": "Find {title} in {city} – sports gear, musical instruments, games, collectibles and more. {description}"
-      },
-      "everywhere": {
-        "title": "Buy {title} {'|'} Hobby & Leisure {'|'} Ambo Market",
-        "description": "Buy {title} on Ambo Market – everything for your hobbies: games, music, sports, crafts and more. {description}"
-      }
-    },
-    "kids": {
-      "city": {
-        "title": "Buy {title} in {city} {'|'} Kids Items {'|'} Ambo Market",
-        "description": "Looking for {title} in {city}? Find toys, clothes and baby items. {description}"
-      },
-      "everywhere": {
-        "title": "Buy {title} {'|'} Kids Items {'|'} Ambo Market",
-        "description": "Buy {title} – toys, clothing and more for kids across Angola. {description}"
-      }
-    },
-    "home": {
-      "city": {
-        "title": "Buy {title} in {city} {'|'} Home & Garden {'|'} Ambo Market",
-        "description": "Find {title} in {city} – furniture, appliances, décor and more. {description}"
-      },
-      "everywhere": {
-        "title": "Buy {title} {'|'} Home & Garden {'|'} Ambo Market",
-        "description": "Explore {title} for your home. Buy or sell furniture, tools and accessories. {description}"
-      }
-    }
-  },
-  "pt": {
-    "contact_seller": "Contatar vendedor",
-    "location": "Localização",
-    "category": "Categoria",
-    "description": "Descrição do produto",
-    "posted": "Publicado em",
-    "share": "Compartilhar anúncio",
-    "related_listings": "Anúncios Relacionados",
-    "seller": "Vendedor",
-    "subcategory": "Subcategoria",
-    "brand": "Marca",
-    "photos": "Fotos",
-    "details": "Detalhes",
-    "call_seller": "Ligar ao vendedor",
-    "close_post": "Fechar anúncio",
-    "no_photo": "Sem foto",
-    "status_open": "Ativo",
-    "status_hold": "Em espera",
-    "status_closed": "Fechado",
-    "status_archived": "Arquivado",
-    "copy_link": "Copiar link",
-    "link_copied": "Link copiado",
-    "vehicles": {
-      "city": {
-        "title": "Comprar {title} em {city} {'|'} Veículos {'|'} Ambo Market",
-        "description": "Compre {title} em {city} – carros, motas, barcos e mais. Apenas anúncios verificados. {description}"
-      },
-      "everywhere": {
-        "title": "Comprar {title} {'|'} Veículos {'|'} Ambo Market",
-        "description": "Explore {title} à venda – carros, motas e veículos comerciais. {description}"
-      }
-    },
-    "real-estate": {
-      "city": {
-        "title": "{title} em {city} {'|'} Imóveis {'|'} Ambo Market",
-        "description": "Encontre {title} em {city} – casas, terrenos, apartamentos e imóveis comerciais. {description}"
-      },
-      "everywhere": {
-        "title": "{title} {'|'} Imóveis {'|'} Ambo Market",
-        "description": "Veja {title} para venda ou aluguel – imóveis em toda Angola. {description}"
-      }
-    },
-    "electronics": {
-      "city": {
-        "title": "Comprar {title} em {city} {'|'} Eletrônicos {'|'} Ambo Market",
-        "description": "À procura de {title} em {city}? Veja telemóveis, computadores, TVs e mais. {description}"
-      },
-      "everywhere": {
-        "title": "Comprar {title} {'|'} Eletrônicos {'|'} Ambo Market",
-        "description": "Compre {title} no Ambo Market – smartphones, gadgets, computadores e muito mais. {description}"
-      }
-    },
-    "fashion": {
-      "city": {
-        "title": "Comprar {title} em {city} {'|'} Moda {'|'} Ambo Market",
-        "description": "Encontre {title} em {city} – roupas, calçados e acessórios com ótimos preços. {description}"
-      },
-      "everywhere": {
-        "title": "Comprar {title} {'|'} Moda {'|'} Ambo Market",
-        "description": "Compre {title} – descubra ofertas de moda em toda Angola. {description}"
-      }
-    },
-    "jobs": {
-      "city": {
-        "title": "{title} em {city} {'|'} Empregos {'|'} Ambo Market",
-        "description": "Vaga de emprego: {title} em {city}. Candidate-se agora ou veja outras oportunidades. {description}"
-      },
-      "everywhere": {
-        "title": "{title} {'|'} Empregos {'|'} Ambo Market",
-        "description": "Oferta de emprego: {title}. Encontre oportunidades de carreira em Angola. {description}"
-      }
-    },
-    "services": {
-      "city": {
-        "title": "{title} em {city} {'|'} Serviços {'|'} Ambo Market",
-        "description": "Encontre {title} em {city} – serviços confiáveis para pessoas e empresas. {description}"
-      },
-      "everywhere": {
-        "title": "{title} {'|'} Serviços {'|'} Ambo Market",
-        "description": "Serviço oferecido: {title}. Publique ou encontre serviços de confiança em Angola. {description}"
-      }
-    },
-    "animals": {
-      "city": {
-        "title": "Comprar {title} em {city} {'|'} Animais {'|'} Ambo Market",
-        "description": "Encontre {title} em {city} – animais de estimação, gado e acessórios. {description}"
-      },
-      "everywhere": {
-        "title": "Comprar {title} {'|'} Animais {'|'} Ambo Market",
-        "description": "{title} – animais domésticos, exóticos ou de fazenda em toda Angola. {description}"
-      }
-    },
-    "hobby": {
-      "city": {
-        "title": "Comprar {title} em {city} {'|'} Lazer & Passatempos {'|'} Ambo Market",
-        "description": "Encontre {title} em {city} – desporto, música, jogos, coleções e mais. {description}"
-      },
-      "everywhere": {
-        "title": "Comprar {title} {'|'} Lazer & Passatempos {'|'} Ambo Market",
-        "description": "Compre {title} no Ambo Market – tudo para os seus passatempos: jogos, música, desporto e artesanato. {description}"
-      }
-    },
-    "kids": {
-      "city": {
-        "title": "Comprar {title} em {city} {'|'} Artigos Infantis {'|'} Ambo Market",
-        "description": "À procura de {title} em {city}? Encontre brinquedos, roupas e artigos para bebés. {description}"
-      },
-      "everywhere": {
-        "title": "Comprar {title} {'|'} Artigos Infantis {'|'} Ambo Market",
-        "description": "Compre {title} – brinquedos, roupas e muito mais para crianças em toda Angola. {description}"
-      }
-    },
-    "home": {
-      "city": {
-        "title": "Comprar {title} em {city} {'|'} Casa & Jardim {'|'} Ambo Market",
-        "description": "Encontre {title} em {city} – móveis, eletrodomésticos, decoração e mais. {description}"
-      },
-      "everywhere": {
-        "title": "Comprar {title} {'|'} Casa & Jardim {'|'} Ambo Market",
-        "description": "Explore {title} para sua casa. Compre ou venda móveis, ferramentas e acessórios. {description}"
-      }
-    }
-  }
-}
-</i18n>
 
 <template>
   <div class="space-y-4 pb-24 pt-4 sm:py-6 lg:pb-6">
@@ -807,7 +658,7 @@ const closePost = () => {
             <div class="border-b border-default px-5 py-3">
               <p
                 class="text-sm font-semibold text-highlighted"
-                v-text="t('description')"
+                v-text="'Descrição do produto'"
               />
             </div>
 
@@ -827,7 +678,7 @@ const closePost = () => {
             <div class="border-b border-default px-5 py-3">
               <p
                 class="text-sm font-semibold text-highlighted"
-                v-text="t('details')"
+                v-text="'Detalhes'"
               />
             </div>
 
@@ -870,7 +721,7 @@ const closePost = () => {
                 :items="[[
                   { label: 'WhatsApp', icon: 'i-simple-icons-whatsapp', to: `https://wa.me/?text=${encodedShareText}`, target: '_blank' },
                   { label: 'Facebook', icon: 'i-simple-icons-facebook', to: `https://www.facebook.com/sharer/sharer.php?u=${encodedShareUrl}`, target: '_blank' },
-                  { label: t('copy_link'), icon: 'i-lucide-link', onSelect: copyShareLink },
+                  { label: 'Copiar link', icon: 'i-lucide-link', onSelect: copyShareLink },
                 ]]"
               >
                 <UButton
@@ -878,7 +729,7 @@ const closePost = () => {
                   color="neutral"
                   variant="ghost"
                   size="sm"
-                  :aria-label="t('share')"
+                  aria-label="Compartilhar anúncio"
                 />
               </UDropdownMenu>
             </div>
@@ -928,7 +779,7 @@ const closePost = () => {
             <div class="px-5 py-4">
               <UButton
                 v-if="hasControlButtons && isOwnerUser"
-                :label="t('close_post')"
+                label="Fechar anúncio"
                 icon="i-lucide-lock"
                 color="neutral"
                 variant="soft"
@@ -938,7 +789,7 @@ const closePost = () => {
 
               <UButton
                 v-else
-                :label="t('call_seller')"
+                label="Ligar ao vendedor"
                 :href="phoneLink"
                 icon="i-lucide-phone"
                 color="primary"
@@ -953,7 +804,7 @@ const closePost = () => {
             <div class="px-5 py-3">
               <p
                 class="text-xs font-medium text-muted uppercase tracking-wide"
-                v-text="t('share')"
+                v-text="'Compartilhar anúncio'"
               />
             </div>
 
@@ -1011,7 +862,7 @@ const closePost = () => {
 
               <span
                 class="flex-1 text-left text-sm text-highlighted"
-                v-text="t('copy_link')"
+                v-text="'Copiar link'"
               />
 
               <UIcon
@@ -1047,7 +898,7 @@ const closePost = () => {
           <div class="flex gap-2">
             <UButton
               v-if="hasControlButtons && isOwnerUser"
-              :label="t('close_post')"
+              label="Fechar anúncio"
               icon="i-lucide-lock"
               color="neutral"
               variant="soft"
@@ -1057,7 +908,7 @@ const closePost = () => {
 
             <template v-else>
               <UButton
-                :label="t('call_seller')"
+                label="Ligar ao vendedor"
                 :href="phoneLink"
                 icon="i-lucide-phone"
                 color="primary"
@@ -1091,7 +942,7 @@ const closePost = () => {
     <div v-if="recommendedPostsList.length">
       <h2
         class="mb-3 text-sm font-semibold text-highlighted"
-        v-text="t('related_listings')"
+        v-text="'Anúncios Relacionados'"
       />
 
       <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -1113,7 +964,7 @@ const closePost = () => {
             <UEmpty
               v-else
               icon="i-lucide-image-off"
-              :title="t('no_photo')"
+              title="Sem foto"
               class="h-full"
             />
           </div>

@@ -50,7 +50,6 @@ const { data: allPosts } = await useAsyncData(
   { watch: [() => route.params.userUid] },
 );
 
-const { t, locale } = useI18n();
 const { uid } = useUser();
 
 const isCurrentUser = computed(() => !!uid.value && uid.value === route.params.userUid);
@@ -65,7 +64,7 @@ const userAvatar = computed(() => ({
 }));
 
 const memberSince = computed(() => user.value?.creationTime ?
-  formatFullDate(user.value.creationTime, locale.value) :
+  formatFullDate(user.value.creationTime, 'pt') :
   '');
 
 const stats = computed(() => {
@@ -78,9 +77,8 @@ const stats = computed(() => {
   };
 });
 
-// SEO
-const title = computed(() => t('title', { name: userName.value }));
-const description = computed(() => t('description', { name: userName.value }));
+const title = computed(() => `${userName.value} – Ambo Market`);
+const description = computed(() => `Veja o perfil e anúncios de ${userName.value} no Ambo Market.`);
 
 useHead({
   title: title.value,
@@ -107,33 +105,6 @@ useHead({
 });
 </script>
 
-<i18n lang="json">
-{
-  "en": {
-    "title": "{name} – Ambo Market",
-    "description": "View {name}'s profile and listings on Ambo Market.",
-    "member_since": "Member since {date}",
-    "total": "Total",
-    "active": "Active",
-    "sold": "Sold",
-    "create_ad": "Post an ad",
-    "settings": "Settings",
-    "back": "Back"
-  },
-  "pt": {
-    "title": "{name} – Ambo Market",
-    "description": "Veja o perfil e anúncios de {name} no Ambo Market.",
-    "member_since": "Membro desde {date}",
-    "total": "Total",
-    "active": "Ativo",
-    "sold": "Vendido",
-    "create_ad": "Criar anúncio",
-    "settings": "Configurações",
-    "back": "Voltar"
-  }
-}
-</i18n>
-
 <template>
   <div class="w-full mx-auto px-4 sm:px-5 py-4 sm:py-6 space-y-5">
     <div class="rounded-2xl border border-default bg-default p-5 space-y-5">
@@ -153,8 +124,9 @@ useHead({
           <p
             v-if="memberSince"
             class="mt-0.5 text-xs text-muted"
-            v-text="t('member_since', { date: memberSince })"
-          />
+          >
+            Membro desde {{ memberSince }}
+          </p>
         </div>
 
         <div class="flex shrink-0 items-center gap-1.5">
@@ -165,7 +137,7 @@ useHead({
             variant="ghost"
             size="sm"
             :to="{ name: 'user-userUid-settings', params: { userUid: uid } }"
-            :aria-label="t('settings')"
+            aria-label="Configurações"
           />
 
           <UButton
@@ -175,7 +147,7 @@ useHead({
             variant="ghost"
             size="sm"
             :to="{ name: 'user-userUid-status', params: { userUid: uid } }"
-            :aria-label="t('back')"
+            aria-label="Voltar"
           />
         </div>
       </div>
@@ -190,10 +162,7 @@ useHead({
             v-text="stats.total"
           />
 
-          <span
-            class="mt-0.5 text-xs text-muted"
-            v-text="t('total')"
-          />
+          <span class="mt-0.5 text-xs text-muted">Total</span>
         </div>
 
         <div class="flex flex-col items-center py-3 px-2">
@@ -202,10 +171,7 @@ useHead({
             v-text="stats.active"
           />
 
-          <span
-            class="mt-0.5 text-xs text-muted"
-            v-text="t('active')"
-          />
+          <span class="mt-0.5 text-xs text-muted">Ativo</span>
         </div>
 
         <div class="flex flex-col items-center py-3 px-2">
@@ -214,16 +180,13 @@ useHead({
             v-text="stats.sold"
           />
 
-          <span
-            class="mt-0.5 text-xs text-muted"
-            v-text="t('sold')"
-          />
+          <span class="mt-0.5 text-xs text-muted">Vendido</span>
         </div>
       </div>
 
       <UButton
         v-if="isCurrentUser && !isSettingsPage"
-        :label="t('create_ad')"
+        label="Criar anúncio"
         icon="i-lucide-plus"
         color="primary"
         size="lg"

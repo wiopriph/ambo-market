@@ -2,78 +2,41 @@
 import { CITIES } from '~/constants/cities';
 
 
-const { t } = useI18n();
+const title = 'Todas as Cidades - Site de Classificados Grátis Ambo Market';
+const description = 'Encontre classificados em Angola ou vá direto para anúncios perto de você.';
 
-const title = computed(() => t('title'));
-const description = computed(() => t('description'));
-
-
-const meta = computed(() => [
-  { key: 'og:title', property: 'og:title', content: title.value },
-  { key: 'twitter:title', property: 'twitter:title', content: title.value },
-  { key: 'description', name: 'description', content: description.value },
-  { key: 'og:description', property: 'og:description', content: description.value },
-  { key: 'twitter:description', property: 'twitter:description', content: description.value },
-]);
-
-useHead({ title: title.value, meta: meta.value });
+useHead({
+  title,
+  meta: [
+    { key: 'og:title', property: 'og:title', content: title },
+    { key: 'twitter:title', property: 'twitter:title', content: title },
+    { key: 'description', name: 'description', content: description },
+    { key: 'og:description', property: 'og:description', content: description },
+    { key: 'twitter:description', property: 'twitter:description', content: description },
+  ],
+});
 
 const cities = computed(() => CITIES.map(city => ({
   id: city.id,
-  name: city.name || t('everywhere'),
+  name: city.name || 'Em todos os lugares',
   description: city.id === 'all' ?
-    t('all_city_description') :
-    t('city_description', { city: city.name }),
+    'Veja anúncios de todas as cidades na Ambo Market.' :
+    `Veja classificados em ${city.name}.`,
   icon: city.id === 'all' ? 'i-lucide-map' : 'i-lucide-map-pin',
-  route: {
-    name: 'cityId',
-    params: {
-      cityId: city.id,
-    },
-  },
+  route: { name: 'cityId', params: { cityId: city.id } },
 })));
-
-const allCityRoute = computed(() => ({
-  name: 'cityId',
-  params: {
-    cityId: 'all',
-  },
-}));
 </script>
-
-<i18n lang="json">
-{
-  "en": {
-    "title": "All Cities - Ambo Market Free Classifieds Website",
-    "h1": "Choose a city",
-    "description": "Find classifieds across Angola or jump straight to listings near you.",
-    "everywhere": "Everywhere",
-    "all_city_description": "See listings from every city on Ambo Market.",
-    "city_description": "Browse classifieds in {city}."
-  },
-  "pt": {
-    "title": "Todas as Cidades - Site de Classificados Grátis Ambo Market",
-    "h1": "Escolha uma cidade",
-    "description": "Encontre classificados em Angola ou vá direto para anúncios perto de você.",
-    "everywhere": "Em todos os lugares",
-    "all_city_description": "Veja anúncios de todas as cidades na Ambo Market.",
-    "city_description": "Veja classificados em {city}."
-  }
-}
-</i18n>
 
 <template>
   <div class="mx-auto max-w-[1280px] px-4 sm:px-5 py-6 sm:py-8 space-y-3">
     <div class="rounded-2xl border border-default bg-default px-5 py-4">
-      <h1
-        class="text-lg font-bold text-highlighted"
-        v-text="t('h1')"
-      />
+      <h1 class="text-lg font-bold text-highlighted">
+        Escolha uma cidade
+      </h1>
 
-      <p
-        class="mt-0.5 text-sm text-muted"
-        v-text="t('description')"
-      />
+      <p class="mt-0.5 text-sm text-muted">
+        Encontre classificados em Angola ou vá direto para anúncios perto de você.
+      </p>
     </div>
 
     <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">

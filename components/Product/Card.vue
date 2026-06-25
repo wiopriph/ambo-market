@@ -13,10 +13,16 @@ interface CardProps {
 
 const props = defineProps<CardProps>();
 
+const STATUS_LABELS: Record<string, string> = {
+  [POST_STATUSES.OPEN]: 'Publicado',
+  [POST_STATUSES.HOLD]: 'Reservado',
+  [POST_STATUSES.CLOSED]: 'Vendido',
+};
+
 const formattedPrice = computed(() => formatCurrency(props.product?.price));
 const city = computed(() => props.product?.location?.cityName || '');
 const previewImage = computed(() => props.product?.preview || '');
-const productTitle = computed(() => props.product?.title || ' ');
+const productTitle = computed(() => props.product?.title || ' ');
 
 const hasStatus = computed(() => props.product?.status !== POST_STATUSES.OPEN);
 
@@ -38,23 +44,7 @@ const link = computed(() => getPostRoute({
 }));
 
 const { pushEvent } = useAnalyticsEvent();
-const { t } = useI18n();
 </script>
-
-<i18n lang="json">
-{
-  "en": {
-    "open": "Published",
-    "hold": "Reserved",
-    "closed": "Sold"
-  },
-  "pt": {
-    "open": "Publicado",
-    "hold": "Reservado",
-    "closed": "Vendido"
-  }
-}
-</i18n>
 
 <template>
   <NuxtLink
@@ -69,7 +59,7 @@ const { t } = useI18n();
         :color="statusColor"
         class="absolute left-2.5 top-2.5 z-10"
       >
-        {{ t(product.status) }}
+        {{ STATUS_LABELS[product.status] }}
       </UBadge>
 
       <span

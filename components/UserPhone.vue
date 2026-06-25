@@ -6,16 +6,15 @@ import { useUser } from '~/composables/useUser';
 import { PHONE_REG_EXP } from '~/constants/reg-exps';
 
 
-const { t } = useI18n();
 const { currentUser, updateProfile } = useUser();
 
 const { errors, handleSubmit, setFieldValue } = useForm({
   initialValues: { name: '', phone: '' },
   validationSchema: object({
-    name: string().required(t('validation.required')),
+    name: string().required('Este campo é obrigatório'),
     phone: string()
-      .required(t('validation.required'))
-      .matches(PHONE_REG_EXP, t('validation.phone')),
+      .required('Este campo é obrigatório')
+      .matches(PHONE_REG_EXP, 'Formato incorreto do telefone'),
   }),
 });
 
@@ -51,41 +50,16 @@ const saveProfile = handleSubmit.withControlled(async () => {
 });
 </script>
 
-<i18n lang="json">
-{
-  "en": {
-    "title": "Add contact details",
-    "description": "Buyers need your name and phone number before you can publish an ad.",
-    "phone_number": "Phone number",
-    "phone_placeholder": "+244 900 000 000",
-    "name": "Name",
-    "name_placeholder": "Your name",
-    "save": "Save and continue"
-  },
-  "pt": {
-    "title": "Adicionar dados de contacto",
-    "description": "Os compradores precisam do seu nome e número de telefone antes de você publicar um anúncio.",
-    "phone_number": "Número de telefone",
-    "phone_placeholder": "+244 900 000 000",
-    "name": "Nome",
-    "name_placeholder": "Seu nome",
-    "save": "Guardar e continuar"
-  }
-}
-</i18n>
-
 <template>
   <div class="rounded-2xl border border-default bg-default px-5 py-4 space-y-5">
     <div class="space-y-1">
-      <h2
-        class="text-xl font-semibold text-highlighted"
-        v-text="t('title')"
-      />
+      <h2 class="text-xl font-semibold text-highlighted">
+        Adicionar dados de contacto
+      </h2>
 
-      <p
-        class="text-sm text-muted"
-        v-text="t('description')"
-      />
+      <p class="text-sm text-muted">
+        Os compradores precisam do seu nome e número de telefone antes de você publicar um anúncio.
+      </p>
     </div>
 
     <form
@@ -93,7 +67,7 @@ const saveProfile = handleSubmit.withControlled(async () => {
       @submit.prevent="saveProfile"
     >
       <UFormField
-        :label="t('name')"
+        label="Nome"
         :error="errors.name"
         name="name"
         required
@@ -103,14 +77,14 @@ const saveProfile = handleSubmit.withControlled(async () => {
           name="name"
           type="text"
           autocomplete="name"
-          :placeholder="t('name_placeholder')"
+          placeholder="Seu nome"
           size="lg"
           class="w-full"
         />
       </UFormField>
 
       <UFormField
-        :label="t('phone_number')"
+        label="Número de telefone"
         :error="errors.phone"
         name="phone"
         required
@@ -122,7 +96,7 @@ const saveProfile = handleSubmit.withControlled(async () => {
           type="tel"
           autocomplete="tel-national"
           inputmode="tel"
-          :placeholder="t('phone_placeholder')"
+          placeholder="+244 900 000 000"
           size="lg"
           class="w-full"
         />
@@ -141,7 +115,7 @@ const saveProfile = handleSubmit.withControlled(async () => {
         size="lg"
         block
         :loading="isLoading"
-        :label="t('save')"
+        label="Guardar e continuar"
       />
     </form>
   </div>

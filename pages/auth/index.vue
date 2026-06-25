@@ -19,7 +19,6 @@ definePageMeta({
 
 const { isLoggedIn } = useUser();
 
-
 const route = useRoute();
 
 watch(
@@ -34,49 +33,41 @@ watch(
   { immediate: true },
 );
 
+const title = 'Entrar no Ambo Market';
+const description = 'Acesse sua conta Ambo Market para gerir anúncios, mensagens e favoritos.';
 
-const { t } = useI18n();
-
-const title = computed(() => t('meta_title'));
-
-const description = computed(() => t('meta_description'));
-
-const meta = computed(() => [
-  { key: 'og:title', property: 'og:title', content: title.value },
-  { key: 'twitter:title', property: 'twitter:title', content: title.value },
-  { key: 'description', name: 'description', content: description.value },
-  { key: 'og:description', property: 'og:description', content: description.value },
-  { key: 'twitter:description', property: 'twitter:description', content: description.value },
-]);
-
-useHead({ title: title.value, meta: meta.value });
+useHead({
+  title,
+  meta: [
+    { key: 'og:title', property: 'og:title', content: title },
+    { key: 'twitter:title', property: 'twitter:title', content: title },
+    { key: 'description', name: 'description', content: description },
+    { key: 'og:description', property: 'og:description', content: description },
+    { key: 'twitter:description', property: 'twitter:description', content: description },
+  ],
+});
 
 const {
   errors,
   handleSubmit,
 } = useForm({
-  initialValues: {
-    email: '',
-    password: '',
-  },
+  initialValues: { email: '', password: '' },
   validationSchema: object({
     email: string()
-      .email(t('validation.email'))
-      .required(t('validation.required')),
+      .email('Formato de email incorreto')
+      .required('Este campo é obrigatório'),
     password: string()
-      .required(t('validation.required')),
+      .required('Este campo é obrigatório'),
   }),
 });
 
 const { value: email } = useField<string>('email');
 const { value: password } = useField<string>('password');
 
-
 const { pushEvent } = useAnalyticsEvent();
 const { signInWithProvider, signIn } = useAuth();
 
 const isLoading = ref(false);
-
 const backendError = ref('');
 
 const clearError = () => {
@@ -100,7 +91,7 @@ const authByEmail = handleSubmit.withControlled(async () => {
       backendError.value = error.message || 'Login error';
       isLoading.value = false;
     }
-  } catch (error: any) {
+  } catch {
     isLoading.value = false;
   }
 });
@@ -127,7 +118,6 @@ const authByGoogle = async () => {
   }
 };
 
-
 const goToForgotPassword = () => {
   navigateTo({
     name: 'auth-forgot-password',
@@ -137,7 +127,6 @@ const goToForgotPassword = () => {
 
 const createAccount = () => {
   clearError();
-
   pushEvent(CLICK_CREATE_ACCOUNT);
 
   navigateTo({
@@ -147,49 +136,16 @@ const createAccount = () => {
 };
 </script>
 
-<i18n lang="json">
-{
-  "en": {
-    "meta_title": "Log in to Ambo Market",
-    "meta_description": "Access your Ambo Market account to manage ads, messages, and saved listings.",
-    "title": "Log in",
-    "subtitle": "Log in to continue and manage your ads.",
-    "email": "E-mail",
-    "password": "Password",
-    "login": "Log in",
-    "forgot_password": "Forgot your password?",
-    "social_block_title": "Or continue with",
-    "no_account": "Don't have an account?",
-    "create_one": "Create one now"
-  },
-  "pt": {
-    "meta_title": "Entrar no Ambo Market",
-    "meta_description": "Acesse sua conta Ambo Market para gerir anúncios, mensagens e favoritos.",
-    "title": "Entrar",
-    "subtitle": "Entre para continuar e gerenciar seus anúncios.",
-    "email": "E-mail",
-    "password": "Senha",
-    "login": "Entrar",
-    "forgot_password": "Esqueceu sua senha?",
-    "social_block_title": "Ou continuar com",
-    "no_account": "Ainda não tem uma conta?",
-    "create_one": "Crie uma agora"
-  }
-}
-</i18n>
-
 <template>
   <div class="mx-auto w-full max-w-md px-4 py-8 sm:py-16 space-y-3">
     <div class="rounded-2xl border border-default bg-default px-5 py-4">
-      <h1
-        class="text-lg font-bold text-highlighted"
-        v-text="t('title')"
-      />
+      <h1 class="text-lg font-bold text-highlighted">
+        Entrar
+      </h1>
 
-      <p
-        class="mt-0.5 text-sm text-muted"
-        v-text="t('subtitle')"
-      />
+      <p class="mt-0.5 text-sm text-muted">
+        Entre para continuar e gerenciar seus anúncios.
+      </p>
     </div>
 
     <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
@@ -212,7 +168,7 @@ const createAccount = () => {
       </button>
     </div>
 
-    <USeparator :label="t('social_block_title')" />
+    <USeparator label="Ou continuar com" />
 
     <form
       class="space-y-3"
@@ -221,7 +177,7 @@ const createAccount = () => {
       <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
         <div class="px-5 py-4">
           <UFormField
-            :label="t('email')"
+            label="E-mail"
             :error="errors.email"
             name="email"
             required
@@ -239,7 +195,7 @@ const createAccount = () => {
 
         <div class="px-5 py-4">
           <div class="flex items-center justify-between mb-1.5">
-            <span class="text-sm font-medium text-highlighted">{{ t('password') }}</span>
+            <span class="text-sm font-medium text-highlighted">Senha</span>
 
             <UButton
               type="button"
@@ -249,7 +205,7 @@ const createAccount = () => {
               class="px-0 h-auto"
               @click="goToForgotPassword"
             >
-              {{ t('forgot_password') }}
+              Esqueceu sua senha?
             </UButton>
           </div>
 
@@ -280,7 +236,7 @@ const createAccount = () => {
 
       <UButton
         type="submit"
-        :label="t('login')"
+        label="Entrar"
         :loading="isLoading"
         size="lg"
         block
@@ -288,7 +244,7 @@ const createAccount = () => {
     </form>
 
     <div class="flex items-center justify-center gap-2 text-sm">
-      <span class="text-muted">{{ t('no_account') }}</span>
+      <span class="text-muted">Ainda não tem uma conta?</span>
 
       <UButton
         type="button"
@@ -298,7 +254,7 @@ const createAccount = () => {
         class="px-0"
         @click="createAccount"
       >
-        {{ t('create_one') }}
+        Crie uma agora
       </UButton>
     </div>
   </div>

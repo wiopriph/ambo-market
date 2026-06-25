@@ -12,8 +12,6 @@ const { currentUser } = useUser();
 
 const needPhoneNumber = computed(() => currentUser.value && !currentUser.value.phone);
 
-const { t } = useI18n();
-
 type Image = {
   base64: string;
   mimeType: string;
@@ -24,18 +22,19 @@ type SelectItem = {
   value: string;
 };
 
-const title = computed(() => t('meta_title'));
-const descriptionMeta = computed(() => t('meta_description'));
+const metaTitle = 'Publicar anúncio grátis - Ambo Market';
+const metaDescription = 'Crie um anúncio classificado grátis na Ambo Market. Adicione cidade, categoria, preço, descrição e fotos em poucos passos.';
 
-const meta = computed(() => [
-  { key: 'og:title', property: 'og:title', content: title.value },
-  { key: 'twitter:title', property: 'twitter:title', content: title.value },
-  { key: 'description', name: 'description', content: descriptionMeta.value },
-  { key: 'og:description', property: 'og:description', content: descriptionMeta.value },
-  { key: 'twitter:description', property: 'twitter:description', content: descriptionMeta.value },
-]);
-
-useHead({ title: title.value, meta: meta.value });
+useHead({
+  title: metaTitle,
+  meta: [
+    { key: 'og:title', property: 'og:title', content: metaTitle },
+    { key: 'twitter:title', property: 'twitter:title', content: metaTitle },
+    { key: 'description', name: 'description', content: metaDescription },
+    { key: 'og:description', property: 'og:description', content: metaDescription },
+    { key: 'twitter:description', property: 'twitter:description', content: metaDescription },
+  ],
+});
 
 const {
   errors,
@@ -53,45 +52,34 @@ const {
     cityId: '',
   },
   validationSchema: object({
-    category: string()
-      .required(t('validation.required')),
+    category: string().required('Este campo é obrigatório'),
     subcategory: string()
-      .test('subcategory-required', t('validation.required'), function(value) {
+      .test('subcategory-required', 'Este campo é obrigatório', function(value) {
         const categoryId = this.parent.category;
         const category = CATEGORIES.find(c => c.id === categoryId);
 
-        if (category?.subcategories?.length) {
-          return !!value;
-        }
+        if (category?.subcategories?.length) return !!value;
 
         return true;
       }),
-
     brand: string()
-      .test('brand-required', t('validation.required'), function(value) {
+      .test('brand-required', 'Este campo é obrigatório', function(value) {
         const categoryId = this.parent.category;
         const subcategoryId = this.parent.subcategory;
         const category = CATEGORIES.find(c => c.id === categoryId);
         const subcategory = category?.subcategories?.find(sc => sc.id === subcategoryId);
 
-        if (subcategory?.brands?.length) {
-          return !!value;
-        }
+        if (subcategory?.brands?.length) return !!value;
 
         return true;
       }),
-
     productName: string()
-      .required(t('validation.required'))
-      .max(50, t('validation.productNameMaxLength')),
-    price: string()
-      .required(t('validation.required')),
-    description: string()
-      .required(t('validation.required')),
-    images: array()
-      .min(1, t('validation.imagesRequired')),
-    cityId: string()
-      .required(t('validation.required')),
+      .required('Este campo é obrigatório')
+      .max(50, 'Ultrapassou o limite de 50 caracteres.'),
+    price: string().required('Este campo é obrigatório'),
+    description: string().required('Este campo é obrigatório'),
+    images: array().min(1, 'Por favor, adicione pelo menos uma foto'),
+    cityId: string().required('Este campo é obrigatório'),
   }),
 });
 
@@ -104,9 +92,8 @@ const { value: description } = useField<string>('description');
 const { value: images } = useField<Image[]>('images');
 const { value: cityId } = useField<string>('cityId');
 
-const toOptions = (arr?: Array<{ id: string; key: string }>): SelectItem[] =>
-  (arr ?? []).map(({ id, key }) => ({ value: id, label: t(key) }));
-
+const toOptions = (arr?: Array<{ id: string; name: string }>): SelectItem[] =>
+  (arr ?? []).map(({ id, name }) => ({ value: id, label: name }));
 
 const currentCategory = computed(() => CATEGORIES.find(c => c.id === category.value));
 const currentSubcategory = computed(() =>
@@ -129,9 +116,7 @@ const fileInput = ref<HTMLInputElement | null>(null);
 const handleFileUpload = (event: Event) => {
   const input = event.target as HTMLInputElement;
 
-  if (!input?.files) {
-    return;
-  }
+  if (!input?.files) return;
 
   const files = Array.from(input.files);
 
@@ -151,9 +136,7 @@ const handleFileUpload = (event: Event) => {
   input.value = '';
 };
 
-const loadFile = () => {
-  fileInput.value?.click();
-};
+const loadFile = () => fileInput.value?.click();
 
 const clearFields = () => {
   resetForm({
@@ -175,9 +158,7 @@ const hasAPIError = ref(false);
 const apiErrorMessage = ref('');
 
 const createPost = handleSubmit.withControlled(async () => {
-  if (isLoading.value) {
-    return;
-  }
+  if (isLoading.value) return;
 
   isLoading.value = true;
   hasAPIError.value = false;
@@ -194,9 +175,7 @@ const createPost = handleSubmit.withControlled(async () => {
         subcategoryId: subcategory.value,
         brandId: brand.value,
         images: images.value,
-        location: {
-          cityId: cityId.value,
-        },
+        location: { cityId: cityId.value },
       },
     });
 
@@ -235,81 +214,16 @@ watch(subcategory, () => {
 });
 </script>
 
-<i18n>
-{
-  "en": {
-    "meta_title": "Post a free ad - Ambo Market",
-    "meta_description": "Create a free classified ad on Ambo Market. Add the city, category, price, description and photos in a few simple steps.",
-    "h1": "Post an ad",
-    "intro": "Fill in the details, add photos, and publish your listing.",
-    "category": "Category",
-    "subcategory": "Subcategory",
-    "brand": "Brand",
-    "select": "Select",
-    "product_name": "Product name",
-    "product_name_placeholder": "Example: iPhone 13 Pro 128 GB",
-    "product_name_length": "The name must not exceed 50 characters.",
-    "price": "Price",
-    "price_placeholder": "Enter the price",
-    "description": "Description",
-    "description_placeholder": "Add condition, accessories, delivery options and other useful details.",
-    "photos": "Photos",
-    "photos_notice": {
-      "first": "The first photo will be displayed in search results.",
-      "second": "Use clear JPG or PNG photos."
-    },
-    "add_photo": "Add photos",
-    "remove_photo": "Remove photo",
-    "city": "City",
-    "select_city": "Select a city",
-    "place_ad": "Place ad",
-    "clear_form": "Clear form",
-    "api_error_title": "Could not create the ad"
-  },
-  "pt": {
-    "meta_title": "Publicar anúncio grátis - Ambo Market",
-    "meta_description": "Crie um anúncio classificado grátis na Ambo Market. Adicione cidade, categoria, preço, descrição e fotos em poucos passos.",
-    "h1": "Publicar anúncio",
-    "intro": "Preencha os detalhes, adicione fotos e publique o anúncio.",
-    "category": "Categoria",
-    "subcategory": "Subcategoria",
-    "brand": "Marca",
-    "select": "Selecione",
-    "product_name": "Nome do produto",
-    "product_name_placeholder": "Exemplo: iPhone 13 Pro 128 GB",
-    "product_name_length": "O nome não deve exceder os 50 caracteres.",
-    "price": "Preço",
-    "price_placeholder": "Digite o preço",
-    "description": "Descrição",
-    "description_placeholder": "Adicione estado, acessórios, opções de entrega e outros detalhes úteis.",
-    "photos": "Fotos",
-    "photos_notice": {
-      "first": "A primeira foto será exibida nos resultados da pesquisa.",
-      "second": "Use fotos claras em JPG ou PNG."
-    },
-    "add_photo": "Adicionar fotos",
-    "remove_photo": "Remover foto",
-    "city": "Cidade",
-    "select_city": "Selecione uma cidade",
-    "place_ad": "Publicar anúncio",
-    "clear_form": "Limpar formulário",
-    "api_error_title": "Não foi possível criar o anúncio"
-  }
-}
-</i18n>
-
 <template>
   <div class="w-full mx-auto max-w-3xl px-4 sm:px-5 py-4 sm:py-6 space-y-3">
     <div class="rounded-2xl border border-default bg-default px-5 py-4">
-      <h1
-        class="text-lg font-bold text-highlighted"
-        v-text="t('h1')"
-      />
+      <h1 class="text-lg font-bold text-highlighted">
+        Publicar anúncio
+      </h1>
 
-      <p
-        class="mt-0.5 text-sm text-muted"
-        v-text="t('intro')"
-      />
+      <p class="mt-0.5 text-sm text-muted">
+        Preencha os detalhes, adicione fotos e publique o anúncio.
+      </p>
     </div>
 
     <div
@@ -327,7 +241,7 @@ watch(subcategory, () => {
       <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
         <div class="px-5 py-4">
           <UFormField
-            :label="t('city')"
+            label="Cidade"
             :error="errors.cityId"
             name="city"
             required
@@ -337,7 +251,7 @@ watch(subcategory, () => {
               :items="citiesItems"
               valueKey="value"
               labelKey="label"
-              :placeholder="t('select_city')"
+              placeholder="Selecione uma cidade"
               size="lg"
               class="w-full"
             />
@@ -346,7 +260,7 @@ watch(subcategory, () => {
 
         <div class="px-5 py-4">
           <UFormField
-            :label="t('category')"
+            label="Categoria"
             :error="errors.category"
             name="category"
             required
@@ -356,7 +270,7 @@ watch(subcategory, () => {
               :items="categoriesItems"
               valueKey="value"
               labelKey="label"
-              :placeholder="t('select')"
+              placeholder="Selecione"
               size="lg"
               class="w-full"
             />
@@ -368,7 +282,7 @@ watch(subcategory, () => {
           class="px-5 py-4"
         >
           <UFormField
-            :label="t('subcategory')"
+            label="Subcategoria"
             :error="errors.subcategory"
             name="subcategory"
             required
@@ -378,7 +292,7 @@ watch(subcategory, () => {
               :items="subcategoriesItems"
               valueKey="value"
               labelKey="label"
-              :placeholder="t('select')"
+              placeholder="Selecione"
               size="lg"
               class="w-full"
             />
@@ -390,7 +304,7 @@ watch(subcategory, () => {
           class="px-5 py-4"
         >
           <UFormField
-            :label="t('brand')"
+            label="Marca"
             :error="errors.brand"
             name="brand"
             required
@@ -400,7 +314,7 @@ watch(subcategory, () => {
               :items="brandsItems"
               valueKey="value"
               labelKey="label"
-              :placeholder="t('select')"
+              placeholder="Selecione"
               size="lg"
               class="w-full"
             />
@@ -411,8 +325,8 @@ watch(subcategory, () => {
       <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
         <div class="px-5 py-4">
           <UFormField
-            :label="t('product_name')"
-            :help="t('product_name_length')"
+            label="Nome do produto"
+            help="O nome não deve exceder os 50 caracteres."
             :error="errors.productName"
             name="productName"
             required
@@ -421,7 +335,7 @@ watch(subcategory, () => {
               v-model="productName"
               name="productName"
               type="text"
-              :placeholder="t('product_name_placeholder')"
+              placeholder="Exemplo: iPhone 13 Pro 128 GB"
               maxlength="50"
               size="lg"
               class="w-full"
@@ -431,7 +345,7 @@ watch(subcategory, () => {
 
         <div class="px-5 py-4">
           <UFormField
-            :label="t('price')"
+            label="Preço"
             :error="errors.price"
             name="price"
             required
@@ -442,7 +356,7 @@ watch(subcategory, () => {
               type="number"
               min="0"
               inputmode="decimal"
-              :placeholder="t('price_placeholder')"
+              placeholder="Digite o preço"
               size="lg"
               class="w-full"
             />
@@ -451,7 +365,7 @@ watch(subcategory, () => {
 
         <div class="px-5 py-4">
           <UFormField
-            :label="t('description')"
+            label="Descrição"
             :error="errors.description"
             name="description"
             required
@@ -459,7 +373,7 @@ watch(subcategory, () => {
             <UTextarea
               v-model="description"
               name="description"
-              :placeholder="t('description_placeholder')"
+              placeholder="Adicione estado, acessórios, opções de entrega e outros detalhes úteis."
               :rows="5"
               :maxrows="10"
               autoresize
@@ -472,10 +386,9 @@ watch(subcategory, () => {
 
       <div class="rounded-2xl border border-default bg-default p-5 space-y-4">
         <div>
-          <p
-            class="text-sm font-semibold text-highlighted"
-            v-text="t('photos')"
-          />
+          <p class="text-sm font-semibold text-highlighted">
+            Fotos
+          </p>
 
           <p
             v-if="errors.images"
@@ -505,7 +418,7 @@ watch(subcategory, () => {
             <div class="aspect-square overflow-hidden rounded-xl border border-default bg-muted">
               <img
                 :src="image.base64"
-                :alt="`${t('photos')} ${index + 1}`"
+                :alt="`Fotos ${index + 1}`"
                 class="size-full object-cover"
               >
             </div>
@@ -513,7 +426,7 @@ watch(subcategory, () => {
             <button
               type="button"
               class="absolute right-1.5 top-1.5 flex size-6 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition hover:bg-black/80"
-              :aria-label="t('remove_photo')"
+              aria-label="Remover foto"
               @click="deletePhoto(index)"
             >
               <UIcon
@@ -549,15 +462,19 @@ watch(subcategory, () => {
           variant="soft"
           size="lg"
           icon="i-lucide-image-plus"
-          :label="t('add_photo')"
+          label="Adicionar fotos"
           block
           @click="loadFile"
         />
 
         <div class="space-y-1 text-xs text-muted">
-          <p v-text="t('photos_notice.first')" />
+          <p>
+            A primeira foto será exibida nos resultados da pesquisa.
+          </p>
 
-          <p v-text="t('photos_notice.second')" />
+          <p>
+            Use fotos claras em JPG ou PNG.
+          </p>
         </div>
       </div>
 
@@ -565,7 +482,7 @@ watch(subcategory, () => {
         v-if="hasAPIError"
         color="error"
         variant="soft"
-        :title="t('api_error_title')"
+        title="Não foi possível criar o anúncio"
         :description="apiErrorMessage"
       />
 
@@ -574,7 +491,7 @@ watch(subcategory, () => {
         color="primary"
         size="lg"
         :loading="isLoading"
-        :label="t('place_ad')"
+        label="Publicar anúncio"
         block
       />
 
@@ -583,7 +500,7 @@ watch(subcategory, () => {
         color="neutral"
         variant="ghost"
         size="lg"
-        :label="t('clear_form')"
+        label="Limpar formulário"
         block
         @click="clearFields"
       />

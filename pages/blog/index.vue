@@ -44,13 +44,11 @@ const TAGS = [
   'Negócios',
 ];
 
-const { t } = useI18n();
-
 const currentTag = computed(() => selectedTag.value);
 
 const tagsList = computed(() => {
   const list = [{
-    title: t('all_topics'),
+    title: 'Todos os temas',
     value: '',
     route: { name: 'blog' },
   }];
@@ -93,57 +91,25 @@ const setPage = (pageNumber: number) => {
   });
 };
 
-const title = computed(() => t('title'));
-const description = computed(() => t('description'));
+const metaTitle = 'Blog da Ambo Market – Dicas, Guias e Insights do Mercado Angolano';
+const metaDescription = 'Fique à frente com dicas de especialistas, guias passo a passo e as últimas tendências do mercado no blog da Ambo Market.';
 
-const meta = computed(() => [
-  { key: 'og:title', property: 'og:title', content: title.value },
-  { key: 'twitter:title', property: 'twitter:title', content: title.value },
-  { key: 'description', name: 'description', content: description.value },
-  { key: 'og:description', property: 'og:description', content: description.value },
-  { key: 'twitter:description', property: 'twitter:description', content: description.value },
-]);
+useHead({
+  title: metaTitle,
+  meta: [
+    { key: 'og:title', property: 'og:title', content: metaTitle },
+    { key: 'twitter:title', property: 'twitter:title', content: metaTitle },
+    { key: 'description', name: 'description', content: metaDescription },
+    { key: 'og:description', property: 'og:description', content: metaDescription },
+    { key: 'twitter:description', property: 'twitter:description', content: metaDescription },
+  ],
+});
 
-useHead({ title: title.value, meta: meta.value });
-
-
-const breadcrumbs = computed(() => [
-  {
-    label: t('main_page'),
-    to: { name: 'index' },
-  },
-  {
-    label: t('blog'),
-  },
-]);
+const breadcrumbs = [
+  { label: 'Página Inicial', to: { name: 'index' } },
+  { label: 'Blog' },
+];
 </script>
-
-<i18n lang="json">
-{
-  "en": {
-    "main_page": "Home",
-    "blog": "Blog",
-    "all_topics": "All topics",
-    "title": "Ambo Market Blog – Expert Tips, Guides & Market Insights from Angola",
-    "h1": "Ambo Market Blog",
-    "description": "Stay ahead with expert tips, step-by-step guides, and the latest market trends on the Ambo Market blog. Whether you're buying or selling in Angola, our blog helps you succeed!",
-    "read_more": "Read more",
-    "not_found_title": "No articles found",
-    "not_found": "Sorry, no articles match your search. Try another topic!"
-  },
-  "pt": {
-    "main_page": "Página Inicial",
-    "blog": "Blog",
-    "all_topics": "Todos os temas",
-    "title": "Blog da Ambo Market – Dicas, Guias e Insights do Mercado Angolano",
-    "h1": "Blog da Ambo Market",
-    "description": "Fique à frente com dicas de especialistas, guias passo a passo e as últimas tendências do mercado no blog da Ambo Market. Se você compra ou vende em Angola, nosso blog é seu parceiro para o sucesso!",
-    "read_more": "Ler mais",
-    "not_found_title": "Nenhum artigo encontrado",
-    "not_found": "Desculpe, nenhum artigo encontrado para essa pesquisa. Tente outro tema!"
-  }
-}
-</i18n>
 
 <template>
   <div class="mx-auto max-w-[1280px] px-4 sm:px-5 py-6 sm:py-8 space-y-5">
@@ -153,15 +119,14 @@ const breadcrumbs = computed(() => [
     />
 
     <div class="rounded-2xl border border-default bg-default px-5 py-4">
-      <h1
-        class="text-lg font-bold text-highlighted"
-        v-text="t('h1')"
-      />
+      <h1 class="text-lg font-bold text-highlighted">
+        Blog da Ambo Market
+      </h1>
 
-      <p
-        class="mt-0.5 text-sm text-muted"
-        v-text="t('description')"
-      />
+      <p class="mt-0.5 text-sm text-muted">
+        Fique à frente com dicas de especialistas, guias passo a passo e as últimas tendências do mercado no blog da
+        Ambo Market.
+      </p>
     </div>
 
     <div class="flex flex-wrap gap-2">
@@ -233,7 +198,7 @@ const breadcrumbs = computed(() => [
           />
 
           <div class="flex items-center gap-1 text-xs text-primary mt-1">
-            <span>{{ t('read_more') }}</span>
+            <span>Ler mais</span>
 
             <UIcon
               name="i-lucide-arrow-right"
@@ -247,8 +212,8 @@ const breadcrumbs = computed(() => [
     <UEmpty
       v-else
       icon="i-lucide-search-x"
-      :title="t('not_found_title')"
-      :description="t('not_found')"
+      title="Nenhum artigo encontrado"
+      description="Desculpe, nenhum artigo encontrado para essa pesquisa. Tente outro tema!"
       variant="naked"
       size="lg"
     />

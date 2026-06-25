@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getCityById } from '~/constants/cities';
+import { getCategoryName } from '~/constants/categories';
 
 
 const props = defineProps<{
@@ -9,177 +10,136 @@ const props = defineProps<{
   productList?: string[];
 }>();
 
-const { t } = useI18n();
-
 const cityName = computed(() => getCityById(props.cityId)?.name ?? '');
-const categoryName = computed(() => t(props.categoryId));
+const categoryName = computed(() => getCategoryName(props.categoryId));
 const everywhere = computed(() => props.cityId === 'all');
 </script>
 
-<i18n>
-{
-  "en": {
-    "title": "{title} – Free Listings on Ambo Market",
-    "intro": "If you are looking for {category} in {city}, you are in the right place! On Ambo Market, you can easily buy, sell, or exchange {category} at no extra cost. Post free ads, find great deals, and save time searching for the products or services you need.",
-    "intro_everywhere": "If you are looking for {category} in Angola, you are in the right place! On Ambo Market, you can easily buy, sell, or exchange {category} at no extra cost. Post free ads, find great deals, and save time searching for the products or services you need.",
-    "why_choose": "Why Ambo Market?",
-    "free_listings": "Free Listings",
-    "free_listings_desc": "Ambo Market is a platform where anyone can post an ad for free and quickly find buyers. Simply create a listing, add photos, set your price, and wait for responses!",
-    "wide_selection": "Wide Selection of {category}",
-    "wide_selection_desc": "Our platform features thousands of listings from private sellers and businesses.",
-    "you_can_find": "You can find {options} at affordable prices.",
-    "easy_search": "Easy Search and Filters",
-    "easy_search_desc": "We understand how important it is to find what you need quickly. Use our filters to sort by price, condition, location, and other criteria to find the perfect match.",
-    "safe_transactions": "Safe Transactions",
-    "safe_transactions_desc": "Buying and selling through classified ads can be simple and secure if you follow basic safety rules: meet in public places, inspect the product before payment, and communicate clearly with buyers or sellers.",
-    "how_to_post": "How to Post an Ad for {category} in {city}?",
-    "how_to_post_everywhere": "How to Post an Ad for {category}?",
-    "step_1": "Sign up or log in to your Ambo Market account.",
-    "step_2": "Click 'Post an Ad' and choose '{category}'.",
-    "step_3": "Add a detailed description, high-quality photos, and a fair price.",
-    "step_4": "Provide contact details so potential buyers can reach you.",
-    "step_5": "Publish your listing and start receiving offers!",
-    "best_deals": "Find the Best Deals on {category} Today!",
-    "best_deals_desc": "Don't miss out on the best deals for {category} in {city}. Browse listings, compare prices, and contact sellers directly. Whether you're looking for new or used {category}, Ambo Market is the best place to buy and sell!",
-    "best_deals_desc_everywhere": "Don't miss out on the best deals for {category} in Angola. Browse listings, compare prices, and contact sellers directly. Whether you're looking for new or used {category}, Ambo Market is the best place to buy and sell!",
-    "start_now": "Start your search now and discover amazing offers on {category} in {city}!",
-    "start_now_everywhere": "Start your search now and discover amazing offers on {category} in Angola!"
-  },
-  "pt": {
-    "title": "{title} – Anúncios Gratuitos no Ambo Market",
-    "intro": "Se você está procurando {category} em {city}, chegou ao lugar certo! No Ambo Market, você pode comprar, vender ou trocar {category} sem custos adicionais. Publique anúncios gratuitos, encontre ótimas ofertas e economize tempo na busca pelos produtos ou serviços que você precisa.",
-    "intro_everywhere": "Se você está procurando {category} em Angola, chegou ao lugar certo! No Ambo Market, você pode comprar, vender ou trocar {category} sem custos adicionais. Publique anúncios gratuitos, encontre ótimas ofertas e economize tempo na busca pelos produtos ou serviços que você precisa.",
-    "why_choose": "Por que Ambo Market?",
-    "free_listings": "Anúncios Gratuitos",
-    "free_listings_desc": "O Ambo Market é uma plataforma onde qualquer pessoa pode publicar um anúncio gratuitamente e encontrar compradores rapidamente. Basta criar um anúncio, adicionar fotos, definir o preço e aguardar os contatos!",
-    "wide_selection": "Grande Variedade de {category}",
-    "wide_selection_desc": "Nosso site conta com milhares de anúncios de vendedores particulares e empresas.",
-    "you_can_find": "Você pode encontrar {options} a preços acessíveis.",
-    "easy_search": "Pesquisa e Filtros Fáceis de Usar",
-    "easy_search_desc": "Sabemos como é importante encontrar o que você precisa rapidamente. Utilize nossos filtros para classificar por preço, estado, localização e outros critérios para encontrar a melhor opção.",
-    "safe_transactions": "Transações Seguras",
-    "safe_transactions_desc": "Comprar e vender por meio de anúncios classificados pode ser simples e seguro se você seguir algumas regras básicas: marque encontros em locais públicos, verifique o produto antes de pagar e mantenha uma comunicação clara com compradores ou vendedores.",
-    "how_to_post": "Como Publicar um Anúncio de {category} em {city}?",
-    "how_to_post_everywhere": "Como Publicar um Anúncio de {category}?",
-    "step_1": "Cadastre-se ou faça login na sua conta do Ambo Market.",
-    "step_2": "Clique em 'Publicar Anúncio' e escolha '{category}'.",
-    "step_3": "Adicione uma descrição detalhada, fotos de alta qualidade e um preço justo.",
-    "step_4": "Informe seus dados de contato para que os interessados possam falar com você.",
-    "step_5": "Publique seu anúncio e comece a receber propostas!",
-    "best_deals": "Encontre as Melhores Ofertas de {category} Hoje Mesmo!",
-    "best_deals_desc": "Não perca as melhores ofertas de {category} em {city}. Navegue pelos anúncios, compare preços e fale diretamente com os vendedores. Seja para comprar {category} novo ou usado, o Ambo Market é o melhor lugar para comprar e vender!",
-    "best_deals_desc_everywhere": "Não perca as melhores ofertas de {category} em Angola. Navegue pelos anúncios, compare preços e fale diretamente com os vendedores. Seja para comprar {category} novo ou usado, o Ambo Market é o melhor lugar para comprar e vender!",
-    "start_now": "Comece sua busca agora e descubra ofertas incríveis de {category} em {city}!",
-    "start_now_everywhere": "Comece sua busca agora e descubra ofertas incríveis de {category} em Angola!"
-  }
-}
-</i18n>
-
 <template>
   <div class="space-y-3 text-sm leading-6 text-muted">
-    <h3
-      class="text-base font-semibold text-highlighted"
-      v-text="t('title', { title })"
-    />
+    <h3 class="text-base font-semibold text-highlighted">
+      {{ title }} – Anúncios Gratuitos no Ambo Market
+    </h3>
 
-    <p>
-      {{
-        everywhere ? t('intro_everywhere', { category: categoryName }) : t('intro', {
-          category: categoryName,
-          city: cityName
-        })
-      }}
+    <p v-if="everywhere">
+      Se você está procurando {{ categoryName }} em Angola, chegou ao lugar certo! No Ambo Market, você pode comprar,
+      vender ou trocar {{ categoryName }} sem custos adicionais. Publique anúncios gratuitos, encontre ótimas ofertas e
+      economize tempo na busca pelos produtos ou serviços que você precisa.
     </p>
 
-    <h3
-      class="text-base font-semibold text-highlighted"
-      v-text="t('why_choose')"
-    />
+    <p v-else>
+      Se você está procurando {{ categoryName }} em {{ cityName }}, chegou ao lugar certo! No Ambo Market, você pode
+      comprar, vender ou trocar {{ categoryName }} sem custos adicionais. Publique anúncios gratuitos, encontre ótimas
+      ofertas e economize tempo na busca pelos produtos ou serviços que você precisa.
+    </p>
+
+    <h3 class="text-base font-semibold text-highlighted">
+      Por que Ambo Market?
+    </h3>
 
     <ol class="list-decimal space-y-2 pl-5">
       <li>
-        <p
-          class="font-medium text-highlighted"
-          v-text="t('free_listings')"
-        />
-
-        <p v-text="t('free_listings_desc')" />
-      </li>
-
-      <li>
-        <p
-          class="font-medium text-highlighted"
-          v-text="t('wide_selection', { category: categoryName })"
-        />
+        <p class="font-medium text-highlighted">
+          Anúncios Gratuitos
+        </p>
 
         <p>
-          {{
-            t('wide_selection_desc')
-          }}{{ productList?.length ? ' ' + t('you_can_find', { options: productList.join(', ') }) : '' }}
+          O Ambo Market é uma plataforma onde qualquer pessoa pode publicar um anúncio gratuitamente e encontrar
+          compradores rapidamente. Basta criar um anúncio, adicionar fotos, definir o preço e aguardar os contatos!
         </p>
       </li>
 
       <li>
-        <p
-          class="font-medium text-highlighted"
-          v-text="t('easy_search')"
-        />
+        <p class="font-medium text-highlighted">
+          Grande Variedade de {{ categoryName }}
+        </p>
 
-        <p v-text="t('easy_search_desc')" />
+        <p>
+          Nosso site conta com milhares de anúncios de vendedores particulares e empresas.<span
+            v-if="productList?.length"
+          > Você pode encontrar {{ productList.join(', ') }} a preços acessíveis.</span>
+        </p>
       </li>
 
       <li>
-        <p
-          class="font-medium text-highlighted"
-          v-text="t('safe_transactions')"
-        />
+        <p class="font-medium text-highlighted">
+          Pesquisa e Filtros Fáceis de Usar
+        </p>
 
-        <p v-text="t('safe_transactions_desc')" />
+        <p>
+          Sabemos como é importante encontrar o que você precisa rapidamente. Utilize nossos filtros para classificar
+          por preço, estado, localização e outros critérios para encontrar a melhor opção.
+        </p>
+      </li>
+
+      <li>
+        <p class="font-medium text-highlighted">
+          Transações Seguras
+        </p>
+
+        <p>
+          Comprar e vender por meio de anúncios classificados pode ser simples e seguro se você seguir algumas regras
+          básicas: marque encontros em locais públicos, verifique o produto antes de pagar e mantenha uma comunicação
+          clara com compradores ou vendedores.
+        </p>
       </li>
     </ol>
 
     <h3 class="text-base font-semibold text-highlighted">
-      {{
-        everywhere ? t('how_to_post_everywhere', { category: categoryName }) : t('how_to_post', {
-          category: categoryName,
-          city: cityName
-        })
-      }}
+      <template v-if="everywhere">
+        Como Publicar um Anúncio de {{ categoryName }}?
+      </template>
+
+      <template v-else>
+        Como Publicar um Anúncio de {{ categoryName }} em {{ cityName }}?
+      </template>
     </h3>
 
     <ol class="list-decimal space-y-1 pl-5">
-      <li v-text="t('step_1')" />
+      <li>
+        Cadastre-se ou faça login na sua conta do Ambo Market.
+      </li>
 
-      <li v-text="t('step_2', { category: categoryName })" />
+      <li>
+        Clique em 'Publicar Anúncio' e escolha '{{ categoryName }}'.
+      </li>
 
-      <li v-text="t('step_3')" />
+      <li>
+        Adicione uma descrição detalhada, fotos de alta qualidade e um preço justo.
+      </li>
 
-      <li v-text="t('step_4')" />
+      <li>
+        Informe seus dados de contato para que os interessados possam falar com você.
+      </li>
 
-      <li v-text="t('step_5')" />
+      <li>
+        Publique seu anúncio e comece a receber propostas!
+      </li>
     </ol>
 
     <h3
       class="text-base font-semibold text-highlighted"
-      v-text="t('best_deals', { category: categoryName })"
+      v-text="`Encontre as Melhores Ofertas de ${categoryName} Hoje Mesmo!`"
     />
 
-    <p>
-      {{
-        everywhere ? t('best_deals_desc_everywhere', { category: categoryName }) : t('best_deals_desc', {
-          category: categoryName,
-          city: cityName
-        })
-      }}
+    <p v-if="everywhere">
+      Não perca as melhores ofertas de {{ categoryName }} em Angola. Navegue pelos anúncios, compare preços e fale
+      diretamente com os vendedores. Seja para comprar {{ categoryName }} novo ou usado, o Ambo Market é o melhor lugar
+      para comprar e vender!
     </p>
 
-    <p>
-      {{
-        everywhere ? t('start_now_everywhere', { category: categoryName }) : t('start_now', {
-          category: categoryName,
-          city: cityName
-        })
-      }}
+    <p v-else>
+      Não perca as melhores ofertas de {{ categoryName }} em {{ cityName }}. Navegue pelos anúncios, compare preços e
+      fale diretamente com os vendedores. Seja para comprar {{ categoryName }} novo ou usado, o Ambo Market é o melhor
+      lugar para comprar e vender!
+    </p>
+
+    <p v-if="everywhere">
+      Comece sua busca agora e descubra ofertas incríveis de {{ categoryName }} em Angola!
+    </p>
+
+    <p v-else>
+      Comece sua busca agora e descubra ofertas incríveis de {{ categoryName }} em {{ cityName }}!
     </p>
   </div>
 </template>

@@ -2,61 +2,18 @@
 import type { NavigationMenuItem } from '@nuxt/ui';
 
 
-const { t } = useI18n();
-
-
-const items = computed<NavigationMenuItem[]>(() => ([
-  {
-    label: t('about'),
-    to: { name: 'about' },
-  },
-  {
-    label: t('terms_of_use'),
-    to: { name: 'terms' },
-  },
-  {
-    label: t('privacy_policy'),
-    to: { name: 'privacy' },
-  },
-]));
+const items: NavigationMenuItem[] = [
+  { label: 'Sobre', to: { name: 'about' } },
+  { label: 'Termos de Uso', to: { name: 'terms' } },
+  { label: 'Política de Privacidade', to: { name: 'privacy' } },
+];
 
 const socialLinks = [
-  {
-    name: 'Facebook',
-    url: 'https://www.facebook.com/ambo.market',
-    icon: 'i-lucide-facebook',
-  },
-  {
-    name: 'Instagram',
-    url: 'https://www.instagram.com/ambo.market',
-    icon: 'i-lucide-instagram',
-  },
-  {
-    name: 'Youtube',
-    url: 'https://www.youtube.com/@ambo.market',
-    icon: 'i-lucide-youtube',
-  },
+  { name: 'Facebook', url: 'https://www.facebook.com/ambo.market', icon: 'i-lucide-facebook' },
+  { name: 'Instagram', url: 'https://www.instagram.com/ambo.market', icon: 'i-lucide-instagram' },
+  { name: 'Youtube', url: 'https://www.youtube.com/@ambo.market', icon: 'i-lucide-youtube' },
 ];
 </script>
-
-<i18n lang="json">
-{
-  "en": {
-    "about": "About",
-    "terms_of_use": "Terms of Use",
-    "privacy_policy": "Privacy Policy",
-    "follow_us": "Follow Us",
-    "seo_text": "Ambo Market - free classifieds in Angola. Buy and sell online in Luanda, Benguela, Huambo, Lobito, Cabinda and across Angola. Cars, real estate, mobile phones, electronics and services."
-  },
-  "pt": {
-    "about": "Sobre",
-    "terms_of_use": "Termos de Uso",
-    "privacy_policy": "Política de Privacidade",
-    "follow_us": "Siga-nos",
-    "seo_text": "Ambo Market - classificados gratis em Angola. Compra e venda online em Luanda, Benguela, Huambo, Lobito, Cabinda e toda Angola. Carros, imoveis, telemoveis, electronica e servicos."
-  }
-}
-</i18n>
 
 <template>
   <UFooter
@@ -92,10 +49,10 @@ const socialLinks = [
     </template>
 
     <template #bottom>
-      <p
-        class="text-center text-xs leading-relaxed text-muted"
-        v-text="t('seo_text')"
-      />
+      <p class="text-center text-xs leading-relaxed text-muted">
+        Ambo Market - classificados gratis em Angola. Compra e venda online em Luanda, Benguela, Huambo, Lobito, Cabinda
+        e toda Angola. Carros, imoveis, telemoveis, electronica e servicos.
+      </p>
     </template>
   </UFooter>
 </template>
