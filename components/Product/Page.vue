@@ -698,13 +698,12 @@ const closePost = () => {
                 @select="setActiveImage"
               >
                 <div class="aspect-square w-full overflow-hidden sm:aspect-[4/3]">
-                  <NuxtImg
+                  <img
                     :src="slide.url"
                     :alt="slide.alt"
                     class="h-full w-full object-cover"
-                    sizes="sm:100vw md:720px lg:860px"
                     @click="selectImage(slide.index)"
-                  />
+                  >
                 </div>
               </UCarousel>
 
@@ -712,11 +711,11 @@ const closePost = () => {
                 v-else
                 class="aspect-square w-full overflow-hidden sm:aspect-[4/3]"
               >
-                <NuxtImg
+                <img
                   :src="fallbackImage"
                   :alt="post.title"
                   class="h-full w-full object-cover"
-                />
+                >
               </div>
 
               <div class="absolute bottom-3 left-3 flex gap-2">
@@ -753,13 +752,12 @@ const closePost = () => {
                 :class="activeImageIndex === i ? 'border-primary' : 'border-transparent opacity-60 hover:opacity-100'"
                 @click="selectImage(i)"
               >
-                <NuxtImg
+                <img
                   :src="thumb.url"
                   :alt="thumb.alt"
                   class="h-full w-full object-cover"
                   loading="lazy"
-                  sizes="56px"
-                />
+                >
               </button>
             </div>
           </div>
@@ -1104,14 +1102,13 @@ const closePost = () => {
           class="group overflow-hidden rounded-2xl border border-default bg-default transition hover:border-primary/40 hover:shadow-sm"
         >
           <div class="relative aspect-square overflow-hidden bg-muted">
-            <NuxtImg
+            <img
               v-if="recommendedPost.preview"
               :src="recommendedPost.preview"
               :alt="recommendedPost.title"
               class="size-full object-cover transition group-hover:scale-105"
               loading="lazy"
-              sizes="sm:50vw lg:220px"
-            />
+            >
 
             <UEmpty
               v-else

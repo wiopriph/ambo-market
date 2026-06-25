@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@nuxt/content": "3.14.0",
-    "@nuxt/image": "2.0.0",
     "@nuxt/ui": "4.8.1",
     "@nuxtjs/sitemap": "8.0.15",
     "@nuxtjs/supabase": "1.6.2",

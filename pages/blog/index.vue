@@ -147,16 +147,23 @@ const breadcrumbs = computed(() => [
 
 <template>
   <div class="mx-auto max-w-[1280px] px-4 sm:px-5 py-6 sm:py-8 space-y-5">
+    <UBreadcrumb
+      :items="breadcrumbs"
+      class="hidden sm:flex"
+    />
 
-    <UBreadcrumb :items="breadcrumbs" class="hidden sm:flex" />
-
-    <!-- Header -->
     <div class="rounded-2xl border border-default bg-default px-5 py-4">
-      <h1 class="text-lg font-bold text-highlighted" v-text="t('h1')" />
-      <p class="mt-0.5 text-sm text-muted" v-text="t('description')" />
+      <h1
+        class="text-lg font-bold text-highlighted"
+        v-text="t('h1')"
+      />
+
+      <p
+        class="mt-0.5 text-sm text-muted"
+        v-text="t('description')"
+      />
     </div>
 
-    <!-- Tag filters -->
     <div class="flex flex-wrap gap-2">
       <UButton
         v-for="tag in tagsList"
@@ -169,7 +176,6 @@ const breadcrumbs = computed(() => [
       />
     </div>
 
-    <!-- Posts grid -->
     <div
       v-if="posts?.length"
       class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3"
@@ -181,21 +187,31 @@ const breadcrumbs = computed(() => [
         class="group flex flex-col overflow-hidden rounded-2xl border border-default bg-default transition hover:border-primary/40 hover:shadow-sm"
       >
         <div class="aspect-[16/9] overflow-hidden bg-muted">
-          <NuxtImg
+          <img
             v-if="post.image"
             :src="post.image"
             :alt="post.title"
             class="size-full object-cover transition group-hover:scale-105"
             loading="lazy"
             sizes="sm:100vw md:50vw lg:420px"
-          />
-          <div v-else class="size-full flex items-center justify-center">
-            <UIcon name="i-lucide-newspaper" class="size-10 text-muted" />
+          >
+
+          <div
+            v-else
+            class="size-full flex items-center justify-center"
+          >
+            <UIcon
+              name="i-lucide-newspaper"
+              class="size-10 text-muted"
+            />
           </div>
         </div>
 
         <div class="flex flex-1 flex-col gap-2 p-4">
-          <div v-if="post.tags?.length" class="flex flex-wrap gap-1">
+          <div
+            v-if="post.tags?.length"
+            class="flex flex-wrap gap-1"
+          >
             <UBadge
               v-for="tag in post.tags"
               :key="tag"
@@ -206,12 +222,23 @@ const breadcrumbs = computed(() => [
             />
           </div>
 
-          <p class="text-sm font-semibold text-highlighted line-clamp-2 leading-snug" v-text="post.title" />
-          <p class="text-xs text-muted line-clamp-2 leading-relaxed flex-1" v-text="post.description" />
+          <p
+            class="text-sm font-semibold text-highlighted line-clamp-2 leading-snug"
+            v-text="post.title"
+          />
+
+          <p
+            class="text-xs text-muted line-clamp-2 leading-relaxed flex-1"
+            v-text="post.description"
+          />
 
           <div class="flex items-center gap-1 text-xs text-primary mt-1">
             <span>{{ t('read_more') }}</span>
-            <UIcon name="i-lucide-arrow-right" class="size-3" />
+
+            <UIcon
+              name="i-lucide-arrow-right"
+              class="size-3"
+            />
           </div>
         </div>
       </NuxtLink>
@@ -226,7 +253,10 @@ const breadcrumbs = computed(() => [
       size="lg"
     />
 
-    <div v-if="hasPagination" class="flex justify-center">
+    <div
+      v-if="hasPagination"
+      class="flex justify-center"
+    >
       <UPagination
         :page="currentPage"
         :total="postCount || 0"

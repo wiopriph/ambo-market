@@ -121,13 +121,13 @@ const onAccountClick = () => {
           :aria-label="t('main_page')"
           class="order-1 shrink-0 lg:flex lg:items-center"
         >
-          <NuxtImg
+          <img
             src="/icon-logo.svg"
             alt="Ambo Market"
             width="180"
             height="32"
             class="h-6 w-auto"
-          />
+          >
         </ULink>
 
         <div class="order-2 ml-auto flex shrink-0 items-center gap-2 lg:order-3 lg:ml-0 lg:self-center">

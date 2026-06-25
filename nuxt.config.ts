@@ -32,11 +32,10 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    '@nuxtjs/i18n',
-    '@nuxtjs/device',
+    '@nuxtjs/i18n', //
+    '@nuxtjs/device', //
     '@nuxt/ui',
-    'nuxt-swiper',
-    '@nuxt/image',
+    'nuxt-swiper', //
     '@nuxtjs/sitemap',
     '@nuxt/content',
     '@nuxtjs/supabase',

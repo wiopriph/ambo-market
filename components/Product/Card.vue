@@ -78,13 +78,11 @@ const { t } = useI18n();
         v-text="city"
       />
 
-      <NuxtImg
+      <img
         :src="previewImage"
         :alt="productTitle"
-        :preload="{ fetchPriority: 'high' }"
-        fetchPriority="high"
         class="absolute inset-0 size-full object-cover transition group-hover:scale-105"
-      />
+      >
     </div>
 
     <div class="p-3">
