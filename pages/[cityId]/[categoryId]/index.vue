@@ -284,7 +284,6 @@ const top3Post = computed(() => {
 });
 </script>
 
-
 <template>
   <div class="mx-auto px-4 sm:px-5 py-4 sm:py-6 space-y-4">
     <UIBreadcrumbs

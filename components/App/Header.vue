@@ -116,7 +116,7 @@ const onAccountClick = () => {
             <span class="hidden md:inline">Publicar anúncio</span>
           </UButton>
 
-          <UDropdownMenu
+          <LazyUDropdownMenu
             v-if="isLoggedIn && currentUser"
             :items="accountItems"
             :content="{ align: 'end', sideOffset: 10 }"
@@ -135,7 +135,7 @@ const onAccountClick = () => {
                 size="md"
               />
             </UButton>
-          </UDropdownMenu>
+          </LazyUDropdownMenu>
 
           <UButton
             v-else

@@ -78,6 +78,26 @@ export default defineNuxtConfig({
     ssr: {
       noExternal: ['@sqlite.org/sqlite-wasm'],
     },
+
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('@sqlite.org/sqlite-wasm') || id.includes('sqlite3-bundler') || id.includes('sqlite3-worker1')) {
+              return 'sqlite-wasm';
+            }
+
+            if (id.includes('supabase-js') || id.includes('gotrue-js') || id.includes('realtime-js') || id.includes('storage-js') || id.includes('postgrest-js') || id.includes('functions-js')) {
+              return 'supabase';
+            }
+
+            if (id.includes('motion-v') || id.includes('framer-motion') || id.includes('motion-dom') || id.includes('motion-utils')) {
+              return 'motion';
+            }
+          },
+        },
+      },
+    },
   },
 
   routeRules: {

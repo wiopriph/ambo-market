@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import debounce from 'lodash/debounce';
+import { useDebounceFn } from '@vueuse/core';
 import { usePosts } from '~/composables/usePosts';
 import type { Filters } from '~/composables/usePosts/types';
 import { DEFAULT_FILTERS } from '~/constants/filters';
@@ -48,15 +48,17 @@ const buildParams = () => {
   return params;
 };
 
+const navigateDebounced = useDebounceFn((value: string) => {
+  const params = buildParams();
+  const query = getObjectDifferences({ ...currentFilters.value, q: value }, DEFAULT_FILTERS);
+
+  pushEvent(SEARCH_SUBMIT, { query: value });
+  navigateTo({ name: Object.keys(params).join('-'), params, query });
+}, 600);
+
 const searchQuery = computed({
   get: () => getFilter('q') || '',
-  set: debounce((value: string) => {
-    const params = buildParams();
-    const query = getObjectDifferences({ ...currentFilters.value, q: value }, DEFAULT_FILTERS);
-
-    pushEvent(SEARCH_SUBMIT, { query: value });
-    navigateTo({ name: Object.keys(params).join('-'), params, query });
-  }, 600),
+  set: (value: string) => navigateDebounced(value),
 });
 
 const setCity = (newCityId: string) => {
