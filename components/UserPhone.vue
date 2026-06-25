@@ -9,18 +9,10 @@ import { PHONE_REG_EXP } from '~/constants/reg-exps';
 const { t } = useI18n();
 const { currentUser, updateProfile } = useUser();
 
-const {
-  errors,
-  handleSubmit,
-  setFieldValue,
-} = useForm({
-  initialValues: {
-    name: '',
-    phone: '',
-  },
+const { errors, handleSubmit, setFieldValue } = useForm({
+  initialValues: { name: '', phone: '' },
   validationSchema: object({
-    name: string()
-      .required(t('validation.required')),
+    name: string().required(t('validation.required')),
     phone: string()
       .required(t('validation.required'))
       .matches(PHONE_REG_EXP, t('validation.phone')),
@@ -30,36 +22,26 @@ const {
 const { value: name } = useField<string>('name');
 const { value: phone } = useField<string>('phone');
 
-watch(
-  currentUser,
-  (user) => {
-    if (!user) {
-      return;
-    }
+watch(currentUser, (user) => {
+  if (!user) return;
 
-    setFieldValue('name', user.name ?? '');
-    setFieldValue('phone', user.phone ?? '');
-  },
-  { immediate: true },
-);
+  setFieldValue('name', user.name ?? '');
+  setFieldValue('phone', user.phone ?? '');
+}, { immediate: true });
 
 const isLoading = ref(false);
 const backendError = ref('');
 
 const saveProfile = handleSubmit.withControlled(async () => {
-  if (isLoading.value) {
-    return;
-  }
+  if (isLoading.value) return;
 
   isLoading.value = true;
   backendError.value = '';
 
   try {
-    const formattedPhone = phone.value.replace(/\s+/g, '');
-
     await updateProfile({
       'display_name': name.value.trim(),
-      phone: formattedPhone,
+      phone: phone.value.replace(/\s+/g, ''),
     });
   } catch (error: any) {
     backendError.value = error?.message || 'Error';
@@ -93,15 +75,15 @@ const saveProfile = handleSubmit.withControlled(async () => {
 </i18n>
 
 <template>
-  <div class="space-y-5">
-    <div class="space-y-2">
+  <div class="rounded-2xl border border-default bg-default px-5 py-4 space-y-5">
+    <div class="space-y-1">
       <h2
         class="text-xl font-semibold text-highlighted"
         v-text="t('title')"
       />
 
       <p
-        class="text-sm leading-6 text-muted"
+        class="text-sm text-muted"
         v-text="t('description')"
       />
     </div>
@@ -159,9 +141,8 @@ const saveProfile = handleSubmit.withControlled(async () => {
         size="lg"
         block
         :loading="isLoading"
-      >
-        {{ t('save') }}
-      </UButton>
+        :label="t('save')"
+      />
     </form>
   </div>
 </template>

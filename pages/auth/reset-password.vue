@@ -133,7 +133,9 @@ const goToLogin = () => {
 </i18n>
 
 <template>
-  <UILoader v-if="isCheckingToken" />
+  <div v-if="isCheckingToken" class="flex justify-center py-12">
+    <UIcon name="i-lucide-loader-circle" class="size-8 animate-spin text-muted" />
+  </div>
 
   <div
     v-else

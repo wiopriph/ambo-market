@@ -106,14 +106,6 @@ export default defineNuxtConfig({
       }),
     ],
 
-    css: {
-      preprocessorOptions: {
-        scss: {
-          api: 'modern',
-          additionalData: '@use \'~/assets/scss/index.scss\' as *;',
-        },
-      },
-    },
 
     optimizeDeps: {
       exclude: ['@sqlite.org/sqlite-wasm'],
@@ -130,19 +122,10 @@ export default defineNuxtConfig({
     },
   },
 
-  // Cache-Control для NuxtImg
-  // nitro: {
-  //   routeRules: {
-  //     '/_ipx/**': {
-  //       headers: {
-  //         'Cache-Control': 'public, max-age=31536000, immutable',
-  //       },
-  //     },
-  //   },
-  // },
-
   routeRules: {
     '/auth': { ssr: false },
+    '/auth/register': { ssr: false },
+    '/auth/forgot-password': { ssr: false },
     '/product/create': { ssr: false },
   },
 

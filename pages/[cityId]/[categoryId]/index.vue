@@ -463,10 +463,11 @@ const top3Post = computed(() => {
         v-if="hasPagination"
         class="flex justify-center"
       >
-        <UIPagination
-          :value="page"
-          :max="totalPages"
-          @input="setPage"
+        <UPagination
+          :page="page"
+          :total="totalPages * MAX_POSTS_PER_PAGE"
+          :itemsPerPage="MAX_POSTS_PER_PAGE"
+          @update:page="setPage"
         />
       </div>
 

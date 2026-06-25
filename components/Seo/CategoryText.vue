@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import type { SeoCategoryTextProps } from './types';
 import { getCityById } from '~/constants/cities';
 
 
-const props = defineProps<SeoCategoryTextProps>();
-
-const cityName = computed(() => {
-  const city = getCityById(props.cityId);
-
-  return city ? city.name : '';
-});
+const props = defineProps<{
+  title: string;
+  cityId: string;
+  categoryId: string;
+  productList?: string[];
+}>();
 
 const { t } = useI18n();
 
+const cityName = computed(() => getCityById(props.cityId)?.name ?? '');
 const categoryName = computed(() => t(props.categoryId));
+const everywhere = computed(() => props.cityId === 'all');
 </script>
 
 <i18n>
@@ -34,13 +34,11 @@ const categoryName = computed(() => t(props.categoryId));
     "safe_transactions_desc": "Buying and selling through classified ads can be simple and secure if you follow basic safety rules: meet in public places, inspect the product before payment, and communicate clearly with buyers or sellers.",
     "how_to_post": "How to Post an Ad for {category} in {city}?",
     "how_to_post_everywhere": "How to Post an Ad for {category}?",
-    "how_to_post_steps": {
-      "step_1": "Sign up or log in to your Ambo Market account.",
-      "step_2": "Click 'Post an Ad' and choose '{category}'.",
-      "step_3": "Add a detailed description, high-quality photos, and a fair price.",
-      "step_4": "Provide contact details so potential buyers can reach you.",
-      "step_5": "Publish your listing and start receiving offers!"
-    },
+    "step_1": "Sign up or log in to your Ambo Market account.",
+    "step_2": "Click 'Post an Ad' and choose '{category}'.",
+    "step_3": "Add a detailed description, high-quality photos, and a fair price.",
+    "step_4": "Provide contact details so potential buyers can reach you.",
+    "step_5": "Publish your listing and start receiving offers!",
     "best_deals": "Find the Best Deals on {category} Today!",
     "best_deals_desc": "Don't miss out on the best deals for {category} in {city}. Browse listings, compare prices, and contact sellers directly. Whether you're looking for new or used {category}, Ambo Market is the best place to buy and sell!",
     "best_deals_desc_everywhere": "Don't miss out on the best deals for {category} in Angola. Browse listings, compare prices, and contact sellers directly. Whether you're looking for new or used {category}, Ambo Market is the best place to buy and sell!",
@@ -63,13 +61,11 @@ const categoryName = computed(() => t(props.categoryId));
     "safe_transactions_desc": "Comprar e vender por meio de anúncios classificados pode ser simples e seguro se você seguir algumas regras básicas: marque encontros em locais públicos, verifique o produto antes de pagar e mantenha uma comunicação clara com compradores ou vendedores.",
     "how_to_post": "Como Publicar um Anúncio de {category} em {city}?",
     "how_to_post_everywhere": "Como Publicar um Anúncio de {category}?",
-    "how_to_post_steps": {
-      "step_1": "Cadastre-se ou faça login na sua conta do Ambo Market.",
-      "step_2": "Clique em 'Publicar Anúncio' e escolha '{category}'.",
-      "step_3": "Adicione uma descrição detalhada, fotos de alta qualidade e um preço justo.",
-      "step_4": "Informe seus dados de contato para que os interessados possam falar com você.",
-      "step_5": "Publique seu anúncio e comece a receber propostas!"
-    },
+    "step_1": "Cadastre-se ou faça login na sua conta do Ambo Market.",
+    "step_2": "Clique em 'Publicar Anúncio' e escolha '{category}'.",
+    "step_3": "Adicione uma descrição detalhada, fotos de alta qualidade e um preço justo.",
+    "step_4": "Informe seus dados de contato para que os interessados possam falar com você.",
+    "step_5": "Publique seu anúncio e comece a receber propostas!",
     "best_deals": "Encontre as Melhores Ofertas de {category} Hoje Mesmo!",
     "best_deals_desc": "Não perca as melhores ofertas de {category} em {city}. Navegue pelos anúncios, compare preços e fale diretamente com os vendedores. Seja para comprar {category} novo ou usado, o Ambo Market é o melhor lugar para comprar e vender!",
     "best_deals_desc_everywhere": "Não perca as melhores ofertas de {category} em Angola. Navegue pelos anúncios, compare preços e fale diretamente com os vendedores. Seja para comprar {category} novo ou usado, o Ambo Market é o melhor lugar para comprar e vender!",
@@ -80,101 +76,110 @@ const categoryName = computed(() => t(props.categoryId));
 </i18n>
 
 <template>
-  <div :class="$style.root">
-    <h3>
-      {{ t('title', { title: props.title }) }}
-    </h3>
+  <div class="space-y-3 text-sm leading-6 text-muted">
+    <h3
+      class="text-base font-semibold text-highlighted"
+      v-text="t('title', { title })"
+    />
 
     <p>
-      {{ cityId === 'all' ? t('intro_everywhere', { category: categoryName }) : t('intro', { category: categoryName, city: cityName }) }}
+      {{
+        everywhere ? t('intro_everywhere', { category: categoryName }) : t('intro', {
+          category: categoryName,
+          city: cityName
+        })
+      }}
     </p>
 
-    <h3 v-text="t('why_choose')" />
+    <h3
+      class="text-base font-semibold text-highlighted"
+      v-text="t('why_choose')"
+    />
 
-    <ol>
+    <ol class="list-decimal space-y-2 pl-5">
       <li>
-        <p v-text="t('free_listings')" />
+        <p
+          class="font-medium text-highlighted"
+          v-text="t('free_listings')"
+        />
 
         <p v-text="t('free_listings_desc')" />
       </li>
 
       <li>
-        <p v-text="t('wide_selection', { category: categoryName })" />
+        <p
+          class="font-medium text-highlighted"
+          v-text="t('wide_selection', { category: categoryName })"
+        />
 
-
-        <p v-if="productList">
-          {{ t('wide_selection_desc') }}
-          {{ productList?.length > 1 ? t('you_can_find', { options: productList.join(', ') }) : '' }}
+        <p>
+          {{
+            t('wide_selection_desc')
+          }}{{ productList?.length ? ' ' + t('you_can_find', { options: productList.join(', ') }) : '' }}
         </p>
       </li>
 
       <li>
-        <p v-text="t('easy_search')" />
+        <p
+          class="font-medium text-highlighted"
+          v-text="t('easy_search')"
+        />
 
         <p v-text="t('easy_search_desc')" />
       </li>
 
       <li>
-        <p v-text="t('safe_transactions')" />
+        <p
+          class="font-medium text-highlighted"
+          v-text="t('safe_transactions')"
+        />
 
         <p v-text="t('safe_transactions_desc')" />
       </li>
     </ol>
 
-    <h3>
-      {{ cityId === 'all' ? t('how_to_post_everywhere', { category: categoryName }) : t('how_to_post', { category: categoryName, city: cityName }) }}
+    <h3 class="text-base font-semibold text-highlighted">
+      {{
+        everywhere ? t('how_to_post_everywhere', { category: categoryName }) : t('how_to_post', {
+          category: categoryName,
+          city: cityName
+        })
+      }}
     </h3>
 
-    <ol>
-      <li>
-        <p v-text="t('how_to_post_steps.step_1')" />
-      </li>
+    <ol class="list-decimal space-y-1 pl-5">
+      <li v-text="t('step_1')" />
 
-      <li>
-        <p v-text="t('how_to_post_steps.step_2', { category: categoryName })" />
-      </li>
+      <li v-text="t('step_2', { category: categoryName })" />
 
-      <li>
-        <p v-text="t('how_to_post_steps.step_3')" />
-      </li>
+      <li v-text="t('step_3')" />
 
-      <li>
-        <p v-text="t('how_to_post_steps.step_4')" />
-      </li>
+      <li v-text="t('step_4')" />
 
-      <li>
-        <p v-text="t('how_to_post_steps.step_5')" />
-      </li>
+      <li v-text="t('step_5')" />
     </ol>
 
-    <h3 v-text="t('best_deals', { category: categoryName })" />
+    <h3
+      class="text-base font-semibold text-highlighted"
+      v-text="t('best_deals', { category: categoryName })"
+    />
 
     <p>
-      {{ cityId === 'all' ? t('best_deals_desc_everywhere', { category: categoryName }) : t('best_deals_desc', { category: categoryName, city: cityName }) }}
+      {{
+        everywhere ? t('best_deals_desc_everywhere', { category: categoryName }) : t('best_deals_desc', {
+          category: categoryName,
+          city: cityName
+        })
+      }}
     </p>
 
     <p>
-      {{ cityId === 'all' ? t('start_now_everywhere', { category: categoryName }) : t('start_now', { category: categoryName, city: cityName }) }}
+      {{
+        everywhere ? t('start_now_everywhere', { category: categoryName }) : t('start_now', {
+          category: categoryName,
+          city: cityName
+        })
+      }}
     </p>
   </div>
 </template>
-
-<style lang="scss" module>
-.root {
-  @include ui-typo-14;
-
-  h3 {
-    @include ui-typo-18-bold;
-
-    margin-top: 16px;
-  }
-
-  p {
-    margin-top: 8px;
-  }
-
-  ol {
-    padding-left: 16px;
-  }
-}
-</style>

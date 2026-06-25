@@ -5,12 +5,10 @@ const props = defineProps<{
   error: { statusCode?: number; message?: string } | null;
 }>();
 
-const errorMessage = computed(() => props.error?.message || t('error_occurred'));
-const errorCode = computed(() => (props.error?.statusCode || 500));
+const errorCode = computed(() => props.error?.statusCode || 500);
+const is404 = computed(() => errorCode.value === 404);
 
-const is404Page = computed(() => errorCode.value === 404);
-
-useHead({ title: errorMessage.value });
+useHead({ title: is404.value ? t('404.message') : (props.error?.message || t('error_occurred')) });
 </script>
 
 <i18n>
@@ -18,16 +16,16 @@ useHead({ title: errorMessage.value });
   "en": {
     "error_occurred": "An error has occurred",
     "404": {
-      "message": "Page doesn't exist :(",
-      "text": "Unfortunately, there is no such page, but you can always find what you need, go to all ads or add your own!"
+      "message": "Page not found",
+      "text": "This page doesn't exist, but you can always find what you need on the homepage."
     },
     "go_to_homepage": "Go to homepage"
   },
   "pt": {
     "error_occurred": "Ocorreu um erro",
     "404": {
-      "message": "A página não existe :(",
-      "text": "Lamentavelmente, essa página não existe, mas você sempre pode encontrar o que precisa, ir para todos os anúncios ou adicionar o seu!"
+      "message": "Página não encontrada",
+      "text": "Essa página não existe, mas você sempre pode encontrar o que precisa na página inicial."
     },
     "go_to_homepage": "Ir para a página inicial"
   }
@@ -35,94 +33,24 @@ useHead({ title: errorMessage.value });
 </i18n>
 
 <template>
-  <div :class="$style.page">
-    <div :class="$style.root">
-      <h1
-        :class="$style.title"
-        v-text="errorCode"
-      />
+  <div class="flex min-h-screen flex-col items-center justify-center px-4 text-center">
+    <p class="text-[160px] font-bold leading-none text-muted/20 sm:text-[120px]">
+      {{ errorCode }}
+    </p>
 
-      <template v-if="is404Page">
-        <p
-          :class="$style.message"
-          v-text="t('404.message')"
-        />
+    <h1 class="mt-4 text-xl font-semibold text-highlighted">
+      {{ is404 ? t('404.message') : t('error_occurred') }}
+    </h1>
 
-        <p
-          :class="$style.text"
-          v-text="t('404.text')"
-        />
-      </template>
+    <p class="mt-2 max-w-sm text-sm text-muted">
+      {{ is404 ? t('404.text') : props.error?.message }}
+    </p>
 
-      <p
-        v-else
-        :class="$style.text"
-        v-text="errorMessage"
-      />
-
-      <NuxtLink
-        to="/"
-        :class="$style.button"
-      >
-        {{ t('go_to_homepage') }}
-      </NuxtLink>
-    </div>
+    <UButton
+      to="/"
+      class="mt-8"
+      size="lg"
+      :label="t('go_to_homepage')"
+    />
   </div>
 </template>
-
-<style lang="scss" module>
-.page {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-
-.root {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 600px;
-  height: 100%;
-  padding: 20px;
-  text-align: center;
-  background-color: #FAFAFA;
-}
-
-.title {
-  color: $ui-color-text-main;
-  font-weight: bold;
-  font-size: 200px;
-  line-height: 240px;
-  opacity: .3;
-
-  @include sm {
-    font-size: 140px;
-    line-height: 200px;
-  }
-}
-
-.message {
-  @include ui-typo-18-bold;
-  color: $ui-color-black;
-}
-
-.text {
-  @include ui-typo-14;
-  margin-top: 20px;
-  margin-bottom: 30px;
-  color: $ui-color-text-main;
-}
-
-.button {
-  @include ui-button-primary;
-
-  @include sm {
-    width: 100%;
-  }
-}
-</style>

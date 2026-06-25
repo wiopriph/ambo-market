@@ -17,7 +17,7 @@ definePageMeta({
   }),
 });
 
-const { isLoggedIn, isAuthChecking } = useUser();
+const { isLoggedIn } = useUser();
 
 
 const route = useRoute();
@@ -179,12 +179,7 @@ const createAccount = () => {
 </i18n>
 
 <template>
-  <UILoader v-if="isAuthChecking" />
-
-  <div
-    v-else
-    class="mx-auto w-full max-w-md px-4 py-8 sm:py-16 space-y-3"
-  >
+  <div class="mx-auto w-full max-w-md px-4 py-8 sm:py-16 space-y-3">
     <div class="rounded-2xl border border-default bg-default px-5 py-4">
       <h1
         class="text-lg font-bold text-highlighted"
