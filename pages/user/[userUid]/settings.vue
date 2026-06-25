@@ -5,6 +5,14 @@ import { type ProfileImageInput, type ProfileUpdateInput, useUser } from '~/comp
 import { PHONE_REG_EXP } from '~/constants/reg-exps';
 
 
+useHead({
+  title: 'Configurações da conta – Ambo Market',
+  meta: [
+    { key: 'description', name: 'description', content: 'Edite o seu perfil, foto e número de telefone na Ambo Market.' },
+    { key: 'robots', name: 'robots', content: 'noindex, nofollow' },
+  ],
+});
+
 definePageMeta({
   middleware: defineNuxtRouteMiddleware((to) => {
     const { isLoggedIn, uid } = useUser();

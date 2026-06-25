@@ -1,10 +1,15 @@
 <script setup lang="ts">
+const title = 'Termos de Uso – Ambo Market';
+const description = 'Leia os Termos de Uso da Ambo Market para conhecer as regras e condições de utilização da nossa plataforma de classificados em Angola.';
+
 useHead({
-  title: 'Terms of Use – Ambo Market',
+  title,
   meta: [
-    { key: 'description', name: 'description', content: 'Read the Ambo Market Terms of Use to understand the rules and conditions for using our classifieds platform.' },
-    { key: 'og:title', property: 'og:title', content: 'Terms of Use – Ambo Market' },
-    { key: 'og:description', property: 'og:description', content: 'Read the Ambo Market Terms of Use to understand the rules and conditions for using our classifieds platform.' },
+    { key: 'description', name: 'description', content: description },
+    { key: 'og:title', property: 'og:title', content: title },
+    { key: 'og:description', property: 'og:description', content: description },
+    { key: 'twitter:title', property: 'twitter:title', content: title },
+    { key: 'twitter:description', property: 'twitter:description', content: description },
     { key: 'robots', name: 'robots', content: 'noindex, follow' },
   ],
 });
@@ -15,7 +20,7 @@ useHead({
     class="mx-auto max-w-3xl space-y-5 py-6 text-sm leading-7 text-default sm:py-10 sm:text-base [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-highlighted [&_li>p:first-child]:font-semibold [&_li>p:first-child]:text-highlighted [&_ol]:space-y-6 [&_ol]:pl-5 [&_ol]:list-decimal [&_li]:space-y-2"
   >
     <h1 class="text-3xl font-bold text-highlighted sm:text-4xl">
-      Platform Terms of Use
+      Termos de Uso da Plataforma
     </h1>
 
     <div>
@@ -23,27 +28,27 @@ useHead({
         color="neutral"
         variant="soft"
       >
-        Effective Date:&nbsp;<strong>15 March 2025</strong>
+        Data de Vigência:&nbsp;<strong>15 de Março de 2025</strong>
       </UBadge>
     </div>
 
     <div>
       <p>
-        These Ambo Market Platform Terms of Use (these "<strong>Terms of Use</strong>
-        ") tell you the rules for using the platform
-        available at <a
+        Estes Termos de Uso da Plataforma Ambo Market (estes "<strong>Termos de Uso</strong>
+        ") estabelecem as regras para a utilização da plataforma
+        disponível em <a
           href="https://ambo.market/"
           target="_blank"
         >ambo.market/</a>
 
-        (these "<strong>Platform</strong>
-        "), as well as any information, content or materials published on, or available via,
-        the Platform (collectively, the "<strong>Content</strong>").
+        (esta "<strong>Plataforma</strong>
+        "), bem como qualquer informação, conteúdo ou material publicado ou disponível através da
+        Plataforma (colectivamente, o "<strong>Conteúdo</strong>").
       </p>
 
       <p>
-        These Terms of Use govern and condition access to, and use of, the Platform and its Content by each visitor to
-        this Platform ("you").
+        Estes Termos de Uso regem e condicionam o acesso e a utilização da Plataforma e do seu Conteúdo por cada
+        visitante desta Plataforma ("você").
       </p>
     </div>
 
@@ -53,459 +58,463 @@ useHead({
     >
       <li id="who-we-are">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          WHO WE ARE AND HOW TO CONTACT US.
+          QUEM SOMOS E COMO NOS CONTACTAR.
         </p>
 
         <p>
-          The Platform is operated and owned by
+          A Plataforma é operada e pertence à
           <strong>Ambo Market</strong>
 
           ("<strong>Ambo Market</strong>
 
-          ", "<strong>we</strong>
+          ", "<strong>nós</strong>
 
-          ", "<strong>our</strong>
+          ", "<strong>nosso</strong>
           ",
-          "<strong>us</strong>").
+          "<strong>nos</strong>").
         </p>
 
         <p>
-          Our mailing address is at Angola, Soyo, Projecto Cajueiro, 32 Soyo, Zaire Angola.
+          A nossa morada postal é Angola, Soyo, Projecto Cajueiro, 32 Soyo, Zaire Angola.
         </p>
 
         <p>
-          To contact us about these Terms of Use or anything else relating to your use of this Platform, please email
+          Para nos contactar sobre estes Termos de Uso ou qualquer outro assunto relacionado com a sua utilização
+          desta Plataforma, por favor envie um e-mail para
           <a href="mailto:support@ambo.market">support@ambo.market</a>.
         </p>
       </li>
 
       <li id="accept-terms-of-use">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          BY USING THE PLATFORM, YOU ACCEPT THESE TERMS OF USE.
+          AO UTILIZAR A PLATAFORMA, ACEITA ESTES TERMOS DE USO.
         </p>
 
         <p>
-          By accessing and continuing to use the Platform, you confirm that you accept these Terms of Use, and
-          acknowledge and agree that these Terms of Use govern and condition your access to, and use of, the Platform
-          and any Content.
+          Ao aceder e continuar a utilizar a Plataforma, confirma que aceita estes Termos de Uso e reconhece e
+          concorda que estes Termos de Uso regem e condicionam o seu acesso e utilização da Plataforma e de qualquer
+          Conteúdo.
         </p>
 
         <p>
-          You understand that these Terms of Use constitute a legally binding agreement between you and Ambo Market.
+          Compreende que estes Termos de Uso constituem um acordo juridicamente vinculativo entre si e a Ambo
+          Market.
         </p>
 
         <p>
-          If you are using the Platform as a business entity or on behalf of a business entity, you represent that you
-          have the authority to legally bind that entity.
+          Se estiver a utilizar a Plataforma como entidade empresarial ou em nome de uma entidade empresarial,
+          declara que tem autoridade para vincular juridicamente essa entidade.
         </p>
 
         <p>
-          If you do not agree to be bound by these Terms of Use, you may not access or use the Platform or any Content
-          and should cease to do so immediately.
+          Se não concordar em ficar vinculado por estes Termos de Uso, não poderá aceder ou utilizar a Plataforma
+          ou qualquer Conteúdo e deverá cessar imediatamente tal utilização.
         </p>
       </li>
 
       <li id="change-terms-of-use">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          WE MAY MAKE CHANGES TO THESE TERMS OF USE.
+          PODEMOS FAZER ALTERAÇÕES A ESTES TERMOS DE USO.
         </p>
 
         <p>
-          We may amend these Terms of Use from time to time, with or without notice to you. The new version of these
-          Terms of Use will be made available on this page. If you are an existing registered user, we may also notify
-          you of any material update to these Terms of Use via email (for example, where we are legally required to do
-          so).
+          Podemos alterar estes Termos de Uso de tempos em tempos, com ou sem aviso prévio. A nova versão destes
+          Termos de Uso será disponibilizada nesta página. Se for um utilizador registado existente, poderemos
+          também notificá-lo de qualquer actualização relevante a estes Termos de Uso por e-mail (por exemplo,
+          quando legalmente obrigados a fazê-lo).
         </p>
 
         <p>
-          Every time you wish to use the Platform, please check these Terms of Use to ensure that you understand the
-          terms and conditions that apply to the Platform and its Content at that time.
+          Sempre que pretenda utilizar a Plataforma, por favor verifique estes Termos de Uso para se assegurar de
+          que compreende os termos e condições aplicáveis à Plataforma e ao seu Conteúdo nesse momento.
         </p>
       </li>
 
       <li id="change-to-platform">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          WE MAY MAKE CHANGES TO THE PLATFORM.
+          PODEMOS FAZER ALTERAÇÕES À PLATAFORMA.
         </p>
 
         <p>
-          We may change the way the Platform operates and/or change any Content from time to time without notice to you.
-          This could be, for example, to reflect changes to the features and functionalities of the Platform, the state
-          of current technology, or market practice, applicable laws or regulations and/or our business priorities.
+          Podemos alterar o modo de funcionamento da Plataforma e/ou alterar qualquer Conteúdo de tempos em tempos
+          sem aviso prévio. Isto pode acontecer, por exemplo, para reflectir alterações nas funcionalidades da
+          Plataforma, no estado da tecnologia actual, nas práticas de mercado, nas leis e regulamentos aplicáveis
+          e/ou nas nossas prioridades de negócio.
         </p>
       </li>
 
       <li id="suspend-withdraw-platform">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          WE MAY SUSPEND OR WITHDRAW THE PLATFORM.
+          PODEMOS SUSPENDER OU RETIRAR A PLATAFORMA.
         </p>
 
         <p>
-          We do not guarantee that the Platform and/or any Content will always be available free of charge, or generally
-          available. We may suspend or withdraw, or restrict the availability of, all or any part of the Platform for
-          business and/or operational reasons.
+          Não garantimos que a Plataforma e/ou qualquer Conteúdo estará sempre disponível gratuitamente ou de forma
+          geral. Podemos suspender ou retirar, ou restringir a disponibilidade de, toda ou parte da Plataforma por
+          razões empresariais e/ou operacionais.
         </p>
       </li>
 
       <li id="your-privacy">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          YOUR PRIVACY.
+          A SUA PRIVACIDADE.
         </p>
 
         <p>
-          Please refer to our <span><a
+          Por favor consulte a nossa <span><a
             href="https://ambo.market/privacy"
             target="_blank"
             rel="noreferrer"
-          >Privacy Policy</a></span> to understand how we collect, process and share your personal data in relation to
-          your use of the Platform.
+          >Política de Privacidade</a></span> para compreender como recolhemos, tratamos e partilhamos os seus dados
+          pessoais em relação à sua utilização da Plataforma.
         </p>
       </li>
 
       <li id="right-to-use-platform">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          YOUR RIGHT TO USE THE PLATFORM AND THE CONTENT.
+          O SEU DIREITO A UTILIZAR A PLATAFORMA E O CONTEÚDO.
         </p>
 
         <p>
-          Subject to your continued compliance with these Terms of Use, Ambo Market grants you a personal, limited,
-          non-transferable, non-exclusive, revocable right to use the Platform and the Content.
+          Sujeito ao cumprimento contínuo destes Termos de Uso, a Ambo Market concede-lhe um direito pessoal,
+          limitado, intransmissível, não exclusivo e revogável de utilizar a Plataforma e o Conteúdo.
         </p>
 
         <p>
-          You may print off one (1) copy, and may download extracts, of any page(s) from the Platform for your personal
-          use and you may draw the attention of others to Content available on the Platform. You must not modify the
-          paper or digital copies of any materials you have printed off or downloaded in any way, and you must not use
-          any illustrations, photographs, video or audio sequences or any graphics separately from any accompanying
-          text. You must not use any part of the Content for commercial purposes without obtaining a licence to do so
-          from us.
+          Pode imprimir uma (1) cópia e descarregar extractos de qualquer página(s) da Plataforma para uso pessoal,
+          e pode chamar a atenção de outros para o Conteúdo disponível na Plataforma. Não deve modificar as cópias
+          em papel ou digitais de qualquer material que tenha impresso ou descarregado, e não deve utilizar
+          quaisquer ilustrações, fotografias, sequências de vídeo ou áudio, ou quaisquer gráficos separadamente de
+          qualquer texto que os acompanhe. Não deve utilizar qualquer parte do Conteúdo para fins comerciais sem
+          obter uma licença da nossa parte para o fazer.
         </p>
 
         <p>
-          Ambo Market is the owner or the licensee of all rights (including intellectual property rights) in the
-          Platform and any Content, including without limitation any designs, text, graphics and the selection and
-          arrangement thereof. The Platform and the Content are protected by copyright laws and treaties around the
-          world. All such rights are reserved.
+          A Ambo Market é proprietária ou licenciada de todos os direitos (incluindo direitos de propriedade
+          intelectual) na Plataforma e em qualquer Conteúdo, incluindo, sem limitação, quaisquer designs, textos,
+          gráficos e a respectiva selecção e disposição. A Plataforma e o Conteúdo são protegidos pelas leis e
+          tratados de direitos de autor em todo o mundo. Todos esses direitos estão reservados.
         </p>
 
         <p>
-          All trademarks, logos, trade dress, service names and service marks ("<strong>Marks</strong>") displayed on
-          the Platform are
-          our property or the property of certain other third-parties. You are not permitted to use these Marks without
-          our prior written consent.
+          Todas as marcas comerciais, logótipos, imagem comercial, nomes de serviços e marcas de serviços
+          ("<strong>Marcas</strong>") apresentados na Plataforma são propriedade nossa ou de determinados terceiros.
+          Não está autorizado a utilizar essas Marcas sem o nosso consentimento prévio por escrito.
         </p>
       </li>
 
       <li id="restrictions">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          RESTRICTIONS.
+          RESTRIÇÕES.
         </p>
 
         <p>
-          You must not:
+          Não deve:
         </p>
 
         <ul class="list-disc space-y-2 pl-5">
           <li>
-            use the Platform if you are under the age of eighteen (18);
+            utilizar a Plataforma se tiver menos de dezoito (18) anos de idade;
           </li>
 
           <li>
-            use the Platform in any unlawful manner or for any unlawful purpose;
+            utilizar a Plataforma de forma ilegal ou para qualquer finalidade ilegal;
           </li>
 
           <li>
-            attempt to gain unauthorised access to the Platform, the server on which the Platform is stored or any
-            server, computer or database connected to the Platform;
+            tentar obter acesso não autorizado à Plataforma, ao servidor onde a Plataforma está alojada ou a
+            qualquer servidor, computador ou base de dados ligado à Plataforma;
           </li>
 
           <li>
-            interfere with, damage or disrupt any part of the Platform or any Content, or any equipment or network on
-            which the Platform or any Content is stored, or any software or other systems or equipment used in the
-            provision of the Platform or any Content;
+            interferir, danificar ou perturbar qualquer parte da Plataforma ou qualquer Conteúdo, ou qualquer
+            equipamento ou rede onde a Plataforma ou qualquer Conteúdo esteja armazenado, ou qualquer software ou
+            outros sistemas ou equipamentos utilizados na prestação da Plataforma ou de qualquer Conteúdo;
           </li>
 
           <li>
-            knowingly introducing viruses, trojans, worms, logic bombs or other material that is malicious or
-            technologically harmful to the Platform;
+            introduzir conscientemente vírus, trojans, worms, bombas lógicas ou outro material malicioso ou
+            tecnologicamente prejudicial na Plataforma;
           </li>
 
           <li>
-            impersonate any other person while using the Platform;
+            fazer-se passar por outra pessoa enquanto utiliza a Plataforma;
           </li>
 
           <li>
-            conduct yourself in a vulgar, offensive, harassing or objectionable manner while using the Platform;
+            comportar-se de forma vulgar, ofensiva, assediante ou censurável enquanto utiliza a Plataforma;
           </li>
 
           <li>
-            use the Platform to generate unsolicited advertisements or spam;
+            utilizar a Plataforma para gerar publicidade não solicitada ou spam;
           </li>
 
           <li>
-            reproduce, duplicate, copy, sell, trade, resell or exploit for any commercial purpose all or any portion of
-            the Platform or any Content;
+            reproduzir, duplicar, copiar, vender, negociar, revender ou explorar para qualquer finalidade comercial
+            toda ou qualquer parte da Plataforma ou qualquer Conteúdo;
           </li>
 
           <li>
-            use manual methods or any software, devices, scripts, robots or any other means or processes (including
-            so-called ‘spiders’, ‘bots’ and ‘crawlers’) to scrape the Platform and/or its Content, or otherwise create
-            or compile (in single or multiple downloads) a collection, compilation, database or directory from the
-            Platform or its Content, or bypass or seek to bypass any robot exclusion headers we may implement; or
+            utilizar métodos manuais ou qualquer software, dispositivos, scripts, robots ou quaisquer outros meios
+            ou processos (incluindo os chamados "spiders", "bots" e "crawlers") para fazer scraping da Plataforma
+            e/ou do seu Conteúdo, ou de outro modo criar ou compilar (em downloads únicos ou múltiplos) uma
+            colecção, compilação, base de dados ou directório a partir da Plataforma ou do seu Conteúdo, ou
+            contornar ou tentar contornar quaisquer cabeçalhos de exclusão de robots que possamos implementar; ou
           </li>
 
           <li>
-            reverse-engineer, decompile, disassemble, decipher or otherwise attempt to derive the source code for the
-            Platform and/or its Content.
+            fazer engenharia inversa, descompilar, desassemblar, decifrar ou de outro modo tentar obter o código
+            fonte da Plataforma e/ou do seu Conteúdo.
           </li>
         </ul>
 
         <p>
-          We will report any breach of the restrictions listed above to the relevant law enforcement authorities and
-          will cooperate with those authorities by disclosing your identity to them.
+          Reportaremos qualquer violação das restrições acima listadas às autoridades policiais competentes e
+          cooperaremos com essas autoridades divulgando-lhes a sua identidade.
         </p>
       </li>
 
       <li id="account-creation">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          ACCOUNT CREATION.
+          CRIAÇÃO DE CONTA.
         </p>
 
         <p>
-          <strong>Account creation.</strong>
-          Although you can browse the Platform as a guest, you will need to create an
-          account (an "<strong>Account</strong>") in order to access certain features of the Platform. If you choose to
-          register for an
-          Account, you will have to provide certain information about yourself as prompted during the account
-          registration process on the Platform.
+          <strong>Criação de conta.</strong>
+          Embora possa navegar na Plataforma como visitante, precisará de criar uma
+          conta (uma "<strong>Conta</strong>") para aceder a determinadas funcionalidades da Plataforma. Se optar por
+          registar uma Conta, terá de fornecer determinadas informações sobre si conforme solicitado durante o
+          processo de registo de conta na Plataforma.
         </p>
 
         <p>
-          <strong>Accurate and up-to-date information.</strong> If you do create an Account, all the registration
-          information you submit should be truthful and accurate. If, for any reason, any information you submit is or
-          becomes untruthful, inaccurate and/or incomplete, you should update that information to maintain its accuracy.
+          <strong>Informações exactas e actualizadas.</strong> Se criar uma Conta, todas as informações de registo
+          que submeter devem ser verdadeiras e exactas. Se, por qualquer motivo, alguma informação que submeta for
+          ou se tornar falsa, inexacta e/ou incompleta, deverá actualizá-la para manter a sua exactidão.
         </p>
 
         <p>
-          <strong>What to do if you want to delete your Account.</strong>
+          <strong>O que fazer se pretender eliminar a sua Conta.</strong>
 
-          You can request the deletion of your Account by emailing <a href="mailto:support@ambo.market">support@ambo.market</a>.
+          Pode solicitar a eliminação da sua Conta enviando um e-mail para <a href="mailto:support@ambo.market">support@ambo.market</a>.
         </p>
 
         <p>
-          <strong>You are responsible for your Account.</strong> You are responsible for maintaining the confidentiality
-          of
-          your Account log-in information (including your password). Accordingly, you are responsible for all activities
-          that occur under your Account.
+          <strong>É responsável pela sua Conta.</strong> É responsável por manter a confidencialidade das
+          informações de início de sessão da sua Conta (incluindo a sua palavra-passe). Por conseguinte, é
+          responsável por todas as actividades que ocorram sob a sua Conta.
         </p>
 
         <p>
-          <strong>Unauthorised use of your Account.</strong> You should notify us immediately if you suspect or become
-          aware
-          of any unauthorised use of your Account or any other breach of its security.
+          <strong>Utilização não autorizada da sua Conta.</strong> Deverá notificar-nos imediatamente se suspeitar
+          ou tomar conhecimento de qualquer utilização não autorizada da sua Conta ou de qualquer outra violação da
+          sua segurança.
         </p>
 
         <p>
-          <strong>Privacy.</strong>
+          <strong>Privacidade.</strong>
 
-          All information you provide to create an Account (including all information you provide to obtain ‘Verified’
-          status) will be used in accordance with our <span><a
+          Todas as informações que fornecer para criar uma Conta (incluindo todas as informações que fornecer para
+          obter o estatuto de "Verificado") serão utilizadas em conformidade com a nossa <span><a
             href="/privacy/"
             target="_blank"
             rel="noreferrer"
-          >Privacy Policy</a></span>.
+          >Política de Privacidade</a></span>.
         </p>
       </li>
 
       <li id="paid-services">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          PAID SERVICES.
+          SERVIÇOS PAGOS.
         </p>
 
         <p>
-          Ambo Market may, from time to time, offer paid services on the Platform ("<strong>Paid Service</strong>").
+          A Ambo Market pode, de tempos em tempos, oferecer serviços pagos na Plataforma ("<strong>Serviço Pago</strong>").
         </p>
 
         <p>
-          You acknowledge and agree that, in respect of each Paid Service:
+          Reconhece e concorda que, relativamente a cada Serviço Pago:
         </p>
 
         <ul class="list-disc space-y-2 pl-5">
           <li>
-            any fee paid by you for a Paid Service is non-refundable in all circumstances;
+            qualquer taxa paga por si por um Serviço Pago não é reembolsável em nenhuma circunstância;
           </li>
         </ul>
       </li>
 
       <li id="listings">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          LISTINGS.
+          ANÚNCIOS.
         </p>
 
         <p>
-          The Platform enables a user wishing to sell an item or service (the "<strong>Seller</strong>
-          ") to advertise such item or
-          service (each a "<strong>Listing</strong>
-          ") to other users of the Platform. A user who is interested in such item or service
-          (the "<strong>Buyer</strong>") may then contact the Seller (via the Listing) to make an offer for such item or
-          service.
+          A Plataforma permite que um utilizador que pretenda vender um artigo ou serviço (o "<strong>Vendedor</strong>
+          ") anuncie esse artigo ou
+          serviço (cada um um "<strong>Anúncio</strong>
+          ") a outros utilizadores da Plataforma. Um utilizador interessado nesse artigo ou serviço
+          (o "<strong>Comprador</strong>") pode então contactar o Vendedor (através do Anúncio) para fazer uma
+          proposta para esse artigo ou serviço.
         </p>
 
         <p>
-          If you are a Seller, you must:
+          Se for um Vendedor, deve:
         </p>
 
         <ul class="list-disc space-y-2 pl-5">
           <li>
-            be legally permitted to sell the item or service on the Platform;
+            estar legalmente autorizado a vender o artigo ou serviço na Plataforma;
           </li>
 
           <li>
-            be the legal owner of the item, or be legally permitted to sell the item or provide the service, advertised
-            on your Listing;
+            ser o proprietário legal do artigo, ou estar legalmente autorizado a vender o artigo ou prestar o
+            serviço anunciado no seu Anúncio;
           </li>
 
           <li>
-            include a complete and accurate description of the item or service on your Listing;
+            incluir uma descrição completa e exacta do artigo ou serviço no seu Anúncio;
           </li>
 
           <li>
-            only include one (1) item or service on any Listing, and you may not sell multiple items or services through
-            a single Listing;
+            incluir apenas um (1) artigo ou serviço em cada Anúncio, não podendo vender múltiplos artigos ou
+            serviços através de um único Anúncio;
           </li>
 
           <li>
-            not post Listings in inappropriate categories or areas on the Platform;
+            não publicar Anúncios em categorias ou áreas inadequadas na Plataforma;
           </li>
 
           <li>
-            not post Listings for any counterfeit items, or items that otherwise infringe the copyright, trademark or
-            other rights of third-parties;
+            não publicar Anúncios de artigos contrafeitos ou de artigos que violem os direitos de autor, marcas
+            comerciais ou outros direitos de terceiros;
           </li>
 
           <li>
-            not use the platform as a third-party agent, service or intermediary that offers to post Listings on the
-            Platform on behalf of others;
+            não utilizar a plataforma como agente, serviço ou intermediário de terceiros que se ofereça para
+            publicar Anúncios na Plataforma em nome de outros;
           </li>
 
           <li>
-            comply with all applicable laws and regulations in connection with your Listing; and
+            cumprir todas as leis e regulamentos aplicáveis em relação ao seu Anúncio; e
           </li>
 
           <li>
-            act lawfully and in good faith in your dealings with Buyers.
+            agir de forma lícita e de boa fé nas suas relações com os Compradores.
           </li>
         </ul>
 
         <p>
-          If you are a Buyer, you must:
+          Se for um Comprador, deve:
         </p>
 
         <ul class="list-disc space-y-2 pl-5">
           <li>
-            be legally permitted to purchase the item or service through the Platform; and
+            estar legalmente autorizado a adquirir o artigo ou serviço através da Plataforma; e
           </li>
 
           <li>
-            act lawfully and in good faith in your dealings with any Seller.
+            agir de forma lícita e de boa fé nas suas relações com qualquer Vendedor.
           </li>
         </ul>
       </li>
 
       <li id="responsible-for-listings">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          AMBO MARKET IS NOT RESPONSIBLE FOR LISTINGS.
+          A AMBO MARKET NÃO É RESPONSÁVEL PELOS ANÚNCIOS.
         </p>
 
         <p>
-          You acknowledge and agree that Ambo Market does not have an obligation to monitor, approve or moderate
-          Listings or their content. We are not responsible for the Listings posted on the Platform.
+          Reconhece e concorda que a Ambo Market não tem a obrigação de monitorizar, aprovar ou moderar os Anúncios
+          ou o seu conteúdo. Não somos responsáveis pelos Anúncios publicados na Plataforma.
         </p>
 
         <p>
-          Although Ambo Market is not responsible for Listings, we reserve the right to monitor Listings and to remove
-          any Listing from the Platform if, in our sole opinion, a Listing is in breach of these Terms of Use.
+          Embora a Ambo Market não seja responsável pelos Anúncios, reservamo-nos o direito de monitorizar os
+          Anúncios e de remover qualquer Anúncio da Plataforma se, na nossa exclusiva opinião, um Anúncio violar
+          estes Termos de Uso.
         </p>
       </li>
 
       <li id="reviews-and-ratings">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          REVIEWS AND RATINGS.
+          AVALIAÇÕES E CLASSIFICAÇÕES.
         </p>
 
         <p>
-          Ambo Market allows users to rate and review their interactions with other users of the Platform. The purpose
-          of Reviews is to
-          build trust and transparency on the Platform and promote a respectful community.
+          A Ambo Market permite que os utilizadores avaliem e classifiquem as suas interacções com outros
+          utilizadores da Plataforma. O objectivo das Avaliações é construir confiança e transparência na Plataforma
+          e promover uma comunidade respeitosa.
         </p>
 
         <p>
-          Any Review posted on the Platform must comply fully with these Terms of Use. In addition, Reviews must:
+          Qualquer Avaliação publicada na Plataforma deve cumprir integralmente estes Termos de Uso. Adicionalmente,
+          as Avaliações devem:
         </p>
 
         <ul class="list-disc space-y-2 pl-5">
           <li>
-            be factual, accurate and represent the genuine opinion of the reviewer;
+            ser factuais, exactas e representar a opinião genuína do avaliador;
           </li>
 
           <li>
-            be based on the reviewer's actual experience and not on personal bias or irrelevant factors;
+            basear-se na experiência real do avaliador e não em preconceitos pessoais ou factores irrelevantes;
           </li>
 
           <li>
-            not be defamatory, malicious, obscene or inflammatory.
+            não ser difamatórias, maliciosas, obscenas ou inflamatórias.
           </li>
         </ul>
 
         <p>
-          By submitting a Review on the Platform, you acknowledge and agree that any views and opinions expressed in the
-          Review are solely your own.
+          Ao submeter uma Avaliação na Plataforma, reconhece e concorda que quaisquer opiniões e pontos de vista
+          expressos na Avaliação são da sua exclusiva responsabilidade.
         </p>
 
         <p>
-          Reviews are not endorsed by and do not reflect the views or opinions of Ambo Market, and Ambo Market does not
-          accept any liability in relation to any Review posted on the Platform. All liability and responsibility for a
-          Review remains with the relevant reviewer.
+          As Avaliações não são endossadas pela Ambo Market e não reflectem as opiniões ou pontos de vista da Ambo
+          Market, que não aceita qualquer responsabilidade em relação a qualquer Avaliação publicada na Plataforma.
+          Toda a responsabilidade por uma Avaliação recai sobre o respectivo avaliador.
         </p>
 
         <p>
-          Although Ambo Market is not responsible for any Review posted on the Platform, we reserve the right to monitor
-          Reviews and to remove any Review from the Platform if, in our opinion, a Review is in breach of these Terms of
-          Use.
+          Embora a Ambo Market não seja responsável por qualquer Avaliação publicada na Plataforma, reservamo-nos o
+          direito de monitorizar as Avaliações e de remover qualquer Avaliação da Plataforma se, na nossa opinião,
+          uma Avaliação violar estes Termos de Uso.
         </p>
       </li>
 
       <li id="uploading-content-to-platform">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          UPLOADING CONTENT TO THE PLATFORM.
+          CARREGAMENTO DE CONTEÚDO PARA A PLATAFORMA.
         </p>
 
         <p>
-          Any content you upload to the Platform, including as part of a Listing, will be considered non-confidential
-          and non-proprietary.
+          Qualquer conteúdo que carregue para a Plataforma, incluindo no âmbito de um Anúncio, será considerado
+          não confidencial e não proprietário.
         </p>
 
         <p>
-          You retain all of your ownership rights in your content, but you are required to grant us and other users of
-          the Platform a limited licence to use, store and copy that content and to distribute and make it available to
-          third-parties. More specifically, you grant us a perpetual, worldwide, non-exclusive, royalty-free,
-          transferable licence to use, reproduce, distribute, prepare derivative works of, display and perform that
-          content in connection with the service provided on the Platform and to promote the Platform.
+          Mantém todos os seus direitos de propriedade sobre o seu conteúdo, mas é obrigado a conceder-nos e a
+          outros utilizadores da Plataforma uma licença limitada para utilizar, armazenar e copiar esse conteúdo e
+          para o distribuir e disponibilizar a terceiros. Mais especificamente, concede-nos uma licença perpétua,
+          mundial, não exclusiva, isenta de royalties e transmissível para utilizar, reproduzir, distribuir,
+          preparar obras derivadas, exibir e executar esse conteúdo em relação ao serviço prestado na Plataforma e
+          para promover a Plataforma.
         </p>
 
         <p>
-          You are solely responsible for securing and backing up your content.
+          É o único responsável por proteger e fazer cópias de segurança do seu conteúdo.
         </p>
 
         <p>
-          We have the right to disclose your identity to any third-party who claims that any content posted or uploaded
-          by you to the Platform constitutes a violation of their intellectual property rights or of their right to
-          privacy.
+          Temos o direito de divulgar a sua identidade a qualquer terceiro que alegue que qualquer conteúdo
+          publicado ou carregado por si para a Plataforma constitui uma violação dos seus direitos de propriedade
+          intelectual ou do seu direito à privacidade.
         </p>
 
         <p>
-          We reserve the right to remove any content posted or uploaded by you to the Platform with or without notice
-          if, in our sole opinion, it does not comply with these Terms of Use.
+          Reservamo-nos o direito de remover qualquer conteúdo publicado ou carregado por si para a Plataforma, com
+          ou sem aviso prévio, se, na nossa exclusiva opinião, não cumprir estes Termos de Uso.
         </p>
       </li>
 
@@ -514,234 +523,236 @@ useHead({
         id="acceptable-use-policy"
       >
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          ACCEPTABLE USE POLICY
+          POLÍTICA DE USO ACEITÁVEL
         </p>
 
         <p>
-          Whenever you make use of a feature that allows you to upload content to the Platform, or to make contact with
-          other users of the Platform, you must comply with the standards set out in our <span><a
+          Sempre que utilizar uma funcionalidade que lhe permita carregar conteúdo para a Plataforma ou contactar
+          outros utilizadores da Plataforma, deve cumprir as normas estabelecidas na nossa <span><a
             href="/acceptable-use-of-policy/"
             target="_blank"
             rel="noreferrer"
-          >Acceptable Use Policy</a></span>.
+          >Política de Uso Aceitável</a></span>.
         </p>
 
         <p>
-          You warrant that any such content does comply with those standards, and you are liable to us and indemnify us
-          for any breach of that warranty. This means that you will be responsible for any loss or damage we suffer as a
-          result of your breach of warranty.
+          Garante que qualquer conteúdo desse tipo cumpre essas normas, e é responsável perante nós e indemniza-nos
+          por qualquer violação dessa garantia. Isto significa que será responsável por qualquer perda ou dano que
+          soframos em resultado da sua violação da garantia.
         </p>
       </li>
 
       <li id="processing-payments">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          PROCESSING PAYMENTS.
+          PROCESSAMENTO DE PAGAMENTOS.
         </p>
 
         <p>
-          We may, in certain circumstances, collect payments from you via the Platform (including when you choose to
-          purchase Paid Services).
+          Podemos, em determinadas circunstâncias, cobrar pagamentos através da Plataforma (incluindo quando optar
+          por adquirir Serviços Pagos).
         </p>
 
         <p>
-          If that is the case, by providing us details of your payment method at checkout, you authorise us (acting
-          through our chosen payment processor) to charge the relevant payment method for the amount displayed to you at
-          checkout.
+          Nesse caso, ao fornecer-nos os detalhes do seu método de pagamento no checkout, autoriza-nos (agindo
+          através do nosso processador de pagamentos escolhido) a debitar o método de pagamento relevante pelo
+          montante apresentado no checkout.
         </p>
 
         <p>
-          We will not be responsible for any losses you may suffer if the payment method you use to make a payment on
-          the Platform does not have sufficient funds to cover the full value of such payment.
+          Não seremos responsáveis por quaisquer perdas que possa sofrer se o método de pagamento que utiliza para
+          efectuar um pagamento na Plataforma não tiver fundos suficientes para cobrir o valor total desse
+          pagamento.
         </p>
       </li>
 
       <li id="our-liability-to-you">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          OUR LIABILITY TO YOU.
+          A NOSSA RESPONSABILIDADE PERANTE SI.
         </p>
 
         <p>
-          We do not intend to exclude or limit in any way our liability to you where it would be unlawful to do so.
+          Não pretendemos excluir ou limitar de qualquer forma a nossa responsabilidade perante si quando tal seria
+          ilegal.
         </p>
 
         <p>
-          Subject to the above, our liability to you is limited as follows:
+          Sujeito ao acima exposto, a nossa responsabilidade perante si é limitada da seguinte forma:
         </p>
 
         <ul class="list-disc space-y-2 pl-5">
           <li>
-            <strong>If you are using the Platform in a business or commercial capacity:</strong> We provide the Platform
-            and
-            the Content to you ‘as is’ and ‘as available’. We exclude all implied conditions, warranties,
-            representations or other terms that may apply to the Platform or any Content. We will not be liable to you
-            for any loss or damage, whether in contract, tort (including negligence), breach of statutory duty or
-            otherwise, even if foreseeable, arising under or in connection with your use of, or inability to use, the
-            Platform, or your use of or reliance on any Content. In particular, we will not be liable to you for any:
-            (i) loss of profits, sales, business or revenue; (ii) business interruption; (iii) loss of anticipated
-            savings; (iv) loss of business opportunity, goodwill or reputation; (v) loss or corruption of data; or (vi)
-            indirect or consequential loss or damage.
+            <strong>Se estiver a utilizar a Plataforma em capacidade empresarial ou comercial:</strong>
+            Disponibilizamos a Plataforma e o Conteúdo "tal como estão" e "conforme disponíveis". Excluímos todas
+            as condições, garantias, representações ou outros termos implícitos que possam aplicar-se à Plataforma
+            ou a qualquer Conteúdo. Não seremos responsáveis perante si por qualquer perda ou dano, seja em
+            contrato, acto ilícito (incluindo negligência), violação de dever legal ou de outra forma, mesmo que
+            previsível, decorrente de ou em conexão com a sua utilização, ou incapacidade de utilizar, a Plataforma,
+            ou a sua utilização ou dependência de qualquer Conteúdo. Em particular, não seremos responsáveis
+            perante si por qualquer: (i) perda de lucros, vendas, negócio ou receitas; (ii) interrupção de negócio;
+            (iii) perda de poupanças previstas; (iv) perda de oportunidade de negócio, clientela ou reputação;
+            (v) perda ou corrupção de dados; ou (vi) perda ou dano indirecto ou consequencial.
           </li>
 
           <li>
-            <strong>If you are using the Platform in a personal capacity:</strong> You acknowledge and agree that we
-            only
-            provide the Platform to you for domestic and private use. We do not guarantee the availability of the
-            Platform, or that the Platform or any Content will be error-free or fit for any specific purpose. You agree
-            not to use the Platform for any commercial or business purposes, and we have no liability to you for any
-            loss of profit, loss of business, business interruption or loss of business opportunity. If we fail to
-            comply with these Terms of Use, we are only responsible for loss or damage you suffer that is a foreseeable
-            result of our breaching these Terms of Use or failing to act with reasonable care and skill.
+            <strong>Se estiver a utilizar a Plataforma em capacidade pessoal:</strong> Reconhece e concorda que
+            disponibilizamos a Plataforma apenas para uso doméstico e privado. Não garantimos a disponibilidade da
+            Plataforma, nem que a Plataforma ou qualquer Conteúdo esteja isento de erros ou seja adequado para
+            qualquer finalidade específica. Concorda em não utilizar a Plataforma para qualquer finalidade comercial
+            ou empresarial, e não temos qualquer responsabilidade perante si por qualquer perda de lucros, perda de
+            negócio, interrupção de negócio ou perda de oportunidade de negócio. Se não cumprirmos estes Termos de
+            Uso, somos apenas responsáveis pela perda ou dano que sofra que seja um resultado previsível da nossa
+            violação destes Termos de Uso ou da nossa incapacidade de agir com razoável cuidado e competência.
           </li>
         </ul>
 
         <p>
-          In no event will Ambo Market’s liability to you in connection with your use of the Platform or these Terms of
-          Use, regardless of the cause of action or loss suffered by you, exceed the higher of: (i) the amount paid by
-          you for the Paid Service which is the subject of the relevant dispute or claim (if any); or (ii) one thousand
-          Angolan kwanza (1,000 AOA).
+          Em nenhuma circunstância a responsabilidade da Ambo Market perante si em relação à sua utilização da
+          Plataforma ou a estes Termos de Uso, independentemente da causa da acção ou da perda sofrida por si,
+          excederá o maior de: (i) o montante pago por si pelo Serviço Pago que é objecto da disputa ou reclamação
+          relevante (se aplicável); ou (ii) mil kwanzas angolanos (1.000 AOA).
         </p>
       </li>
 
       <li id="breach-of-these-terms-of-use">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          BREACH OF THESE TERMS OF USE.
+          VIOLAÇÃO DESTES TERMOS DE USO.
         </p>
 
         <p>
-          When we consider, in our sole opinion, that you are in breach of any part of these Terms of Use, we may take
-          such action as we deem appropriate in our sole discretion, including without limitation suspending or
-          withdrawing your right to use the Platform or its Content, closing your Account and/or taking legal action
-          against you.
+          Quando considerarmos, na nossa exclusiva opinião, que violou qualquer parte destes Termos de Uso, podemos
+          tomar as medidas que considerarmos adequadas a nosso exclusivo critério, incluindo, sem limitação,
+          suspender ou retirar o seu direito de utilizar a Plataforma ou o seu Conteúdo, encerrar a sua Conta e/ou
+          intentar acção legal contra si.
         </p>
       </li>
 
       <li id="reporting-illegal-content">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          REPORTING ILLEGAL OR INFRINGING CONTENT.
+          DENÚNCIA DE CONTEÚDO ILEGAL OU INFRACTOR.
         </p>
 
         <p>
-          If you come across any Content on the Platform that you believe to be illegal, please contact us immediately
-          at <a href="mailto:support@ambo.market">support@ambo.market</a> with full details of the illegal Content.
+          Se encontrar qualquer Conteúdo na Plataforma que considere ser ilegal, por favor contacte-nos
+          imediatamente em <a href="mailto:support@ambo.market">support@ambo.market</a> com todos os detalhes do
+          Conteúdo ilegal.
         </p>
 
         <p>
-          If you are the owner of intellectual property rights, or an agent who is fully authorised to act on behalf of
-          the owner of intellectual property rights, and believe that any Content infringes upon your intellectual
-          property right or the intellectual property rights of the owner on whose behalf you are authorised to act,
-          please notify Ambo Market at <a href="mailto:support@ambo.market">support@ambo.market</a> with full details of
-          the alleged infringement.
-          We will use all reasonable efforts to remove any infringing Content from the Platform within a reasonable
-          period of time.
+          Se for titular de direitos de propriedade intelectual, ou um agente totalmente autorizado a agir em nome
+          do titular de direitos de propriedade intelectual, e considerar que qualquer Conteúdo viola o seu direito
+          de propriedade intelectual ou os direitos de propriedade intelectual do titular em nome do qual está
+          autorizado a agir, por favor notifique a Ambo Market em <a href="mailto:support@ambo.market">support@ambo.market</a>
+          com todos os detalhes da alegada infracção. Empregaremos todos os esforços razoáveis para remover qualquer
+          Conteúdo infractor da Plataforma num prazo razoável.
         </p>
       </li>
 
       <li id="general">
         <p class="font-semibold uppercase tracking-wide text-highlighted">
-          GENERAL.
+          DISPOSIÇÕES GERAIS.
         </p>
 
         <p>
-          <strong>Links to third-party sites or content.</strong> Where the Platform contains links to other websites
-          and/or
-          third-party content (including in Listings), these links are provided for your information and convenience
-          only. Such links should not be interpreted as approval by us of those linked websites or any content you may
-          obtain from them. We have no control over the contents of such third-party websites, and exclude all liability
-          in that respect.
+          <strong>Links para sites ou conteúdo de terceiros.</strong> Quando a Plataforma contiver links para outros
+          websites e/ou conteúdo de terceiros (incluindo em Anúncios), esses links são fornecidos apenas para sua
+          informação e conveniência. Tais links não devem ser interpretados como aprovação da nossa parte dos
+          websites linkados ou de qualquer conteúdo que possa obter dos mesmos. Não temos controlo sobre o conteúdo
+          de tais websites de terceiros e excluímos toda a responsabilidade a esse respeito.
         </p>
 
         <p>
-          <strong>Rules about linking to the Platform.</strong> You may link to any page of the Platform or any specific
-          Content, provided that you do so in a way that is fair and legal and does not damage our reputation or take
-          advantage of it. The Platform must not be framed on any other website. You must not establish a link in such a
-          way as to suggest any form of association, approval or endorsement on our part where none exists. We reserve
-          the right to withdraw linking permission without notice.
+          <strong>Regras sobre links para a Plataforma.</strong> Pode criar links para qualquer página da Plataforma
+          ou para qualquer Conteúdo específico, desde que o faça de forma justa e legal e que não prejudique a nossa
+          reputação nem tire partido dela. A Plataforma não deve ser enquadrada em nenhum outro website. Não deve
+          estabelecer um link de forma a sugerir qualquer forma de associação, aprovação ou endosso da nossa parte
+          quando tal não existe. Reservamo-nos o direito de retirar a permissão de link sem aviso prévio.
         </p>
 
         <p>
-          <strong>Contact.</strong>
+          <strong>Contacto.</strong>
 
-          You may contact us by emailing <a href="mailto:support@ambo.market">support@ambo.market</a>. If we need to
-          contact you, we will write to
-          the email address associated with your Account (if any).
+          Pode contactar-nos enviando um e-mail para <a href="mailto:support@ambo.market">support@ambo.market</a>.
+          Se precisarmos de contactá-lo, escreveremos para o endereço de e-mail associado à sua Conta (se
+          aplicável).
         </p>
 
         <p>
-          <strong>We are not responsible for viruses.</strong> We do not guarantee that the Platform and the Content
-          will be
-          secure or free from bugs or viruses. You are responsible for configuring your device to access the Platform
-          and the Content in a secure way. Where relevant, you should use your own virus protection software.
+          <strong>Não somos responsáveis por vírus.</strong> Não garantimos que a Plataforma e o Conteúdo estarão
+          seguros ou isentos de bugs ou vírus. É responsável por configurar o seu dispositivo para aceder à
+          Plataforma e ao Conteúdo de forma segura. Quando relevante, deve utilizar o seu próprio software de
+          protecção contra vírus.
         </p>
 
         <p>
-          <strong>We are not liable for events outside our control.</strong> We will not be liable or responsible for
-          any
-          failure to perform, or delay in performance of, any of our obligations that is caused by events outside our
-          reasonable control (each a "Force Majeure Event"). A Force Majeure Event includes any act, event,
-          non-happening, omission or accident beyond our reasonable control. The performance of our obligations under
-          these Terms of Use is deemed to be suspended for the period that the Force Majeure Event continues, and we
-          will have an extension of time for performance for the duration of that period. We will use reasonable efforts
-          to bring the Force Majeure Event to a close or to find a solution by which our obligations under these Terms
-          of Use may be performed despite the Force Majeure Event.
+          <strong>Não somos responsáveis por eventos fora do nosso controlo.</strong> Não seremos responsáveis por
+          qualquer falha no cumprimento, ou atraso no cumprimento, de qualquer uma das nossas obrigações causada por
+          eventos fora do nosso controlo razoável (cada um um "Evento de Força Maior"). Um Evento de Força Maior
+          inclui qualquer acto, evento, omissão ou acidente para além do nosso controlo razoável. O cumprimento das
+          nossas obrigações ao abrigo destes Termos de Uso é considerado suspenso durante o período em que o Evento
+          de Força Maior durar, e teremos uma extensão de tempo para o cumprimento durante esse período.
+          Empregaremos esforços razoáveis para pôr fim ao Evento de Força Maior ou para encontrar uma solução
+          através da qual as nossas obrigações ao abrigo destes Termos de Uso possam ser cumpridas apesar do Evento
+          de Força Maior.
         </p>
 
         <p>
-          <strong>Other agreements between you and Ambo Market.</strong> You may have entered into other agreements with
-          Ambo Market or its affiliates, or may have accepted other terms and conditions governing the use of other
-          services provided by Ambo Market or its affiliates. These Terms of Use apply in addition to any such
-          agreements. In the event of any conflict or ambiguity between these Terms and any other agreement between you
-          and Ambo Market or its affiliate, the provisions of these Terms will prevail (but only to the extent of such
-          conflict or ambiguity).
+          <strong>Outros acordos entre si e a Ambo Market.</strong> Pode ter celebrado outros acordos com a Ambo
+          Market ou as suas afiliadas, ou ter aceite outros termos e condições que regem a utilização de outros
+          serviços prestados pela Ambo Market ou pelas suas afiliadas. Estes Termos de Uso aplicam-se em adição a
+          quaisquer tais acordos. Em caso de conflito ou ambiguidade entre estes Termos e qualquer outro acordo
+          entre si e a Ambo Market ou a sua afiliada, as disposições destes Termos prevalecerão (mas apenas na
+          medida desse conflito ou ambiguidade).
         </p>
 
         <p>
-          <strong>We may transfer our rights and obligations.</strong> We may transfer our rights and obligations under
-          these Terms of Use to another organisation. We will notify you in writing if this happens, and we will ensure
-          that the transfer will not affect your rights under these Terms of Use.
+          <strong>Podemos transferir os nossos direitos e obrigações.</strong> Podemos transferir os nossos direitos
+          e obrigações ao abrigo destes Termos de Uso para outra organização. Notificá-lo-emos por escrito se isso
+          acontecer, e asseguraremos que a transferência não afectará os seus direitos ao abrigo destes Termos de
+          Uso.
         </p>
 
         <p>
-          <strong>Nobody else has any rights under these Terms of Use.</strong> These Terms of Use are between you and
-          Ambo
-          Market only, and no other person will have any rights to enforce or rely on any of its provisions.
+          <strong>Nenhuma outra pessoa tem direitos ao abrigo destes Termos de Uso.</strong> Estes Termos de Uso
+          são entre si e a Ambo Market apenas, e nenhuma outra pessoa terá quaisquer direitos para fazer cumprir ou
+          invocar qualquer das suas disposições.
         </p>
 
         <p>
-          <strong>Even if we delay enforcing our rights under these Terms of Use, we can still enforce them
-            later.</strong>
-          If we do not insist immediately that you do anything you are required to do under these Terms of Use, or if we
-          delay taking steps against you in respect of your breaching these Terms of Use, that will not mean that you do
-          not have to do those things and it will not prevent us taking steps against you at a later date.
+          <strong>Mesmo que demoremos a exercer os nossos direitos ao abrigo destes Termos de Uso, podemos
+            ainda exercê-los mais tarde.</strong>
+          Se não insistirmos imediatamente que faça qualquer coisa que seja obrigado a fazer ao abrigo destes Termos
+          de Uso, ou se demorarmos a tomar medidas contra si em relação à sua violação destes Termos de Uso, tal não
+          significará que não tem de fazer essas coisas e não nos impedirá de tomar medidas contra si numa data
+          posterior.
         </p>
 
         <p>
-          <strong>If a court finds part of these Terms of Use illegal, the rest will continue in force.</strong> Each of
-          the
-          sections of these Terms of Use operates separately. If any court or relevant authority decides that any of
-          them are unlawful, the remaining sections will remain in full force and effect.
+          <strong>Se um tribunal considerar parte destes Termos de Uso ilegal, o restante continuará em
+            vigor.</strong> Cada uma das secções destes Termos de Uso opera separadamente. Se qualquer tribunal ou
+          autoridade competente decidir que alguma delas é ilegal, as secções restantes permanecerão em pleno vigor
+          e efeito.
         </p>
 
         <p>
-          <strong>Accessing the Platform from another territory.</strong> The Platform is directed to people residing in
-          certain territories only. We cannot ensure that the Content available on or through the Platform is
-          appropriate for use or available in locations we do not explicitly make the Platform available in, and cannot
-          ensure that the Platform complies with the laws and regulations in territories we do not operate in.
+          <strong>Acesso à Plataforma a partir de outro território.</strong> A Plataforma destina-se a pessoas que
+          residam em determinados territórios apenas. Não podemos garantir que o Conteúdo disponível na ou através
+          da Plataforma seja adequado para uso ou disponível em locais onde não disponibilizamos explicitamente a
+          Plataforma, nem podemos garantir que a Plataforma cumpra as leis e regulamentos de territórios onde não
+          operamos.
         </p>
 
         <p>
-          <strong>Language.</strong> If these Terms of Use are translated into any other language and there is a
-          discrepancy
-          between the English text and the text in the other language, the English text version will prevail to the
-          fullest extent permitted by applicable law.
+          <strong>Idioma.</strong> Se estes Termos de Uso forem traduzidos para outro idioma e existir uma
+          discrepância entre o texto em inglês e o texto no outro idioma, prevalecerá a versão em texto inglês na
+          medida máxima permitida pela lei aplicável.
         </p>
 
         <p>
-          <strong>Dispute resolution.</strong>
+          <strong>Resolução de litígios.</strong>
 
-          If a dispute arises between you and Ambo Market, we strongly encourage you to first contact us directly to
-          seek a resolution by emailing <a href="mailto:support@ambo.market">support@ambo.market</a>. We will review
-          your complaint and do our best
-          to address it.
+          Se surgir um litígio entre si e a Ambo Market, encorajamo-lo fortemente a contactar-nos primeiro
+          directamente para procurar uma resolução, enviando um e-mail para <a href="mailto:support@ambo.market">support@ambo.market</a>.
+          Analisaremos a sua reclamação e faremos o nosso melhor para a resolver.
         </p>
       </li>
     </ol>

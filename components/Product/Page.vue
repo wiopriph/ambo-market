@@ -412,15 +412,15 @@ const seo = computed(() => {
 const title = computed(() => seo.value.title);
 
 const meta = computed(() => [
+  { key: 'description', name: 'description', content: seo.value.description },
+  { key: 'og:type', property: 'og:type', content: 'product' },
   { key: 'og:title', property: 'og:title', content: seo.value.title },
   { key: 'og:description', property: 'og:description', content: seo.value.description },
-  { hid: 'og:image', property: 'og:image', content: seo.value.image },
-
-  { key: 'description', name: 'description', content: seo.value.description },
-
-  { hid: 'twitter:image', property: 'twitter:image', content: seo.value.image },
+  { key: 'og:image', property: 'og:image', content: seo.value.image },
+  { key: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
   { key: 'twitter:title', property: 'twitter:title', content: seo.value.title },
   { key: 'twitter:description', property: 'twitter:description', content: seo.value.description },
+  { key: 'twitter:image', property: 'twitter:image', content: seo.value.image },
 ]);
 
 const script = computed(() => [{

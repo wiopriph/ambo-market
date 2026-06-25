@@ -28,11 +28,12 @@ const metaDescription = 'Crie um anúncio classificado grátis na Ambo Market. A
 useHead({
   title: metaTitle,
   meta: [
-    { key: 'og:title', property: 'og:title', content: metaTitle },
-    { key: 'twitter:title', property: 'twitter:title', content: metaTitle },
     { key: 'description', name: 'description', content: metaDescription },
+    { key: 'og:title', property: 'og:title', content: metaTitle },
     { key: 'og:description', property: 'og:description', content: metaDescription },
+    { key: 'twitter:title', property: 'twitter:title', content: metaTitle },
     { key: 'twitter:description', property: 'twitter:description', content: metaDescription },
+    { key: 'robots', name: 'robots', content: 'noindex, nofollow' },
   ],
 });
 

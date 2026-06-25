@@ -2,6 +2,8 @@
 import { useUser } from '~/composables/useUser';
 
 
+useHead({ meta: [{ key: 'robots', name: 'robots', content: 'noindex, nofollow' }] });
+
 definePageMeta({
   middleware: defineNuxtRouteMiddleware((to) => {
     const { isLoggedIn, uid } = useUser();

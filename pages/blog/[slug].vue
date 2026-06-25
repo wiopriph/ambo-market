@@ -20,11 +20,13 @@ const image = computed(() => {
 });
 
 const meta = computed(() => {
-  const metaTags = [
-    { key: 'og:title', property: 'og:title', content: title.value },
-    { key: 'twitter:title', property: 'twitter:title', content: title.value },
+  const metaTags: Record<string, string>[] = [
     { key: 'description', name: 'description', content: description.value },
+    { key: 'og:type', property: 'og:type', content: 'article' },
+    { key: 'og:title', property: 'og:title', content: title.value },
     { key: 'og:description', property: 'og:description', content: description.value },
+    { key: 'twitter:card', name: 'twitter:card', content: image.value ? 'summary_large_image' : 'summary' },
+    { key: 'twitter:title', property: 'twitter:title', content: title.value },
     { key: 'twitter:description', property: 'twitter:description', content: description.value },
   ];
 

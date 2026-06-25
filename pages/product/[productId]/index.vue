@@ -17,6 +17,8 @@ interface PostByIdResponse {
   user: User;
 }
 
+useHead({ meta: [{ key: 'robots', name: 'robots', content: 'noindex, nofollow' }] });
+
 definePageMeta({
   middleware: defineNuxtRouteMiddleware(async (to) => {
     try {

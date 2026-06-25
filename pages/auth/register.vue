@@ -20,11 +20,12 @@ const description = 'Crie uma conta no Ambo Market para publicar classificados g
 useHead({
   title,
   meta: [
-    { key: 'og:title', property: 'og:title', content: title },
-    { key: 'twitter:title', property: 'twitter:title', content: title },
     { key: 'description', name: 'description', content: description },
+    { key: 'og:title', property: 'og:title', content: title },
     { key: 'og:description', property: 'og:description', content: description },
+    { key: 'twitter:title', property: 'twitter:title', content: title },
     { key: 'twitter:description', property: 'twitter:description', content: description },
+    { key: 'robots', name: 'robots', content: 'noindex, nofollow' },
   ],
 });
 
