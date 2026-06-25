@@ -19,13 +19,13 @@ type SeoEntry = { h1: string; title: string; description: string };
 const SEARCH_SEO = {
   city: {
     h1: 'Anúncios para «{q}» em {city}',
-    title: '{q} em {city} com os Melhores Preços | Ambo Market',
-    description: 'Veja anúncios para {q} em {city}. Compre ou venda com fotos, avaliações e preços acessíveis 💸 em toda Angola. Publique grátis no Ambo Market.',
+    title: '{q} em {city} – Anúncios de Particulares e Empresas | Ambo Market',
+    description: 'Veja anúncios de {q} em {city}: novos e segunda mão, com fotos, preços e avaliações. Compre ou venda com segurança. Publique grátis no Ambo Market.',
   },
   everywhere: {
     h1: 'Anúncios para «{q}»',
-    title: '{q} com os Melhores Preços | Ambo Market',
-    description: 'Encontre ofertas para {q} em todo o país. Produtos novos e usados 🤩 com avaliações 💬 e vendedores confiáveis. Anuncie gratuitamente.',
+    title: '{q} à Venda em Angola – Classificados Grátis | Ambo Market',
+    description: 'Encontre {q} em toda Angola – Luanda, Benguela, Huambo e mais. Produtos novos e usados de particulares e empresas. Anuncie gratuitamente no Ambo Market.',
   },
 };
 
@@ -33,121 +33,121 @@ const CATEGORY_SEO: Record<string, { city: SeoEntry; everywhere: SeoEntry }> = {
   vehicles: {
     city: {
       h1: 'Veículos à venda em {city}',
-      title: 'Comprar e vender carros, motos e caminhões em {city} | Ambo Market',
-      description: 'Encontre veículos novos e usados, incluindo carros, motos e caminhões. Compare preços e conecte-se com vendedores verificados. Veja anúncios em {city}, entre em contato ou publique seu anúncio grátis.',
+      title: 'Carros, Motos e Caminhões em {city} – Novos e Usados | Ambo Market',
+      description: 'Compre ou venda veículos em {city}: carros, motos, caminhões, barcos e peças. Anúncios de particulares e concessionárias. Compare preços e negocie grátis.',
     },
     everywhere: {
       h1: 'Veículos à venda',
-      title: 'Comprar e vender carros, motos e caminhões em Angola | Ambo Market',
-      description: 'Encontre veículos novos e usados, incluindo carros, motos e caminhões. Compare preços e conecte-se com vendedores verificados. Veja anúncios em Angola, entre em contato ou publique seu anúncio grátis.',
+      title: 'Carros, Motos e Caminhões em Angola – Classificados de Veículos | Ambo Market',
+      description: 'Marketplace de veículos em Angola: carros novos e usados, motos, caminhões, barcos e peças. Vendedores verificados, fotos reais e preços competitivos. Anuncie grátis.',
     },
   },
   'real-estate': {
     city: {
       h1: 'Imóveis para venda ou aluguel em {city}',
-      title: 'Encontre casas, apartamentos e terrenos em {city} | Ambo Market',
-      description: 'Explore ofertas de imóveis – casas, apartamentos, terrenos e imóveis comerciais. Veja anúncios em {city} ou publique sua oferta gratuitamente.',
+      title: 'Casas, Apartamentos e Terrenos para Venda ou Aluguel em {city} | Ambo Market',
+      description: 'Encontre imóveis em {city}: casas, apartamentos, quartos, terrenos e espaços comerciais para comprar ou alugar. Anúncios de proprietários e agências. Publique grátis.',
     },
     everywhere: {
       h1: 'Imóveis para venda ou aluguel',
-      title: 'Encontre casas, apartamentos e terrenos em Angola | Ambo Market',
-      description: 'Explore ofertas de imóveis – casas, apartamentos, terrenos e imóveis comerciais. Veja anúncios em Angola ou publique sua oferta gratuitamente.',
+      title: 'Casas, Apartamentos e Terrenos em Angola – Compra e Aluguel | Ambo Market',
+      description: 'Imóveis em Angola: casas para comprar ou alugar, apartamentos, terrenos e escritórios comerciais. Veja anúncios em Luanda, Benguela, Huambo e todo o país. Publique grátis.',
     },
   },
   electronics: {
     city: {
-      h1: 'Eletrônicos em {city}',
-      title: 'Comprar e vender celulares, laptops, TVs e mais em {city} | Ambo Market',
-      description: 'Encontre os melhores eletrônicos – celulares, laptops, TVs e áudio com ótimos preços. Veja anúncios em {city} ou publique sua oferta grátis.',
+      h1: 'Electrónicos em {city}',
+      title: 'Telemóveis, Laptops, TVs e Electrónicos em {city} | Ambo Market',
+      description: 'Compre ou venda electrónicos em {city}: smartphones, laptops, TVs, consolas, eletrodomésticos e acessórios. Novos e segunda mão com garantia. Anuncie grátis.',
     },
     everywhere: {
-      h1: 'Eletrônicos',
-      title: 'Comprar e vender celulares, laptops, TVs e mais em Angola | Ambo Market',
-      description: 'Encontre os melhores eletrônicos – celulares, laptops, TVs e áudio com ótimos preços. Veja anúncios em Angola ou publique sua oferta grátis.',
+      h1: 'Electrónicos',
+      title: 'Telemóveis, Laptops, TVs e Electrónicos em Angola | Ambo Market',
+      description: 'Electrónicos em Angola: smartphones iPhone, Samsung, Xiaomi, laptops, TVs, eletrodomésticos e muito mais. Produtos novos e usados. Compare preços e anuncie grátis.',
     },
   },
   fashion: {
     city: {
       h1: 'Roupas e moda em {city}',
-      title: 'Compre e venda roupas, calçados e acessórios em {city} | Ambo Market',
-      description: 'Descubra moda masculina, feminina e infantil. Roupas, calçados, bolsas e mais. Veja anúncios em {city} ou publique sua oferta gratuita.',
+      title: 'Roupas, Calçados e Acessórios de Moda em {city} | Ambo Market',
+      description: 'Compre ou venda moda em {city}: roupas masculinas, femininas e infantis, calçados, bolsas, perfumes e acessórios. Novos e segunda mão. Anuncie grátis no Ambo Market.',
     },
     everywhere: {
       h1: 'Roupas e moda',
-      title: 'Compre e venda roupas, calçados e acessórios em Angola | Ambo Market',
-      description: 'Descubra moda masculina, feminina e infantil. Roupas, calçados, bolsas e mais. Veja anúncios em Angola ou publique sua oferta gratuita.',
+      title: 'Roupas, Calçados e Acessórios de Moda em Angola | Ambo Market',
+      description: 'Moda em Angola: vestuário masculino e feminino, calçados, bolsas, relógios e acessórios. Marcas originais e preços acessíveis. Compre ou venda com facilidade. Anuncie grátis.',
     },
   },
   jobs: {
     city: {
       h1: 'Encontre um emprego em {city}',
-      title: 'Vagas de trabalho e oportunidades em {city} | Ambo Market',
-      description: 'Pesquise vagas ou publique oportunidades. Tempo integral, meio período ou freelance. Veja anúncios em {city} ou publique sua oferta gratuitamente.',
+      title: 'Vagas de Emprego e Trabalho em {city} – Oferta e Procura | Ambo Market',
+      description: 'Vagas de emprego em {city}: tempo inteiro, meio período, freelance e estágio. Encontre trabalho ou recrute talentos. Publique ou candidate-se gratuitamente.',
     },
     everywhere: {
       h1: 'Encontre um emprego',
-      title: 'Vagas de trabalho e oportunidades em Angola | Ambo Market',
-      description: 'Pesquise vagas ou publique oportunidades. Tempo integral, meio período ou freelance. Veja anúncios em Angola ou publique sua oferta gratuitamente.',
+      title: 'Vagas de Emprego em Angola – Trabalho para Todos os Perfis | Ambo Market',
+      description: 'Emprego em Angola: vagas de tempo inteiro, meio período, remoto e freelance em Luanda, Benguela e todo o país. Encontre trabalho ou recrute. Anuncie grátis no Ambo Market.',
     },
   },
   services: {
     city: {
       h1: 'Serviços locais em {city}',
-      title: 'Contrate ou ofereça serviços: Limpeza, consertos, beleza e mais em {city} | Ambo Market',
-      description: 'Ofereça ou contrate serviços como construção, beleza, aulas, entregas e mais. Veja anúncios em {city} ou publique sua oferta grátis.',
+      title: 'Serviços em {city}: Construção, Limpeza, Beleza, Reparações | Ambo Market',
+      description: 'Contrate ou ofereça serviços em {city}: construção, electricidade, canalização, limpeza, beleza, transportes, aulas, informática e mais. Anuncie gratuitamente.',
     },
     everywhere: {
       h1: 'Serviços locais',
-      title: 'Contrate ou ofereça serviços: Limpeza, consertos, beleza e mais em Angola | Ambo Market',
-      description: 'Ofereça ou contrate serviços como construção, beleza, aulas, entregas e mais. Veja anúncios em Angola ou publique sua oferta grátis.',
+      title: 'Serviços em Angola: Construção, Limpeza, Beleza, Reparações | Ambo Market',
+      description: 'Serviços em Angola: construção e remodelação, electricidade, canalização, limpeza doméstica, beleza e estética, transportes, aulas e formação. Contrate ou anuncie grátis.',
     },
   },
   animals: {
     city: {
       h1: 'Animais e pets em {city}',
-      title: 'Compre ou venda pets, gado e suprimentos em {city} | Ambo Market',
-      description: 'Veja anúncios de pets, animais de fazenda e acessórios. Comida, gaiolas, produtos e mais. Veja anúncios em {city} ou publique o seu gratuitamente.',
+      title: 'Animais de Estimação, Gado e Acessórios em {city} | Ambo Market',
+      description: 'Compre ou venda animais em {city}: cães, gatos, aves, peixe, gado e aves de capoeira. Ração, gaiolas, coleiras e acessórios pet. Anuncie grátis no Ambo Market.',
     },
     everywhere: {
       h1: 'Animais e pets',
-      title: 'Compre ou venda pets, gado e suprimentos em Angola | Ambo Market',
-      description: 'Veja anúncios de pets, animais de fazenda e acessórios. Comida, gaiolas, produtos e mais. Veja anúncios em Angola ou publique o seu gratuitamente.',
+      title: 'Animais de Estimação, Gado e Acessórios em Angola | Ambo Market',
+      description: 'Animais em Angola: cães, gatos, aves exóticas, gado bovino e caprino, aves de capoeira. Ração, vacinas e acessórios. Particulares e criadores. Anuncie gratuitamente.',
     },
   },
   hobby: {
     city: {
       h1: 'Hobbies e lazer em {city}',
-      title: 'Compre ou venda esportes, música e colecionáveis em {city} | Ambo Market',
-      description: 'Instrumentos musicais, jogos, equipamentos esportivos e itens colecionáveis. Veja anúncios em {city} ou publique sua oferta grátis.',
+      title: 'Desporto, Música, Jogos e Colecionáveis em {city} | Ambo Market',
+      description: 'Compre ou venda artigos de lazer em {city}: instrumentos musicais, material desportivo, jogos de tabuleiro, colecionáveis e equipamento de camping. Anuncie grátis.',
     },
     everywhere: {
       h1: 'Hobbies e lazer',
-      title: 'Compre ou venda esportes, música e colecionáveis em Angola | Ambo Market',
-      description: 'Instrumentos musicais, jogos, equipamentos esportivos e itens colecionáveis. Veja anúncios em Angola ou publique sua oferta grátis.',
+      title: 'Desporto, Música, Jogos e Colecionáveis em Angola | Ambo Market',
+      description: 'Artigos de lazer em Angola: instrumentos musicais, bicicletas, material de ginásio, jogos de vídeo, livros e colecionáveis. Compre ou venda com facilidade. Anuncie grátis.',
     },
   },
   kids: {
     city: {
       h1: 'Itens infantis em {city}',
-      title: 'Compre ou venda brinquedos, roupas e móveis infantis em {city} | Ambo Market',
-      description: 'Aproveite ofertas em brinquedos, roupas infantis, carrinhos e berços. Ideal para famílias. Veja anúncios em {city} ou publique sua oferta gratuitamente.',
+      title: 'Brinquedos, Roupas e Móveis para Bebés e Crianças em {city} | Ambo Market',
+      description: 'Produtos infantis em {city}: brinquedos, roupas para bebés e crianças, carrinhos, berços, cadeiras e artigos escolares. Novos e segunda mão. Anuncie grátis.',
     },
     everywhere: {
       h1: 'Itens infantis',
-      title: 'Compre ou venda brinquedos, roupas e móveis infantis em Angola | Ambo Market',
-      description: 'Aproveite ofertas em brinquedos, roupas infantis, carrinhos e berços. Ideal para famílias. Veja anúncios em Angola ou publique sua oferta gratuitamente.',
+      title: 'Brinquedos, Roupas e Móveis Infantis em Angola | Ambo Market',
+      description: 'Artigos infantis em Angola: brinquedos educativos, roupa de bebé e criança, carrinhos, berços, bicicletas infantis e material escolar. Poupe nas compras. Anuncie grátis.',
     },
   },
   home: {
     city: {
       h1: 'Casa e jardim em {city}',
-      title: 'Compre ou venda móveis, ferramentas e decoração em {city} | Ambo Market',
-      description: 'Renove sua casa com móveis, eletrodomésticos, ferramentas e decoração. Veja anúncios em {city} ou publique sua oferta gratuita.',
+      title: 'Móveis, Eletrodomésticos e Decoração em {city} | Ambo Market',
+      description: 'Renove a sua casa em {city}: sofás, camas, mesas, frigoríficos, fogões, ar condicionado, ferramentas e decoração. Novos e usados de particulares. Anuncie grátis.',
     },
     everywhere: {
       h1: 'Casa e jardim',
-      title: 'Compre ou venda móveis, ferramentas e decoração em Angola | Ambo Market',
-      description: 'Renove sua casa com móveis, eletrodomésticos, ferramentas e decoração. Veja anúncios em Angola ou publique sua oferta gratuita.',
+      title: 'Móveis, Eletrodomésticos e Decoração para Casa em Angola | Ambo Market',
+      description: 'Artigos para casa em Angola: móveis novos e usados, eletrodomésticos, ferramentas, materiais de construção e decoração. Compre barato ou venda o que não usa. Anuncie grátis.',
     },
   },
 };

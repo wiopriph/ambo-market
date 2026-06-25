@@ -2,8 +2,8 @@
 import { CITIES } from '~/constants/cities';
 
 
-const title = 'Todas as Cidades - Site de Classificados Grátis Ambo Market';
-const description = 'Encontre classificados em Angola ou vá direto para anúncios perto de você.';
+const title = 'Classificados por Cidade em Angola – Luanda, Benguela, Huambo, Soyo | Ambo Market';
+const description = 'Encontre classificados na sua cidade: Luanda, Benguela, Huambo, Soyo, Malanje e mais. Compre, venda e negocie perto de você no Ambo Market.';
 
 useHead({
   title,

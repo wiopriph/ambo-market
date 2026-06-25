@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const metaTitle = 'Sobre a Ambo Market – Nossa Missão e História';
-const metaDescription = 'Conheça a Ambo Market — um marketplace simples, seguro e aberto para pessoas comuns em Angola e mercados emergentes.';
+const metaTitle = 'Sobre a Ambo Market – Marketplace de Classificados Nº 1 em Angola';
+const metaDescription = 'A Ambo Market é o marketplace de classificados gratuito em Angola: compre e venda carros, imóveis, electrónicos e muito mais. Simples, seguro e para todos.';
 
 const paragraphs = [
   'Acreditamos que o comércio online deve ser simples, seguro e aberto a todos.',

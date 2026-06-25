@@ -26,30 +26,30 @@ const seo = computed(() => {
     if (isPriorityCity.value) {
       return {
         h1: `Resultados para «${searchQuery}» em ${city}`,
-        title: `${searchQuery} em ${city} – Compre com os melhores preços | Ambo Market`,
-        description: `Veja anúncios para «${searchQuery}» em ${city} – ofertas com fotos e avaliações. Compre e venda com praticidade no Ambo Market.`,
+        title: `${searchQuery} em ${city} – Compre Novo e Usado com os Melhores Preços | Ambo Market`,
+        description: `Encontre «${searchQuery}» em ${city}: anúncios de particulares e empresas com fotos, preços e avaliações. Compre, venda e negocie com segurança no Ambo Market.`,
       };
     }
 
     return {
       h1: `Resultados para «${searchQuery}»`,
-      title: `${searchQuery} à venda – Melhores ofertas em Angola | Ambo Market`,
-      description: `Encontre anúncios de «${searchQuery}» em toda Angola. Compre com confiança – com fotos e avaliações de vendedores. Ambo Market é fácil e seguro.`,
+      title: `${searchQuery} à venda em Angola – Classificados Grátis | Ambo Market`,
+      description: `Veja anúncios de «${searchQuery}» em toda Angola: Luanda, Benguela, Huambo e mais. Compre novo ou usado com segurança. Publique o seu anúncio grátis no Ambo Market.`,
     };
   }
 
   if (isPriorityCity.value) {
     return {
       h1: `Compra e venda em ${city}`,
-      title: `Classificados em ${city} – Anúncios Grátis de Compra e Venda | Ambo Market`,
-      description: `Veja anúncios em ${city} – produtos diversos para comprar ou vender. Publique seu anúncio grátis e negocie localmente no Ambo Market.`,
+      title: `Classificados em ${city} – Carros, Imóveis, Emprego e Mais | Ambo Market`,
+      description: `Compre e venda em ${city}: carros, imóveis, electrónicos, roupas, emprego e serviços. Anúncios grátis de particulares e empresas. Publique o seu no Ambo Market!`,
     };
   }
 
   return {
     h1: 'Compra e venda em toda Angola',
-    title: 'Classificados em Angola – Anuncie Grátis | Ambo Market',
-    description: 'Classificados gratuitos em Angola – compre, venda e negocie com facilidade em todo o país. Encontre ofertas e publique anúncios grátis no Ambo Market.',
+    title: 'Classificados em Angola – Carros, Imóveis, Emprego | Anuncie Grátis | Ambo Market',
+    description: 'Marketplace de classificados grátis em Angola: carros novos e usados, imóveis, electrónicos, emprego, serviços e muito mais. Compre, venda e negocie online com segurança.',
   };
 });
 

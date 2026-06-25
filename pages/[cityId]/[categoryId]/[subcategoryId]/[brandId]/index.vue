@@ -19,13 +19,13 @@ type SeoEntry = { h1: string; title: string; description: string };
 const SEARCH_SEO = {
   city: {
     h1: 'Anúncios para «{q}» em {city}',
-    title: '{q} em {city} com os Melhores Preços | Ambo Market',
-    description: 'Veja anúncios para {q} em {city}. Compre ou venda com fotos, avaliações e preços acessíveis 💸 em toda Angola. Publique grátis no Ambo Market.',
+    title: '{q} em {city} – Anúncios de Particulares e Empresas | Ambo Market',
+    description: 'Veja anúncios de {q} em {city}: novos e segunda mão, com fotos, preços e avaliações. Compre ou venda com segurança. Publique grátis no Ambo Market.',
   },
   everywhere: {
     h1: 'Anúncios para «{q}»',
-    title: '{q} com os Melhores Preços | Ambo Market',
-    description: 'Encontre ofertas para {q} em todo o país. Produtos novos e usados 🤩 com avaliações 💬 e vendedores confiáveis. Anuncie gratuitamente.',
+    title: '{q} à Venda em Angola – Classificados Grátis | Ambo Market',
+    description: 'Encontre {q} em toda Angola – Luanda, Benguela, Huambo e mais. Produtos novos e usados de particulares e empresas. Anuncie gratuitamente no Ambo Market.',
   },
 };
 
@@ -46,109 +46,109 @@ const BRAND_SEO: Record<string, Record<string, { city: SeoEntry; everywhere: Seo
     honda: {
       city: {
         h1: 'Motos Honda em {city}',
-        title: 'Compre e Venda Motos Honda em {city} | Ambo Market',
-        description: 'Encontre modelos Honda como CG, CBR, Africa Twin e outros em {city}.',
+        title: 'Motos Honda Novas e Usadas em {city} – CG, CBR, Africa Twin | Ambo Market',
+        description: 'Honda em {city}: CG 150, CBR 600, CB 500, Africa Twin e scooters. Novos e usados de particulares. Compare preços e negocie. Anuncie a sua Honda grátis.',
       },
       everywhere: {
         h1: 'Motos Honda',
-        title: 'Compre e Venda Motos Honda em Angola | Ambo Market',
-        description: 'Explore anúncios de Honda em toda Angola. Modelos populares e confiáveis.',
+        title: 'Motos Honda em Angola – CG, CBR, Africa Twin, Novas e Usadas | Ambo Market',
+        description: 'Motos Honda à venda em Angola: CG, CBR, CB, XRE, Africa Twin, PCX e mais. Novos e segunda mão de particulares e revendedores. Anuncie grátis no Ambo Market.',
       },
     },
     yamaha: {
       city: {
         h1: 'Motos Yamaha em {city}',
-        title: 'Compre e Venda Motos Yamaha em {city} | Ambo Market',
-        description: 'Modelos como YBR, Fazer, MT-07 e mais disponíveis em {city}.',
+        title: 'Motos Yamaha Novas e Usadas em {city} – YBR, Fazer, MT | Ambo Market',
+        description: 'Yamaha em {city}: YBR 125, Fazer 250, MT-07, MT-09, R1 e mais. Novos e usados a bons preços. Compare ofertas e anuncie a sua Yamaha grátis.',
       },
       everywhere: {
         h1: 'Motos Yamaha',
-        title: 'Compre e Venda Motos Yamaha em Angola | Ambo Market',
-        description: 'Veja ofertas de Yamaha em Angola. Publique ou encontre boas oportunidades.',
+        title: 'Motos Yamaha em Angola – YBR, Fazer, MT-07, R1 | Ambo Market',
+        description: 'Motas Yamaha à venda em Angola: YBR, Fazer, NMAX, MT-07, MT-09, R1 e crosseiros. Novos e usados de particulares. Preços competitivos. Anuncie grátis.',
       },
     },
     suzuki: {
       city: {
         h1: 'Motos Suzuki em {city}',
-        title: 'Compre e Venda Motos Suzuki em {city} | Ambo Market',
-        description: 'Descubra motos Suzuki como GSX, DR-Z e mais em {city}. Anuncie já.',
+        title: 'Motos Suzuki Novas e Usadas em {city} – GSX, DR-Z, Intruder | Ambo Market',
+        description: 'Suzuki em {city}: GSX-R, DR-Z, Intruder, V-Strom e mais. Novos e usados de particulares. Anuncie ou compre com segurança no Ambo Market.',
       },
       everywhere: {
         h1: 'Motos Suzuki',
-        title: 'Compre e Venda Motos Suzuki em Angola | Ambo Market',
-        description: 'Anúncios de motos Suzuki em Angola. Encontre modelos novos e usados.',
+        title: 'Motos Suzuki em Angola – GSX, DR-Z, V-Strom | Ambo Market',
+        description: 'Motas Suzuki à venda em Angola: GSX-R, DR-Z 400, V-Strom, Intruder e scooters. Novos e segunda mão. Particulares e concessionárias. Anuncie grátis.',
       },
     },
     kawasaki: {
       city: {
         h1: 'Motos Kawasaki em {city}',
-        title: 'Compre e Venda Motos Kawasaki em {city} | Ambo Market',
-        description: 'Veja modelos Kawasaki como Ninja, Versys, Z e outros em {city}.',
+        title: 'Motos Kawasaki Novas e Usadas em {city} – Ninja, Z, Versys | Ambo Market',
+        description: 'Kawasaki em {city}: Ninja 400, Z900, Versys, KLX e mais. Desempenho e fiabilidade. Anuncie ou compre com segurança no Ambo Market.',
       },
       everywhere: {
         h1: 'Motos Kawasaki',
-        title: 'Compre e Venda Motos Kawasaki em Angola | Ambo Market',
-        description: 'Ofertas de Kawasaki em Angola. Potência, estilo e confiança em duas rodas.',
+        title: 'Motos Kawasaki em Angola – Ninja, Z900, Versys | Ambo Market',
+        description: 'Kawasaki à venda em Angola: Ninja 400, Ninja 650, Z900, Versys 650, KLX e Z125. Potência e estilo. Novos e usados. Anuncie grátis no Ambo Market.',
       },
     },
     vespa: {
       city: {
         h1: 'Scooters Vespa em {city}',
-        title: 'Compre e Venda Vespa em {city} | Ambo Market',
-        description: 'Clássica e elegante – encontre scooters Vespa em {city}. Anuncie gratuitamente.',
+        title: 'Scooters Vespa Novas e Usadas em {city} – GTS, Primavera, Sprint | Ambo Market',
+        description: 'Vespa em {city}: GTS 300, Primavera, Sprint e modelos clássicos. Ícone italiano de mobilidade urbana. Anuncie ou compre com segurança.',
       },
       everywhere: {
         h1: 'Scooters Vespa',
-        title: 'Compre e Venda Vespa em Angola | Ambo Market',
-        description: 'Descubra o charme da Vespa em Angola. Scooters novas e usadas à venda.',
+        title: 'Vespa em Angola – GTS, Primavera, Sprint, Novas e Usadas | Ambo Market',
+        description: 'Scooters Vespa à venda em Angola: GTS 300, Primavera 125, Sprint e edições especiais. Elegância e praticidade urbana. Anuncie grátis no Ambo Market.',
       },
     },
     ducati: {
       city: {
         h1: 'Motos Ducati em {city}',
-        title: 'Compre e Venda Motos Ducati em {city} | Ambo Market',
-        description: 'Performance italiana em duas rodas – veja Ducati Monster, Multistrada e outros.',
+        title: 'Motos Ducati Novas e Usadas em {city} – Monster, Multistrada | Ambo Market',
+        description: 'Ducati em {city}: Monster 937, Multistrada V4, Panigale, Scrambler e mais. Performance italiana. Anuncie ou compre com segurança no Ambo Market.',
       },
       everywhere: {
         h1: 'Motos Ducati',
-        title: 'Compre e Venda Motos Ducati em Angola | Ambo Market',
-        description: 'Encontre motos Ducati à venda em Angola. Estilo e velocidade incomparáveis.',
+        title: 'Motos Ducati em Angola – Monster, Multistrada, Panigale | Ambo Market',
+        description: 'Ducati à venda em Angola: Monster, Multistrada V4, Panigale V4, Scrambler e Diavel. Estilo e desempenho incomparáveis. Anuncie grátis no Ambo Market.',
       },
     },
     'bmw-motorrad': {
       city: {
         h1: 'BMW Motorrad em {city}',
-        title: 'Compre e Venda BMW Motorrad em {city} | Ambo Market',
-        description: 'Descubra motos BMW como GS, F 850, R 1250 e mais em {city}. Anuncie já.',
+        title: 'Motos BMW Novas e Usadas em {city} – GS, R 1250, F 850 | Ambo Market',
+        description: 'BMW Motorrad em {city}: R 1250 GS, F 850 GS, S 1000 RR, R 18 e mais. Tecnologia premium em duas rodas. Anuncie ou compre com segurança.',
       },
       everywhere: {
         h1: 'BMW Motorrad',
-        title: 'Compre e Venda BMW Motorrad em Angola | Ambo Market',
-        description: 'Motos premium da BMW à venda em Angola. Conforto, potência e tecnologia.',
+        title: 'Motos BMW em Angola – R 1250 GS, F 850 GS, S 1000 RR | Ambo Market',
+        description: 'BMW Motorrad à venda em Angola: R 1250 GS, F 850 GS, S 1000 RR, C 400 X. Conforto, segurança e potência. Novos e usados. Anuncie grátis.',
       },
     },
     'harley-davidson': {
       city: {
         h1: 'Harley-Davidson em {city}',
-        title: 'Compre e Venda Harley-Davidson em {city} | Ambo Market',
-        description: 'Clássicos americanos como Sportster, Softail, Road King e outros em {city}.',
+        title: 'Harley-Davidson em {city} – Sportster, Softail, Road King | Ambo Market',
+        description: 'Harley-Davidson em {city}: Sportster, Softail, Road King, Street Glide e Fat Boy. Clássicos americanos a preços competitivos. Anuncie grátis.',
       },
       everywhere: {
         h1: 'Harley-Davidson',
-        title: 'Compre e Venda Harley-Davidson em Angola | Ambo Market',
-        description: 'Sinta a liberdade com uma Harley-Davidson. Veja ofertas em Angola.',
+        title: 'Harley-Davidson em Angola – Sportster, Softail, Road King | Ambo Market',
+        description: 'Harley-Davidson à venda em Angola: Sportster 1200, Softail, Road King, Street Glide e mais. Liberdade na estrada. Novos e usados. Anuncie grátis.',
       },
     },
     aprilia: {
       city: {
         h1: 'Motos Aprilia em {city}',
-        title: 'Compre e Venda Motos Aprilia em {city} | Ambo Market',
-        description: 'Motos Aprilia como RSV4, Tuareg e SR GT disponíveis em {city}.',
+        title: 'Motos Aprilia Novas e Usadas em {city} – RSV4, Tuareg, SR | Ambo Market',
+        description: 'Aprilia em {city}: RSV4, Tuono V4, Tuareg 660, SR GT e mais. Desempenho italiano de pista e estrada. Anuncie ou compre com segurança.',
       },
       everywhere: {
         h1: 'Motos Aprilia',
-        title: 'Compre e Venda Motos Aprilia em Angola | Ambo Market',
-        description: 'Desempenho italiano e design marcante – veja Aprilia em Angola.',
+        title: 'Motos Aprilia em Angola – RSV4, Tuareg, Tuono, SR GT | Ambo Market',
+        description: 'Aprilia à venda em Angola: RSV4, Tuono V4, Tuareg 660, SR GT 125 e mais. Design arrojado e desempenho de pista. Novos e usados. Anuncie grátis.',
       },
     },
   },
@@ -156,121 +156,121 @@ const BRAND_SEO: Record<string, Record<string, { city: SeoEntry; everywhere: Seo
     other: {
       city: {
         h1: 'Carros à Venda em {city}',
-        title: 'Compre e Venda Carros em {city} | Ambo Market',
-        description: 'Veja ofertas de diversas marcas de carros em {city}. Anuncie o seu gratuitamente.',
+        title: 'Carros Novos e Usados em {city} – Todas as Marcas | Ambo Market',
+        description: 'Carros à venda em {city}: Toyota, Hyundai, Kia, Mitsubishi, Nissan, Ford e mais. Novos e segunda mão de particulares e empresas. Anuncie o seu gratuitamente.',
       },
       everywhere: {
         h1: 'Carros à Venda',
-        title: 'Compre e Venda Carros em Angola | Ambo Market',
-        description: 'Encontre carros de várias marcas à venda em Angola. Publique ou explore anúncios com facilidade.',
+        title: 'Carros Novos e Usados em Angola – Toyota, Hyundai, Kia, Nissan | Ambo Market',
+        description: 'Carros à venda em Angola: todas as marcas, novos e segunda mão. Toyota, Hyundai, Kia, Mitsubishi, Ford, Nissan e mais. Anuncie grátis no Ambo Market.',
       },
     },
     toyota: {
       city: {
         h1: 'Toyota à Venda em {city}',
-        title: 'Compre e Venda Toyota em {city} | Ambo Market',
-        description: 'Modelos como Hilux, Corolla e Land Cruiser em {city}. Apenas vendedores confiáveis.',
+        title: 'Toyota Hilux, Corolla, Land Cruiser em {city} – Novos e Usados | Ambo Market',
+        description: 'Toyota à venda em {city}: Hilux, Corolla, Land Cruiser, RAV4, Prado e Fortuner. Novos e usados, de particulares e concessionárias. Anuncie grátis.',
       },
       everywhere: {
         h1: 'Toyota à Venda',
-        title: 'Compre e Venda Toyota em Angola | Ambo Market',
-        description: 'Ofertas de Toyota em toda Angola – desde modelos económicos até premium.',
+        title: 'Toyota em Angola – Hilux, Land Cruiser, Corolla, RAV4 | Ambo Market',
+        description: 'Toyota à venda em Angola: Hilux pickup, Land Cruiser Prado, Corolla, RAV4, Fortuner e Camry. A marca mais fiável de Angola. Novos e usados. Anuncie grátis.',
       },
     },
     suzuki: {
       city: {
         h1: 'Suzuki à Venda em {city}',
-        title: 'Compre e Venda Suzuki em {city} | Ambo Market',
-        description: 'Veja anúncios de Suzuki Swift, Vitara, Jimny e outros em {city}.',
+        title: 'Suzuki Swift, Vitara, Jimny e Grand Vitara em {city} | Ambo Market',
+        description: 'Suzuki à venda em {city}: Swift, Vitara, Jimny, Grand Vitara e S-Presso. Económicos e 4x4 para Angola. Novos e usados. Anuncie grátis.',
       },
       everywhere: {
         h1: 'Suzuki à Venda',
-        title: 'Compre e Venda Suzuki em Angola | Ambo Market',
-        description: 'Encontre ofertas de Suzuki em Angola. Vendedores verificados e bons preços.',
+        title: 'Suzuki em Angola – Swift, Vitara, Jimny, Grand Vitara | Ambo Market',
+        description: 'Suzuki à venda em Angola: Swift, Vitara, Jimny 4x4, Grand Vitara e S-Presso. Económicos e robustos para as estradas angolanas. Anuncie grátis.',
       },
     },
     hyundai: {
       city: {
         h1: 'Hyundai à Venda em {city}',
-        title: 'Compre e Venda Hyundai em {city} | Ambo Market',
-        description: 'Veja modelos Hyundai como Tucson, Accent e Elantra em {city}.',
+        title: 'Hyundai Tucson, Accent, Elantra, i10 em {city} – Novos e Usados | Ambo Market',
+        description: 'Hyundai à venda em {city}: Tucson, Santa Fe, Accent, Elantra, i10 e i20. Qualidade e bom custo-benefício. Novos e usados. Anuncie grátis.',
       },
       everywhere: {
         h1: 'Hyundai à Venda',
-        title: 'Compre e Venda Hyundai em Angola | Ambo Market',
-        description: 'Carros Hyundai novos e usados à venda em toda Angola.',
+        title: 'Hyundai em Angola – Tucson, Santa Fe, Accent, Elantra | Ambo Market',
+        description: 'Hyundai à venda em Angola: Tucson, Santa Fe, Accent, Elantra, i10 e mais. Qualidade coreana a preços competitivos. Novos e usados. Anuncie grátis.',
       },
     },
     kia: {
       city: {
         h1: 'Kia à Venda em {city}',
-        title: 'Compre e Venda Kia em {city} | Ambo Market',
-        description: 'Procura por Kia Sportage, Rio, Picanto e mais em {city}.',
+        title: 'Kia Sportage, Picanto, Rio, Sorento em {city} – Novos e Usados | Ambo Market',
+        description: 'Kia à venda em {city}: Sportage, Picanto, Rio, Sorento e Cerato. Design moderno e boa eficiência. Novos e usados de particulares. Anuncie grátis.',
       },
       everywhere: {
         h1: 'Kia à Venda',
-        title: 'Compre e Venda Kia em Angola | Ambo Market',
-        description: 'Kia à venda em Angola. Veja ou publique anúncios facilmente.',
+        title: 'Kia em Angola – Sportage, Picanto, Rio, Sorento | Ambo Market',
+        description: 'Kia à venda em Angola: Sportage SUV, Picanto, Rio, Sorento e Cerato. Fiabilidade e design moderno. Novos e usados. Particulares e empresas. Anuncie grátis.',
       },
     },
     mitsubishi: {
       city: {
         h1: 'Mitsubishi em {city}',
-        title: 'Compre e Venda Mitsubishi em {city} | Ambo Market',
-        description: 'Veja Pajero, L200 e outros modelos Mitsubishi em {city}. Anuncie de graça.',
+        title: 'Mitsubishi Pajero, L200, Outlander em {city} – Novos e Usados | Ambo Market',
+        description: 'Mitsubishi à venda em {city}: Pajero Sport, L200 Triton, Outlander, Eclipse Cross. 4x4 robustos para Angola. Novos e usados. Anuncie grátis.',
       },
       everywhere: {
         h1: 'Mitsubishi',
-        title: 'Compre e Venda Mitsubishi em Angola | Ambo Market',
-        description: 'Modelos Mitsubishi disponíveis em toda Angola. Anúncios verificados.',
+        title: 'Mitsubishi em Angola – Pajero, L200 Triton, Outlander | Ambo Market',
+        description: 'Mitsubishi à venda em Angola: Pajero Sport, L200 Triton, Outlander e Eclipse Cross. 4x4 resistentes para estradas angolanas. Novos e usados. Anuncie grátis.',
       },
     },
     chevrolet: {
       city: {
         h1: 'Chevrolet à Venda em {city}',
-        title: 'Compre e Venda Chevrolet em {city} | Ambo Market',
-        description: 'Veja Chevrolet Spark, Aveo, Trailblazer e mais em {city}.',
+        title: 'Chevrolet Spark, Trailblazer, S10 em {city} – Novos e Usados | Ambo Market',
+        description: 'Chevrolet à venda em {city}: Spark, Onix, Trailblazer, S10 e Captiva. Versáteis para cidade e campo. Novos e usados. Anuncie grátis.',
       },
       everywhere: {
         h1: 'Chevrolet à Venda',
-        title: 'Compre e Venda Chevrolet em Angola | Ambo Market',
-        description: 'Anúncios de Chevrolet em Angola. Bons preços e vendedores confiáveis.',
+        title: 'Chevrolet em Angola – Spark, Onix, Trailblazer, S10 | Ambo Market',
+        description: 'Chevrolet à venda em Angola: Spark, Onix, Trailblazer 4x4, S10 pickup e Captiva. Para todos os perfis. Novos e usados de particulares. Anuncie grátis.',
       },
     },
     nissan: {
       city: {
         h1: 'Nissan à Venda em {city}',
-        title: 'Compre e Venda Nissan em {city} | Ambo Market',
-        description: 'Encontre modelos como Navara, Patrol, Micra e outros em {city}.',
+        title: 'Nissan Navara, Patrol, X-Trail em {city} – Novos e Usados | Ambo Market',
+        description: 'Nissan à venda em {city}: Navara, Patrol, X-Trail, Micra e Note. Robustos e económicos. Novos e usados de particulares. Anuncie grátis.',
       },
       everywhere: {
         h1: 'Nissan à Venda',
-        title: 'Compre e Venda Nissan em Angola | Ambo Market',
-        description: 'Veja anúncios de Nissan em toda Angola. Ótimos preços e boa oferta.',
+        title: 'Nissan em Angola – Navara, Patrol, X-Trail | Ambo Market',
+        description: 'Nissan à venda em Angola: Navara pickup, Patrol 4x4, X-Trail, Micra e Note. Fiáveis para qualquer terreno. Novos e usados. Anuncie grátis no Ambo Market.',
       },
     },
     renault: {
       city: {
         h1: 'Renault em {city}',
-        title: 'Compre e Venda Renault em {city} | Ambo Market',
-        description: 'Clio, Duster, Kwid e mais disponíveis em {city}.',
+        title: 'Renault Duster, Clio, Kwid, Logan em {city} – Novos e Usados | Ambo Market',
+        description: 'Renault à venda em {city}: Duster, Clio, Kwid, Logan e Sandero. Económicos e práticos. Novos e usados de particulares. Anuncie grátis.',
       },
       everywhere: {
         h1: 'Renault',
-        title: 'Compre e Venda Renault em Angola | Ambo Market',
-        description: 'Anúncios atualizados de Renault em toda Angola. Novos e usados.',
+        title: 'Renault em Angola – Duster, Clio, Kwid, Logan | Ambo Market',
+        description: 'Renault à venda em Angola: Duster SUV, Clio, Kwid, Logan e Sandero. Custo-benefício europeu. Novos e usados de particulares e importadores. Anuncie grátis.',
       },
     },
     ford: {
       city: {
         h1: 'Ford à Venda em {city}',
-        title: 'Compre e Venda Ford em {city} | Ambo Market',
-        description: 'Modelos como Ranger, EcoSport, Focus disponíveis em {city}.',
+        title: 'Ford Ranger, EcoSport, Territory em {city} – Novos e Usados | Ambo Market',
+        description: 'Ford à venda em {city}: Ranger pickup, EcoSport, Territory, Focus e Fiesta. Para todos os perfis. Novos e usados de particulares. Anuncie grátis.',
       },
       everywhere: {
         h1: 'Ford à Venda',
-        title: 'Compre e Venda Ford em Angola | Ambo Market',
-        description: 'Ford para uso pessoal ou profissional. Veja anúncios em Angola.',
+        title: 'Ford em Angola – Ranger, EcoSport, Territory | Ambo Market',
+        description: 'Ford à venda em Angola: Ranger 4x4, EcoSport, Territory SUV, Focus e Transit. Para uso pessoal e comercial. Novos e usados. Anuncie grátis no Ambo Market.',
       },
     },
     mercedes: {

@@ -91,8 +91,8 @@ const setPage = (pageNumber: number) => {
   });
 };
 
-const metaTitle = 'Blog da Ambo Market – Dicas, Guias e Insights do Mercado Angolano';
-const metaDescription = 'Fique à frente com dicas de especialistas, guias passo a passo e as últimas tendências do mercado no blog da Ambo Market.';
+const metaTitle = 'Blog Ambo Market – Dicas para Comprar e Vender Carros, Imóveis e Mais em Angola';
+const metaDescription = 'Guias e dicas para comprar e vender em Angola: como anunciar grátis, negociar carros usados, encontrar emprego, alugar imóveis e muito mais no Ambo Market.';
 
 useHead({
   title: metaTitle,
