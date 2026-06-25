@@ -67,10 +67,10 @@ const { t } = useI18n();
       <UBadge
         v-if="hasStatus"
         :color="statusColor"
-        variant="subtle"
         class="absolute left-2.5 top-2.5 z-10"
-        v-text="t(product.status)"
-      />
+      >
+        {{ t(product.status) }}
+      </UBadge>
 
       <span
         v-if="city"
