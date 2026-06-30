@@ -93,7 +93,7 @@ const register = handleSubmit.withControlled(async () => {
 </script>
 
 <template>
-  <div class="mx-auto w-full max-w-md px-4 py-8 sm:py-16 space-y-3">
+  <div class="mx-auto w-full max-w-md space-y-3">
     <div class="rounded-2xl border border-default bg-default px-5 py-4">
       <h1 class="text-lg font-bold text-highlighted">
         Criar uma conta

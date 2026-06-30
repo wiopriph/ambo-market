@@ -17,7 +17,7 @@ useHead({
 
 <template>
   <article
-    class="mx-auto max-w-3xl space-y-5 py-6 text-sm leading-7 text-default sm:py-10 sm:text-base [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-highlighted [&_li>p:first-child]:font-semibold [&_li>p:first-child]:text-highlighted [&_ol]:space-y-6 [&_ol]:pl-5 [&_ol]:list-decimal [&_li]:space-y-2"
+    class="mx-auto max-w-3xl space-y-5 text-sm leading-7 text-default sm:text-base [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-highlighted [&_li>p:first-child]:font-semibold [&_li>p:first-child]:text-highlighted [&_ol]:space-y-6 [&_ol]:pl-5 [&_ol]:list-decimal [&_li]:space-y-2"
   >
     <h1 class="text-3xl font-bold text-highlighted sm:text-4xl">
       Termos de Uso da Plataforma

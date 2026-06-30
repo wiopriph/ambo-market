@@ -17,7 +17,7 @@ useHead({
 
 <template>
   <article
-    class="mx-auto max-w-3xl space-y-5 py-6 text-sm leading-7 text-default sm:py-10 sm:text-base [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_table]:w-full [&_table]:min-w-[500px] [&_table]:border-collapse [&_td]:border [&_td]:border-default [&_td]:p-3 [&_td]:align-top [&_th]:border [&_th]:border-default [&_th]:bg-muted/40 [&_th]:p-3 [&_th]:text-left [&_th]:align-top [&_th]:font-semibold [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-highlighted"
+    class="mx-auto max-w-3xl space-y-5 text-sm leading-7 text-default sm:text-base [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_table]:w-full [&_table]:min-w-[500px] [&_table]:border-collapse [&_td]:border [&_td]:border-default [&_td]:p-3 [&_td]:align-top [&_th]:border [&_th]:border-default [&_th]:bg-muted/40 [&_th]:p-3 [&_th]:text-left [&_th]:align-top [&_th]:font-semibold [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-highlighted"
   >
     <h1 class="text-3xl font-bold text-highlighted sm:text-4xl">
       Política de Privacidade

@@ -93,7 +93,7 @@ const breadcrumbs = computed(() => [
 <template>
   <div
     v-if="doc"
-    class="mx-auto  px-4 sm:px-5 py-6 sm:py-8 space-y-4"
+    class="space-y-4"
   >
     <UBreadcrumb
       :items="breadcrumbs"

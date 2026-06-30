@@ -521,7 +521,7 @@ const closePost = () => {
 </script>
 
 <template>
-  <div class="space-y-4 pb-24 pt-4 sm:py-6 lg:pb-6">
+  <div class="space-y-4 pb-24 lg:pb-0">
     <UBreadcrumb
       :items="breadcrumbItems"
       class="hidden sm:flex"
@@ -917,6 +917,7 @@ const closePost = () => {
               />
 
               <UButton
+                v-if="false"
                 icon="i-simple-icons-whatsapp"
                 color="neutral"
                 variant="soft"

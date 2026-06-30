@@ -216,7 +216,7 @@ watch(subcategory, () => {
 </script>
 
 <template>
-  <div class="w-full mx-auto max-w-3xl px-4 sm:px-5 py-4 sm:py-6 space-y-3">
+  <div class="mx-auto w-full max-w-3xl space-y-3">
     <div class="rounded-2xl border border-default bg-default px-5 py-4">
       <h1 class="text-lg font-bold text-highlighted">
         Publicar anúncio
@@ -336,7 +336,7 @@ watch(subcategory, () => {
               v-model="productName"
               name="productName"
               type="text"
-              placeholder="Exemplo: iPhone 13 Pro 128 GB"
+              placeholder="Exemplo: Toyota Hilux 2018"
               maxlength="50"
               size="lg"
               class="w-full"

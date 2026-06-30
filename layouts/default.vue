@@ -3,13 +3,9 @@
     <AppHeader />
 
     <UMain>
-      <UContainer class="px-2 py-2 sm:px-2 lg:px-4">
-        <UPage>
-          <UPageBody class="mx-auto px-2 py-2 sm:px-2 lg:px-4">
-            <NuxtPage />
-          </UPageBody>
-        </UPage>
-      </UContainer>
+      <div class="mx-auto w-full max-w-[1280px] px-4 py-6 sm:px-6 sm:py-8">
+        <NuxtPage />
+      </div>
     </UMain>
 
     <AppFooter />

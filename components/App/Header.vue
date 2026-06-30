@@ -90,7 +90,7 @@ const onAccountClick = () => {
 
 <template>
   <header class="sticky top-0 z-50 bg-default/80 backdrop-blur">
-    <div class="mx-auto max-w-6xl px-2 py-2 sm:px-2 lg:px-4">
+    <div class="mx-auto max-w-[1280px] px-4 sm:px-6">
       <div class="flex flex-wrap items-center gap-x-4 gap-y-2 py-2 lg:h-12 lg:items-stretch lg:py-0">
         <ULink
           :to="indexRoute"

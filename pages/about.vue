@@ -13,16 +13,17 @@ const paragraphs = [
 
 const values = [
   {
-    icon: 'i-lucide-zap',
     label: 'Simples',
     text: 'Sem complicação. Publique um anúncio em minutos e encontre o que precisa rápido.',
   },
   {
-    icon: 'i-lucide-shield-check',
     label: 'Seguro',
     text: 'Vendedores verificados, anúncios transparentes e confiança real na comunidade.',
   },
-  { icon: 'i-lucide-users', label: 'Aberto a todos', text: 'Para pessoas e empresas em Angola e além.' },
+  {
+    label: 'Aberto a todos',
+    text: 'Para pessoas e empresas em Angola e além.',
+  },
 ];
 
 useHead({
@@ -38,33 +39,21 @@ useHead({
 </script>
 
 <template>
-  <div class="mx-auto max-w-2xl px-4 sm:px-5 py-10 sm:py-16 space-y-10">
+  <div class="mx-auto max-w-2xl space-y-10">
     <div class="space-y-4">
       <h1
         class="text-3xl font-bold tracking-tight text-highlighted sm:text-4xl"
       >
         Sobre a Ambo
       </h1>
-
-      <p
-        class="text-base leading-relaxed text-muted"
-        v-text="paragraphs[0]"
-      />
     </div>
 
     <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
       <div
         v-for="value in values"
-        :key="value.icon"
+        :key="value.label"
         class="rounded-2xl border border-default bg-default p-4 space-y-2"
       >
-        <div class="flex size-8 items-center justify-center rounded-lg bg-primary/10">
-          <UIcon
-            :name="value.icon"
-            class="size-4 text-primary"
-          />
-        </div>
-
         <p
           class="text-sm font-semibold text-highlighted"
           v-text="value.label"
@@ -77,18 +66,13 @@ useHead({
       </div>
     </div>
 
-    <div class="space-y-5 border-l-2 border-default pl-5">
+    <div class="space-y-5">
       <p
-        v-for="(paragraph, index) in paragraphs.slice(1, -1)"
+        v-for="(paragraph, index) in paragraphs"
         :key="index"
         class="text-sm leading-7 text-toned sm:text-base"
         v-text="paragraph"
       />
     </div>
-
-    <p
-      class="text-sm font-medium text-primary"
-      v-text="paragraphs[paragraphs.length - 1]"
-    />
   </div>
 </template>

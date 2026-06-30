@@ -728,7 +728,7 @@ const setPage = (pageNumber: number) => {
 </script>
 
 <template>
-  <div class="mx-auto px-4 sm:px-5 py-4 sm:py-6 space-y-4">
+  <div class="space-y-4">
     <UIBreadcrumbs
       :items="breadcrumbs"
       class="hidden sm:flex"

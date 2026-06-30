@@ -112,7 +112,7 @@ const breadcrumbs = [
 </script>
 
 <template>
-  <div class="mx-auto max-w-[1280px] px-4 sm:px-5 py-6 sm:py-8 space-y-5">
+  <div class="space-y-5">
     <UBreadcrumb
       :items="breadcrumbs"
       class="hidden sm:flex"

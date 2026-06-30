@@ -28,7 +28,7 @@ const cities = computed(() => CITIES.map(city => ({
 </script>
 
 <template>
-  <div class="mx-auto max-w-[1280px] px-4 sm:px-5 py-6 sm:py-8 space-y-3">
+  <div class="space-y-3">
     <div class="rounded-2xl border border-default bg-default px-5 py-4">
       <h1 class="text-lg font-bold text-highlighted">
         Escolha uma cidade

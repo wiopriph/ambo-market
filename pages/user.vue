@@ -111,7 +111,7 @@ useHead({
 </script>
 
 <template>
-  <div class="w-full mx-auto px-4 sm:px-5 py-4 sm:py-6 space-y-5">
+  <div class="space-y-5">
     <div class="rounded-2xl border border-default bg-default p-5 space-y-5">
       <div class="flex items-start gap-4">
         <UAvatar
