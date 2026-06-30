@@ -127,5 +127,9 @@ const setPage = (pageNumber: number) => {
         @update:page="setPage"
       />
     </div>
+
+    <UITextRoll v-if="page === 1">
+      <SeoHomeText :cityId="cityId" />
+    </UITextRoll>
   </div>
 </template>

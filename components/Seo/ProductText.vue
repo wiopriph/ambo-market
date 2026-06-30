@@ -12,133 +12,111 @@ const props = defineProps<{
 <template>
   <div class="space-y-3 text-sm leading-6 text-muted">
     <h3 class="text-base font-semibold text-highlighted">
-      {{ productTitle }} – Compre &amp; Venda no Ambo Market
+      {{ productTitle }} – à venda em {{ city }} | Ambo Market
     </h3>
 
     <p>
-      Procurando {{ productTitle }} em {{ city }}? No Ambo Market, você pode encontrar e comprar {{ productTitle }} de
-      vendedores confiáveis.
+      Encontrou um óptimo anúncio: <strong class="text-highlighted">{{ productTitle }}</strong> em {{ city }}, por
+      {{ price }}, publicado por {{ seller }} na categoria {{ category }}. No Ambo Market, todos os anúncios são
+      gratuitos e publicados por vendedores reais — sem intermediários, sem comissões.
     </p>
 
     <h3 class="text-base font-semibold text-highlighted">
-      Detalhes do Anúncio
+      Por que comprar {{ category }} no Ambo Market?
     </h3>
 
-    <ul class="list-disc space-y-1 pl-5">
-      <li>
-        Categoria: {{ category }}
-      </li>
-
-      <li>
-        Preço: {{ price }}
-      </li>
-
-      <li>
-        Localização: {{ city }}
-      </li>
-
-      <li>
-        Contato: {{ seller }}
-      </li>
-    </ul>
-
-    <h3 class="text-base font-semibold text-highlighted">
-      Por que Comprar {{ category }} no Ambo Market?
-    </h3>
-
-    <ol class="list-decimal space-y-3 pl-5">
+    <ol class="list-decimal space-y-2 pl-5">
       <li>
         <p class="font-medium text-highlighted">
-          Plataforma Gratuita e Conveniente
+          Preços Directos de Particulares e Empresas
         </p>
 
         <p>
-          O Ambo Market permite que você navegue por milhares de anúncios sem nenhum custo.
-        </p>
-
-        <p v-if="productList?.length > 1">
-          Se você está procurando {{ productList.join(', ') }}, encontrará diversas alternativas em um só lugar.
+          Negocie directamente com o vendedor e obtenha o melhor preço. Sem lojas intermediárias, sem margens
+          inflacionadas — o preço que vê é o preço negociado entre comprador e vendedor.
+          <span v-if="productList?.length > 1"> Veja também: {{ productList.join(', ') }}.</span>
         </p>
       </li>
 
       <li>
         <p class="font-medium text-highlighted">
-          Vendedores Reais e Confiáveis
+          Vendedores Verificados em {{ city }}
         </p>
 
         <p>
-          Todos os anúncios são publicados por usuários reais. Você pode entrar em contato diretamente com o vendedor
-          antes de decidir.
+          Os anúncios no Ambo Market são publicados por utilizadores reais de Angola: particulares e empresas
+          estabelecidas em Luanda, Benguela, Huambo, Soyo e outras cidades. Veja o perfil do vendedor, o histórico de
+          anúncios e entre em contacto com confiança.
         </p>
       </li>
 
       <li>
         <p class="font-medium text-highlighted">
-          Negociação Fácil e Compras Locais
+          Compra Local em {{ city }}
         </p>
 
         <p>
-          Encontre {{ productTitle }} em {{ city }} perto de você! Fale com o vendedor, negocie o preço e combine um
-          ponto de encontro.
+          Encontre {{ productTitle }} perto de si em {{ city }}. Combine um ponto de encontro, veja o produto
+          pessoalmente antes de pagar e feche o negócio com segurança.
         </p>
       </li>
 
       <li>
         <p class="font-medium text-highlighted">
-          Transações Seguras
+          Maior Selecção de {{ category }} em Angola
         </p>
 
         <p>
-          Prefira se encontrar em locais públicos, verifique o item antes de pagar e confirme todos os detalhes.
+          O Ambo Market reúne milhares de anúncios de {{ category }} em todo o país. Se este anúncio não for o ideal,
+          navegue pelas outras ofertas disponíveis e encontre a opção perfeita.
         </p>
       </li>
     </ol>
 
     <h3 class="text-base font-semibold text-highlighted">
-      Como Entrar em Contato com o Vendedor?
+      Como Entrar em Contacto com o Vendedor?
     </h3>
 
     <p>
-      Interessado em {{ productTitle }}? Entre em contato pelos detalhes do anúncio ou envie uma mensagem pelo Ambo
-      Market.
+      Interessado em <strong class="text-highlighted">{{ productTitle }}</strong>? Clique no botão de contacto acima
+      para enviar uma mensagem ou ligar directamente ao vendedor {{ seller }}. Responda rapidamente — os melhores
+      anúncios são vendidos depressa!
     </p>
 
     <h3 class="text-base font-semibold text-highlighted">
-      Quer Vender Seus Próprios Itens? Publique um Anúncio Grátis!
+      Tem {{ category }} para Vender? Publique Grátis!
     </h3>
 
     <p>
-      Se você tem um item da categoria {{ category }} para vender, publique gratuitamente em minutos.
+      Junte-se a milhares de angolanos que vendem {{ category }} no Ambo Market todos os dias. Publicar um anúncio é
+      rápido, gratuito e sem comissões.
     </p>
 
     <ol class="list-decimal space-y-1 pl-5">
       <li>
-        Cadastre-se ou faça login na sua conta do Ambo Market.
+        Registe-se ou entre na sua conta do Ambo Market.
       </li>
 
       <li>
-        Clique em 'Publicar Anúncio' e escolha a categoria correta.
+        Clique em "Publicar Anúncio" e seleccione a categoria "{{ category }}".
       </li>
 
       <li>
-        Envie fotos de alta qualidade, escreva uma descrição e defina um preço justo.
+        Adicione fotos de qualidade, uma descrição clara e o preço em kwanza (AOA).
       </li>
 
       <li>
-        Informe seus dados de contato para que os interessados possam falar com você.
+        Indique os seus dados de contacto para receber propostas directamente.
       </li>
 
       <li>
-        Publique o anúncio e comece a receber propostas!
+        Publique gratuitamente e comece a vender hoje mesmo!
       </li>
     </ol>
 
     <p>
-      Junte-se a milhares de usuários que compram e vendem {{ productTitle }} todos os dias no Ambo Market.
-    </p>
-
-    <p>
-      Comece agora e encontre as melhores ofertas de {{ category }} em {{ city }}!
+      O Ambo Market é o marketplace número 1 de classificados em Angola — compre e venda {{ category }} em {{ city }}
+      de forma simples, segura e completamente gratuita.
     </p>
   </div>
 </template>

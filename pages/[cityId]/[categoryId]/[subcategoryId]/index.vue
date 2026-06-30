@@ -758,6 +758,14 @@ const setPage = (pageNumber: number) => {
           @update:page="setPage"
         />
       </div>
+
+      <UITextRoll v-if="page === 1">
+        <SeoCategoryText
+          :title="seo.h1"
+          :cityId="cityId"
+          :categoryId="(route.params.categoryId as string)"
+        />
+      </UITextRoll>
     </div>
   </div>
 </template>
