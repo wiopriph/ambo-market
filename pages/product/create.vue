@@ -83,18 +83,6 @@ const {
     description: string().required('Este campo é obrigatório'),
     images: array().min(1, 'Por favor, adicione pelo menos uma foto'),
     cityId: string().required('Este campo é obrigatório'),
-    attributes: object().test('attributes-required', 'Preencha os campos obrigatórios', function(value) {
-      const categoryId = this.parent.category;
-      const subcategoryId = this.parent.subcategory;
-      const fields = getProductAttributeFields(categoryId, subcategoryId);
-      const missing = fields.filter(field => field.required && !value?.[field.key] && value?.[field.key] !== 0);
-
-      if (missing.length) {
-        return this.createError({ message: `Preencha: ${missing.map(field => field.label).join(', ')}` });
-      }
-
-      return true;
-    }),
   }),
 });
 
@@ -512,13 +500,6 @@ watch(subcategory, () => {
         title="Não foi possível criar o anúncio"
         :description="apiErrorMessage"
       />
-
-      <div v-if="errors.attributes">
-        <p
-          class="text-sm text-error"
-          v-text="errors.attributes"
-        />
-      </div>
 
       <UButton
         type="submit"

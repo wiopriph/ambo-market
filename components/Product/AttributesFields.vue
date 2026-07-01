@@ -19,57 +19,63 @@ const setValue = (key: string, value: unknown) => {
 <template>
   <div
     v-if="fields.length"
-    class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden"
+    class="rounded-2xl border border-default bg-default overflow-hidden"
   >
-    <div
-      v-for="field in fields"
-      :key="field.key"
-      class="px-5 py-4"
-    >
-      <UFormField
-        :label="field.unit ? `${field.label} (${field.unit})` : field.label"
-        :name="`attributes.${field.key}`"
-        :required="field.required"
+    <p class="px-5 pt-4 text-xs text-muted">
+      Opcional — quanto mais detalhes, mais rápido vende.
+    </p>
+
+    <div class="divide-y divide-default">
+      <div
+        v-for="field in fields"
+        :key="field.key"
+        class="px-5 py-4"
       >
-        <USelect
-          v-if="field.type === 'select'"
-          :modelValue="(modelValue[field.key] as string)"
-          :items="field.options"
-          valueKey="value"
-          labelKey="label"
-          :placeholder="field.placeholder ?? 'Selecione'"
-          size="lg"
-          class="w-full"
-          @update:model-value="setValue(field.key, $event)"
-        />
+        <UFormField
+          :label="field.unit ? `${field.label} (${field.unit})` : field.label"
+          :name="`attributes.${field.key}`"
+          :required="field.required"
+        >
+          <USelect
+            v-if="field.type === 'select'"
+            :modelValue="(modelValue[field.key] as string)"
+            :items="field.options"
+            valueKey="value"
+            labelKey="label"
+            :placeholder="field.placeholder ?? 'Selecione'"
+            size="lg"
+            class="w-full"
+            @update:model-value="setValue(field.key, $event)"
+          />
 
-        <UInput
-          v-else-if="field.type === 'number'"
-          :modelValue="(modelValue[field.key] as string)"
-          type="number"
-          inputmode="decimal"
-          size="lg"
-          class="w-full"
-          :placeholder="field.placeholder"
-          @update:model-value="setValue(field.key, $event)"
-        />
+          <UInput
+            v-else-if="field.type === 'number'"
+            :modelValue="(modelValue[field.key] as string)"
+            type="number"
+            inputmode="decimal"
+            size="lg"
+            class="w-full"
+            :placeholder="field.placeholder"
+            @update:model-value="setValue(field.key, $event)"
+          />
 
-        <USwitch
-          v-else-if="field.type === 'boolean'"
-          :modelValue="!!modelValue[field.key]"
-          @update:model-value="setValue(field.key, $event)"
-        />
+          <USwitch
+            v-else-if="field.type === 'boolean'"
+            :modelValue="!!modelValue[field.key]"
+            @update:model-value="setValue(field.key, $event)"
+          />
 
-        <UInput
-          v-else
-          :modelValue="(modelValue[field.key] as string)"
-          type="text"
-          size="lg"
-          class="w-full"
-          :placeholder="field.placeholder"
-          @update:model-value="setValue(field.key, $event)"
-        />
-      </UFormField>
+          <UInput
+            v-else
+            :modelValue="(modelValue[field.key] as string)"
+            type="text"
+            size="lg"
+            class="w-full"
+            :placeholder="field.placeholder"
+            @update:model-value="setValue(field.key, $event)"
+          />
+        </UFormField>
+      </div>
     </div>
   </div>
 </template>

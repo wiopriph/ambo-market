@@ -52,7 +52,7 @@ const KIDS_AGE_RANGES = toOptions(['0-1 ano', '1-3 anos', '4-6 anos', '7-9 anos'
 export const PRODUCT_ATTRIBUTES: Record<string, AttributeField[]> = {
   // Transporte
   'vehicles/cars': [
-    { key: 'year', label: 'Ano', type: 'number', required: true, placeholder: 'Ex: 2018' },
+    { key: 'year', label: 'Ano', type: 'number', placeholder: 'Ex: 2018' },
     { key: 'mileage', label: 'Quilometragem', type: 'number', unit: 'km', placeholder: 'Ex: 55000' },
     {
       key: 'fuel',
@@ -74,14 +74,14 @@ export const PRODUCT_ATTRIBUTES: Record<string, AttributeField[]> = {
         { value: 'automatic', label: 'Automática' },
       ],
     },
-    conditionField(CONDITION_2, true),
+    conditionField(CONDITION_2),
   ],
 
   'vehicles/motorcycles': [
-    { key: 'year', label: 'Ano', type: 'number', required: true, placeholder: 'Ex: 2020' },
+    { key: 'year', label: 'Ano', type: 'number', placeholder: 'Ex: 2020' },
     { key: 'mileage', label: 'Quilometragem', type: 'number', unit: 'km', placeholder: 'Ex: 12000' },
     { key: 'engineSize', label: 'Cilindrada', type: 'number', unit: 'cc', placeholder: 'Ex: 150' },
-    conditionField(CONDITION_2, true),
+    conditionField(CONDITION_2),
   ],
 
   'vehicles/commercial': [
@@ -122,21 +122,21 @@ export const PRODUCT_ATTRIBUTES: Record<string, AttributeField[]> = {
   ],
 
   'vehicles/parts': [
-    { key: 'partType', label: 'Tipo de Peça', type: 'text', required: true, placeholder: 'Ex: Pneu, Bateria, Farol' },
+    { key: 'partType', label: 'Tipo de Peça', type: 'text', placeholder: 'Ex: Pneu, Bateria, Farol' },
     { key: 'compatibility', label: 'Compatível com', type: 'text', placeholder: 'Ex: Toyota Hilux 2015-2020' },
     conditionField(CONDITION_3),
   ],
 
   // Imóveis
   'real-estate/rent': [
-    { key: 'area', label: 'Área', type: 'number', unit: 'm²', required: true, placeholder: 'Ex: 80' },
+    { key: 'area', label: 'Área', type: 'number', unit: 'm²', placeholder: 'Ex: 80' },
     { key: 'rooms', label: 'Quartos (T)', type: 'select', options: toOptions(['T0', 'T1', 'T2', 'T3', 'T4', 'T5+']) },
     { key: 'bathrooms', label: 'Casas de Banho', type: 'number', placeholder: 'Ex: 2' },
     { key: 'furnished', label: 'Mobilado', type: 'boolean' },
   ],
 
   'real-estate/sale': [
-    { key: 'area', label: 'Área', type: 'number', unit: 'm²', required: true, placeholder: 'Ex: 120' },
+    { key: 'area', label: 'Área', type: 'number', unit: 'm²', placeholder: 'Ex: 120' },
     { key: 'rooms', label: 'Quartos (T)', type: 'select', options: toOptions(['T0', 'T1', 'T2', 'T3', 'T4', 'T5+']) },
     { key: 'bathrooms', label: 'Casas de Banho', type: 'number', placeholder: 'Ex: 2' },
     {
@@ -152,7 +152,7 @@ export const PRODUCT_ATTRIBUTES: Record<string, AttributeField[]> = {
   ],
 
   'real-estate/commercial-property': [
-    { key: 'area', label: 'Área', type: 'number', unit: 'm²', required: true },
+    { key: 'area', label: 'Área', type: 'number', unit: 'm²' },
     {
       key: 'propertyType',
       label: 'Tipo de Espaço',
@@ -168,7 +168,7 @@ export const PRODUCT_ATTRIBUTES: Record<string, AttributeField[]> = {
   ],
 
   'real-estate/land': [
-    { key: 'area', label: 'Área', type: 'number', unit: 'm²', required: true },
+    { key: 'area', label: 'Área', type: 'number', unit: 'm²' },
     {
       key: 'landType',
       label: 'Tipo de Terreno',
@@ -186,7 +186,7 @@ export const PRODUCT_ATTRIBUTES: Record<string, AttributeField[]> = {
   'electronics/phones': [
     { key: 'storage', label: 'Armazenamento', type: 'select', options: toOptions(['32GB', '64GB', '128GB', '256GB', '512GB', '1TB']) },
     { key: 'ram', label: 'Memória RAM', type: 'select', options: toOptions(['2GB', '4GB', '6GB', '8GB', '12GB', '16GB']) },
-    conditionField(CONDITION_3, true),
+    conditionField(CONDITION_3),
   ],
 
   'electronics/computers': [
@@ -198,7 +198,7 @@ export const PRODUCT_ATTRIBUTES: Record<string, AttributeField[]> = {
       type: 'select',
       options: toOptions(['128GB SSD', '256GB SSD', '512GB SSD', '1TB SSD', '1TB HDD', '2TB HDD']),
     },
-    conditionField(CONDITION_3, true),
+    conditionField(CONDITION_3),
   ],
 
   'electronics/gaming': [
@@ -291,7 +291,6 @@ export const PRODUCT_ATTRIBUTES: Record<string, AttributeField[]> = {
       key: 'employmentType',
       label: 'Tipo de Contrato',
       type: 'select',
-      required: true,
       options: [
         { value: 'full-time', label: 'Tempo Integral' },
         { value: 'part-time', label: 'Meio Período' },
@@ -313,7 +312,7 @@ export const PRODUCT_ATTRIBUTES: Record<string, AttributeField[]> = {
   ],
 
   'jobs/resumes': [
-    { key: 'desiredPosition', label: 'Cargo Pretendido', type: 'text', required: true },
+    { key: 'desiredPosition', label: 'Cargo Pretendido', type: 'text' },
     { key: 'experienceYears', label: 'Anos de Experiência', type: 'number' },
     {
       key: 'availability',
@@ -398,7 +397,6 @@ export const PRODUCT_ATTRIBUTES: Record<string, AttributeField[]> = {
       key: 'species',
       label: 'Espécie',
       type: 'select',
-      required: true,
       options: [
         { value: 'dog', label: 'Cão' },
         { value: 'cat', label: 'Gato' },
@@ -410,7 +408,7 @@ export const PRODUCT_ATTRIBUTES: Record<string, AttributeField[]> = {
   ],
 
   'animals/other-animals': [
-    { key: 'species', label: 'Espécie', type: 'text', required: true, placeholder: 'Ex: Galinha, Cabra, Vaca' },
+    { key: 'species', label: 'Espécie', type: 'text', placeholder: 'Ex: Galinha, Cabra, Vaca' },
     { key: 'quantity', label: 'Quantidade', type: 'number' },
   ],
 
