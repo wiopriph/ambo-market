@@ -1,4 +1,4 @@
-FROM node:22.11.0-slim AS base
+FROM node:25.0.0-slim AS base
 
 ARG PORT=3000
 
