@@ -4,6 +4,7 @@ import { array, object, string } from 'yup';
 import { useUser } from '~/composables/useUser';
 import { CATEGORIES } from '~/constants/categories';
 import { CITIES } from '~/constants/cities';
+import { getProductAttributeFields } from '~/constants/productAttributes';
 
 
 definePageMeta({ middleware: 'auth' });
@@ -51,6 +52,7 @@ const {
     description: '',
     images: [],
     cityId: '',
+    attributes: {},
   },
   validationSchema: object({
     category: string().required('Este campo é obrigatório'),
@@ -81,6 +83,18 @@ const {
     description: string().required('Este campo é obrigatório'),
     images: array().min(1, 'Por favor, adicione pelo menos uma foto'),
     cityId: string().required('Este campo é obrigatório'),
+    attributes: object().test('attributes-required', 'Preencha os campos obrigatórios', function(value) {
+      const categoryId = this.parent.category;
+      const subcategoryId = this.parent.subcategory;
+      const fields = getProductAttributeFields(categoryId, subcategoryId);
+      const missing = fields.filter(field => field.required && !value?.[field.key] && value?.[field.key] !== 0);
+
+      if (missing.length) {
+        return this.createError({ message: `Preencha: ${missing.map(field => field.label).join(', ')}` });
+      }
+
+      return true;
+    }),
   }),
 });
 
@@ -92,6 +106,7 @@ const { value: price } = useField<string>('price');
 const { value: description } = useField<string>('description');
 const { value: images } = useField<Image[]>('images');
 const { value: cityId } = useField<string>('cityId');
+const { value: attributes } = useField<Record<string, unknown>>('attributes');
 
 const toOptions = (arr?: Array<{ id: string; name: string }>): SelectItem[] =>
   (arr ?? []).map(({ id, name }) => ({ value: id, label: name }));
@@ -107,6 +122,8 @@ const brandsItems = computed<SelectItem[]>(() => toOptions(currentSubcategory.va
 const citiesItems = computed<SelectItem[]>(() => CITIES
   .filter(city => city.id !== 'all')
   .map(city => ({ value: city.id, label: city.name })));
+
+const attributeFields = computed(() => getProductAttributeFields(category.value, subcategory.value));
 
 const deletePhoto = (index: number) => {
   images.value.splice(index, 1);
@@ -150,6 +167,7 @@ const clearFields = () => {
       description: '',
       images: [],
       cityId: '',
+      attributes: {},
     },
   });
 };
@@ -177,6 +195,7 @@ const createPost = handleSubmit.withControlled(async () => {
         brandId: brand.value,
         images: images.value,
         location: { cityId: cityId.value },
+        attributes: attributes.value,
       },
     });
 
@@ -208,10 +227,12 @@ const createPost = handleSubmit.withControlled(async () => {
 watch(category, () => {
   subcategory.value = '';
   brand.value = '';
+  attributes.value = {};
 });
 
 watch(subcategory, () => {
   brand.value = '';
+  attributes.value = {};
 });
 </script>
 
@@ -323,6 +344,11 @@ watch(subcategory, () => {
         </div>
       </div>
 
+      <ProductAttributesFields
+        v-model="attributes"
+        :fields="attributeFields"
+      />
+
       <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
         <div class="px-5 py-4">
           <UFormField
@@ -336,7 +362,7 @@ watch(subcategory, () => {
               v-model="productName"
               name="productName"
               type="text"
-              placeholder="Exemplo: Toyota Hilux 2018"
+              placeholder="Nome curto e claro do produto"
               maxlength="50"
               size="lg"
               class="w-full"
@@ -486,6 +512,13 @@ watch(subcategory, () => {
         title="Não foi possível criar o anúncio"
         :description="apiErrorMessage"
       />
+
+      <div v-if="errors.attributes">
+        <p
+          class="text-sm text-error"
+          v-text="errors.attributes"
+        />
+      </div>
 
       <UButton
         type="submit"

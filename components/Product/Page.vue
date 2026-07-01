@@ -8,6 +8,7 @@ import { useUser } from '~/composables/useUser';
 import { getPostRoute } from '~/utils/getPostRoute';
 import { CLICK_AD_PHOTO } from '~/constants/analytics-events';
 import { getBrandName, getCategoryName, getSubcategoryName } from '~/constants/categories';
+import { formatAttributeValue, getProductAttributeFields } from '~/constants/productAttributes';
 
 
 type BreadcrumbDepth = 'category' | 'subcategory' | 'brand';
@@ -178,6 +179,19 @@ const breadcrumbItems = computed(() => breadcrumbsList.value.map((item) => ({
   to: item.to,
 })));
 
+const attributeDetails = computed(() => {
+  const fields = getProductAttributeFields(categoryId.value, subcategoryId.value);
+  const attrs = post.value?.attributes ?? {};
+
+  return fields
+    .map(field => ({
+      label: field.label,
+      value: formatAttributeValue(field, attrs[field.key]),
+      icon: 'i-lucide-list-checks',
+    }))
+    .filter(item => item.value);
+});
+
 const productDetails = computed(() => [
   {
     label: 'Localização',
@@ -199,6 +213,7 @@ const productDetails = computed(() => [
     value: brandId.value ? postBrandName.value : '',
     icon: 'i-lucide-tag',
   },
+  ...attributeDetails.value,
   {
     label: 'Publicado em',
     value: formattedDate.value,

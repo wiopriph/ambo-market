@@ -17,6 +17,7 @@ export type Post = {
   location: Location;
   preview: string;
   images: string[];
+  attributes?: Record<string, string | number | boolean>;
 };
 
 export type User = {

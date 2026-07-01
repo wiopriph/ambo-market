@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
-import { defineEventHandler, readBody, createError } from 'h3';
+import { createError, defineEventHandler, readBody } from 'h3';
 import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server';
-import { uploadPostImage, type ImageInput } from '~~/server/utils/images';
+import { type ImageInput, uploadPostImage } from '~~/server/utils/images';
 import { getCityById } from '~/constants/cities';
 
 
@@ -75,6 +75,7 @@ export default defineEventHandler(async (event) => {
     price: number | string;
     location: LocationInput;
     images: ImageInput[];
+    attributes?: Record<string, unknown>;
   }>(event);
 
   const {
@@ -86,6 +87,7 @@ export default defineEventHandler(async (event) => {
     price,
     location,
     images,
+    attributes,
   } = body || {};
 
   if (!title || !description || !price || !categoryId || !location || !images?.length) {
@@ -96,7 +98,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const parsedPrice =
-    typeof price === 'string' ? parseInt(price, 10) : Number(price);
+        typeof price === 'string' ? parseInt(price, 10) : Number(price);
 
   if (Number.isNaN(parsedPrice)) {
     throw createError({
@@ -140,6 +142,7 @@ export default defineEventHandler(async (event) => {
       'location_display_name': locationData.cityName,
       'location_lat': null,
       'location_lon': null,
+      attributes: attributes && Object.keys(attributes).length ? attributes : null,
     })
     .single();
 

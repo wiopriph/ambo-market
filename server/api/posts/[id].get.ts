@@ -23,6 +23,7 @@ const mapRowToPost = (row: any) => ({
   status: row.status ?? null,
   userId: row.user_id ?? null, // старое поле для совместимости
   authorId: row.author_id ?? null,
+  attributes: row.attributes ?? null,
 });
 
 export default defineEventHandler(async (event) => {
