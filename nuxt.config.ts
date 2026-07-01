@@ -113,6 +113,8 @@ export default defineNuxtConfig({
     '/auth/register': { ssr: false },
     '/auth/forgot-password': { ssr: false },
     '/product/create': { ssr: false },
+    '/icon-logo.svg': { headers: { 'cache-control': 'public, max-age=31536000, immutable' } },
+    '/favicon.ico': { headers: { 'cache-control': 'public, max-age=31536000, immutable' } },
   },
 
   plugins: [

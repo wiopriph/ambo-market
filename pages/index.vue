@@ -94,7 +94,10 @@ const totalPages = computed(() => {
 
 const hasPagination = computed(() => totalPages.value > 1);
 
+const scrollToTopOnLoad = useScrollToTopOnLoad(isLoading);
+
 const setPage = (pageNumber: number) => {
+  scrollToTopOnLoad();
   navigateTo({ query: { ...route.query, page: pageNumber } });
 };
 </script>
