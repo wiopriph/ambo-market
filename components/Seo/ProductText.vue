@@ -11,9 +11,9 @@ const props = defineProps<{
 
 <template>
   <div class="space-y-3 text-sm leading-6 text-muted">
-    <h3 class="text-base font-semibold text-highlighted">
+    <h2 class="text-base font-semibold text-highlighted">
       {{ productTitle }} – à venda em {{ city }} | Ambo Market
-    </h3>
+    </h2>
 
     <p>
       Encontrou um óptimo anúncio: <strong class="text-highlighted">{{ productTitle }}</strong> em {{ city }}, por

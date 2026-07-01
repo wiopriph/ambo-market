@@ -158,6 +158,7 @@ const isCityOpen = ref(false);
       :class="{ 'bg-elevated': activeFiltersCount > 0 }"
       class="flex shrink-0 items-center gap-2 border-l border-default px-3 py-2 transition hover:bg-elevated sm:px-4 sm:py-2.5 lg:h-full lg:px-3 lg:py-0"
       type="button"
+      aria-label="Filtros"
       @click="isFilterOpen = true"
     >
       <UIcon

@@ -111,6 +111,7 @@ const onAccountClick = () => {
             color="primary"
             icon="i-lucide-plus"
             size="md"
+            aria-label="Publicar anúncio"
             @click="goToCreatePage"
           >
             <span class="hidden md:inline">Publicar anúncio</span>

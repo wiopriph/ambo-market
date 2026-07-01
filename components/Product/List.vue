@@ -51,6 +51,7 @@ const emptyDescription = computed(() => props.emptyText || 'Não encontramos o q
       v-for="(product, index) in props.list"
       :key="index"
       :product="product"
+      :priority="index === 0"
     />
   </div>
 

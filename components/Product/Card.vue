@@ -8,6 +8,7 @@ import { CLICK_PRODUCT_CARD } from '~/constants/analytics-events';
 
 interface CardProps {
   product: Post;
+  priority?: boolean;
 }
 
 
@@ -71,6 +72,10 @@ const { pushEvent } = useAnalyticsEvent();
       <img
         :src="previewImage"
         :alt="productTitle"
+        width="360"
+        height="360"
+        :loading="priority ? 'eager' : 'lazy'"
+        :fetchpriority="priority ? 'high' : 'auto'"
         class="absolute inset-0 size-full object-cover transition group-hover:scale-105"
       >
     </div>

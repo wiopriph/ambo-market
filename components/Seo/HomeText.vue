@@ -84,9 +84,9 @@ const cityContent = computed(():    CityContent => {
 
 <template>
   <div class="space-y-3 text-sm leading-6 text-muted">
-    <h3 class="text-base font-semibold text-highlighted">
+    <h2 class="text-base font-semibold text-highlighted">
       Classificados Grátis em {{ location }} – Compre e Venda no Ambo Market
-    </h3>
+    </h2>
 
     <p>
       {{ cityContent.intro }}
