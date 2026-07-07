@@ -15,12 +15,14 @@ const currentStatus = computed(() => {
   return STATUSES.includes(status as typeof STATUSES[number]) ? status : 'all';
 });
 
-const { data: posts, status: fetchStatus } = await useLazyAsyncData(
-  () => `my-posts-${currentStatus.value}`,
-  () => $fetch(`/api/users/${uid.value}/posts`, {
-    params: currentStatus.value === 'all' ? {} : { status: currentStatus.value },
-  }),
-  { watch: [currentStatus], server: false },
+// useFetch (в отличие от $fetch) пробрасывает cookie сессии в API при SSR:
+// страница приходит с сервера уже с данными, без пустого состояния и жмыха
+const { data: posts, status: fetchStatus } = await useFetch(
+  () => `/api/users/${uid.value}/posts`,
+  {
+    key: () => `my-posts-${currentStatus.value}`,
+    query: computed(() => currentStatus.value === 'all' ? {} : { status: currentStatus.value }),
+  },
 );
 
 const isLoading = computed(() => fetchStatus.value === 'pending');

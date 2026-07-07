@@ -6,17 +6,20 @@ useHead({ title: 'Favoritos - Ambo Market' });
 
 const { favoriteIds } = useFavorites();
 
-const { data, status, refresh } = await useLazyFetch<{ posts: Post[]; resultsCount: number }>(
+// useFetch пробрасывает cookie сессии при SSR — страница приходит сразу с данными
+const { data, status, refresh } = await useFetch<{ posts: Post[]; resultsCount: number }>(
   '/api/favorites',
-  { server: false },
 );
 
 const posts = computed(() => data.value?.posts ?? []);
 const isLoading = computed(() => status.value === 'pending');
 
 // удаление из избранного на этой же странице -> обновляем список
-watch(favoriteIds, () => {
-  refresh();
+watch(favoriteIds, (ids, oldIds) => {
+  // реагируем только на реальное изменение (не на первичную загрузку id при логине)
+  if (ids.length !== oldIds.length) {
+    refresh();
+  }
 });
 </script>
 
