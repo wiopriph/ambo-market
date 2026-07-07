@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {
+  CLICK_FAVORITES_BUTTON,
   CLICK_LOGIN_BUTTON,
   CLICK_MY_ADS_BUTTON,
   CLICK_POST_AD_BUTTON,
@@ -62,6 +63,12 @@ const accountItems = computed(() => [
       icon: 'i-lucide-list',
       to: { name: 'user-ads' },
       onSelect: () => pushEvent(CLICK_MY_ADS_BUTTON),
+    },
+    {
+      label: 'Favoritos',
+      icon: 'i-lucide-heart',
+      to: { name: 'user-favorites' },
+      onSelect: () => pushEvent(CLICK_FAVORITES_BUTTON),
     },
     {
       label: 'Configurações',

@@ -3,7 +3,8 @@ import type { Post } from '~/composables/usePosts/types';
 import formatCurrency from '~/utils/formatCurrency';
 import { POST_STATUSES } from '~/constants/post-statuses';
 import { getPostRoute } from '~/utils/getPostRoute';
-import { CLICK_PRODUCT_CARD } from '~/constants/analytics-events';
+import { CLICK_CARD_FAVORITE, CLICK_PRODUCT_CARD } from '~/constants/analytics-events';
+import { useFavorites } from '~/composables/useFavorites';
 
 
 interface CardProps {
@@ -45,6 +46,15 @@ const link = computed(() => getPostRoute({
 }));
 
 const { pushEvent } = useAnalyticsEvent();
+
+const { isFavorite, toggleFavorite } = useFavorites();
+
+const favorite = computed(() => isFavorite(props.product?.id));
+
+const onFavoriteClick = () => {
+  pushEvent(CLICK_CARD_FAVORITE, { 'product_id': props.product?.id });
+  toggleFavorite(props.product?.id);
+};
 </script>
 
 <template>
@@ -68,6 +78,19 @@ const { pushEvent } = useAnalyticsEvent();
         class="absolute bottom-2.5 left-2.5 z-10 max-w-[calc(100%-20px)] truncate rounded-md bg-black/50 px-1.5 py-0.5 text-xs text-white backdrop-blur-sm"
         v-text="city"
       />
+
+      <button
+        type="button"
+        class="absolute right-2.5 top-2.5 z-10 flex size-8 items-center justify-center rounded-full bg-black/40 backdrop-blur-sm transition hover:bg-black/60"
+        :aria-label="favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'"
+        @click.prevent.stop="onFavoriteClick"
+      >
+        <UIcon
+          name="i-lucide-heart"
+          class="size-4 transition"
+          :class="favorite ? 'text-red-500' : 'text-white'"
+        />
+      </button>
 
       <img
         :src="previewImage"
