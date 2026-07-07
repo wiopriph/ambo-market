@@ -53,7 +53,6 @@ const { data: allPosts } = await useAsyncData(
 const { uid } = useUser();
 
 const isCurrentUser = computed(() => !!uid.value && uid.value === route.params.userUid);
-const isSettingsPage = computed(() => route.name === 'user-userUid-settings');
 
 const userName = computed(() => user.value?.name || `User_${String(route.params.userUid).slice(0, 4)}`);
 
@@ -136,31 +135,18 @@ useHead({
 
         <div class="flex shrink-0 items-center gap-1.5">
           <UButton
-            v-if="isCurrentUser && !isSettingsPage"
+            v-if="isCurrentUser"
             icon="i-lucide-settings"
             color="neutral"
             variant="ghost"
             size="sm"
-            :to="{ name: 'user-userUid-settings', params: { userUid: uid } }"
+            :to="{ name: 'my-settings' }"
             aria-label="Configurações"
-          />
-
-          <UButton
-            v-if="isCurrentUser && isSettingsPage"
-            icon="i-lucide-arrow-left"
-            color="neutral"
-            variant="ghost"
-            size="sm"
-            :to="{ name: 'user-userUid-status', params: { userUid: uid } }"
-            aria-label="Voltar"
           />
         </div>
       </div>
 
-      <div
-        v-if="!isSettingsPage"
-        class="grid grid-cols-3 divide-x divide-default rounded-xl border border-default overflow-hidden"
-      >
+      <div class="grid grid-cols-3 divide-x divide-default rounded-xl border border-default overflow-hidden">
         <div class="flex flex-col items-center py-3 px-2">
           <span
             class="text-xl font-bold text-highlighted"
@@ -190,7 +176,7 @@ useHead({
       </div>
 
       <UButton
-        v-if="isCurrentUser && !isSettingsPage"
+        v-if="isCurrentUser"
         label="Criar anúncio"
         icon="i-lucide-plus"
         color="primary"

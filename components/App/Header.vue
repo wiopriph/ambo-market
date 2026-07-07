@@ -61,19 +61,19 @@ const accountItems = computed(() => [
     {
       label: 'Meus anúncios',
       icon: 'i-lucide-list',
-      to: { name: 'user-ads' },
+      to: { name: 'my-ads' },
       onSelect: () => pushEvent(CLICK_MY_ADS_BUTTON),
     },
     {
       label: 'Favoritos',
       icon: 'i-lucide-heart',
-      to: { name: 'user-favorites' },
+      to: { name: 'my-favorites' },
       onSelect: () => pushEvent(CLICK_FAVORITES_BUTTON),
     },
     {
       label: 'Configurações',
       icon: 'i-lucide-settings',
-      to: { name: 'user-settings' },
+      to: { name: 'my-settings' },
       onSelect: () => pushEvent(CLICK_SETTINGS_BUTTON),
     },
   ],

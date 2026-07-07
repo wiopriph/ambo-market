@@ -2,12 +2,7 @@
 import type { Post } from '~/composables/usePosts/types';
 
 
-definePageMeta({ middleware: 'auth' });
-
-useHead({
-  title: 'Favoritos - Ambo Market',
-  meta: [{ key: 'robots', name: 'robots', content: 'noindex, nofollow' }],
-});
+useHead({ title: 'Favoritos - Ambo Market' });
 
 const { favoriteIds } = useFavorites();
 

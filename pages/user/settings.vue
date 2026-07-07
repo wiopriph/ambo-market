@@ -1,23 +1,6 @@
 <script setup lang="ts">
-import { useUser } from '~/composables/useUser';
-
-
-useHead({ meta: [{ key: 'robots', name: 'robots', content: 'noindex, nofollow' }] });
-
+// старый URL: оставлен как 301-редирект на /my/settings
 definePageMeta({
-  middleware: defineNuxtRouteMiddleware((to) => {
-    const { isLoggedIn, uid } = useUser();
-
-    if (isLoggedIn.value && uid.value) {
-      return navigateTo({
-        name: 'user-userUid-settings',
-        params: {
-          userUid: uid.value,
-        },
-      });
-    }
-
-    return navigateTo({ name: 'auth', query: { redirect: to.path } });
-  }),
+  middleware: defineNuxtRouteMiddleware(() => navigateTo({ name: 'my-settings' }, { redirectCode: 301 })),
 });
 </script>

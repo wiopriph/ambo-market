@@ -13,24 +13,6 @@ useHead({
   ],
 });
 
-definePageMeta({
-  middleware: defineNuxtRouteMiddleware((to) => {
-    const { isLoggedIn, uid } = useUser();
-
-    if (!isLoggedIn.value) {
-      return navigateTo({ name: 'auth', query: { redirect: to.path } });
-    }
-
-    if (uid.value !== to.params.userUid) {
-      return navigateTo({
-        name: 'user-userUid-settings',
-        params: { userUid: uid.value },
-      });
-    }
-  }),
-});
-
-
 const { currentUser, updateProfile } = useUser();
 
 const {
