@@ -6,7 +6,7 @@ import type { Post as ProductPost, ProductApiResponse, User } from '~/types/prod
 import { formatFullDate } from '~/utils/formatDate';
 import { useUser } from '~/composables/useUser';
 import { getPostRoute } from '~/utils/getPostRoute';
-import { CLICK_AD_FAVORITE, CLICK_AD_PHOTO } from '~/constants/analytics-events';
+import { CLICK_AD_FAVORITE, CLICK_AD_PHOTO, CLICK_CALL, CLICK_WHATSAPP } from '~/constants/analytics-events';
 import { useFavorites } from '~/composables/useFavorites';
 import { getBrandName, getCategoryName, getSubcategoryName } from '~/constants/categories';
 import { formatAttributeValue, getProductAttributeFields } from '~/constants/productAttributes';
@@ -231,13 +231,18 @@ const productDetails = computed(() => [
   },
 ].filter((item) => item.value));
 
-const sellerDescription = computed(() => {
-  if (seller.value?.phone) {
-    return seller.value.phone;
-  }
+const sellerMemberSince = computed(() =>
+  seller.value?.creationTime ? `Membro desde ${formatFullDate(seller.value.creationTime, 'pt')}` : '');
 
-  return 'Vendedor';
+const sellerActivePosts = computed(() => {
+  const activeCount = seller.value?.activePostsCount ?? 0;
+
+  if (!activeCount) return '';
+
+  return activeCount === 1 ? '1 anúncio ativo' : `${activeCount} anúncios ativos`;
 });
+
+const hasSellerMeta = computed(() => !!sellerMemberSince.value || !!sellerActivePosts.value);
 
 const sellerAvatar = computed(() => ({
   src: seller.value?.photoURL,
@@ -246,6 +251,28 @@ const sellerAvatar = computed(() => ({
 }));
 
 const phoneLink = computed(() => seller.value?.phone ? `tel:${seller.value.phone}` : undefined);
+
+const whatsappLink = computed(() => {
+  const phone = seller.value?.phone?.replace(/\D/g, '');
+
+  if (!phone) return undefined;
+
+  const text = encodeURIComponent(
+    `Olá! Vi o seu anúncio "${post.value?.title ?? ''}" no Ambo Market e tenho interesse.`,
+  );
+
+  return `https://wa.me/${phone}?text=${text}`;
+});
+
+const onWhatsappClick = () => {
+  pushEvent(CLICK_WHATSAPP, { 'product_id': postId.value });
+};
+
+const onCallClick = () => {
+  pushEvent(CLICK_CALL, { 'product_id': postId.value });
+};
+
+const viewsCount = computed(() => post.value?.viewsCount ?? null);
 const isPostOpen = computed(() => post.value?.status === POST_STATUSES.OPEN);
 const isPostUnavailable = computed(() => !isPostOpen.value);
 const statusLabel = computed(() => {
@@ -535,6 +562,20 @@ const { uid } = useUser();
 const isOwnerUser = computed(() => uid.value === seller.value?.id);
 const hasControlButtons = computed(() => post.value?.status === POST_STATUSES.OPEN);
 
+// счётчик просмотров: пингуем один раз на каждый открытый пост (не считаем владельца)
+if (import.meta.client) {
+  watch(
+    () => post.value?.id,
+    (id) => {
+      if (id && !isOwnerUser.value) {
+        $fetch(`/api/posts/${id}/view`, { method: 'POST' }).catch(() => {
+        });
+      }
+    },
+    { immediate: true },
+  );
+}
+
 
 const isClosePostModalVisible = ref(false);
 
@@ -684,6 +725,17 @@ const closePost = () => {
                 />
                 {{ formattedDate }}
               </span>
+
+              <span
+                v-if="viewsCount && viewsCount > 100"
+                class="flex items-center gap-1"
+              >
+                <UIcon
+                  name="i-lucide-eye"
+                  class="size-4"
+                />
+                {{ viewsCount }}
+              </span>
             </div>
           </div>
 
@@ -808,6 +860,17 @@ const closePost = () => {
                 />
                 {{ formattedDate }}
               </span>
+
+              <span
+                v-if="viewsCount && viewsCount > 100"
+                class="flex items-center gap-1"
+              >
+                <UIcon
+                  name="i-lucide-eye"
+                  class="size-4"
+                />
+                {{ viewsCount }}
+              </span>
             </div>
           </div>
 
@@ -816,14 +879,37 @@ const closePost = () => {
             <div class="px-5 py-4">
               <UUser
                 :name="seller.name"
-                :description="sellerDescription"
                 :avatar="sellerAvatar"
                 :to="{ name: 'user-userUid-status', params: { userUid: seller.id } }"
                 size="lg"
-              />
+              >
+                <template
+                  v-if="hasSellerMeta"
+                  #description
+                >
+                  <span
+                    v-if="sellerMemberSince"
+                    class="block"
+                    v-text="sellerMemberSince"
+                  />
+
+                  <span
+                    v-if="sellerActivePosts"
+                    class="block"
+                    v-text="sellerActivePosts"
+                  />
+                </template>
+
+                <template
+                  v-else
+                  #description
+                >
+                  Vendedor
+                </template>
+              </UUser>
             </div>
 
-            <div class="px-5 py-4">
+            <div class="px-5 py-4 space-y-2">
               <UButton
                 v-if="hasControlButtons && isOwnerUser"
                 label="Fechar anúncio"
@@ -834,15 +920,29 @@ const closePost = () => {
                 @click="isClosePostModalVisible = true"
               />
 
-              <UButton
-                v-else
-                label="Ligar ao vendedor"
-                :href="phoneLink"
-                icon="i-lucide-phone"
-                color="primary"
-                block
-                :disabled="!phoneLink || isPostUnavailable"
-              />
+              <template v-else>
+                <UButton
+                  label="Ligar ao vendedor"
+                  :href="phoneLink"
+                  icon="i-lucide-phone"
+                  color="primary"
+                  block
+                  :disabled="!phoneLink || isPostUnavailable"
+                  @click="onCallClick"
+                />
+
+                <UButton
+                  v-if="whatsappLink"
+                  label="WhatsApp"
+                  :href="whatsappLink"
+                  target="_blank"
+                  icon="i-simple-icons-whatsapp"
+                  block
+                  :disabled="isPostUnavailable"
+                  class="bg-[#25D366] hover:bg-[#1ebe5b] text-white"
+                  @click="onWhatsappClick"
+                />
+              </template>
             </div>
           </div>
 
@@ -961,17 +1061,19 @@ const closePost = () => {
                 color="primary"
                 class="flex-1"
                 :disabled="!phoneLink || isPostUnavailable"
+                @click="onCallClick"
               />
 
               <UButton
-                v-if="false"
+                v-if="whatsappLink"
                 icon="i-simple-icons-whatsapp"
-                color="neutral"
-                variant="soft"
                 size="md"
-                :href="`https://wa.me/?text=${encodedShareText}`"
+                :href="whatsappLink"
                 target="_blank"
-                aria-label="WhatsApp"
+                aria-label="Contactar no WhatsApp"
+                class="bg-[#25D366] hover:bg-[#1ebe5b] text-white"
+                :disabled="isPostUnavailable"
+                @click="onWhatsappClick"
               />
             </template>
           </div>

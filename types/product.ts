@@ -18,6 +18,7 @@ export type Post = {
   preview: string;
   images: string[];
   attributes?: Record<string, string | number | boolean>;
+  viewsCount?: number | null;
 };
 
 export type User = {
@@ -28,6 +29,7 @@ export type User = {
   phone?: string;
   photoURL: string;
   disabled: boolean;
+  activePostsCount?: number;
 };
 
 export type ProductApiResponse = {

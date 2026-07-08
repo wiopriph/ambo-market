@@ -29,6 +29,7 @@ export const SELECT_BRAND = 'select_brand'; // brand_id
 // Страница объявления
 export const CLICK_CALL = 'click_call'; // product_id
 export const CLICK_CHAT = 'click_chat'; // product_id
+export const CLICK_WHATSAPP = 'click_whatsapp'; // product_id
 export const CLICK_BUY = 'click_buy'; // product_id
 export const CLICK_AD_FAVORITE = 'click_ad_favorite'; // product_id
 export const CLICK_AD_PHOTO = 'click_ad_photo'; // product_id

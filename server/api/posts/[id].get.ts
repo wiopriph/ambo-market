@@ -24,6 +24,7 @@ const mapRowToPost = (row: any) => ({
   userId: row.user_id ?? null, // старое поле для совместимости
   authorId: row.author_id ?? null,
   attributes: row.attributes ?? null,
+  viewsCount: typeof row.views_count === 'number' ? row.views_count : null,
 });
 
 export default defineEventHandler(async (event) => {
@@ -58,14 +59,22 @@ export default defineEventHandler(async (event) => {
     disabled: null as boolean | null, // нет аналога — оставим null
     email: null as string | null,
     phone: null as string | null,
+    activePostsCount: 0,
   };
 
   if (post.authorId) {
-    const { data: profile, error: profErr } = await client
-      .from('profiles')
-      .select('display_name, avatar_url, phone, email, created_at')
-      .eq('id', post.authorId)
-      .maybeSingle();
+    const [{ data: profile, error: profErr }, { count: activeCount }] = await Promise.all([
+      client
+        .from('profiles')
+        .select('display_name, avatar_url, phone, email, created_at')
+        .eq('id', post.authorId)
+        .maybeSingle(),
+      client
+        .from('posts')
+        .select('id', { count: 'exact', head: true })
+        .eq('author_id', post.authorId)
+        .eq('status', 'open'),
+    ]);
 
     if (profErr) {
       throw createError({ statusCode: 500, statusMessage: profErr.message });
@@ -78,6 +87,8 @@ export default defineEventHandler(async (event) => {
       user.phone = profile.phone ?? null;
       user.creationTime = profile.created_at ?? null;
     }
+
+    user.activePostsCount = activeCount ?? 0;
   }
 
   return { post, user };

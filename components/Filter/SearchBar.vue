@@ -64,7 +64,7 @@ const searchQuery = computed({
 });
 
 const setCity = (newCityId: string) => {
-  pushEvent(SELECT_CITY, { city_id: newCityId });
+  pushEvent(SELECT_CITY, { 'city_id': newCityId });
 
   const params = { ...buildParams(), cityId: newCityId || 'all' };
 
