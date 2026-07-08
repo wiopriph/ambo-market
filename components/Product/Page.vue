@@ -6,7 +6,8 @@ import type { Post as ProductPost, ProductApiResponse, User } from '~/types/prod
 import { formatFullDate } from '~/utils/formatDate';
 import { useUser } from '~/composables/useUser';
 import { getPostRoute } from '~/utils/getPostRoute';
-import { CLICK_AD_PHOTO } from '~/constants/analytics-events';
+import { CLICK_AD_FAVORITE, CLICK_AD_PHOTO } from '~/constants/analytics-events';
+import { useFavorites } from '~/composables/useFavorites';
 import { getBrandName, getCategoryName, getSubcategoryName } from '~/constants/categories';
 import { formatAttributeValue, getProductAttributeFields } from '~/constants/productAttributes';
 
@@ -172,6 +173,15 @@ const selectImage = (index: number) => {
 
   activeImageIndex.value = index;
   scrollCarouselTo(index);
+};
+
+const { isFavorite, toggleFavorite } = useFavorites();
+
+const favorite = computed(() => isFavorite(postId.value));
+
+const onFavoriteClick = () => {
+  pushEvent(CLICK_AD_FAVORITE, { 'product_id': postId.value });
+  toggleFavorite(postId.value);
 };
 
 const breadcrumbItems = computed(() => breadcrumbsList.value.map((item) => ({
@@ -630,10 +640,22 @@ const closePost = () => {
 
           <!-- Title + meta (mobile) -->
           <div class="rounded-2xl border border-default bg-default px-5 py-4 lg:hidden">
-            <h1
-              class="text-xl font-bold text-highlighted"
-              v-text="post.title"
-            />
+            <div class="flex items-start gap-2">
+              <h1
+                class="flex-1 text-xl font-bold text-highlighted"
+                v-text="post.title"
+              />
+
+              <UButton
+                icon="i-lucide-heart"
+                color="neutral"
+                variant="ghost"
+                size="sm"
+                :class="favorite ? 'text-red-500' : ''"
+                :aria-label="favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'"
+                @click="onFavoriteClick"
+              />
+            </div>
 
             <p
               class="mt-1 text-2xl font-bold text-primary"
@@ -730,6 +752,16 @@ const closePost = () => {
               <h1
                 class="flex-1 text-xl font-bold text-highlighted"
                 v-text="post.title"
+              />
+
+              <UButton
+                icon="i-lucide-heart"
+                color="neutral"
+                variant="ghost"
+                size="sm"
+                :class="favorite ? 'text-red-500' : ''"
+                :aria-label="favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'"
+                @click="onFavoriteClick"
               />
 
               <UDropdownMenu
