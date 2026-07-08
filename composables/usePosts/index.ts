@@ -36,8 +36,11 @@ export function usePosts() {
   };
 
   const filters = useState<Filters>('filters', () => DEFAULT_FILTERS);
+  // атрибутные фильтры: { attr_fuel: 'diesel,gasoline', attr_year_min: '2015' }
+  const attrs = useState<Record<string, string>>('attrFilters', () => ({}));
   const currentFilters = computed(() => getObjectDifferences(filters.value, DEFAULT_FILTERS));
-  const hasActiveFilters = computed(() => !!Object.keys(currentFilters.value).length);
+  const hasActiveFilters = computed(() =>
+    !!Object.keys(currentFilters.value).length || !!Object.keys(attrs.value).length);
 
   const getFilter = <K extends keyof Filters>(name: K): Filters[K] => filters.value[name];
 
@@ -48,6 +51,7 @@ export function usePosts() {
 
     page.value = data.page || 1;
     filters.value = data.filters;
+    attrs.value = data.attrs ?? {};
   };
 
 
@@ -74,9 +78,10 @@ export function usePosts() {
         search: filters.value.q,
         page: page.value,
         limit: MAX_POSTS_PER_PAGE,
+        ...attrs.value,
       });
     } catch (error) {
-      // eslint-disable-next-line no-console
+       
       console.error('Error while getting posts:', error);
     } finally {
       isLoading.value = false;
@@ -93,6 +98,7 @@ export function usePosts() {
     isPriorityCity,
 
     filters,
+    attrs,
     currentFilters,
     hasActiveFilters,
     getFilter,

@@ -24,6 +24,14 @@ export default defineNuxtRouteMiddleware((to) => {
     maxPrice,
   };
 
+  const attrs: Record<string, string> = {};
+
+  for (const [key, value] of Object.entries(query)) {
+    if (key.startsWith('attr_') && typeof value === 'string' && value) {
+      attrs[key] = value;
+    }
+  }
+
   return initializeFilters({
     categoryId,
     subcategoryId,
@@ -31,5 +39,6 @@ export default defineNuxtRouteMiddleware((to) => {
 
     filters,
     page,
+    attrs,
   });
 });

@@ -15,6 +15,8 @@ export interface InitializeFilters {
   categoryId: string;
   subcategoryId: string;
   brandId: string;
+  // атрибутные фильтры в формате query-параметров: { attr_fuel: 'diesel,gasoline', attr_year_min: '2015' }
+  attrs: Record<string, string>;
 }
 
 
@@ -28,6 +30,7 @@ export interface FetchPostsParams {
   search: string;
   page: number;
   limit: number;
+  [attrParam: `attr_${string}`]: string;
 }
 
 export interface Post {

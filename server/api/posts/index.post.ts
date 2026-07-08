@@ -3,12 +3,59 @@ import { createError, defineEventHandler, readBody } from 'h3';
 import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server';
 import { type ImageInput, uploadPostImage } from '~~/server/utils/images';
 import { getCityById } from '~/constants/cities';
+import { getProductAttributeFields } from '~/constants/productAttributes';
 
 
 type LocationInput = {
   cityId?: string;
   cityName?: string;
 };
+
+// приводим значения атрибутов к типам из схемы: числовые фильтры (gte/lte по jsonb)
+// работают только когда число хранится числом, а не строкой "2018"
+function normalizeAttributes(
+  attributes: Record<string, unknown> | undefined,
+  categoryId: string,
+  subcategoryId?: string,
+): Record<string, unknown> | null {
+  if (!attributes || typeof attributes !== 'object') return null;
+
+  const fields = getProductAttributeFields(categoryId, subcategoryId);
+  const result: Record<string, unknown> = {};
+
+  for (const field of fields) {
+    const value = attributes[field.key];
+
+    if (value === undefined || value === null || value === '') continue;
+
+    if (field.type === 'number') {
+      const num = Number(value);
+
+      if (!Number.isNaN(num)) result[field.key] = num;
+
+      continue;
+    }
+
+    if (field.type === 'boolean') {
+      result[field.key] = value === true || value === 'true';
+
+      continue;
+    }
+
+    // select: принимаем только значения из схемы
+    if (field.type === 'select') {
+      const isAllowed = (field.options ?? []).some(option => option.value === value);
+
+      if (isAllowed) result[field.key] = value;
+
+      continue;
+    }
+
+    result[field.key] = String(value).slice(0, 200);
+  }
+
+  return Object.keys(result).length ? result : null;
+}
 
 function parseLocation(location: LocationInput) {
   if (!location || typeof location !== 'object') {
@@ -142,7 +189,7 @@ export default defineEventHandler(async (event) => {
       'location_display_name': locationData.cityName,
       'location_lat': null,
       'location_lon': null,
-      attributes: attributes && Object.keys(attributes).length ? attributes : null,
+      attributes: normalizeAttributes(attributes, categoryId, subcategoryId),
     })
     .single();
 

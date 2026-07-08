@@ -527,6 +527,16 @@ export function getProductAttributeFields(categoryId?: string | null, subcategor
   return [];
 }
 
+/**
+ * Поля, по которым можно фильтровать листинг:
+ * select — мультивыбор значений, number — диапазон от/до, boolean — переключатель.
+ * text не фильтруется (свободный ввод).
+ */
+export function getFilterableAttributeFields(categoryId?: string | null, subcategoryId?: string | null): AttributeField[] {
+  return getProductAttributeFields(categoryId, subcategoryId)
+    .filter(field => field.type !== 'text');
+}
+
 export function formatAttributeValue(field: AttributeField, rawValue: unknown): string {
   if (rawValue === undefined || rawValue === null || rawValue === '') {
     return '';

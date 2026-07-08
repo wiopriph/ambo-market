@@ -1,5 +1,6 @@
 import { serverSupabaseClient } from '#supabase/server';
 import { getCityById, getCityIdByName } from '~/constants/cities';
+import { getFilterableAttributeFields } from '~/constants/productAttributes';
 
 
 const isNum = (v: any): v is number => typeof v === 'number' && !Number.isNaN(v);
@@ -86,6 +87,43 @@ export default defineEventHandler(async (event) => {
   if (search) {
     // ищем по title/description без учёта регистра
     s = s.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
+  }
+
+  // Фильтры по атрибутам (attr_fuel=diesel,gasoline / attr_year_min=2015 / attr_furnished=1).
+  // Ключи берём только из схемы категории — значения из URL никогда не попадают в путь колонки.
+  if (categoryId && subcategoryId) {
+    for (const field of getFilterableAttributeFields(categoryId, subcategoryId)) {
+      if (field.type === 'select') {
+        const raw = q[`attr_${field.key}`] as string | undefined;
+
+        if (raw) {
+          const allowed = new Set((field.options ?? []).map(option => option.value));
+          const values = raw.split(',').filter(value => allowed.has(value));
+
+          if (values.length) {
+            s = s.in(`attributes->>${field.key}`, values);
+          }
+        }
+      }
+
+      if (field.type === 'number') {
+        const min = Number(q[`attr_${field.key}_min`]);
+        const max = Number(q[`attr_${field.key}_max`]);
+
+        // attributes->key — сравнение как jsonb-число (значения нормализуются при создании поста)
+        if (isNum(min)) {
+          s = s.gte(`attributes->${field.key}`, min);
+        }
+
+        if (isNum(max)) {
+          s = s.lte(`attributes->${field.key}`, max);
+        }
+      }
+
+      if (field.type === 'boolean' && q[`attr_${field.key}`] === '1') {
+        s = s.eq(`attributes->${field.key}`, true);
+      }
+    }
   }
 
   s = s.order('created_at', { ascending: false })

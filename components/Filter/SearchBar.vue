@@ -20,6 +20,7 @@ const {
   currentFilters,
   hasActiveFilters,
   getFilter,
+  attrs,
 } = usePosts();
 
 const citiesList = computed(() => CITIES.map(city => ({
@@ -32,7 +33,8 @@ const currentCityLabel = computed(
 );
 
 const activeFiltersCount = computed(
-  () => [categoryId.value, subcategoryId.value, brandId.value].filter(Boolean).length,
+  () => [categoryId.value, subcategoryId.value, brandId.value].filter(Boolean).length +
+    Object.keys(attrs.value).length,
 );
 
 const buildParams = () => {
