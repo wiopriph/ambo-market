@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import type { Post } from '~/composables/usePosts/types';
 import { MAX_POSTS_PER_PAGE } from '~/composables/usePosts/constants';
+import { useFeedback } from '~/composables/useFeedback';
 
+
+const { openFeedback } = useFeedback();
 
 interface ListProps {
   list?: Post[];
@@ -55,11 +58,23 @@ const emptyDescription = computed(() => props.emptyText || 'Não encontramos o q
     />
   </div>
 
-  <UEmpty
+  <div
     v-else
-    icon="i-lucide-package-search"
-    :title="emptyTitle"
-    :description="emptyDescription"
-    class="mt-5 mb-10 mx-auto max-w-md"
-  />
+    class="mt-5 mb-10 flex flex-col items-center gap-3"
+  >
+    <UEmpty
+      icon="i-lucide-package-search"
+      :title="emptyTitle"
+      :description="emptyDescription"
+      class="mx-auto max-w-md"
+    />
+
+    <button
+      type="button"
+      class="text-sm text-muted underline underline-offset-4 transition hover:text-primary"
+      @click="openFeedback('idea')"
+    >
+      Não encontrou o que procura? Diga-nos.
+    </button>
+  </div>
 </template>

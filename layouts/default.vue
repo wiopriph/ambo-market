@@ -9,5 +9,7 @@
     </UMain>
 
     <AppFooter />
+
+    <AppFeedbackModal />
   </UApp>
 </template>

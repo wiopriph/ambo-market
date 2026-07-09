@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui';
+import { useFeedback } from '~/composables/useFeedback';
 
+
+const { openFeedback } = useFeedback();
 
 const items: NavigationMenuItem[] = [
   { label: 'Sobre', to: { name: 'about' } },
   { label: 'Termos de Uso', to: { name: 'terms' } },
   { label: 'Política de Privacidade', to: { name: 'privacy' } },
+  { label: 'Deixe a sua opinião', onSelect: () => openFeedback('idea') },
 ];
 
 const socialLinks = [
