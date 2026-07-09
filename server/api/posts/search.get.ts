@@ -85,8 +85,10 @@ export default defineEventHandler(async (event) => {
   }
 
   if (search) {
-    // ищем по title/description без учёта регистра
-    s = s.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
+    // полнотекстовый поиск: морфология (casas→casa, vendo→vender),
+    // без учёта акцентов (movel→móvel), title весит больше description.
+    // websearch — терпимый к вводу парсер (пробелы = И, кавычки = фраза).
+    s = s.textSearch('fts', search, { type: 'websearch', config: 'pt_unaccent' });
   }
 
   // Фильтры по атрибутам (attr_fuel=diesel,gasoline / attr_year_min=2015 / attr_furnished=1).
