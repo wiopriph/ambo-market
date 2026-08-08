@@ -42,48 +42,23 @@ const { data: product, error } = await useAsyncData<ProductApiResponse>(
   () => `post-${route.params.productId}`,
   async () => {
     try {
-      const response = await $fetch<{ post: any; user: any }>(`/api/posts/${postId.value}`);
-
-      const { post, user } = response as ProductApiResponse;
-
-      const postCityId = post?.location?.cityId ?? 'all';
-      const canonicalRoute = getPostRoute({
-        productId: post?.id,
-        brandId: post?.brandId,
-        subcategoryId: post?.subcategoryId,
-        categoryId: post?.categoryId,
-        cityId: postCityId,
-      });
-
-      if (route.name !== canonicalRoute.name ||
-        Object.entries(canonicalRoute.params).some(([key, value]) => route.params[key] !== value)) {
-        navigateTo(canonicalRoute, { redirectCode: 301 });
-      }
-
-      return {
-        post,
-        user,
-      };
+      return await $fetch<ProductApiResponse>(`/api/posts/${postId.value}`);
     } catch (error) {
-      if (error?.statusCode === 404 || error?.message === 'Post not found') {
-        throw createError({
-          statusCode: 404,
-          statusMessage: 'Not found',
-          fatal: true,
-        });
-      }
+      const isNotFound = error?.statusCode === 404 || error?.message === 'Post not found';
 
       throw createError({
-        statusCode: 500,
-        statusMessage: 'Failed to load product data',
+        statusCode: isNotFound ? 404 : 500,
+        statusMessage: isNotFound ? 'Not found' : 'Failed to load product data',
         fatal: true,
       });
     }
   },
 );
 
-if (error && error?.value) {
-  throw createError(error?.value);
+// useAsyncData не пробрасывает ошибку из обработчика наружу, а кладёт её в error.
+// Без этого ре-throw страница отрендерилась бы с пустыми данными и кодом 200.
+if (error.value) {
+  throw createError(error.value);
 }
 
 const { data: recommendedPosts } = await useAsyncData<ProductPost[]>(
@@ -120,6 +95,28 @@ const postBrandName = computed(() => getBrandName(categoryId.value ?? '', subcat
 const postLocation = computed(() => post.value?.location);
 const postCityId = computed(() => postLocation.value?.cityId ?? 'all');
 const postCityName = computed(() => postLocation.value?.cityName);
+
+// Канонический путь собирается из данных поста: если запрошенный URL не совпал
+// (устаревшая ссылка, у поста сменились категория или город) — отдаём 301.
+//
+// ВАЖНО: navigateTo обязан вызываться здесь, в scope setup, а не внутри обработчика
+// useAsyncData. Там после первого await теряется асинхронный контекст Nuxt, navigateTo
+// падает с «nuxt instance unavailable», и это исключение ловил catch того же обработчика,
+// превращая любой неканонический URL в 500 вместо 301.
+const canonicalRoute = computed(() => getPostRoute({
+  productId: post.value?.id ?? '',
+  brandId: post.value?.brandId,
+  subcategoryId: post.value?.subcategoryId,
+  categoryId: post.value?.categoryId ?? '',
+  cityId: postCityId.value,
+}));
+
+const isCanonicalUrl = computed(() => route.name === canonicalRoute.value.name &&
+  Object.entries(canonicalRoute.value.params).every(([key, value]) => route.params[key] === value));
+
+if (post.value && !isCanonicalUrl.value) {
+  await navigateTo(canonicalRoute.value, { redirectCode: 301 });
+}
 
 const formattedPrice = computed(() => formatCurrency(`${post.value?.price}`));
 const formattedDate = computed(() => post.value?.createdAt ? formatFullDate(post.value?.createdAt, 'pt') : '');
