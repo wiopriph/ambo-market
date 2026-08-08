@@ -8,7 +8,7 @@ Peer-to-peer buying and selling, commission-free.
 [![Nuxt](https://img.shields.io/badge/Nuxt-4.4-00DC82?logo=nuxt&logoColor=white)](https://nuxt.com)
 [![Vue](https://img.shields.io/badge/Vue-3.5-4FC08D?logo=vue.js&logoColor=white)](https://vuejs.org)
 [![Supabase](https://img.shields.io/badge/Supabase-Postgres-3ECF8E?logo=supabase&logoColor=white)](https://supabase.com)
-[![Node](https://img.shields.io/badge/Node-25-339933?logo=node.js&logoColor=white)](https://nodejs.org)
+[![Node](https://img.shields.io/badge/Node-24-339933?logo=node.js&logoColor=white)](https://nodejs.org)
 
 </div>
 

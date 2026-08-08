@@ -16,16 +16,5 @@ export default defineContentConfig({
         tags: z.array(z.string()).optional(),
       }),
     }),
-    // blogEn: defineCollection({
-    //   source: {
-    //     include: 'blog/en/*.md',
-    //     prefix: '/blog/en',
-    //   },
-    //   type: 'page',
-    //   schema: z.object({
-    //     lang: z.string(),
-    //     date: z.date(),
-    //   }),
-    // }),
   },
 });
