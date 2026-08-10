@@ -453,24 +453,35 @@ const seo = computed(() => {
 
   const title = entry ? fillStr(entry.title, vars) : (post.value?.title ?? '');
   const description = entry ? fillStr(entry.description, vars) : (post.value?.description ?? '');
-  const image = post.value?.preview || '';
+  // полноразмерное фото (до 1920px) — превью 360px слишком мелкое для og:image
+  const image = post.value?.images?.[0] || post.value?.preview || '';
 
   return { title, description, image };
 });
 
 const title = computed(() => seo.value.title);
 
-const meta = computed(() => [
-  { key: 'description', name: 'description', content: seo.value.description },
-  { key: 'og:type', property: 'og:type', content: 'product' },
-  { key: 'og:title', property: 'og:title', content: seo.value.title },
-  { key: 'og:description', property: 'og:description', content: seo.value.description },
-  { key: 'og:image', property: 'og:image', content: seo.value.image },
-  { key: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
-  { key: 'twitter:title', property: 'twitter:title', content: seo.value.title },
-  { key: 'twitter:description', property: 'twitter:description', content: seo.value.description },
-  { key: 'twitter:image', property: 'twitter:image', content: seo.value.image },
-]);
+const meta = computed(() => {
+  const tags = [
+    { key: 'description', name: 'description', content: seo.value.description },
+    { key: 'og:type', property: 'og:type', content: 'product' },
+    { key: 'og:title', property: 'og:title', content: seo.value.title },
+    { key: 'og:description', property: 'og:description', content: seo.value.description },
+    { key: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
+    { key: 'twitter:title', property: 'twitter:title', content: seo.value.title },
+    { key: 'twitter:description', property: 'twitter:description', content: seo.value.description },
+  ];
+
+  // без фото тег не ставим — сработает глобальный дефолт из plugins/seo.ts
+  if (seo.value.image) {
+    tags.push(
+      { key: 'og:image', property: 'og:image', content: seo.value.image },
+      { key: 'twitter:image', property: 'twitter:image', content: seo.value.image },
+    );
+  }
+
+  return tags;
+});
 
 const script = computed(() => [{
   type: 'application/ld+json',

@@ -37,6 +37,14 @@ const meta = computed(() => {
     );
   }
 
+  if (doc.value?.date) {
+    metaTags.push({ key: 'article:published_time', property: 'article:published_time', content: String(doc.value.date) });
+  }
+
+  if (doc.value?.dateModified || doc.value?.date) {
+    metaTags.push({ key: 'article:modified_time', property: 'article:modified_time', content: String(doc.value.dateModified || doc.value.date) });
+  }
+
   return metaTags;
 });
 

@@ -86,11 +86,16 @@ useHead({
     { key: 'og:type', property: 'og:type', content: 'profile' },
     { key: 'og:title', property: 'og:title', content: title.value },
     { key: 'og:description', property: 'og:description', content: description.value },
-    { key: 'og:image', property: 'og:image', content: user.value?.photoURL || '' },
     { key: 'twitter:card', name: 'twitter:card', content: 'summary' },
     { key: 'twitter:title', property: 'twitter:title', content: title.value },
     { key: 'twitter:description', property: 'twitter:description', content: description.value },
-    { key: 'twitter:image', property: 'twitter:image', content: user.value?.photoURL || '' },
+    // без фото og:image не ставим — сработает глобальный дефолт из plugins/seo.ts
+    ...(user.value?.photoURL ?
+      [
+        { key: 'og:image', property: 'og:image', content: user.value.photoURL },
+        { key: 'twitter:image', property: 'twitter:image', content: user.value.photoURL },
+      ] :
+      []),
   ],
   script: [{
     type: 'application/ld+json',
