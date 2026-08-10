@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
   const updateData: Partial<DbProfile> & { updated_at?: string } = {};
 
   if (body.display_name !== undefined) {
-    updateData.display_name = body.display_name?.trim() || null;
+    updateData['display_name'] = body.display_name?.trim() || null;
   }
 
   if (body.phone !== undefined) {
@@ -50,12 +50,12 @@ export default defineEventHandler(async (event) => {
   }
 
   if (body.image) {
-    updateData.avatar_url = await uploadProfileImage(client as any, body.image, userId, {
+    updateData['avatar_url'] = await uploadProfileImage(client as any, body.image, userId, {
       bucketName: 'media',
     });
   }
 
-  updateData.updated_at = new Date().toISOString();
+  updateData['updated_at'] = new Date().toISOString();
 
   const { data, error } = await client
     .from('profiles')

@@ -10,8 +10,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "node ./node_modules/eslint/bin/eslint.js --format gitlab --ext .js,.vue,.ts --ignore-path .gitignore .",
-    "lintfix": "node ./node_modules/eslint/bin/eslint.js -c .eslintrc.js --fix --ext .js,.vue,.ts --ignore-path .gitignore ."
+    "lint": "eslint .",
+    "lintfix": "eslint . --fix"
   },
   "dependencies": {
     "@nuxt/content": "3.14.0",

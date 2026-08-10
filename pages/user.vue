@@ -191,6 +191,6 @@ useHead({
       />
     </div>
 
-    <NuxtPage :userName="userName" />
+    <NuxtPage />
   </div>
 </template>

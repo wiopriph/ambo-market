@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
     .from('posts')
     .update({
       status: 'closed',
-      updated_at: new Date().toISOString(),
+      'updated_at': new Date().toISOString(),
     })
     .eq('id', postId);
 

@@ -15,7 +15,6 @@ type SupabaseLikeClient = {
         path: string,
         body: Buffer,
         options: { contentType: string; cacheControl?: string; upsert?: boolean },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ) => Promise<{ data: any; error: any }>;
       getPublicUrl: (path: string) => { data: { publicUrl: string } };
     };
@@ -49,7 +48,7 @@ export async function processImageBuffer(
       .webp({ quality })
       .toBuffer();
   } catch (error) {
-    // eslint-disable-next-line no-console
+     
     console.error('Error processing image:', error);
     throw createError({
       statusCode: 500,
@@ -90,7 +89,7 @@ export async function uploadPostImage(
     });
 
   if (uploadError) {
-    // eslint-disable-next-line no-console
+     
     console.error('Upload error', uploadError);
     throw createError({
       statusCode: 500,
@@ -135,7 +134,7 @@ export async function uploadProfileImage(
     });
 
   if (uploadError) {
-    // eslint-disable-next-line no-console
+     
     console.error('Upload error', uploadError);
     throw createError({
       statusCode: 500,

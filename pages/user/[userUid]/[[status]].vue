@@ -1,6 +1,4 @@
 <script setup lang="ts">
-defineProps<{ userName?: string }>();
-
 definePageMeta({
   middleware: defineNuxtRouteMiddleware((to) => {
     const { status } = to.params;

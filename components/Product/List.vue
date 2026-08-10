@@ -15,6 +15,7 @@ interface ListProps {
 
 
 const props = withDefaults(defineProps<ListProps>(), {
+  list: () => [],
   isLoading: false,
   emptyTitle: '',
   emptyText: '',
