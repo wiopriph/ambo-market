@@ -58,14 +58,6 @@ const seo = computed(() => {
   };
 });
 
-const config = useRuntimeConfig();
-
-const canonicalLink = computed(() =>
-  cityId.value === 'all' ?
-    [{ rel: 'canonical', href: config?.public?.appBaseUrl }] :
-    [],
-);
-
 useHead({
   title: seo.value.title,
   meta: [
@@ -75,7 +67,6 @@ useHead({
     { key: 'og:description', property: 'og:description', content: seo.value.description },
     { key: 'twitter:description', property: 'twitter:description', content: seo.value.description },
   ],
-  link: canonicalLink.value,
 });
 
 const categories = computed(() => CATEGORIES.map(category => ({
