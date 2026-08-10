@@ -537,29 +537,52 @@ const breadcrumbsList = computed(() => {
   return breadcrumbs;
 });
 
-const { breadcrumbList, jsonLdScript } = useJsonLd();
+const { absoluteUrl, breadcrumbList, jsonLdScript } = useJsonLd();
 
-const productSchema = computed(() => ({
-  '@type': 'Product',
-  identifier: post.value?.id,
-  name: post.value?.title,
-  image: post.value?.images,
-  description: post.value?.description,
-  category: postCategoryName.value,
+const CONDITION_SCHEMA: Record<string, string> = {
+  new: 'https://schema.org/NewCondition',
+  used: 'https://schema.org/UsedCondition',
+  refurbished: 'https://schema.org/RefurbishedCondition',
+};
 
-  offers: {
-    '@type': 'Offer',
-    price: post.value?.price || 0,
-    priceCurrency: 'AOA',
-    availability: 'https://schema.org/InStock',
-    priceValidUntil: '2099-12-31T23:59:59Z',
-    seller: {
-      '@type': 'Person',
-      name: seller.value?.name,
-      identifier: seller.value?.id,
-    },
-  },
-}));
+const productSchema = computed(() => {
+  const condition = CONDITION_SCHEMA[`${post.value?.attributes?.condition ?? ''}`];
+  const price = post.value?.price ?? 0;
+  const url = absoluteUrl(canonicalRoute.value);
+
+  return {
+    '@type': 'Product',
+    identifier: post.value?.id,
+    name: post.value?.title,
+    url,
+    image: post.value?.images,
+    description: post.value?.description,
+    category: postCategoryName.value,
+    ...(brandId.value ? { brand: { '@type': 'Brand', name: postBrandName.value } } : {}),
+    ...(condition ? { itemCondition: condition } : {}),
+
+    // без цены Offer не размечаем («preço a combinar»)
+    ...(price > 0 ?
+      {
+        offers: {
+          '@type': 'Offer',
+          url,
+          price,
+          priceCurrency: 'AOA',
+          availability: isPostOpen.value ?
+            'https://schema.org/InStock' :
+            'https://schema.org/SoldOut',
+          itemCondition: condition,
+          seller: {
+            '@type': 'Person',
+            name: seller.value?.name,
+            identifier: seller.value?.id,
+          },
+        },
+      } :
+      {}),
+  };
+});
 
 const script = computed(() => [jsonLdScript(
   productSchema.value,
