@@ -46,12 +46,18 @@ export default defineNuxtConfig({
     '@nuxtjs/supabase',
   ],
 
+  site: {
+    url: 'https://ambo.market',
+    name: 'Ambo Market',
+  },
+
   sitemap: {
     xsl: false,
     excludeAppSources: true,
     cacheMaxAgeSeconds: 3600,
     sources: [
-      // '/api/sitemap',
+      '/api/sitemap',
+      '/api/sitemap-posts',
       '/api/sitemap-blog',
     ],
   },
