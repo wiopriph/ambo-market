@@ -545,13 +545,39 @@ const CONDITION_SCHEMA: Record<string, string> = {
   refurbished: 'https://schema.org/RefurbishedCondition',
 };
 
+// schema.org-подтипы для транспорта: Car/Motorcycle — точные типы,
+// для остального транспорта — общий Vehicle
+const VEHICLE_SCHEMA_TYPES: Record<string, string> = {
+  cars: 'Car',
+  motorcycles: 'Motorcycle',
+  commercial: 'Vehicle',
+  boats: 'Vehicle',
+};
+
+const FUEL_LABELS: Record<string, string> = {
+  gasoline: 'Gasolina',
+  diesel: 'Diesel',
+  electric: 'Eléctrico',
+  hybrid: 'Híbrido',
+};
+
+const TRANSMISSION_LABELS: Record<string, string> = {
+  manual: 'Manual',
+  automatic: 'Automática',
+};
+
 const productSchema = computed(() => {
-  const condition = CONDITION_SCHEMA[`${post.value?.attributes?.condition ?? ''}`];
+  const attrs = post.value?.attributes ?? {};
+  const condition = CONDITION_SCHEMA[`${attrs.condition ?? ''}`];
   const price = post.value?.price ?? 0;
   const url = absoluteUrl(canonicalRoute.value);
 
+  const vehicleType = categoryId.value === 'vehicles' ?
+    VEHICLE_SCHEMA_TYPES[subcategoryId.value ?? ''] :
+    undefined;
+
   return {
-    '@type': 'Product',
+    '@type': vehicleType ? ['Product', vehicleType] : 'Product',
     identifier: post.value?.id,
     name: post.value?.title,
     url,
@@ -560,6 +586,19 @@ const productSchema = computed(() => {
     category: postCategoryName.value,
     ...(brandId.value ? { brand: { '@type': 'Brand', name: postBrandName.value } } : {}),
     ...(condition ? { itemCondition: condition } : {}),
+
+    ...(vehicleType ?
+      {
+        ...(attrs.year ? { vehicleModelDate: `${attrs.year}` } : {}),
+        ...(typeof attrs.mileage === 'number' ?
+          { mileageFromOdometer: { '@type': 'QuantitativeValue', value: attrs.mileage, unitCode: 'KMT' } } :
+          {}),
+        ...(FUEL_LABELS[`${attrs.fuel ?? ''}`] ? { fuelType: FUEL_LABELS[`${attrs.fuel}`] } : {}),
+        ...(TRANSMISSION_LABELS[`${attrs.transmission ?? ''}`] ?
+          { vehicleTransmission: TRANSMISSION_LABELS[`${attrs.transmission}`] } :
+          {}),
+      } :
+      {}),
 
     // без цены Offer не размечаем («preço a combinar»)
     ...(price > 0 ?
@@ -584,8 +623,63 @@ const productSchema = computed(() => {
   };
 });
 
+const EMPLOYMENT_TYPES: Record<string, string> = {
+  'full-time': 'FULL_TIME',
+  'part-time': 'PART_TIME',
+  freelance: 'CONTRACTOR',
+  internship: 'INTERN',
+};
+
+// вакансия — не товар: вместо Product размечаем JobPosting (вход в Google Jobs)
+const jobPostingSchema = computed(() => {
+  const attrs = post.value?.attributes ?? {};
+  const employmentType = EMPLOYMENT_TYPES[`${attrs.employmentType ?? ''}`];
+  const price = post.value?.price ?? 0;
+
+  return {
+    '@type': 'JobPosting',
+    title: post.value?.title,
+    description: post.value?.description,
+    datePosted: post.value?.createdAt,
+    url: absoluteUrl(canonicalRoute.value),
+    ...(employmentType ? { employmentType } : {}),
+    hiringOrganization: {
+      '@type': 'Organization',
+      name: seller.value?.name,
+    },
+    jobLocation: {
+      '@type': 'Place',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: postCityName.value || 'Angola',
+        addressCountry: 'AO',
+      },
+    },
+    ...(price > 0 ?
+      {
+        baseSalary: {
+          '@type': 'MonetaryAmount',
+          currency: 'AOA',
+          value: { '@type': 'QuantitativeValue', value: price, unitText: 'MONTH' },
+        },
+      } :
+      {}),
+    directApply: false,
+  };
+});
+
+const realEstateListingSchema = computed(() => ({
+  '@type': 'RealEstateListing',
+  name: post.value?.title,
+  url: absoluteUrl(canonicalRoute.value),
+  datePosted: post.value?.createdAt,
+}));
+
+const isJobVacancy = computed(() => categoryId.value === 'jobs' && subcategoryId.value === 'vacancies');
+
 const script = computed(() => [jsonLdScript(
-  productSchema.value,
+  isJobVacancy.value ? jobPostingSchema.value : productSchema.value,
+  ...(categoryId.value === 'real-estate' ? [realEstateListingSchema.value] : []),
   breadcrumbList(breadcrumbsList.value),
 )]);
 
