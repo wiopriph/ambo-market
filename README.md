@@ -112,7 +112,6 @@ All variables live in [`.env.example`](.env.example). Copy it to `.env` and fill
 ├── public/            static assets served as-is (favicon, logo, robots)
 ├── server/
 │   ├── api/           REST endpoints (posts, favorites, feedback, users…)
-│   ├── plugins/       Nitro plugins (defer-css)
 │   └── utils/         server utilities (images, rateLimit)
 ├── types/             TypeScript types
 ├── utils/             client utilities (formatting, routes)
@@ -154,7 +153,6 @@ docker run -p 3000:3000 --env-file .env ambo-market
 
 - Static assets (`/icon-logo.svg`, `/favicon.ico`) are served with `Cache-Control: immutable`
   via `routeRules` in [`nuxt.config.ts`](nuxt.config.ts).
-- CSS is made non-render-blocking through the Nitro plugin `server/plugins/defer-css.ts`.
 - GTM is loaded lazily — on the first user interaction.
 - If a reverse proxy / CDN sits in front of Nitro, make sure it doesn't override the
   cache-control headers.
