@@ -10,6 +10,8 @@
 
     <AppFooter />
 
+    <AppBottomNav />
+
     <AppFeedbackModal />
   </UApp>
 </template>

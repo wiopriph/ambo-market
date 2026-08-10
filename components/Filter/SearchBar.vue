@@ -125,7 +125,7 @@ const isCityOpen = ref(false);
       :content="{ align: 'start' }"
     >
       <button
-        class="hidden shrink-0 items-center gap-1.5 border-l border-default px-3 py-2 text-left transition hover:bg-elevated sm:flex sm:px-4 sm:py-2.5 lg:h-full lg:px-3 lg:py-0"
+        class="flex shrink-0 items-center gap-1.5 border-l border-default px-3 py-2 text-left transition hover:bg-elevated sm:px-4 sm:py-2.5 lg:h-full lg:px-3 lg:py-0"
         :class="{ 'bg-elevated': isCityOpen }"
         type="button"
       >
@@ -135,7 +135,7 @@ const isCityOpen = ref(false);
         />
 
         <span
-          class="text-sm font-medium text-highlighted"
+          class="max-w-24 truncate text-sm font-medium text-highlighted sm:max-w-none"
           v-text="currentCityLabel"
         />
       </button>
