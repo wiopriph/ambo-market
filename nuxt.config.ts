@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: {
-        lang: 'pt',
+        lang: 'pt-AO',
       },
     },
   },
