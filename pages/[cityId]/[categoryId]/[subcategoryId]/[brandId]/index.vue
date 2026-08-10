@@ -706,6 +706,15 @@ const { data: posts } = await useAsyncData(
   { watch: [() => [route.query, route.params]] },
 );
 
+// BreadcrumbList для листингов рендерит UIBreadcrumbs — здесь только ItemList
+const { productItemList, jsonLdScript } = useJsonLd();
+
+useHead({
+  script: posts.value?.posts?.length ?
+    [jsonLdScript(productItemList(posts.value.posts))] :
+    [],
+});
+
 
 const totalPages = computed(() => {
   const postsCount = posts.value?.resultsCount || 0;

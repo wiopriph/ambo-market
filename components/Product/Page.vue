@@ -483,34 +483,6 @@ const meta = computed(() => {
   return tags;
 });
 
-const script = computed(() => [{
-  type: 'application/ld+json',
-  innerHTML: JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    identifier: post.value?.id,
-    name: post.value?.title,
-    image: post.value?.images,
-    description: post.value?.description,
-    category: postCategoryName.value,
-
-    offers: {
-      '@type': 'Offer',
-      price: post.value?.price || 0,
-      priceCurrency: 'AOA',
-      availability: 'https://schema.org/InStock',
-      priceValidUntil: '2099-12-31T23:59:59Z',
-      seller: {
-        '@type': 'Person',
-        name: seller.value?.name,
-        identifier: seller.value?.id,
-      },
-    },
-  }),
-}]);
-
-useHead({ title: title.value, meta: meta.value, script: script.value });
-
 const breadcrumbsList = computed(() => {
   const breadcrumbs: Breadcrumb[] = [{
     title: 'Início',
@@ -564,6 +536,37 @@ const breadcrumbsList = computed(() => {
 
   return breadcrumbs;
 });
+
+const { breadcrumbList, jsonLdScript } = useJsonLd();
+
+const productSchema = computed(() => ({
+  '@type': 'Product',
+  identifier: post.value?.id,
+  name: post.value?.title,
+  image: post.value?.images,
+  description: post.value?.description,
+  category: postCategoryName.value,
+
+  offers: {
+    '@type': 'Offer',
+    price: post.value?.price || 0,
+    priceCurrency: 'AOA',
+    availability: 'https://schema.org/InStock',
+    priceValidUntil: '2099-12-31T23:59:59Z',
+    seller: {
+      '@type': 'Person',
+      name: seller.value?.name,
+      identifier: seller.value?.id,
+    },
+  },
+}));
+
+const script = computed(() => [jsonLdScript(
+  productSchema.value,
+  breadcrumbList(breadcrumbsList.value),
+)]);
+
+useHead({ title: title.value, meta: meta.value, script: script.value });
 
 const { uid } = useUser();
 

@@ -85,6 +85,16 @@ const { data: posts } = await useAsyncData(
   { watch: [() => route.query] },
 );
 
+const { organization, webSite, productItemList, jsonLdScript } = useJsonLd();
+
+useHead({
+  script: [jsonLdScript(
+    organization(),
+    webSite(),
+    ...(posts.value?.posts?.length ? [productItemList(posts.value.posts)] : []),
+  )],
+});
+
 
 const totalPages = computed(() => {
   const postsCount = posts.value?.resultsCount ?? 0;
