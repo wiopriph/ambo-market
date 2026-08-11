@@ -43,6 +43,7 @@ const {
   errors,
   handleSubmit,
   resetForm,
+  validateField,
 } = useForm({
   initialValues: {
     category: '',
@@ -79,7 +80,7 @@ const {
       }),
     productName: string()
       .required('Este campo é obrigatório')
-      .max(50, 'Ultrapassou o limite de 50 caracteres.'),
+      .max(70, 'Ultrapassou o limite de 70 caracteres.'),
     price: string().required('Este campo é obrigatório'),
     description: string().required('Este campo é obrigatório'),
     images: array().min(1, 'Por favor, adicione pelo menos uma foto'),
@@ -114,6 +115,45 @@ const citiesItems = computed<SelectItem[]>(() => CITIES
 
 const attributeFields = computed(() => getProductAttributeFields(category.value, subcategory.value));
 
+// ── шаги визарда ──────────────────────────────────────────────────────
+const WIZARD_STEPS = ['Categoria', 'Fotos', 'Detalhes'];
+
+// поля, которые должны быть валидны для перехода с шага дальше
+const STEP_FIELDS: Record<number, string[]> = {
+  1: ['cityId', 'category', 'subcategory', 'brand'],
+  2: ['images'],
+};
+
+const FIELD_STEP: Record<string, number> = {
+  cityId: 1,
+  category: 1,
+  subcategory: 1,
+  brand: 1,
+  images: 2,
+  productName: 3,
+  price: 3,
+  description: 3,
+};
+
+const step = ref(1);
+const isLastStep = computed(() => step.value === WIZARD_STEPS.length);
+
+const goBack = () => {
+  if (step.value > 1) {
+    step.value -= 1;
+  }
+};
+
+const goNext = async () => {
+  const results = await Promise.all(
+    (STEP_FIELDS[step.value] ?? []).map(field => validateField(field)),
+  );
+
+  if (results.every(result => result.valid)) {
+    step.value += 1;
+  }
+};
+
 // ── черновик ──────────────────────────────────────────────────────────
 // Текстовые поля — в localStorage (переживают и перезагрузку).
 // Фото (base64) в localStorage не влезают — держим их в useState:
@@ -132,9 +172,12 @@ const saveDraft = () => {
     description: description.value,
     cityId: cityId.value,
     attributes: attributes.value,
+    step: step.value,
   };
 
-  if (Object.values(draft).some(value => value && Object.keys(value).length !== 0)) {
+  const { step: _step, ...fields } = draft;
+
+  if (Object.values(fields).some(value => value && Object.keys(value).length !== 0)) {
     localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
   } else {
     localStorage.removeItem(DRAFT_KEY);
@@ -150,12 +193,20 @@ const clearDraft = () => {
   draftImages.value = [];
 };
 
+// watch(category/subcategory) сбрасывают зависимые поля — при программном
+// восстановлении черновика этот сброс затирал восстановленные значения
+let isRestoringDraft = false;
+
 onMounted(() => {
   try {
     const raw = localStorage.getItem(DRAFT_KEY);
     const draft = raw ? JSON.parse(raw) : null;
 
     if (draft || draftImages.value.length) {
+      const { step: draftStep, ...draftFields } = draft ?? {};
+
+      isRestoringDraft = true;
+
       resetForm({
         values: {
           category: '',
@@ -166,9 +217,19 @@ onMounted(() => {
           description: '',
           cityId: '',
           attributes: {},
-          ...draft,
+          ...draftFields,
           images: draftImages.value,
         },
+      });
+
+      const restored = Number(draftStep);
+
+      if (restored >= 1 && restored <= WIZARD_STEPS.length) {
+        step.value = restored;
+      }
+
+      nextTick(() => {
+        isRestoringDraft = false;
       });
     }
   } catch {
@@ -177,7 +238,7 @@ onMounted(() => {
 });
 
 watch(
-  [category, subcategory, brand, productName, price, description, cityId, attributes, images],
+  [category, subcategory, brand, productName, price, description, cityId, attributes, images, step],
   () => saveDraftDebounced(),
   { deep: true },
 );
@@ -215,6 +276,7 @@ const loadFile = () => fileInput.value?.click();
 
 const clearFields = () => {
   clearDraft();
+  step.value = 1;
 
   resetForm({
     values: {
@@ -234,6 +296,18 @@ const clearFields = () => {
 const isLoading = ref(false);
 const hasAPIError = ref(false);
 const apiErrorMessage = ref('');
+
+// при невалидном сабмите ошибка может быть на скрытом шаге —
+// возвращаем пользователя к самому раннему шагу с проблемой
+const onInvalidSubmit = ({ errors: submitErrors }: { errors: Record<string, string> }) => {
+  const steps = Object.keys(submitErrors)
+    .map(field => FIELD_STEP[field])
+    .filter(Boolean);
+
+  if (steps.length) {
+    step.value = Math.min(...steps);
+  }
+};
 
 const createPost = handleSubmit.withControlled(async () => {
   if (isLoading.value) return;
@@ -289,15 +363,19 @@ const createPost = handleSubmit.withControlled(async () => {
   } finally {
     isLoading.value = false;
   }
-});
+}, onInvalidSubmit);
 
 watch(category, () => {
+  if (isRestoringDraft) return;
+
   subcategory.value = '';
   brand.value = '';
   attributes.value = {};
 });
 
 watch(subcategory, () => {
+  if (isRestoringDraft) return;
+
   brand.value = '';
   attributes.value = {};
 });
@@ -327,7 +405,36 @@ watch(subcategory, () => {
       class="space-y-3"
       @submit.prevent="createPost"
     >
-      <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
+      <div class="flex items-center gap-2 rounded-2xl border border-default bg-default px-5 py-3">
+        <template
+          v-for="(label, index) in WIZARD_STEPS"
+          :key="label"
+        >
+          <div
+            v-if="index"
+            class="h-px flex-1 bg-accented"
+          />
+
+          <div class="flex items-center gap-1.5">
+            <span
+              class="flex size-6 items-center justify-center rounded-full text-xs font-semibold"
+              :class="step > index ? 'bg-primary text-inverted' : 'bg-elevated text-muted'"
+              v-text="index + 1"
+            />
+
+            <span
+              class="text-xs"
+              :class="step === index + 1 ? 'font-medium text-highlighted' : 'text-muted'"
+              v-text="label"
+            />
+          </div>
+        </template>
+      </div>
+
+      <div
+        v-if="step === 1"
+        class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden"
+      >
         <div class="px-5 py-4">
           <UFormField
             label="Cidade"
@@ -412,15 +519,19 @@ watch(subcategory, () => {
       </div>
 
       <ProductAttributesFields
+        v-if="step === 3"
         v-model="attributes"
         :fields="attributeFields"
       />
 
-      <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden">
+      <div
+        v-if="step === 3"
+        class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden"
+      >
         <div class="px-5 py-4">
           <UFormField
             label="Nome do produto"
-            help="O nome não deve exceder os 50 caracteres."
+            help="O nome não deve exceder os 70 caracteres."
             :error="errors.productName"
             name="productName"
             required
@@ -430,7 +541,7 @@ watch(subcategory, () => {
               name="productName"
               type="text"
               placeholder="Nome curto e claro do produto"
-              maxlength="50"
+              maxlength="70"
               size="lg"
               class="w-full"
             />
@@ -478,7 +589,10 @@ watch(subcategory, () => {
         </div>
       </div>
 
-      <div class="rounded-2xl border border-default bg-default p-5 space-y-4">
+      <div
+        v-if="step === 2"
+        class="rounded-2xl border border-default bg-default p-5 space-y-4"
+      >
         <div>
           <p class="text-sm font-semibold text-highlighted">
             Fotos
@@ -573,24 +687,50 @@ watch(subcategory, () => {
       </div>
 
       <UAlert
-        v-if="hasAPIError"
+        v-if="isLastStep && hasAPIError"
         color="error"
         variant="soft"
         title="Não foi possível criar o anúncio"
         :description="apiErrorMessage"
       />
 
-      <UButton
-        type="submit"
-        color="primary"
-        size="lg"
-        :loading="isLoading"
-        label="Publicar anúncio"
-        block
-      />
+      <div class="flex gap-2">
+        <UButton
+          v-if="step > 1"
+          type="button"
+          color="neutral"
+          variant="soft"
+          size="lg"
+          icon="i-lucide-arrow-left"
+          label="Voltar"
+          class="flex-1"
+          @click="goBack"
+        />
+
+        <UButton
+          v-if="!isLastStep"
+          type="button"
+          color="primary"
+          size="lg"
+          trailingIcon="i-lucide-arrow-right"
+          label="Continuar"
+          class="flex-1"
+          @click="goNext"
+        />
+
+        <UButton
+          v-else
+          type="submit"
+          color="primary"
+          size="lg"
+          :loading="isLoading"
+          label="Publicar anúncio"
+          class="flex-1"
+        />
+      </div>
 
       <p
-        v-if="!isLoggedIn"
+        v-if="isLastStep && !isLoggedIn"
         class="text-center text-xs text-muted"
       >
         Para publicar, você fará login no próximo passo — o anúncio fica guardado.
