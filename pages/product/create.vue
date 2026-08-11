@@ -489,7 +489,7 @@ watch(subcategory, () => {
               />
 
               <span
-                class="truncate"
+                class="leading-snug"
                 v-text="categoryOption.name"
               />
             </button>
@@ -507,12 +507,12 @@ watch(subcategory, () => {
             v-text="errors.subcategory"
           />
 
-          <div class="mt-3 flex flex-wrap gap-2">
+          <div class="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
             <button
               v-for="subcategoryOption in currentCategory.subcategories"
               :key="subcategoryOption.id"
               type="button"
-              class="flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition"
+              class="flex items-center gap-2 rounded-xl border px-3 py-3 text-left text-sm transition"
               :class="subcategory === subcategoryOption.id ?
                 'border-primary bg-primary/5 font-medium text-primary' :
                 'border-default text-toned hover:border-accented'"
@@ -521,10 +521,13 @@ watch(subcategory, () => {
               <UIcon
                 v-if="subcategoryOption.icon"
                 :name="subcategoryOption.icon"
-                class="size-4 shrink-0"
+                class="size-5 shrink-0"
               />
 
-              <span v-text="subcategoryOption.name" />
+              <span
+                class="leading-snug"
+                v-text="subcategoryOption.name"
+              />
             </button>
           </div>
         </div>
@@ -802,7 +805,7 @@ watch(subcategory, () => {
         :description="apiErrorMessage"
       />
 
-      <div class="flex gap-2">
+      <div class="flex flex-col-reverse gap-2 sm:flex-row">
         <UButton
           v-if="step > 1"
           type="button"
@@ -811,7 +814,7 @@ watch(subcategory, () => {
           size="lg"
           icon="i-lucide-arrow-left"
           label="Voltar"
-          class="flex-1"
+          class="flex-1 justify-center"
           @click="goBack"
         />
 
@@ -822,7 +825,7 @@ watch(subcategory, () => {
           size="lg"
           trailingIcon="i-lucide-arrow-right"
           label="Continuar"
-          class="flex-1"
+          class="flex-1 justify-center"
           @click="goNext"
         />
 
@@ -833,7 +836,7 @@ watch(subcategory, () => {
           size="lg"
           :loading="isLoading"
           label="Publicar anúncio"
-          class="flex-1"
+          class="flex-1 justify-center"
         />
       </div>
 
