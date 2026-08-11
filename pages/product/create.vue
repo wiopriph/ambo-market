@@ -2,6 +2,8 @@
 import { useDebounceFn } from '@vueuse/core';
 import { useField, useForm } from 'vee-validate';
 import { array, object, string } from 'yup';
+import formatCurrency from '~/utils/formatCurrency';
+import { usePosts } from '~/composables/usePosts';
 import { useUser } from '~/composables/useUser';
 import { CATEGORIES } from '~/constants/categories';
 import { CITIES } from '~/constants/cities';
@@ -44,6 +46,7 @@ const {
   handleSubmit,
   resetForm,
   validateField,
+  setFieldValue,
 } = useForm({
   initialValues: {
     category: '',
@@ -115,23 +118,52 @@ const citiesItems = computed<SelectItem[]>(() => CITIES
 
 const attributeFields = computed(() => getProductAttributeFields(category.value, subcategory.value));
 
+// бренды: короткий список — чипы в один тап, длинный — селект с поиском
+const MAX_BRAND_CHIPS = 12;
+const showBrandChips = computed(() => brandsItems.value.length > 0 && brandsItems.value.length <= MAX_BRAND_CHIPS);
+
+// пример названия под выбранную категорию — вместо абстрактной подсказки
+const TITLE_EXAMPLES: Record<string, string> = {
+  vehicles: 'Ex: Toyota Corolla 2015 automático',
+  'real-estate': 'Ex: Apartamento T3 no Talatona',
+  electronics: 'Ex: iPhone 12 128GB azul',
+  fashion: 'Ex: Ténis Nike Air Max 42 novos',
+  jobs: 'Ex: Motorista com carta de condução',
+  services: 'Ex: Electricista ao domicílio',
+  animals: 'Ex: Pastor Alemão 3 meses vacinado',
+  hobby: 'Ex: Guitarra acústica Yamaha',
+  kids: 'Ex: Carrinho de bebé pouco usado',
+  home: 'Ex: Sofá de 3 lugares em pele',
+};
+
+const titlePlaceholder = computed(() => TITLE_EXAMPLES[category.value] || 'Ex: iPhone 12 128GB azul');
+
+// город почти всегда совпадает с выбранным на сайте — предзаполняем
+const { location } = usePosts();
+
+const prefillCity = () => {
+  if (!cityId.value && location.value.cityId && location.value.cityId !== 'all') {
+    cityId.value = location.value.cityId;
+  }
+};
+
 // ── шаги визарда ──────────────────────────────────────────────────────
 const WIZARD_STEPS = ['Categoria', 'Fotos', 'Detalhes'];
 
 // поля, которые должны быть валидны для перехода с шага дальше
 const STEP_FIELDS: Record<number, string[]> = {
-  1: ['cityId', 'category', 'subcategory', 'brand'],
-  2: ['images'],
+  1: ['category', 'subcategory', 'brand'],
+  2: ['images', 'productName'],
 };
 
 const FIELD_STEP: Record<string, number> = {
-  cityId: 1,
   category: 1,
   subcategory: 1,
   brand: 1,
   images: 2,
-  productName: 3,
+  productName: 2,
   price: 3,
+  cityId: 3,
   description: 3,
 };
 
@@ -235,6 +267,8 @@ onMounted(() => {
   } catch {
     localStorage.removeItem(DRAFT_KEY);
   }
+
+  prefillCity();
 });
 
 watch(
@@ -368,16 +402,16 @@ const createPost = handleSubmit.withControlled(async () => {
 watch(category, () => {
   if (isRestoringDraft) return;
 
-  subcategory.value = '';
-  brand.value = '';
-  attributes.value = {};
+  setFieldValue('subcategory', '', false);
+  setFieldValue('brand', '', false);
+  setFieldValue('attributes', {}, false);
 });
 
 watch(subcategory, () => {
   if (isRestoringDraft) return;
 
-  brand.value = '';
-  attributes.value = {};
+  setFieldValue('brand', '', false);
+  setFieldValue('attributes', {}, false);
 });
 </script>
 
@@ -389,19 +423,11 @@ watch(subcategory, () => {
       </h1>
 
       <p class="mt-0.5 text-sm text-muted">
-        Preencha os detalhes, adicione fotos e publique o anúncio.
+        Leva menos de um minuto — só o essencial.
       </p>
     </div>
 
-    <div
-      v-if="needPhoneNumber"
-      class="rounded-2xl border border-default bg-default p-5"
-    >
-      <LazyUserPhone />
-    </div>
-
     <form
-      v-else
       class="space-y-3"
       @submit.prevent="createPost"
     >
@@ -433,8 +459,154 @@ watch(subcategory, () => {
 
       <div
         v-if="step === 1"
+        class="rounded-2xl border border-default bg-default p-5 space-y-5"
+      >
+        <div>
+          <p class="text-sm font-semibold text-highlighted">
+            O que você está a vender?
+          </p>
+
+          <p
+            v-if="errors.category"
+            class="mt-1 text-sm text-error"
+            v-text="errors.category"
+          />
+
+          <div class="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
+            <button
+              v-for="categoryOption in CATEGORIES"
+              :key="categoryOption.id"
+              type="button"
+              class="flex items-center gap-2 rounded-xl border px-3 py-3 text-left text-sm transition"
+              :class="category === categoryOption.id ?
+                'border-primary bg-primary/5 font-medium text-primary' :
+                'border-default text-toned hover:border-accented'"
+              @click="category = categoryOption.id"
+            >
+              <UIcon
+                :name="categoryOption.icon"
+                class="size-5 shrink-0"
+              />
+
+              <span
+                class="truncate"
+                v-text="categoryOption.name"
+              />
+            </button>
+          </div>
+        </div>
+
+        <div v-if="currentCategory?.subcategories?.length">
+          <p class="text-sm font-semibold text-highlighted">
+            Subcategoria
+          </p>
+
+          <p
+            v-if="errors.subcategory"
+            class="mt-1 text-sm text-error"
+            v-text="errors.subcategory"
+          />
+
+          <div class="mt-3 flex flex-wrap gap-2">
+            <button
+              v-for="subcategoryOption in currentCategory.subcategories"
+              :key="subcategoryOption.id"
+              type="button"
+              class="flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition"
+              :class="subcategory === subcategoryOption.id ?
+                'border-primary bg-primary/5 font-medium text-primary' :
+                'border-default text-toned hover:border-accented'"
+              @click="subcategory = subcategoryOption.id"
+            >
+              <UIcon
+                v-if="subcategoryOption.icon"
+                :name="subcategoryOption.icon"
+                class="size-4 shrink-0"
+              />
+
+              <span v-text="subcategoryOption.name" />
+            </button>
+          </div>
+        </div>
+
+        <div v-if="brandsItems.length">
+          <p class="text-sm font-semibold text-highlighted">
+            Marca
+          </p>
+
+          <p
+            v-if="errors.brand"
+            class="mt-1 text-sm text-error"
+            v-text="errors.brand"
+          />
+
+          <div
+            v-if="showBrandChips"
+            class="mt-3 flex flex-wrap gap-2"
+          >
+            <button
+              v-for="brandOption in brandsItems"
+              :key="brandOption.value"
+              type="button"
+              class="rounded-full border px-3 py-1.5 text-sm transition"
+              :class="brand === brandOption.value ?
+                'border-primary bg-primary/5 font-medium text-primary' :
+                'border-default text-toned hover:border-accented'"
+              @click="brand = brandOption.value"
+            >
+              {{ brandOption.label }}
+            </button>
+          </div>
+
+          <USelectMenu
+            v-else
+            v-model="brand"
+            :items="brandsItems"
+            valueKey="value"
+            placeholder="Procurar marca..."
+            size="lg"
+            class="mt-3 w-full"
+          />
+        </div>
+      </div>
+
+      <div
+        v-if="step === 3"
         class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden"
       >
+        <div class="px-5 py-4">
+          <UFormField
+            label="Preço"
+            :error="errors.price"
+            name="price"
+            required
+          >
+            <UInput
+              v-model="price"
+              name="price"
+              type="number"
+              min="0"
+              inputmode="numeric"
+              placeholder="0"
+              size="lg"
+              class="w-full"
+              :ui="{ trailing: 'pointer-events-none' }"
+            >
+              <template #trailing>
+                <span class="text-sm text-muted">Kz</span>
+              </template>
+            </UInput>
+
+            <template #hint>
+              <span
+                v-if="Number(price) > 0"
+                class="text-xs text-muted"
+                v-text="formatCurrency(price)"
+              />
+            </template>
+          </UFormField>
+        </div>
+
         <div class="px-5 py-4">
           <UFormField
             label="Cidade"
@@ -456,61 +628,18 @@ watch(subcategory, () => {
 
         <div class="px-5 py-4">
           <UFormField
-            label="Categoria"
-            :error="errors.category"
-            name="category"
+            label="Descrição"
+            :error="errors.description"
+            name="description"
             required
           >
-            <USelect
-              v-model="category"
-              :items="categoriesItems"
-              valueKey="value"
-              labelKey="label"
-              placeholder="Selecione"
-              size="lg"
-              class="w-full"
-            />
-          </UFormField>
-        </div>
-
-        <div
-          v-if="subcategoriesItems.length"
-          class="px-5 py-4"
-        >
-          <UFormField
-            label="Subcategoria"
-            :error="errors.subcategory"
-            name="subcategory"
-            required
-          >
-            <USelect
-              v-model="subcategory"
-              :items="subcategoriesItems"
-              valueKey="value"
-              labelKey="label"
-              placeholder="Selecione"
-              size="lg"
-              class="w-full"
-            />
-          </UFormField>
-        </div>
-
-        <div
-          v-if="brandsItems.length"
-          class="px-5 py-4"
-        >
-          <UFormField
-            label="Marca"
-            :error="errors.brand"
-            name="brand"
-            required
-          >
-            <USelect
-              v-model="brand"
-              :items="brandsItems"
-              valueKey="value"
-              labelKey="label"
-              placeholder="Selecione"
+            <UTextarea
+              v-model="description"
+              name="description"
+              placeholder="Estado do produto, tempo de uso, motivo da venda, entrega..."
+              :rows="5"
+              :maxrows="10"
+              autoresize
               size="lg"
               class="w-full"
             />
@@ -525,67 +654,19 @@ watch(subcategory, () => {
       />
 
       <div
-        v-if="step === 3"
-        class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden"
+        v-if="step === 3 && needPhoneNumber"
+        class="rounded-2xl border border-default bg-default p-5"
       >
-        <div class="px-5 py-4">
-          <UFormField
-            label="Nome do produto"
-            help="O nome não deve exceder os 70 caracteres."
-            :error="errors.productName"
-            name="productName"
-            required
-          >
-            <UInput
-              v-model="productName"
-              name="productName"
-              type="text"
-              placeholder="Nome curto e claro do produto"
-              maxlength="70"
-              size="lg"
-              class="w-full"
-            />
-          </UFormField>
-        </div>
+        <p class="text-sm font-semibold text-highlighted">
+          Contacto para os compradores
+        </p>
 
-        <div class="px-5 py-4">
-          <UFormField
-            label="Preço"
-            :error="errors.price"
-            name="price"
-            required
-          >
-            <UInput
-              v-model="price"
-              name="price"
-              type="number"
-              min="0"
-              inputmode="decimal"
-              placeholder="Digite o preço"
-              size="lg"
-              class="w-full"
-            />
-          </UFormField>
-        </div>
+        <p class="mt-0.5 text-xs text-muted">
+          Adicione o seu telefone para os compradores falarem consigo.
+        </p>
 
-        <div class="px-5 py-4">
-          <UFormField
-            label="Descrição"
-            :error="errors.description"
-            name="description"
-            required
-          >
-            <UTextarea
-              v-model="description"
-              name="description"
-              placeholder="Adicione estado, acessórios, opções de entrega e outros detalhes úteis."
-              :rows="5"
-              :maxrows="10"
-              autoresize
-              size="lg"
-              class="w-full"
-            />
-          </UFormField>
+        <div class="mt-4">
+          <LazyUserPhone />
         </div>
       </div>
 
@@ -596,6 +677,10 @@ watch(subcategory, () => {
         <div>
           <p class="text-sm font-semibold text-highlighted">
             Fotos
+          </p>
+
+          <p class="mt-0.5 text-xs text-muted">
+            A primeira foto será a capa do anúncio.
           </p>
 
           <p
@@ -675,15 +760,38 @@ watch(subcategory, () => {
           @click="loadFile"
         />
 
-        <div class="space-y-1 text-xs text-muted">
-          <p>
-            A primeira foto será exibida nos resultados da pesquisa.
-          </p>
+        <p class="text-xs text-muted">
+          Use fotos claras em JPG ou PNG.
+        </p>
+      </div>
 
-          <p>
-            Use fotos claras em JPG ou PNG.
-          </p>
-        </div>
+      <div
+        v-if="step === 2"
+        class="rounded-2xl border border-default bg-default px-5 py-4"
+      >
+        <UFormField
+          label="Título do anúncio"
+          :error="errors.productName"
+          name="productName"
+          required
+        >
+          <UInput
+            v-model="productName"
+            name="productName"
+            type="text"
+            :placeholder="titlePlaceholder"
+            maxlength="70"
+            size="lg"
+            class="w-full"
+          />
+
+          <template #hint>
+            <span
+              class="text-xs text-muted"
+              v-text="`${productName.length}/70`"
+            />
+          </template>
+        </UFormField>
       </div>
 
       <UAlert
