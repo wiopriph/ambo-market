@@ -32,6 +32,14 @@ const {
 const goToLogin = () => {
   pushEvent(CLICK_LOGIN_BUTTON);
 
+  // на страницах авторизации текущий URL в redirect не заворачиваем —
+  // иначе каждый клик по «Entrar» вкладывает redirect в redirect
+  if (String(route.name ?? '').startsWith('auth')) {
+    navigateTo({ name: 'auth', query: route.query });
+
+    return;
+  }
+
   navigateTo({
     name: 'auth',
     query: { redirect: route.fullPath as string },

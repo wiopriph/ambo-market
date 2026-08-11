@@ -18,6 +18,16 @@ const { isLoggedIn } = useUser();
 // у страницы товара свой закреплённый блок контактов — навигацию там не показываем
 const isProductPage = computed(() => String(route.name ?? '').includes('productId'));
 
+// на страницах авторизации текущий URL в redirect не заворачиваем —
+// иначе каждый клик по «Entrar» вкладывает redirect в redirect
+const loginRoute = computed(() => {
+  if (String(route.name ?? '').startsWith('auth')) {
+    return { name: 'auth', query: route.query };
+  }
+
+  return { name: 'auth', query: { redirect: route.fullPath } };
+});
+
 const homeRoute = computed(() =>
   isPriorityCity.value ? { name: 'cityId', params: { cityId: cityId.value } } : { name: 'index' });
 
@@ -33,7 +43,7 @@ const profileTab = computed(() => isLoggedIn.value ?
   {
     label: 'Entrar',
     icon: 'i-lucide-log-in',
-    to: { name: 'auth', query: { redirect: route.fullPath } },
+    to: loginRoute.value,
     event: CLICK_LOGIN_BUTTON,
   });
 
