@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useDebounceFn } from '@vueuse/core';
 import { useField, useForm } from 'vee-validate';
 import { array, object, string } from 'yup';
 import { useUser } from '~/composables/useUser';
@@ -7,9 +8,9 @@ import { CITIES } from '~/constants/cities';
 import { getProductAttributeFields } from '~/constants/productAttributes';
 
 
-definePageMeta({ middleware: 'auth' });
-
-const { currentUser } = useUser();
+// страница доступна без логина: авторизация запрашивается на шаге «Публикации»,
+// заполненная форма переживает переход на /auth и обратно через черновик
+const { currentUser, isLoggedIn } = useUser();
 
 const needPhoneNumber = computed(() => currentUser.value && !currentUser.value.phone);
 
@@ -113,6 +114,74 @@ const citiesItems = computed<SelectItem[]>(() => CITIES
 
 const attributeFields = computed(() => getProductAttributeFields(category.value, subcategory.value));
 
+// ── черновик ──────────────────────────────────────────────────────────
+// Текстовые поля — в localStorage (переживают и перезагрузку).
+// Фото (base64) в localStorage не влезают — держим их в useState:
+// он переживает SPA-переход на /auth и обратно, но не перезагрузку.
+const DRAFT_KEY = 'post-draft';
+
+const draftImages = useState<Image[]>('createPostDraftImages', () => []);
+
+const saveDraft = () => {
+  const draft = {
+    category: category.value,
+    subcategory: subcategory.value,
+    brand: brand.value,
+    productName: productName.value,
+    price: price.value,
+    description: description.value,
+    cityId: cityId.value,
+    attributes: attributes.value,
+  };
+
+  if (Object.values(draft).some(value => value && Object.keys(value).length !== 0)) {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+  } else {
+    localStorage.removeItem(DRAFT_KEY);
+  }
+
+  draftImages.value = images.value;
+};
+
+const saveDraftDebounced = useDebounceFn(saveDraft, 500);
+
+const clearDraft = () => {
+  localStorage.removeItem(DRAFT_KEY);
+  draftImages.value = [];
+};
+
+onMounted(() => {
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY);
+    const draft = raw ? JSON.parse(raw) : null;
+
+    if (draft || draftImages.value.length) {
+      resetForm({
+        values: {
+          category: '',
+          subcategory: '',
+          brand: '',
+          productName: '',
+          price: '',
+          description: '',
+          cityId: '',
+          attributes: {},
+          ...draft,
+          images: draftImages.value,
+        },
+      });
+    }
+  } catch {
+    localStorage.removeItem(DRAFT_KEY);
+  }
+});
+
+watch(
+  [category, subcategory, brand, productName, price, description, cityId, attributes, images],
+  () => saveDraftDebounced(),
+  { deep: true },
+);
+
 const deletePhoto = (index: number) => {
   images.value.splice(index, 1);
 };
@@ -145,6 +214,8 @@ const handleFileUpload = (event: Event) => {
 const loadFile = () => fileInput.value?.click();
 
 const clearFields = () => {
+  clearDraft();
+
   resetForm({
     values: {
       category: '',
@@ -166,6 +237,14 @@ const apiErrorMessage = ref('');
 
 const createPost = handleSubmit.withControlled(async () => {
   if (isLoading.value) return;
+
+  // гость: сохраняем черновик и уводим на вход — после логина
+  // возврат сюда, форма восстановится из черновика
+  if (!isLoggedIn.value) {
+    saveDraft();
+
+    return navigateTo({ name: 'auth', query: { redirect: '/product/create' } });
+  }
 
   isLoading.value = true;
   hasAPIError.value = false;
@@ -509,6 +588,13 @@ watch(subcategory, () => {
         label="Publicar anúncio"
         block
       />
+
+      <p
+        v-if="!isLoggedIn"
+        class="text-center text-xs text-muted"
+      >
+        Para publicar, você fará login no próximo passo — o anúncio fica guardado.
+      </p>
 
       <UButton
         type="button"
