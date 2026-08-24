@@ -37,7 +37,7 @@ const profileTab = computed(() => isLoggedIn.value ?
   {
     label: 'Perfil',
     icon: 'i-lucide-user',
-    to: { name: 'my' },
+    to: { name: 'my-settings' },
     event: CLICK_USER_BUTTON,
   } :
   {

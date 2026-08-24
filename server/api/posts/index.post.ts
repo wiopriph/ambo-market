@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { createError, defineEventHandler, readBody } from 'h3';
 import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server';
 import { type ImageInput, uploadPostImage } from '~~/server/utils/images';
+import { sendTelegramMessage } from '~~/server/utils/telegram';
 import { getCityById } from '~/constants/cities';
 import { getProductAttributeFields } from '~/constants/productAttributes';
 
@@ -199,6 +200,18 @@ export default defineEventHandler(async (event) => {
       statusMessage: 'Failed to create a post',
     });
   }
+
+  const baseUrl = (useRuntimeConfig().public.appBaseUrl || 'https://ambo.market').replace(/\/$/, '');
+
+  await sendTelegramMessage(
+    [
+      '🆕 Novo anúncio',
+      `${title} — ${parsedPrice} Kz`,
+      `Categoria: ${categoryId}${subcategoryId ? ` / ${subcategoryId}` : ''}`,
+      `Cidade: ${locationData.cityName}`,
+      `${baseUrl}/product/${postId}`,
+    ].join('\n'),
+  );
 
   return { id: postId };
 });

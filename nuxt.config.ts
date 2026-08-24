@@ -22,6 +22,11 @@ export default defineNuxtConfig({
       serviceKey: '',
     },
 
+    telegram: {
+      botToken: '',
+      chatId: '',
+    },
+
     public: {
       gtmId: '',
       gtmEnabled: false,

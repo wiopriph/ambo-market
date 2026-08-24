@@ -33,6 +33,7 @@ export const CLICK_WHATSAPP = 'click_whatsapp'; // product_id
 export const CLICK_BUY = 'click_buy'; // product_id
 export const CLICK_AD_FAVORITE = 'click_ad_favorite'; // product_id
 export const CLICK_AD_PHOTO = 'click_ad_photo'; // product_id
+export const CLICK_REPORT_AD = 'click_report_ad'; // product_id
 export const CLICK_SHARE_SOCIAL = 'click_share_social'; // product_link, platform
 
 // Авторизация

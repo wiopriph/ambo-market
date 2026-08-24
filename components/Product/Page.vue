@@ -6,7 +6,7 @@ import type { Post as ProductPost, ProductApiResponse, User } from '~/types/prod
 import { formatFullDate } from '~/utils/formatDate';
 import { useUser } from '~/composables/useUser';
 import { getPostRoute } from '~/utils/getPostRoute';
-import { CLICK_AD_FAVORITE, CLICK_AD_PHOTO, CLICK_CALL, CLICK_WHATSAPP } from '~/constants/analytics-events';
+import { CLICK_AD_FAVORITE, CLICK_AD_PHOTO, CLICK_CALL, CLICK_REPORT_AD, CLICK_WHATSAPP } from '~/constants/analytics-events';
 import { useFavorites } from '~/composables/useFavorites';
 import { getBrandName, getCategoryName, getSubcategoryName } from '~/constants/categories';
 import { formatAttributeValue, getProductAttributeFields } from '~/constants/productAttributes';
@@ -707,6 +707,24 @@ if (import.meta.client) {
 
 const isClosePostModalVisible = ref(false);
 
+// ── жалоба на объявление ──
+const isReportModalVisible = ref(false);
+const isReported = ref(false);
+
+onMounted(() => {
+  isReported.value = !!localStorage.getItem(`reported:${postId.value}`);
+});
+
+const openReport = () => {
+  pushEvent(CLICK_REPORT_AD, { 'product_id': postId.value });
+  isReportModalVisible.value = true;
+};
+
+const onReported = () => {
+  isReported.value = true;
+  localStorage.setItem(`reported:${postId.value}`, '1');
+};
+
 const closePost = () => {
   if (product.value?.post) {
     product.value.post.status = POST_STATUSES.CLOSED;
@@ -1146,6 +1164,22 @@ const closePost = () => {
               />
             </button>
           </div>
+
+          <!-- Report -->
+          <button
+            v-if="!isOwnerUser"
+            type="button"
+            :disabled="isReported"
+            class="mx-auto flex items-center gap-1.5 text-xs text-muted transition enabled:hover:text-error disabled:cursor-default"
+            @click="openReport"
+          >
+            <UIcon
+              name="i-lucide-flag"
+              class="size-3.5"
+            />
+
+            <span v-text="isReported ? 'Denunciado' : 'Denunciar anúncio'" />
+          </button>
         </aside>
       </div>
 
@@ -1213,6 +1247,13 @@ const closePost = () => {
         :postId="postId"
         @change-status="closePost"
         @close="isClosePostModalVisible = false"
+      />
+
+      <LazyProductReportModal
+        v-if="isReportModalVisible"
+        :postId="postId"
+        @reported="onReported"
+        @close="isReportModalVisible = false"
       />
     </section>
 
