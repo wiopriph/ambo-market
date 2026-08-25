@@ -2,13 +2,10 @@ User-agent: *
 
 Disallow: /auth
 Disallow: /my
-Disallow: /product/create
 
 Disallow: /*?*q=
 Disallow: /*?*minPrice=
 Disallow: /*?*maxPrice=
 Disallow: /*?*attr_
-
-Disallow: /_nuxt/
 
 Sitemap: https://ambo.market/sitemap.xml
