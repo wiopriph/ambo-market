@@ -102,10 +102,6 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks(id) {
-            if (id.includes('@sqlite.org/sqlite-wasm') || id.includes('sqlite3-bundler') || id.includes('sqlite3-worker1')) {
-              return 'sqlite-wasm';
-            }
-
             if (id.includes('supabase-js') || id.includes('gotrue-js') || id.includes('realtime-js') || id.includes('storage-js') || id.includes('postgrest-js') || id.includes('functions-js')) {
               return 'supabase';
             }
@@ -137,6 +133,25 @@ export default defineNuxtConfig({
       nuxtLink: {
         prefetch: false,
       },
+    },
+  },
+
+  hooks: {
+    // SQLite для @nuxt/content нужен только клиентским запросам в блоге,
+    // но Vite прогревает его на каждой странице: modulepreload js-чанка (59KB gz)
+    // + prefetch wasm-бинаря (383KB gz). Вырезаем из прогрева — при реальном
+    // использовании динамический импорт подгрузит их сам.
+    'build:manifest'(manifest) {
+      for (const chunk of Object.values(manifest)) {
+        if (chunk.file?.includes('sqlite')) {
+          chunk.prefetch = false;
+          chunk.preload = false;
+        }
+
+        if (chunk.assets?.length) {
+          chunk.assets = chunk.assets.filter(asset => !asset.endsWith('.wasm'));
+        }
+      }
     },
   },
 
