@@ -1092,6 +1092,52 @@ const closePost = () => {
             </div>
           </div>
 
+          <!-- Dicas de segurança -->
+          <div class="rounded-2xl border border-default bg-default px-5 py-4">
+            <div class="flex items-center gap-2">
+              <UIcon
+                name="i-lucide-shield-check"
+                class="size-4 shrink-0 text-primary"
+              />
+
+              <p class="text-sm font-semibold text-highlighted">
+                Dicas de segurança
+              </p>
+            </div>
+
+            <ul class="mt-3 space-y-2 text-xs leading-relaxed text-muted">
+              <li class="flex gap-2">
+                <span aria-hidden="true">•</span>
+                Encontre-se com o vendedor em locais públicos e movimentados
+              </li>
+
+              <li class="flex gap-2">
+                <span aria-hidden="true">•</span>
+                Verifique o produto antes de pagar — nunca envie dinheiro adiantado
+              </li>
+
+              <li class="flex gap-2">
+                <span aria-hidden="true">•</span>
+                Desconfie de preços muito abaixo do mercado
+              </li>
+            </ul>
+
+            <button
+              v-if="!isOwnerUser"
+              type="button"
+              :disabled="isReported"
+              class="mt-3 flex items-center gap-1.5 text-xs font-medium text-muted transition enabled:hover:text-error disabled:cursor-default"
+              @click="openReport"
+            >
+              <UIcon
+                name="i-lucide-flag"
+                class="size-3.5"
+              />
+
+              <span v-text="isReported ? 'Denunciado — obrigado' : 'Algo suspeito? Denuncie o anúncio'" />
+            </button>
+          </div>
+
           <!-- Share (mobile only) -->
           <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden lg:hidden">
             <div class="px-5 py-3">
@@ -1164,22 +1210,6 @@ const closePost = () => {
               />
             </button>
           </div>
-
-          <!-- Report -->
-          <button
-            v-if="!isOwnerUser"
-            type="button"
-            :disabled="isReported"
-            class="mx-auto flex items-center gap-1.5 text-xs text-muted transition enabled:hover:text-error disabled:cursor-default"
-            @click="openReport"
-          >
-            <UIcon
-              name="i-lucide-flag"
-              class="size-3.5"
-            />
-
-            <span v-text="isReported ? 'Denunciado' : 'Denunciar anúncio'" />
-          </button>
         </aside>
       </div>
 
