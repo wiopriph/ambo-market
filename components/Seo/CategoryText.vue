@@ -32,7 +32,7 @@ const categoryContent = computed((): CategoryContent => {
     },
     'real-estate': {
       intro: `Encontre imóveis à venda e para alugar em ${loc} no Ambo Market. Apartamentos T1, T2 e T3, moradias, terrenos, escritórios comerciais e armazéns — tudo num só lugar. Imóveis em Luanda (Talatona, Miramar, Kilamba, Viana), Benguela, Huambo, Soyo e outras províncias de Angola.`,
-      body: 'O mercado imobiliário angolano está em crescimento. No Ambo Market encontrará condomínios fechados, vivendas independentes, apartamentos mobilados e não mobilados, terrenos urbanizados e espaços comerciais. Preços negociáveis em kwanza (AOA) ou USD. Anúncios de proprietários directos e imobiliárias verificadas.',
+      body: 'O mercado imobiliário angolano está em crescimento. No Ambo Market encontrará condomínios fechados, vivendas independentes, apartamentos mobilados e não mobilados, terrenos urbanizados e espaços comerciais. Preços negociáveis em kwanza (AOA) ou USD. Anúncios de proprietários directos e imobiliárias.',
       cta: `Anuncie o seu imóvel gratuitamente em ${loc} e alcance milhares de potenciais compradores e inquilinos!`,
     },
     electronics: {

@@ -18,7 +18,7 @@ const values = [
   },
   {
     label: 'Seguro',
-    text: 'Vendedores verificados, anúncios transparentes e confiança real na comunidade.',
+    text: 'Anúncios transparentes, moderação activa e confiança real na comunidade.',
   },
   {
     label: 'Aberto a todos',

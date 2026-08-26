@@ -35,7 +35,7 @@ const SUBCATEGORY_SEO: Record<string, Record<string, { city: SeoEntry; everywher
       city: {
         h1: 'Carros à Venda em {city}',
         title: 'Carros Novos e Usados em {city} – Toyota, Honda, Hyundai | Ambo Market',
-        description: 'Compre ou venda carros em {city}: sedans, SUVs, pickups e mais. Toyota, Honda, Hyundai, Mitsubishi e outras marcas. Compare preços e contacte vendedores verificados.',
+        description: 'Compre ou venda carros em {city}: sedans, SUVs, pickups e mais. Toyota, Honda, Hyundai, Mitsubishi e outras marcas. Compare preços e contacte vendedores directamente.',
       },
       everywhere: {
         h1: 'Carros à Venda',
@@ -83,7 +83,7 @@ const SUBCATEGORY_SEO: Record<string, Record<string, { city: SeoEntry; everywher
       city: {
         h1: 'Peças e Acessórios Automóvel em {city}',
         title: 'Peças para Carros e Motas em {city} – Pneus, Baterias e Mais | Ambo Market',
-        description: 'Peças auto em {city}: pneus, baterias, faróis, jantes, espelhos, suspensão e óleo motor. Novos e recondicionados. Vendedores verificados. Anuncie grátis.',
+        description: 'Peças auto em {city}: pneus, baterias, faróis, jantes, espelhos, suspensão e óleo motor. Novos e recondicionados. Contacto directo com vendedores. Anuncie grátis.',
       },
       everywhere: {
         h1: 'Peças e Acessórios',
@@ -109,7 +109,7 @@ const SUBCATEGORY_SEO: Record<string, Record<string, { city: SeoEntry; everywher
       city: {
         h1: 'Imóveis à Venda em {city}',
         title: 'Casas, Apartamentos e Terrenos à Venda em {city} | Ambo Market',
-        description: 'Imóveis à venda em {city}: casas, apartamentos, viveiros e terrenos residenciais. Bons preços, vendedores verificados e fotos reais. Anuncie o seu imóvel grátis.',
+        description: 'Imóveis à venda em {city}: casas, apartamentos, viveiros e terrenos residenciais. Bons preços, contacto directo e fotos reais. Anuncie o seu imóvel grátis.',
       },
       everywhere: {
         h1: 'Imóveis à Venda',

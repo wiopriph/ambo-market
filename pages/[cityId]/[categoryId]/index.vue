@@ -39,7 +39,7 @@ const CATEGORY_SEO: Record<string, { city: SeoEntry; everywhere: SeoEntry }> = {
     everywhere: {
       h1: 'Veículos à venda',
       title: 'Carros, Motos e Caminhões em Angola – Classificados de Veículos | Ambo Market',
-      description: 'Marketplace de veículos em Angola: carros novos e usados, motos, caminhões, barcos e peças. Vendedores verificados, fotos reais e preços competitivos. Anuncie grátis.',
+      description: 'Marketplace de veículos em Angola: carros novos e usados, motos, caminhões, barcos e peças. Fotos reais, preços competitivos e contacto directo com o vendedor. Anuncie grátis.',
     },
   },
   'real-estate': {

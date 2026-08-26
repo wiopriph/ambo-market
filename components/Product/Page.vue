@@ -338,7 +338,7 @@ const PRODUCT_SEO: Record<string, { city: ProductSeoEntry; everywhere: ProductSe
   vehicles: {
     city: {
       title: 'Comprar {title} em {city} | Veículos | Ambo Market',
-      description: 'Compre {title} em {city} – carros, motas, barcos e mais. Apenas anúncios verificados. {description}',
+      description: 'Compre {title} em {city} – carros, motas, barcos e mais. Negocie directamente com o vendedor. {description}',
     },
     everywhere: {
       title: 'Comprar {title} | Veículos | Ambo Market',

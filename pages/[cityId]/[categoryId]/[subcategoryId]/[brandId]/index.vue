@@ -332,7 +332,7 @@ const BRAND_SEO: Record<string, Record<string, { city: SeoEntry; everywhere: Seo
       everywhere: {
         h1: 'Telemóveis à Venda',
         title: 'Compre e Venda Telemóveis em Angola | Ambo Market',
-        description: 'Veja telemóveis de todas as marcas à venda em Angola. Apenas anúncios verificados.',
+        description: 'Veja telemóveis de todas as marcas à venda em Angola. Novos e usados, com fotos e preços em kwanza.',
       },
     },
     apple: {
@@ -540,7 +540,7 @@ const BRAND_SEO: Record<string, Record<string, { city: SeoEntry; everywhere: Seo
       everywhere: {
         h1: 'PlayStation da Sony',
         title: 'Compre e Venda PlayStation em Angola | Ambo Market',
-        description: 'Consolas e jogos PlayStation à venda em toda Angola. Anúncios verificados e bons preços.',
+        description: 'Consolas e jogos PlayStation à venda em toda Angola. Novos e usados a bons preços.',
       },
     },
     microsoft: {

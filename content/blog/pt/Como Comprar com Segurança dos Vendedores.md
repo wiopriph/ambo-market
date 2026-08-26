@@ -56,7 +56,7 @@ Fique atento se o vendedor:
 
 ## Checklist Rápido Antes de Comprar
 
-- ✅ Perfil verificado e confiável?
+- ✅ Perfil completo e com anúncios reais?
 - ✅ Fotos reais do produto recebidas?
 - ✅ Entrega marcada em local seguro ou via **Negócio Seguro**?
 - ✅ Sem pressões ou comportamentos suspeitos?
