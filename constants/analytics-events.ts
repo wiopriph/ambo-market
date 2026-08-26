@@ -27,6 +27,7 @@ export const SELECT_SUBCATEGORY = 'select_subcategory'; // subcategory_id
 export const SELECT_BRAND = 'select_brand'; // brand_id
 
 // Страница объявления
+export const VIEW_CONTACT = 'view_contact'; // product_id
 export const CLICK_CALL = 'click_call'; // product_id
 export const CLICK_CHAT = 'click_chat'; // product_id
 export const CLICK_WHATSAPP = 'click_whatsapp'; // product_id

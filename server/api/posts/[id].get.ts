@@ -66,7 +66,7 @@ export default defineEventHandler(async (event) => {
     const [{ data: profile, error: profErr }, { count: activeCount }] = await Promise.all([
       client
         .from('profiles')
-        .select('display_name, avatar_url, phone, email, created_at')
+        .select('display_name, avatar_url, created_at')
         .eq('id', post.authorId)
         .maybeSingle(),
       client
@@ -83,9 +83,9 @@ export default defineEventHandler(async (event) => {
     if (profile) {
       user.name = profile.display_name ?? null;
       user.photoURL = profile.avatar_url ?? null;
-      user.email = profile.email ?? null;
-      user.phone = profile.phone ?? null;
       user.creationTime = profile.created_at ?? null;
+      // phone и email намеренно не отдаём: контакт — через /api/posts/[id]/contact
+      // по клику «Mostrar contacto», с rate-limit против парсинга базы продавцов
     }
 
     user.activePostsCount = activeCount ?? 0;

@@ -6,7 +6,7 @@ import type { Post as ProductPost, ProductApiResponse, User } from '~/types/prod
 import { formatFullDate } from '~/utils/formatDate';
 import { useUser } from '~/composables/useUser';
 import { getPostRoute } from '~/utils/getPostRoute';
-import { CLICK_AD_FAVORITE, CLICK_AD_PHOTO, CLICK_CALL, CLICK_REPORT_AD, CLICK_WHATSAPP } from '~/constants/analytics-events';
+import { CLICK_AD_FAVORITE, CLICK_AD_PHOTO, CLICK_CALL, CLICK_REPORT_AD, CLICK_WHATSAPP, VIEW_CONTACT } from '~/constants/analytics-events';
 import { useFavorites } from '~/composables/useFavorites';
 import { getBrandName, getCategoryName, getSubcategoryName } from '~/constants/categories';
 import { formatAttributeValue, getProductAttributeFields } from '~/constants/productAttributes';
@@ -247,10 +247,36 @@ const sellerAvatar = computed(() => ({
   text: seller.value?.name?.slice(0, 2).toUpperCase(),
 }));
 
-const phoneLink = computed(() => seller.value?.phone ? `tel:${seller.value.phone}` : undefined);
+// телефон не приходит с постом — раскрывается по клику «Mostrar contacto»:
+// защита от парсинга базы продавцов + метрика лида view_contact
+const revealedPhone = ref<string | null>(null);
+const isContactLoading = ref(false);
+
+const showContact = async () => {
+  if (isContactLoading.value || revealedPhone.value) return;
+
+  isContactLoading.value = true;
+
+  try {
+    const { phone } = await $fetch<{ phone: string }>(`/api/posts/${postId.value}/contact`);
+
+    revealedPhone.value = phone;
+    pushEvent(VIEW_CONTACT, { 'product_id': postId.value });
+  } catch (error: any) {
+    toast.add({
+      title: error?.statusMessage || 'Não foi possível obter o contacto',
+      color: 'error',
+      icon: 'i-lucide-circle-alert',
+    });
+  } finally {
+    isContactLoading.value = false;
+  }
+};
+
+const phoneLink = computed(() => revealedPhone.value ? `tel:${revealedPhone.value}` : undefined);
 
 const whatsappLink = computed(() => {
-  const phone = seller.value?.phone?.replace(/\D/g, '');
+  const phone = revealedPhone.value?.replace(/\D/g, '');
 
   if (!phone) return undefined;
 
@@ -1066,7 +1092,24 @@ const closePost = () => {
                 @click="isClosePostModalVisible = true"
               />
 
+              <template v-else-if="!revealedPhone">
+                <UButton
+                  label="Mostrar contacto"
+                  icon="i-lucide-phone"
+                  color="primary"
+                  block
+                  :loading="isContactLoading"
+                  :disabled="isPostUnavailable"
+                  @click="showContact"
+                />
+              </template>
+
               <template v-else>
+                <p
+                  class="text-center text-sm font-semibold text-highlighted"
+                  v-text="revealedPhone"
+                />
+
                 <UButton
                   label="Ligar ao vendedor"
                   :href="phoneLink"
@@ -1243,6 +1286,17 @@ const closePost = () => {
               variant="soft"
               class="flex-1"
               @click="isClosePostModalVisible = true"
+            />
+
+            <UButton
+              v-else-if="!revealedPhone"
+              label="Mostrar contacto"
+              icon="i-lucide-phone"
+              color="primary"
+              class="flex-1"
+              :loading="isContactLoading"
+              :disabled="isPostUnavailable"
+              @click="showContact"
             />
 
             <template v-else>
