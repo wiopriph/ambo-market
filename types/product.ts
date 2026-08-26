@@ -23,6 +23,7 @@ export type Post = {
 
 export type User = {
   id: string;
+  hasContact?: boolean;
   creationTime: string;
   emailVerified: boolean;
   name: string;

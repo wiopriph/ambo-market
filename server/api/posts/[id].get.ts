@@ -59,6 +59,7 @@ export default defineEventHandler(async (event) => {
     disabled: null as boolean | null, // нет аналога — оставим null
     email: null as string | null,
     phone: null as string | null,
+    hasContact: false,
     activePostsCount: 0,
   };
 
@@ -66,7 +67,7 @@ export default defineEventHandler(async (event) => {
     const [{ data: profile, error: profErr }, { count: activeCount }] = await Promise.all([
       client
         .from('profiles')
-        .select('display_name, avatar_url, created_at')
+        .select('display_name, avatar_url, phone, created_at')
         .eq('id', post.authorId)
         .maybeSingle(),
       client
@@ -84,8 +85,10 @@ export default defineEventHandler(async (event) => {
       user.name = profile.display_name ?? null;
       user.photoURL = profile.avatar_url ?? null;
       user.creationTime = profile.created_at ?? null;
-      // phone и email намеренно не отдаём: контакт — через /api/posts/[id]/contact
-      // по клику «Mostrar contacto», с rate-limit против парсинга базы продавцов
+      // сам номер не отдаём (контакт — через /api/posts/[id]/contact по клику,
+      // с rate-limit против парсинга базы), но факт наличия нужен UI,
+      // чтобы не показывать «Mostrar contacto», ведущую в 404
+      user.hasContact = !!profile.phone;
     }
 
     user.activePostsCount = activeCount ?? 0;

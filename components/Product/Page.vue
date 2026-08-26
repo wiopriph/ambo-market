@@ -252,6 +252,8 @@ const sellerAvatar = computed(() => ({
 const revealedPhone = ref<string | null>(null);
 const isContactLoading = ref(false);
 
+const hasContact = computed(() => seller.value?.hasContact ?? false);
+
 const showContact = async () => {
   if (isContactLoading.value || revealedPhone.value) return;
 
@@ -1092,6 +1094,17 @@ const closePost = () => {
                 @click="isClosePostModalVisible = true"
               />
 
+              <template v-else-if="!hasContact">
+                <UButton
+                  label="Contacto indisponível"
+                  icon="i-lucide-phone-off"
+                  color="neutral"
+                  variant="soft"
+                  block
+                  disabled
+                />
+              </template>
+
               <template v-else-if="!revealedPhone">
                 <UButton
                   label="Mostrar contacto"
@@ -1286,6 +1299,16 @@ const closePost = () => {
               variant="soft"
               class="flex-1"
               @click="isClosePostModalVisible = true"
+            />
+
+            <UButton
+              v-else-if="!hasContact"
+              label="Contacto indisponível"
+              icon="i-lucide-phone-off"
+              color="neutral"
+              variant="soft"
+              class="flex-1"
+              disabled
             />
 
             <UButton

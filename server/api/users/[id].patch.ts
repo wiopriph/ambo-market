@@ -1,6 +1,7 @@
 import { createError, defineEventHandler, readBody } from 'h3';
 import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server';
 import { type ImageInput, uploadProfileImage } from '~~/server/utils/images';
+import { PHONE_REG_EXP } from '~/constants/reg-exps';
 
 
 type DbProfile = {
@@ -23,7 +24,9 @@ type ProfileUpdateInput = {
 export default defineEventHandler(async (event) => {
   const userId = event.context.params?.id as string;
   const client = await serverSupabaseClient(event);
-  const currentUser = await serverSupabaseUser(event);
+  // serverSupabaseUser бросает «Auth session missing!» вместо null для гостя —
+  // ловим, чтобы отдать честный 401, а не 500
+  const currentUser = await serverSupabaseUser(event).catch(() => null);
 
   if (!currentUser) {
     throw createError({ statusCode: 401, statusMessage: 'Unauthorized' });
@@ -42,7 +45,15 @@ export default defineEventHandler(async (event) => {
   }
 
   if (body.phone !== undefined) {
-    updateData.phone = body.phone?.replace(/\s+/g, '') || null;
+    // телефон нельзя стереть: продавец без номера оставляет объявления
+    // без контакта. Пустой или невалидный номер отклоняем, а не пишем NULL.
+    const normalizedPhone = (body.phone ?? '').replace(/\s+/g, '');
+
+    if (!PHONE_REG_EXP.test(normalizedPhone)) {
+      throw createError({ statusCode: 400, statusMessage: 'Número de telefone inválido' });
+    }
+
+    updateData.phone = normalizedPhone;
   }
 
   if (body.email !== undefined) {
