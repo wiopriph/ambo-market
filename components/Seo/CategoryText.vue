@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { getCityById } from '~/constants/cities';
 import { getCategoryName } from '~/constants/categories';
+import { getBrandSeoText } from '~/constants/seoBrandTexts';
 
 
 const props = defineProps<{
   title: string;
   cityId: string;
   categoryId: string;
+  subcategoryId?: string;
+  brandId?: string;
   productList?: string[];
 }>();
 
@@ -23,6 +26,15 @@ type CategoryContent = {
 
 const categoryContent = computed((): CategoryContent => {
   const loc = location.value;
+
+  // Точечный текст бренда важнее общекатегорийного.
+  if (props.subcategoryId && props.brandId) {
+    const brandText = getBrandSeoText(props.subcategoryId, props.brandId, loc);
+
+    if (brandText) {
+      return brandText;
+    }
+  }
 
   const map: Record<string, CategoryContent> = {
     vehicles: {

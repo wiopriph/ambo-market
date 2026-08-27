@@ -19,68 +19,6 @@ interface Category {
 
 export const CATEGORIES: Category[] = [
   {
-    id: 'vehicles',
-    name: 'Transporte',
-    icon: 'i-lucide-car',
-    subcategories: [
-      {
-        id: 'cars',
-        name: 'Carros',
-        icon: 'i-lucide-car',
-        brands: [
-          { id: 'other', name: 'Outro' },
-          { id: 'toyota', name: 'Toyota' },
-          { id: 'suzuki', name: 'Suzuki' },
-          { id: 'hyundai', name: 'Hyundai' },
-          { id: 'kia', name: 'Kia' },
-          { id: 'mitsubishi', name: 'Mitsubishi' },
-          { id: 'chevrolet', name: 'Chevrolet' },
-          { id: 'nissan', name: 'Nissan' },
-          { id: 'renault', name: 'Renault' },
-          { id: 'ford', name: 'Ford' },
-          { id: 'mercedes', name: 'Mercedes-Benz' },
-          { id: 'volkswagen', name: 'Volkswagen' },
-          { id: 'bmw', name: 'BMW' },
-          { id: 'jetour', name: 'Jetour' },
-          { id: 'maxus', name: 'Maxus' },
-        ],
-      },
-      {
-        id: 'motorcycles',
-        name: 'Motos e Scooters',
-        icon: 'i-lucide-bike',
-        brands: [
-          { id: 'other', name: 'Outro' },
-          { id: 'honda', name: 'Honda' },
-          { id: 'yamaha', name: 'Yamaha' },
-          { id: 'suzuki', name: 'Suzuki' },
-          { id: 'kawasaki', name: 'Kawasaki' },
-          { id: 'vespa', name: 'Vespa' },
-          { id: 'ducati', name: 'Ducati' },
-          { id: 'bmw-motorrad', name: 'BMW Motorrad' },
-          { id: 'harley-davidson', name: 'Harley Davidson' },
-          { id: 'aprilia', name: 'Aprilia' },
-        ],
-      },
-      { id: 'commercial', name: 'Veículos Comerciais', icon: 'i-lucide-truck' },
-      { id: 'boats', name: 'Barcos', icon: 'i-lucide-ship' },
-      { id: 'parts', name: 'Peças e Acessórios', icon: 'i-lucide-cog' },
-    ],
-  },
-
-  {
-    id: 'real-estate',
-    name: 'Imóveis',
-    icon: 'i-lucide-house',
-    subcategories: [
-      { id: 'rent', name: 'Aluguel', icon: 'i-lucide-key-round' },
-      { id: 'sale', name: 'Venda', icon: 'i-lucide-badge-dollar-sign' },
-      { id: 'commercial-property', name: 'Imóveis Comerciais', icon: 'i-lucide-building-2' },
-      { id: 'land', name: 'Terreno', icon: 'i-lucide-map' },
-    ],
-  },
-
-  {
     id: 'electronics',
     name: 'Eletrônicos',
     icon: 'i-lucide-smartphone',
@@ -89,31 +27,35 @@ export const CATEGORIES: Category[] = [
         id: 'phones',
         name: 'Telemóveis',
         icon: 'i-lucide-smartphone',
+        // По популярности: Apple лидирует в наших объявлениях, Transsion — на рынке Африки.
         brands: [
-          { id: 'other', name: 'Outro' },
           { id: 'apple', name: 'Apple' },
           { id: 'samsung', name: 'Samsung' },
-          { id: 'itel', name: 'iTel' },
           { id: 'tecno', name: 'Tecno' },
+          { id: 'itel', name: 'iTel' },
+          { id: 'infinix', name: 'Infinix' },
           { id: 'xiaomi', name: 'Xiaomi' },
           { id: 'huawei', name: 'Huawei' },
           { id: 'oppo', name: 'Oppo' },
+          { id: 'honor', name: 'Honor' },
+          { id: 'other', name: 'Outro' },
         ],
       },
       {
         id: 'computers',
         name: 'Computadores e Portáteis',
         icon: 'i-lucide-laptop',
+        // По популярности в наших объявлениях.
         brands: [
-          { id: 'other', name: 'Outro' },
+          { id: 'lenovo', name: 'Lenovo' },
           { id: 'hp', name: 'HP' },
           { id: 'dell', name: 'Dell' },
-          { id: 'asus', name: 'Asus' },
-          { id: 'lenovo', name: 'Lenovo' },
           { id: 'apple', name: 'Apple' },
+          { id: 'asus', name: 'Asus' },
           { id: 'acer', name: 'Acer' },
           { id: 'msi', name: 'MSI' },
           { id: 'huawei', name: 'Huawei' },
+          { id: 'other', name: 'Outro' },
         ],
       },
       {
@@ -135,26 +77,63 @@ export const CATEGORIES: Category[] = [
   },
 
   {
-    id: 'fashion',
-    name: 'Moda',
-    icon: 'i-lucide-shirt',
+    id: 'vehicles',
+    name: 'Transporte',
+    icon: 'i-lucide-car',
     subcategories: [
-      { id: 'men', name: 'Moda Masculina', icon: 'i-lucide-user-round' },
-      { id: 'women', name: 'Moda Feminina', icon: 'i-lucide-users-round' },
-      { id: 'shoes', name: 'Calçados', icon: 'i-lucide-footprints' },
-      { id: 'bags', name: 'Bolsas', icon: 'i-lucide-shopping-bag' },
-      { id: 'accessories-fashion', name: 'Acessórios', icon: 'i-lucide-watch' },
-      { id: 'beauty-products', name: 'Produtos de Beleza', icon: 'i-lucide-sparkles' },
-    ],
-  },
-
-  {
-    id: 'jobs',
-    name: 'Emprego',
-    icon: 'i-lucide-briefcase-business',
-    subcategories: [
-      { id: 'vacancies', name: 'Vagas', icon: 'i-lucide-clipboard-list' },
-      { id: 'resumes', name: 'Currículos', icon: 'i-lucide-file-user' },
+      {
+        id: 'cars',
+        name: 'Carros',
+        icon: 'i-lucide-car',
+        // По популярности на рынке Анголы (продажи + наши объявления).
+        brands: [
+          { id: 'toyota', name: 'Toyota' },
+          { id: 'hyundai', name: 'Hyundai' },
+          { id: 'suzuki', name: 'Suzuki' },
+          { id: 'kia', name: 'Kia' },
+          { id: 'mitsubishi', name: 'Mitsubishi' },
+          { id: 'nissan', name: 'Nissan' },
+          { id: 'ford', name: 'Ford' },
+          { id: 'maxus', name: 'Maxus' },
+          { id: 'gac', name: 'GAC' },
+          { id: 'chery', name: 'Chery' },
+          { id: 'mercedes', name: 'Mercedes-Benz' },
+          { id: 'bmw', name: 'BMW' },
+          { id: 'volkswagen', name: 'Volkswagen' },
+          { id: 'honda', name: 'Honda' },
+          { id: 'jetour', name: 'Jetour' },
+          { id: 'jac', name: 'JAC' },
+          { id: 'changan', name: 'Changan' },
+          { id: 'chevrolet', name: 'Chevrolet' },
+          { id: 'renault', name: 'Renault' },
+          { id: 'other', name: 'Outro' },
+        ],
+      },
+      {
+        id: 'motorcycles',
+        name: 'Motos e Scooters',
+        icon: 'i-lucide-bike',
+        // По популярности: Bajaj/Haojue/Haojin — больше половины продаж мото в Анголе.
+        brands: [
+          { id: 'bajaj', name: 'Bajaj' },
+          { id: 'haojue', name: 'Haojue' },
+          { id: 'haojin', name: 'Haojin' },
+          { id: 'tvs', name: 'TVS' },
+          { id: 'honda', name: 'Honda' },
+          { id: 'yamaha', name: 'Yamaha' },
+          { id: 'suzuki', name: 'Suzuki' },
+          { id: 'kawasaki', name: 'Kawasaki' },
+          { id: 'vespa', name: 'Vespa' },
+          { id: 'bmw-motorrad', name: 'BMW Motorrad' },
+          { id: 'harley-davidson', name: 'Harley Davidson' },
+          { id: 'ducati', name: 'Ducati' },
+          { id: 'aprilia', name: 'Aprilia' },
+          { id: 'other', name: 'Outro' },
+        ],
+      },
+      { id: 'commercial', name: 'Veículos Comerciais', icon: 'i-lucide-truck' },
+      { id: 'boats', name: 'Barcos', icon: 'i-lucide-ship' },
+      { id: 'parts', name: 'Peças e Acessórios', icon: 'i-lucide-cog' },
     ],
   },
 
@@ -172,6 +151,18 @@ export const CATEGORIES: Category[] = [
   },
 
   {
+    id: 'real-estate',
+    name: 'Imóveis',
+    icon: 'i-lucide-house',
+    subcategories: [
+      { id: 'rent', name: 'Aluguel', icon: 'i-lucide-key-round' },
+      { id: 'sale', name: 'Venda', icon: 'i-lucide-badge-dollar-sign' },
+      { id: 'commercial-property', name: 'Imóveis Comerciais', icon: 'i-lucide-building-2' },
+      { id: 'land', name: 'Terreno', icon: 'i-lucide-map' },
+    ],
+  },
+
+  {
     id: 'animals',
     name: 'Animais',
     icon: 'i-lucide-paw-print',
@@ -179,6 +170,33 @@ export const CATEGORIES: Category[] = [
       { id: 'pets', name: 'Cães e Gatos', icon: 'i-lucide-paw-print' },
       { id: 'other-animals', name: 'Outros Animais', icon: 'i-lucide-bone' },
       { id: 'supplies', name: 'Rações e Acessórios', icon: 'i-lucide-package' },
+    ],
+  },
+
+  {
+    id: 'fashion',
+    name: 'Moda',
+    icon: 'i-lucide-shirt',
+    subcategories: [
+      { id: 'men', name: 'Moda Masculina', icon: 'i-lucide-user-round' },
+      { id: 'women', name: 'Moda Feminina', icon: 'i-lucide-users-round' },
+      { id: 'shoes', name: 'Calçados', icon: 'i-lucide-footprints' },
+      { id: 'bags', name: 'Bolsas', icon: 'i-lucide-shopping-bag' },
+      { id: 'accessories-fashion', name: 'Acessórios', icon: 'i-lucide-watch' },
+      { id: 'beauty-products', name: 'Produtos de Beleza', icon: 'i-lucide-sparkles' },
+    ],
+  },
+
+  {
+    id: 'home',
+    name: 'Casa',
+    icon: 'i-lucide-house',
+    subcategories: [
+      { id: 'furniture', name: 'Móveis', icon: 'i-lucide-sofa' },
+      { id: 'appliances', name: 'Eletrodomésticos', icon: 'i-lucide-washing-machine' },
+      { id: 'tools', name: 'Ferramentas', icon: 'i-lucide-hammer' },
+      { id: 'decor', name: 'Decoração', icon: 'i-lucide-lamp' },
+      { id: 'other-home', name: 'Outros para Casa', icon: 'i-lucide-boxes' },
     ],
   },
 
@@ -208,15 +226,12 @@ export const CATEGORIES: Category[] = [
   },
 
   {
-    id: 'home',
-    name: 'Casa',
-    icon: 'i-lucide-house',
+    id: 'jobs',
+    name: 'Emprego',
+    icon: 'i-lucide-briefcase-business',
     subcategories: [
-      { id: 'furniture', name: 'Móveis', icon: 'i-lucide-sofa' },
-      { id: 'appliances', name: 'Eletrodomésticos', icon: 'i-lucide-washing-machine' },
-      { id: 'tools', name: 'Ferramentas', icon: 'i-lucide-hammer' },
-      { id: 'decor', name: 'Decoração', icon: 'i-lucide-lamp' },
-      { id: 'other-home', name: 'Outros para Casa', icon: 'i-lucide-boxes' },
+      { id: 'vacancies', name: 'Vagas', icon: 'i-lucide-clipboard-list' },
+      { id: 'resumes', name: 'Currículos', icon: 'i-lucide-file-user' },
     ],
   },
 ];

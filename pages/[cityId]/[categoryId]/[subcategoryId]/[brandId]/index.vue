@@ -151,6 +151,54 @@ const BRAND_SEO: Record<string, Record<string, { city: SeoEntry; everywhere: Seo
         description: 'Aprilia à venda em Angola: RSV4, Tuono V4, Tuareg 660, SR GT 125 e mais. Design arrojado e desempenho de pista. Novos e usados. Anuncie grátis.',
       },
     },
+    bajaj: {
+      city: {
+        h1: 'Motos Bajaj em {city}',
+        title: 'Motos Bajaj em {city} – Boxer, CT 100, Pulsar | Ambo Market',
+        description: 'Bajaj em {city}: Boxer 100, CT 100, Pulsar e mais. A moto de trabalho número 1 de Angola. Novas e usadas em kwanza. Anuncie grátis.',
+      },
+      everywhere: {
+        h1: 'Motos Bajaj',
+        title: 'Motos Bajaj em Angola – Boxer, CT 100, Pulsar | Ambo Market',
+        description: 'Bajaj à venda em Angola: Boxer, CT 100 e Pulsar. A marca preferida dos kupapatas — económica e resistente. Anuncie grátis no Ambo Market.',
+      },
+    },
+    haojue: {
+      city: {
+        h1: 'Motos Haojue em {city}',
+        title: 'Motos Haojue em {city} – HJ125, NK150, DK150 | Ambo Market',
+        description: 'Haojue em {city}: HJ125, NK150, DK150 e mais. Motos económicas e duráveis para trabalho e dia-a-dia. Novas e usadas no Ambo Market.',
+      },
+      everywhere: {
+        h1: 'Motos Haojue',
+        title: 'Motos Haojue em Angola – HJ125, NK150, DK150 | Ambo Market',
+        description: 'Haojue à venda em Angola: das motos mais vendidas do país. Económicas, resistentes e com peças acessíveis. Anuncie grátis no Ambo Market.',
+      },
+    },
+    haojin: {
+      city: {
+        h1: 'Motos Haojin em {city}',
+        title: 'Motos Haojin em {city} – HJ150, HJ125 | Ambo Market',
+        description: 'Haojin em {city}: HJ125, HJ150 e mais. Motos de trabalho acessíveis e fáceis de manter. Novas e usadas em kwanza no Ambo Market.',
+      },
+      everywhere: {
+        h1: 'Motos Haojin',
+        title: 'Motos Haojin em Angola – HJ125, HJ150 | Ambo Market',
+        description: 'Haojin à venda em Angola: motos económicas entre as mais vendidas do país. Ideais para trabalho e kupapata. Anuncie grátis no Ambo Market.',
+      },
+    },
+    tvs: {
+      city: {
+        h1: 'Motos TVS em {city}',
+        title: 'Motos TVS em {city} – HLX 125, Star, Apache | Ambo Market',
+        description: 'TVS em {city}: HLX 125, Star City e Apache. Motos indianas económicas para trabalho e cidade. Novas e usadas no Ambo Market.',
+      },
+      everywhere: {
+        h1: 'Motos TVS',
+        title: 'Motos TVS em Angola – HLX 125, Star, Apache | Ambo Market',
+        description: 'TVS à venda em Angola: HLX 125, Star City e Apache. Das marcas mais vendidas de África — económica e fiável. Anuncie grátis no Ambo Market.',
+      },
+    },
   },
   cars: {
     other: {
@@ -321,6 +369,66 @@ const BRAND_SEO: Record<string, Record<string, { city: SeoEntry; everywhere: Seo
         description: 'Jetour à venda em Angola. Modernos, acessíveis e com bom custo-benefício.',
       },
     },
+    honda: {
+      city: {
+        h1: 'Carros Honda em {city}',
+        title: 'Carros Honda Novos e Usados em {city} – Civic, CR-V, Fit | Ambo Market',
+        description: 'Honda em {city}: Civic, CR-V, Fit, Accord e HR-V. Fiabilidade japonesa a bom preço. Anuncie ou compre com segurança no Ambo Market.',
+      },
+      everywhere: {
+        h1: 'Carros Honda',
+        title: 'Carros Honda em Angola – Civic, CR-V, Fit, Accord | Ambo Market',
+        description: 'Honda à venda em Angola: Civic, CR-V, Fit, Accord e HR-V. Novos e usados com preços em kwanza. Anuncie grátis no Ambo Market.',
+      },
+    },
+    gac: {
+      city: {
+        h1: 'GAC à Venda em {city}',
+        title: 'Carros GAC em {city} – GS3, GS4, GS8 | Ambo Market',
+        description: 'GAC Motor em {city}: GS3, GS4, GS8 e Empow. SUVs chineses entre os mais vendidos de Angola. Novos e usados no Ambo Market.',
+      },
+      everywhere: {
+        h1: 'GAC à Venda',
+        title: 'Carros GAC em Angola – GS3, GS4, GS8 | Ambo Market',
+        description: 'GAC Motor à venda em Angola: GS3, GS4, GS8 e mais. SUVs modernos no top de vendas do país. Anuncie grátis no Ambo Market.',
+      },
+    },
+    chery: {
+      city: {
+        h1: 'Chery à Venda em {city}',
+        title: 'Carros Chery em {city} – Tiggo 4, Tiggo 7, Arrizo | Ambo Market',
+        description: 'Chery em {city}: Tiggo 4 Pro, Tiggo 7 Pro, Tiggo 8 e Arrizo. SUVs com garantia e bom preço. Novos e usados no Ambo Market.',
+      },
+      everywhere: {
+        h1: 'Chery à Venda',
+        title: 'Carros Chery em Angola – Tiggo 4, Tiggo 7, Tiggo 8 | Ambo Market',
+        description: 'Chery à venda em Angola: linha Tiggo e Arrizo com importador oficial no país. Novos e usados com preços em kwanza. Anuncie grátis.',
+      },
+    },
+    jac: {
+      city: {
+        h1: 'JAC à Venda em {city}',
+        title: 'JAC Motors em {city} – T8, T6, JS4 e Camiões | Ambo Market',
+        description: 'JAC em {city}: pick-ups T6 e T8, SUVs JS4 e veículos de carga. Robustez chinesa a preço acessível. Anuncie grátis no Ambo Market.',
+      },
+      everywhere: {
+        h1: 'JAC à Venda',
+        title: 'JAC Motors em Angola – Pick-ups T8, T6, SUVs JS4 | Ambo Market',
+        description: 'JAC Motors à venda em Angola: pick-ups, SUVs e camiões ligeiros para trabalho. Novos e usados em kwanza. Anuncie grátis no Ambo Market.',
+      },
+    },
+    changan: {
+      city: {
+        h1: 'Changan à Venda em {city}',
+        title: 'Carros Changan em {city} – CS35, CS55, Alsvin | Ambo Market',
+        description: 'Changan em {city}: CS35 Plus, CS55 Plus, Alsvin e Hunter. SUVs e berlinas modernos a bom preço. Novos e usados no Ambo Market.',
+      },
+      everywhere: {
+        h1: 'Changan à Venda',
+        title: 'Carros Changan em Angola – CS35, CS55, Alsvin | Ambo Market',
+        description: 'Changan à venda em Angola: CS35 Plus, CS55 Plus, Alsvin e pick-up Hunter. Design moderno e preço justo. Anuncie grátis no Ambo Market.',
+      },
+    },
     maxus: {
       city: {
         h1: 'Maxus à Venda em {city}',
@@ -429,6 +537,30 @@ const BRAND_SEO: Record<string, Record<string, { city: SeoEntry; everywhere: Seo
         h1: 'Telemóveis OPPO',
         title: 'Compre e Venda OPPO em Angola | Ambo Market',
         description: 'Telemóveis OPPO à venda em Angola – design moderno e bom desempenho.',
+      },
+    },
+    infinix: {
+      city: {
+        h1: 'Telemóveis Infinix em {city}',
+        title: 'Infinix em {city} – Hot, Note, Smart, Zero | Ambo Market',
+        description: 'Infinix em {city}: Hot 40, Note 40, Smart 8 e Zero. Ecrãs grandes e baterias potentes a preço acessível. Novos e usados no Ambo Market.',
+      },
+      everywhere: {
+        h1: 'Telemóveis Infinix',
+        title: 'Infinix em Angola – Hot, Note, Smart, Zero | Ambo Market',
+        description: 'Infinix à venda em Angola: Hot, Note, Smart e Zero. Uma das marcas mais vendidas de África. Novos e usados em kwanza. Anuncie grátis.',
+      },
+    },
+    honor: {
+      city: {
+        h1: 'Telemóveis Honor em {city}',
+        title: 'Honor em {city} – X series, Magic, Honor 90 | Ambo Market',
+        description: 'Honor em {city}: X8, X9, Honor 90 e Magic. Câmaras fortes e design premium a bom preço. Novos e usados no Ambo Market.',
+      },
+      everywhere: {
+        h1: 'Telemóveis Honor',
+        title: 'Honor em Angola – X series, Magic, Honor 90 | Ambo Market',
+        description: 'Honor à venda em Angola: séries X, Number e Magic. Marca em rápido crescimento em África. Novos e usados em kwanza. Anuncie grátis.',
       },
     },
   },
@@ -779,6 +911,8 @@ const setPage = (pageNumber: number) => {
           :title="seo.h1"
           :cityId="cityId"
           :categoryId="(route.params.categoryId as string)"
+          :subcategoryId="(route.params.subcategoryId as string)"
+          :brandId="(route.params.brandId as string)"
         />
       </UITextRoll>
     </div>
