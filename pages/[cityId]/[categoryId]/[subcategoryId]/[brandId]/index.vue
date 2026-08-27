@@ -321,6 +321,18 @@ const BRAND_SEO: Record<string, Record<string, { city: SeoEntry; everywhere: Seo
         description: 'Jetour à venda em Angola. Modernos, acessíveis e com bom custo-benefício.',
       },
     },
+    maxus: {
+      city: {
+        h1: 'Maxus à Venda em {city}',
+        title: 'Compre e Venda Maxus em {city} | Ambo Market',
+        description: 'Pickups e comerciais Maxus T60, T70, D90 e mais à venda em {city}.',
+      },
+      everywhere: {
+        h1: 'Maxus à Venda',
+        title: 'Compre e Venda Maxus em Angola | Ambo Market',
+        description: 'Maxus à venda em Angola. Pickups e veículos comerciais robustos para trabalho.',
+      },
+    },
   },
   phones: {
     other: {

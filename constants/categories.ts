@@ -42,6 +42,7 @@ export const CATEGORIES: Category[] = [
           { id: 'volkswagen', name: 'Volkswagen' },
           { id: 'bmw', name: 'BMW' },
           { id: 'jetour', name: 'Jetour' },
+          { id: 'maxus', name: 'Maxus' },
         ],
       },
       {
