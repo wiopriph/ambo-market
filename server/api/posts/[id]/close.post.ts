@@ -1,10 +1,12 @@
 import { defineEventHandler, createError } from 'h3';
-import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server';
+import { serverSupabaseServiceRole, serverSupabaseUser } from '#supabase/server';
 
 
 export default defineEventHandler(async (event) => {
-  const client = await serverSupabaseClient(event);
   const user = await serverSupabaseUser(event);
+  // service-role: клиентские write-политики на posts сняты. Владельца
+  // проверяем в коде (author_id === user.id) ниже.
+  const client = serverSupabaseServiceRole(event);
   const postId = event.context.params?.id;
 
   if (!user) {

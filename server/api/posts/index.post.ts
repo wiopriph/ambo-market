@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { createError, defineEventHandler, readBody } from 'h3';
-import { serverSupabaseClient, serverSupabaseServiceRole, serverSupabaseUser } from '#supabase/server';
+import { serverSupabaseServiceRole, serverSupabaseUser } from '#supabase/server';
 import { type ImageInput, uploadPostImage } from '~~/server/utils/images';
 import { sendTelegramMessage } from '~~/server/utils/telegram';
 import { getCityById } from '~/constants/cities';
@@ -84,8 +84,11 @@ function parseLocation(location: LocationInput) {
 }
 
 export default defineEventHandler(async (event) => {
-  const client = await serverSupabaseClient(event);
   const user = await serverSupabaseUser(event);
+  // service-role: клиентские write-политики на posts сняты (RLS не даёт
+  // вставить объявление мимо этого API и его проверки телефона).
+  // author_id ниже проставляется явно из проверенной сессии.
+  const client = serverSupabaseServiceRole(event);
 
   if (!user) {
     throw createError({
