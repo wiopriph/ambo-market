@@ -1,5 +1,5 @@
 import { createError, defineEventHandler, readBody } from 'h3';
-import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server';
+import { serverSupabaseServiceRole, serverSupabaseUser } from '#supabase/server';
 import { type ImageInput, uploadProfileImage } from '~~/server/utils/images';
 import { PHONE_REG_EXP } from '~/constants/reg-exps';
 
@@ -23,7 +23,7 @@ type ProfileUpdateInput = {
 
 export default defineEventHandler(async (event) => {
   const userId = event.context.params?.id as string;
-  const client = await serverSupabaseClient(event);
+  const client = serverSupabaseServiceRole(event);
   // serverSupabaseUser бросает «Auth session missing!» вместо null для гостя —
   // ловим, чтобы отдать честный 401, а не 500
   const currentUser = await serverSupabaseUser(event).catch(() => null);
