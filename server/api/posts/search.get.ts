@@ -34,7 +34,6 @@ function mapRowToPost(row: any) {
       id: row.author_id ?? null,
       name: row.author_name ?? null,
       avatar: row.author_avatar ?? null,
-      email: row.author_email ?? null,
     },
   };
 }
