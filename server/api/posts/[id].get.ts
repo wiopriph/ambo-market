@@ -1,4 +1,4 @@
-import { serverSupabaseClient } from '#supabase/server';
+import { serverSupabaseServiceRole } from '#supabase/server';
 import { getCityIdByName } from '~/constants/cities';
 
 
@@ -29,7 +29,9 @@ const mapRowToPost = (row: any) => ({
 
 export default defineEventHandler(async (event) => {
   const id = event.context.params!.id as string;
-  const client = await serverSupabaseClient(event);
+  // service-role: клиентский доступ к profiles закрыт; телефон наружу
+  // не отдаём (только hasContact), контакт — через /contact
+  const client = serverSupabaseServiceRole(event);
 
   // 1) пост (можно 'posts' если нет view)
   const column = isFirestoreId(id) ? 'fs_id' : 'id';

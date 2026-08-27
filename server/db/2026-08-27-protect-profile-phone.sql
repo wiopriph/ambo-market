@@ -1,25 +1,31 @@
--- Защита телефона продавца. Применить в Supabase Dashboard → SQL Editor.
+-- Закрытие прямого клиентского доступа к profiles. Применить в Supabase
+-- Dashboard → SQL Editor. Имена политик взяты из pg_policies (см. скриншот).
 --
--- Причина: PATCH /api/users/[id] раньше ходил под токеном пользователя (RLS),
--- значит существует политика «authenticated обновляет свою строку profiles».
--- Та же политика открыта браузерному supabase-клиенту — любой залогиненный
--- пользователь мог из DevTools обнулить phone в обход серверной валидации,
--- оставив свои объявления без контакта.
+-- Две дыры, обе через авто-REST Supabase в обход серверного API:
 --
--- Теперь запись профиля идёт только через service-role в API. Здесь:
---   1) убираем прямой UPDATE profiles для клиентов;
---   2) триггер-предохранитель на случай любого другого писателя.
+--   1. profiles.read.all  (SELECT, roles={public}, qual=true)
+--      Любой аноним мог выкачать phone и email ВСЕХ продавцов одним
+--      запросом supabase.from('profiles').select('phone,email').
+--      Обходит /contact с rate-limit и всю защиту номера.
+--
+--   2. profiles.update.self  (UPDATE, roles={authenticated}, auth.uid()=id)
+--      Залогиненный мог обнулить свой phone из DevTools, минуя валидацию
+--      API — отсюда продавцы без контакта.
+--
+-- Приложение к profiles с клиента не обращается: чтение профиля идёт через
+-- серверные API на service-role, запись — через PATCH (тоже service-role).
+-- Поэтому прямой клиентский доступ к таблице закрываем целиком.
 
--- ── 1. Клиент больше не пишет profiles напрямую ──────────────────────────
--- Снимаем клиентские UPDATE-политики (имя может отличаться — проверьте
--- select * from pg_policies where tablename = 'profiles'; и снимите нужную).
-drop policy if exists "Users can update own profile" on profiles;
-drop policy if exists "Enable update for users based on id" on profiles;
--- SELECT-политику для чтения профиля НЕ трогаем — она нужна.
+-- ── 1. Снять клиентские политики ─────────────────────────────────────────
+drop policy if exists "profiles.read.all" on profiles;
+drop policy if exists "profiles.update.self" on profiles;
 
--- ── 2. Предохранитель на уровне БД ───────────────────────────────────────
--- Заданный телефон нельзя стереть: только заменить на другой непустой.
--- Ловит API, прямой REST, ручные UPDATE в SQL-редакторе.
+-- ── 2. Отозвать табличные привилегии у клиентских ролей ──────────────────
+-- Service role ходит мимо RLS и грантов — серверные API не затрагиваются.
+revoke all on profiles from anon, authenticated;
+
+-- ── 3. Предохранитель на уровне БД ───────────────────────────────────────
+-- Заданный телефон нельзя стереть никаким писателем (API, REST, ручной SQL).
 create or replace function profiles_protect_phone()
 returns trigger
 language plpgsql

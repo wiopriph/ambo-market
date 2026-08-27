@@ -1,4 +1,4 @@
-import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server';
+import { serverSupabaseServiceRole, serverSupabaseUser } from '#supabase/server';
 
 
 async function getCurrentUserSafe(event) {
@@ -11,7 +11,9 @@ async function getCurrentUserSafe(event) {
 
 export default defineEventHandler(async (event) => {
   const userId = event.context.params!.id as string;
-  const client = await serverSupabaseClient(event);
+  // service-role: клиентский доступ к profiles закрыт (phone/email не должны
+  // утекать через авто-REST). Ответ шейпится по isSelf ниже.
+  const client = serverSupabaseServiceRole(event);
   const currentUser = await getCurrentUserSafe(event);
 
   const { data: profile, error } = await client

@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { createError, defineEventHandler, readBody } from 'h3';
-import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server';
+import { serverSupabaseClient, serverSupabaseServiceRole, serverSupabaseUser } from '#supabase/server';
 import { type ImageInput, uploadPostImage } from '~~/server/utils/images';
 import { sendTelegramMessage } from '~~/server/utils/telegram';
 import { getCityById } from '~/constants/cities';
@@ -94,7 +94,8 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const { data: profile, error: profileError } = await client
+  // profiles закрыт для клиентских ролей — читаем через service-role
+  const { data: profile, error: profileError } = await serverSupabaseServiceRole(event)
     .from('profiles')
     .select('phone')
     .eq('id', user.id)
