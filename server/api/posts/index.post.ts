@@ -163,11 +163,35 @@ export default defineEventHandler(async (event) => {
   const locationData = parseLocation(location);
 
   // блоклист: телефон автора или казино-номер/фраза в тексте.
-  // Шэдоу-hold — спамеру отвечаем как при успехе, но пост не публикуется.
   const blockMatch = await checkBlocklist(client, {
     phone: profile.phone,
     text: `${title} ${description}`,
   });
+
+  // матч по НОМЕРУ — стопроцентный спамер: тихий пермабан, ничего не сохраняем
+  // (ни фото, ни пост). Ответ выглядит успешным, редирект уйдёт в 404 — «глюк».
+  // Матч по текстовой фразе может быть ложным — тот пойдёт в шэдоу-hold ниже.
+  if (blockMatch?.kind === 'phone') {
+    await client.auth.admin.updateUserById(user.id, { 'ban_duration': '876000h' });
+
+    if (profile.phone) {
+      await client
+        .from('blocklist')
+        .upsert(
+          { kind: 'phone', value: profile.phone.replace(/\D/g, ''), note: 'auto: post com número bloqueado' },
+          { onConflict: 'kind,value' },
+        );
+    }
+
+    await sendTelegramMessage([
+      '🤖 Auto-ban: anúncio com número bloqueado (não guardado)',
+      `Blocklist: ${blockMatch.value}`,
+      `Título: ${title}`,
+      `User: ${user.id}`,
+    ].join('\n'));
+
+    return { id: randomUUID() };
+  }
 
   const postId = randomUUID();
   const bucketName = 'media';
