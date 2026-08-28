@@ -9,6 +9,13 @@ export type BlocklistMatch = { kind: string; value: string };
 export const digitsOnly = (value: string) => value.replace(/\D/g, '');
 
 /**
+ * Код Анголы в начале отбрасываем: '244944123456', '00244944123456'
+ * и '944123456' — один и тот же номер, в каком бы виде он ни попал
+ * в блоклист или в текст.
+ */
+export const stripCountryCode = (digits: string) => digits.replace(/^(00)?244(?=\d{9}$)/, '');
+
+/**
  * Цифровые последовательности текста, устойчивые к форматированию:
  * разделители между цифрами (пробел, дефис, точка и т.п.) схлопываются,
  * так что «944 123 456» и «944-12-34-56» дают одну последовательность.
@@ -39,7 +46,7 @@ export async function checkBlocklist(
 
   for (const entry of entries as BlocklistEntry[]) {
     if (entry.kind === 'phone') {
-      const blocked = digitsOnly(entry.value);
+      const blocked = stripCountryCode(digitsOnly(entry.value));
 
       if (!blocked) continue;
 

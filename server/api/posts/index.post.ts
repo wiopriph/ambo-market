@@ -184,9 +184,9 @@ export default defineEventHandler(async (event) => {
     }
 
     await sendTelegramMessage([
-      '🤖 Auto-ban: anúncio com número bloqueado (não guardado)',
-      `Blocklist: ${blockMatch.value}`,
-      `Título: ${title}`,
+      '🤖 Автобан: пост с заблокированным номером (не сохранён)',
+      `Блоклист: ${blockMatch.value}`,
+      `Заголовок: ${title}`,
       `User: ${user.id}`,
     ].join('\n'));
 
@@ -242,11 +242,11 @@ export default defineEventHandler(async (event) => {
   await sendTelegramMessage(
     [
       blockMatch ?
-        `⚠️ BLOCKLIST (${blockMatch.kind}: ${blockMatch.value}) — anúncio em hold` :
-        '🆕 Novo anúncio',
+        `⚠️ BLOCKLIST (${blockMatch.kind}: ${blockMatch.value}) — пост в hold` :
+        '🆕 Новое объявление',
       `${title} — ${parsedPrice} Kz`,
-      `Categoria: ${categoryId}${subcategoryId ? ` / ${subcategoryId}` : ''}`,
-      `Cidade: ${locationData.cityName}`,
+      `Категория: ${categoryId}${subcategoryId ? ` / ${subcategoryId}` : ''}`,
+      `Город: ${locationData.cityName}`,
       `${baseUrl}/product/${postId}`,
     ].join('\n'),
     moderationKeyboard(postId),

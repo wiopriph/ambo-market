@@ -13,11 +13,11 @@ type ReportReason = typeof REPORT_REASONS[number];
 const isReason = (v: unknown): v is ReportReason => REPORT_REASONS.includes(v as ReportReason);
 
 const REASON_LABELS: Record<ReportReason, string> = {
-  fraud: 'Fraude ou burla',
-  prohibited: 'Produto proibido',
-  spam: 'Anúncio duplicado ou spam',
-  misleading: 'Preço ou descrição enganosa',
-  other: 'Outro motivo',
+  fraud: 'Мошенничество',
+  prohibited: 'Запрещённый товар',
+  spam: 'Дубль или спам',
+  misleading: 'Обманная цена или описание',
+  other: 'Другая причина',
 };
 
 const AUTO_HOLD_THRESHOLD = 3;
@@ -130,11 +130,11 @@ export default defineEventHandler(async (event) => {
 
   await sendTelegramMessage(
     [
-      autoHeld ? '🚫 [AUTO-HOLD] Anúncio suspenso por denúncias' : '🚩 Nova denúncia',
-      `Anúncio: ${post.title ?? postId}`,
-      `Motivo: ${REASON_LABELS[body.reason]}`,
-      comment ? `Detalhes: ${comment.slice(0, 300)}` : null,
-      `Denúncias únicas: ${uniqueReporters}`,
+      autoHeld ? '🚫 [AUTO-HOLD] Пост снят по жалобам' : '🚩 Новая жалоба',
+      `Объявление: ${post.title ?? postId}`,
+      `Причина: ${REASON_LABELS[body.reason]}`,
+      comment ? `Детали: ${comment.slice(0, 300)}` : null,
+      `Уникальных жалоб: ${uniqueReporters}`,
       `${baseUrl}/product/${postId}`,
     ].filter(Boolean).join('\n'),
     moderationKeyboard(postId),

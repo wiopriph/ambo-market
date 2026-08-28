@@ -62,8 +62,8 @@ export default defineEventHandler(async (event) => {
       await client.auth.admin.updateUserById(userId, { 'ban_duration': '876000h' });
 
       await sendTelegramMessage([
-        '🤖 Auto-ban: tentativa de usar número bloqueado',
-        `Número: ${normalizedPhone} (blocklist: ${blocked.value})`,
+        '🤖 Автобан: попытка привязать заблокированный номер',
+        `Номер: ${normalizedPhone} (блоклист: ${blocked.value})`,
         `User: ${userId}`,
       ].join('\n'));
 

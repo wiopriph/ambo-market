@@ -67,7 +67,7 @@ export default defineEventHandler(async (event) => {
           .maybeSingle();
 
         if (!post) {
-          await answerCallback(cb.id, 'Anúncio não encontrado', true);
+          await answerCallback(cb.id, 'Объявление не найдено', true);
 
           return { ok: true };
         }
@@ -79,14 +79,14 @@ export default defineEventHandler(async (event) => {
             .eq('id', postId);
 
           if (error) {
-            await answerCallback(cb.id, `Erro: ${error.message.slice(0, 50)}`, true);
+            await answerCallback(cb.id, `Ошибка: ${error.message.slice(0, 50)}`, true);
 
             return { ok: true };
           }
         }
 
-        await answerCallback(cb.id, post.status === 'removed' ? 'Já removido' : 'Removido');
-        await finalize('🗑 removido');
+        await answerCallback(cb.id, post.status === 'removed' ? 'Уже удалено' : 'Удалено');
+        await finalize('🗑 удалено');
 
         return { ok: true };
       }
@@ -94,14 +94,14 @@ export default defineEventHandler(async (event) => {
       // ── 🚫 бан: шаг подтверждения ────────────────────────────────────
       case 'ban': {
         await editTelegramKeyboard(chatId, messageId, banConfirmKeyboard(postId));
-        await answerCallback(cb.id, 'Confirmar?');
+        await answerCallback(cb.id, 'Подтвердить?');
 
         return { ok: true };
       }
 
       case 'bno': {
         await editTelegramKeyboard(chatId, messageId, moderationKeyboard(postId));
-        await answerCallback(cb.id, 'Cancelado');
+        await answerCallback(cb.id, 'Отменено');
 
         return { ok: true };
       }
@@ -115,7 +115,7 @@ export default defineEventHandler(async (event) => {
           .maybeSingle();
 
         if (!post?.author_id) {
-          await answerCallback(cb.id, 'Autor não encontrado', true);
+          await answerCallback(cb.id, 'Автор не найден', true);
 
           return { ok: true };
         }
@@ -126,7 +126,7 @@ export default defineEventHandler(async (event) => {
         });
 
         if (banError) {
-          await answerCallback(cb.id, `Erro: ${banError.message.slice(0, 50)}`, true);
+          await answerCallback(cb.id, `Ошибка: ${banError.message.slice(0, 50)}`, true);
 
           return { ok: true };
         }
@@ -154,8 +154,8 @@ export default defineEventHandler(async (event) => {
             );
         }
 
-        await answerCallback(cb.id, 'Banido');
-        await finalize('🚫 utilizador banido');
+        await answerCallback(cb.id, 'Забанен');
+        await finalize('🚫 пользователь забанен');
 
         return { ok: true };
       }
@@ -163,7 +163,7 @@ export default defineEventHandler(async (event) => {
       // ── 📘 опубликовать ссылку на страницу Facebook ─────────────────
       case 'fb': {
         if (!facebook?.pageId || !facebook?.pageToken) {
-          await answerCallback(cb.id, 'FB não configurado', true);
+          await answerCallback(cb.id, 'FB не настроен', true);
 
           return { ok: true };
         }
@@ -175,7 +175,7 @@ export default defineEventHandler(async (event) => {
           .maybeSingle();
 
         if (!post) {
-          await answerCallback(cb.id, 'Anúncio não encontrado', true);
+          await answerCallback(cb.id, 'Объявление не найдено', true);
 
           return { ok: true };
         }
@@ -200,13 +200,13 @@ export default defineEventHandler(async (event) => {
 
           const fbUrl = `https://facebook.com/${res.id}`;
 
-          await answerCallback(cb.id, 'Publicado no FB');
-          await finalize(`📘 publicado: ${fbUrl}`);
+          await answerCallback(cb.id, 'Опубликовано в FB');
+          await finalize(`📘 опубликовано: ${fbUrl}`);
         } catch (error: any) {
-          const message_ = error?.data?.error?.message || error?.message || 'erro';
+          const message_ = error?.data?.error?.message || error?.message || 'ошибка';
 
           console.error('FB publish failed:', message_);
-          await answerCallback(cb.id, `Erro FB: ${String(message_).slice(0, 50)}`, true);
+          await answerCallback(cb.id, `Ошибка FB: ${String(message_).slice(0, 50)}`, true);
         }
 
         return { ok: true };
@@ -221,7 +221,7 @@ export default defineEventHandler(async (event) => {
   } catch (error: any) {
     console.error('Telegram webhook failed:', error);
     // тост с ошибкой; сообщение не трогаем — кнопки остаются, можно повторить
-    await answerCallback(cb.id, `Erro: ${String(error?.message ?? 'falha').slice(0, 50)}`, true);
+    await answerCallback(cb.id, `Ошибка: ${String(error?.message ?? 'сбой').slice(0, 50)}`, true);
 
     return { ok: true };
   }

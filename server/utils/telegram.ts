@@ -87,8 +87,8 @@ export async function answerCallback(callbackId: string, text?: string, alert = 
 /** Три кнопки под уведомлением о новом объявлении или жалобе. */
 export function moderationKeyboard(postId: string): InlineKeyboard {
   return [[
-    { text: '🗑 Remover', 'callback_data': `del:${postId}` },
-    { text: '🚫 Banir', 'callback_data': `ban:${postId}` },
+    { text: '🗑 Удалить', 'callback_data': `del:${postId}` },
+    { text: '🚫 Забанить', 'callback_data': `ban:${postId}` },
     { text: '📘 FB', 'callback_data': `fb:${postId}` },
   ]];
 }
@@ -96,7 +96,7 @@ export function moderationKeyboard(postId: string): InlineKeyboard {
 /** Подтверждение бана. */
 export function banConfirmKeyboard(postId: string): InlineKeyboard {
   return [[
-    { text: '✅ Sim, banir', 'callback_data': `banc:${postId}` },
-    { text: '✖ Não', 'callback_data': `bno:${postId}` },
+    { text: '✅ Да, забанить', 'callback_data': `banc:${postId}` },
+    { text: '✖ Отмена', 'callback_data': `bno:${postId}` },
   ]];
 }
