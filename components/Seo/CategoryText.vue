@@ -2,6 +2,7 @@
 import { getCityById } from '~/constants/cities';
 import { getCategoryName } from '~/constants/categories';
 import { getBrandSeoText } from '~/constants/seoBrandTexts';
+import { getSubcategorySeoText } from '~/constants/seoSubcategoryTexts';
 
 
 const props = defineProps<{
@@ -27,12 +28,20 @@ type CategoryContent = {
 const categoryContent = computed((): CategoryContent => {
   const loc = location.value;
 
-  // Точечный текст бренда важнее общекатегорийного.
+  // Приоритет: точечный текст бренда > подкатегории > общекатегорийный.
   if (props.subcategoryId && props.brandId) {
     const brandText = getBrandSeoText(props.subcategoryId, props.brandId, loc);
 
     if (brandText) {
       return brandText;
+    }
+  }
+
+  if (props.subcategoryId) {
+    const subcategoryText = getSubcategorySeoText(props.categoryId, props.subcategoryId, loc);
+
+    if (subcategoryText) {
+      return subcategoryText;
     }
   }
 

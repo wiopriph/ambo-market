@@ -776,6 +776,7 @@ const setPage = (pageNumber: number) => {
           :title="seo.h1"
           :cityId="cityId"
           :categoryId="(route.params.categoryId as string)"
+          :subcategoryId="(route.params.subcategoryId as string)"
         />
       </UITextRoll>
     </div>
