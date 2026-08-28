@@ -172,6 +172,17 @@ const selectImage = (index: number) => {
   scrollCarouselTo(index);
 };
 
+// полноэкранный просмотр: тап по фото открывает лайтбокс на текущем кадре
+const isLightboxOpen = ref(false);
+
+const openLightbox = (index: number) => {
+  // eslint-disable-next-line camelcase
+  pushEvent(CLICK_AD_PHOTO, { product_id: postId.value });
+
+  activeImageIndex.value = index;
+  isLightboxOpen.value = true;
+};
+
 const { isFavorite, toggleFavorite } = useFavorites();
 
 const favorite = computed(() => isFavorite(postId.value));
@@ -199,34 +210,8 @@ const attributeDetails = computed(() => {
     .filter(item => item.value);
 });
 
-const productDetails = computed(() => [
-  {
-    label: 'Localização',
-    value: postCityName.value,
-    icon: 'i-lucide-map-pin',
-  },
-  {
-    label: 'Categoria',
-    value: postCategoryName.value,
-    icon: 'i-lucide-layout-grid',
-  },
-  {
-    label: 'Subcategoria',
-    value: postSubcategoryName.value,
-    icon: 'i-lucide-list-tree',
-  },
-  {
-    label: 'Marca',
-    value: brandId.value ? postBrandName.value : '',
-    icon: 'i-lucide-tag',
-  },
-  ...attributeDetails.value,
-  {
-    label: 'Publicado em',
-    value: formattedDate.value,
-    icon: 'i-lucide-calendar-days',
-  },
-].filter((item) => item.value));
+// только атрибуты товара: категория/город/дата уже есть в крошках и мета-строке
+const productDetails = computed(() => attributeDetails.value.filter(item => item.value));
 
 const sellerMemberSince = computed(() =>
   seller.value?.creationTime ? `Membro desde ${formatFullDate(seller.value.creationTime, 'pt')}` : '');
@@ -765,7 +750,7 @@ const closePost = () => {
   <div class="space-y-4 pb-24 lg:pb-0">
     <UBreadcrumb
       :items="breadcrumbItems"
-      class="hidden sm:flex"
+      class="overflow-x-auto"
     />
 
     <section v-if="post && seller">
@@ -793,8 +778,8 @@ const closePost = () => {
                   <img
                     :src="slide.url"
                     :alt="slide.alt"
-                    class="h-full w-full object-cover"
-                    @click="selectImage(slide.index)"
+                    class="h-full w-full cursor-zoom-in object-cover"
+                    @click="openLightbox(slide.index)"
                   >
                 </div>
               </UCarousel>
@@ -857,9 +842,9 @@ const closePost = () => {
           <!-- Title + meta (mobile) -->
           <div class="rounded-2xl border border-default bg-default px-5 py-4 lg:hidden">
             <div class="flex items-start gap-2">
-              <h1
-                class="flex-1 text-xl font-bold text-highlighted"
-                v-text="post.title"
+              <p
+                class="flex-1 text-2xl font-bold text-primary"
+                v-text="formattedPrice"
               />
 
               <UButton
@@ -871,11 +856,27 @@ const closePost = () => {
                 :aria-label="favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'"
                 @click="onFavoriteClick"
               />
+
+              <UDropdownMenu
+                :items="[[
+                  { label: 'WhatsApp', icon: 'i-simple-icons-whatsapp', to: `https://wa.me/?text=${encodedShareText}`, target: '_blank' },
+                  { label: 'Facebook', icon: 'i-simple-icons-facebook', to: `https://www.facebook.com/sharer/sharer.php?u=${encodedShareUrl}`, target: '_blank' },
+                  { label: 'Copiar link', icon: 'i-lucide-link', onSelect: copyShareLink },
+                ]]"
+              >
+                <UButton
+                  icon="i-lucide-share-2"
+                  color="neutral"
+                  variant="ghost"
+                  size="sm"
+                  aria-label="Compartilhar anúncio"
+                />
+              </UDropdownMenu>
             </div>
 
-            <p
-              class="mt-1 text-2xl font-bold text-primary"
-              v-text="formattedPrice"
+            <h1
+              class="mt-1 text-lg font-bold leading-snug text-highlighted"
+              v-text="post.title"
             />
 
             <div class="mt-2 flex flex-wrap gap-3 text-sm text-muted">
@@ -1084,7 +1085,7 @@ const closePost = () => {
               </UUser>
             </div>
 
-            <div class="px-5 py-4 space-y-2">
+            <div class="hidden px-5 py-4 space-y-2 lg:block">
               <UButton
                 v-if="hasControlButtons && isOwnerUser"
                 label="Fechar anúncio"
@@ -1194,102 +1195,16 @@ const closePost = () => {
               <span v-text="isReported ? 'Denunciado — obrigado' : 'Algo suspeito? Denuncie o anúncio'" />
             </button>
           </div>
-
-          <!-- Share (mobile only) -->
-          <div class="rounded-2xl border border-default bg-default divide-y divide-default overflow-hidden lg:hidden">
-            <div class="px-5 py-3">
-              <p
-                class="text-xs font-medium text-muted uppercase tracking-wide"
-                v-text="'Compartilhar anúncio'"
-              />
-            </div>
-
-            <NuxtLink
-              :href="`https://wa.me/?text=${encodedShareText}`"
-              target="_blank"
-              class="flex items-center gap-3 px-5 py-3.5 transition hover:bg-elevated"
-            >
-              <div class="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#25D366]/10">
-                <UIcon
-                  name="i-simple-icons-whatsapp"
-                  class="size-4 text-[#25D366]"
-                />
-              </div>
-
-              <span class="flex-1 text-sm text-highlighted">WhatsApp</span>
-
-              <UIcon
-                name="i-lucide-chevron-right"
-                class="size-4 text-muted"
-              />
-            </NuxtLink>
-
-            <NuxtLink
-              :href="`https://www.facebook.com/sharer/sharer.php?u=${encodedShareUrl}`"
-              target="_blank"
-              class="flex items-center gap-3 px-5 py-3.5 transition hover:bg-elevated"
-            >
-              <div class="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#1877F2]/10">
-                <UIcon
-                  name="i-simple-icons-facebook"
-                  class="size-4 text-[#1877F2]"
-                />
-              </div>
-
-              <span class="flex-1 text-sm text-highlighted">Facebook</span>
-
-              <UIcon
-                name="i-lucide-chevron-right"
-                class="size-4 text-muted"
-              />
-            </NuxtLink>
-
-            <button
-              type="button"
-              class="flex w-full items-center gap-3 px-5 py-3.5 transition hover:bg-elevated"
-              @click="copyShareLink"
-            >
-              <div class="flex size-8 shrink-0 items-center justify-center rounded-xl bg-primary/10">
-                <UIcon
-                  name="i-lucide-link"
-                  class="size-4 text-primary"
-                />
-              </div>
-
-              <span
-                class="flex-1 text-left text-sm text-highlighted"
-                v-text="'Copiar link'"
-              />
-
-              <UIcon
-                name="i-lucide-chevron-right"
-                class="size-4 text-muted"
-              />
-            </button>
-          </div>
         </aside>
       </div>
 
       <!-- Mobile sticky CTA -->
       <div class="fixed inset-x-0 bottom-0 z-20 border-t border-default bg-default/95 backdrop-blur-sm lg:hidden">
         <div class="px-4 py-3 space-y-2">
-          <div class="flex items-baseline justify-between">
-            <p
-              class="text-xl font-bold text-highlighted"
-              v-text="formattedPrice"
-            />
-
-            <p
-              v-if="postCityName"
-              class="text-xs text-muted flex items-center gap-1"
-            >
-              <UIcon
-                name="i-lucide-map-pin"
-                class="size-3"
-              />
-              {{ postCityName }}
-            </p>
-          </div>
+          <p
+            class="text-xl font-bold text-highlighted"
+            v-text="formattedPrice"
+          />
 
           <div class="flex gap-2">
             <UButton
@@ -1362,6 +1277,13 @@ const closePost = () => {
         :postId="postId"
         @reported="onReported"
         @close="isReportModalVisible = false"
+      />
+
+      <ProductGalleryLightbox
+        v-model:open="isLightboxOpen"
+        :images="carouselSlides"
+        :startIndex="activeImageIndex"
+        @select="selectImage"
       />
     </section>
 
