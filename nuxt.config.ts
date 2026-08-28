@@ -25,6 +25,14 @@ export default defineNuxtConfig({
     telegram: {
       botToken: '',
       chatId: '',
+      // секрет вебхука кнопок (X-Telegram-Bot-Api-Secret-Token из setWebhook)
+      webhookSecret: '',
+    },
+
+    // публикация объявлений на страницу Facebook (опционально)
+    facebook: {
+      pageId: '',
+      pageToken: '',
     },
 
     public: {

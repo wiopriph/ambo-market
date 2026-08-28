@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { createError, defineEventHandler, readBody } from 'h3';
 import { serverSupabaseServiceRole, serverSupabaseUser } from '#supabase/server';
 import { type ImageInput, uploadPostImage } from '~~/server/utils/images';
-import { sendTelegramMessage } from '~~/server/utils/telegram';
+import { moderationKeyboard, sendTelegramMessage } from '~~/server/utils/telegram';
 import { getCityById } from '~/constants/cities';
 import { getProductAttributeFields } from '~/constants/productAttributes';
 
@@ -215,6 +215,7 @@ export default defineEventHandler(async (event) => {
       `Cidade: ${locationData.cityName}`,
       `${baseUrl}/product/${postId}`,
     ].join('\n'),
+    moderationKeyboard(postId),
   );
 
   return { id: postId };

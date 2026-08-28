@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { serverSupabaseServiceRole, serverSupabaseUser } from '#supabase/server';
 import { checkRateLimit } from '~~/server/utils/rateLimit';
-import { sendTelegramMessage } from '~~/server/utils/telegram';
+import { moderationKeyboard, sendTelegramMessage } from '~~/server/utils/telegram';
 
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -137,6 +137,7 @@ export default defineEventHandler(async (event) => {
       `Denúncias únicas: ${uniqueReporters}`,
       `${baseUrl}/product/${postId}`,
     ].filter(Boolean).join('\n'),
+    moderationKeyboard(postId),
   );
 
   return { ok: true };
