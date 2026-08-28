@@ -3,6 +3,7 @@ import { createError, defineEventHandler, readBody } from 'h3';
 import { serverSupabaseServiceRole, serverSupabaseUser } from '#supabase/server';
 import { type ImageInput, uploadPostImage } from '~~/server/utils/images';
 import { moderationKeyboard, sendTelegramMessage } from '~~/server/utils/telegram';
+import { checkBlocklist } from '~~/server/utils/blocklist';
 import { getCityById } from '~/constants/cities';
 import { getProductAttributeFields } from '~/constants/productAttributes';
 
@@ -161,6 +162,13 @@ export default defineEventHandler(async (event) => {
 
   const locationData = parseLocation(location);
 
+  // блоклист: телефон автора или казино-номер/фраза в тексте.
+  // Шэдоу-hold — спамеру отвечаем как при успехе, но пост не публикуется.
+  const blockMatch = await checkBlocklist(client, {
+    phone: profile.phone,
+    text: `${title} ${description}`,
+  });
+
   const postId = randomUUID();
   const bucketName = 'media';
 
@@ -184,7 +192,7 @@ export default defineEventHandler(async (event) => {
       title,
       description,
       price: parsedPrice,
-      status: 'open',
+      status: blockMatch ? 'hold' : 'open',
       'brand_id': brandId || null,
       'category_id': categoryId,
       'subcategory_id': subcategoryId || null,
@@ -209,7 +217,9 @@ export default defineEventHandler(async (event) => {
 
   await sendTelegramMessage(
     [
-      '🆕 Novo anúncio',
+      blockMatch ?
+        `⚠️ BLOCKLIST (${blockMatch.kind}: ${blockMatch.value}) — anúncio em hold` :
+        '🆕 Novo anúncio',
       `${title} — ${parsedPrice} Kz`,
       `Categoria: ${categoryId}${subcategoryId ? ` / ${subcategoryId}` : ''}`,
       `Cidade: ${locationData.cityName}`,

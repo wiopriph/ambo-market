@@ -138,6 +138,22 @@ export default defineEventHandler(async (event) => {
           .eq('author_id', post.author_id)
           .in('status', ACTIVE_STATUSES);
 
+        // номер — в блоклист: перерегистрация с ним не пройдёт
+        const { data: bannedProfile } = await client
+          .from('profiles')
+          .select('phone')
+          .eq('id', post.author_id)
+          .maybeSingle();
+
+        if (bannedProfile?.phone) {
+          await client
+            .from('blocklist')
+            .upsert(
+              { kind: 'phone', value: bannedProfile.phone.replace(/\D/g, ''), note: 'auto: banir' },
+              { onConflict: 'kind,value' },
+            );
+        }
+
         await answerCallback(cb.id, 'Banido');
         await finalize('🚫 utilizador banido');
 

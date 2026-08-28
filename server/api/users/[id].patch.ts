@@ -2,6 +2,7 @@ import { createError, defineEventHandler, readBody } from 'h3';
 import { serverSupabaseServiceRole, serverSupabaseUser } from '#supabase/server';
 import { type ImageInput, uploadProfileImage } from '~~/server/utils/images';
 import { PHONE_REG_EXP } from '~/constants/reg-exps';
+import { checkBlocklist } from '~~/server/utils/blocklist';
 
 
 type DbProfile = {
@@ -51,6 +52,13 @@ export default defineEventHandler(async (event) => {
 
     if (!PHONE_REG_EXP.test(normalizedPhone)) {
       throw createError({ statusCode: 400, statusMessage: 'Número de telefone inválido' });
+    }
+
+    // заблокированный номер нельзя привязать к аккаунту
+    const blocked = await checkBlocklist(client, { phone: normalizedPhone });
+
+    if (blocked) {
+      throw createError({ statusCode: 403, statusMessage: 'Este número está bloqueado' });
     }
 
     updateData.phone = normalizedPhone;
