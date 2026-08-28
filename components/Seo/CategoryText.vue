@@ -92,9 +92,9 @@ const categoryContent = computed((): CategoryContent => {
       cta: `Venda artigos infantis que já não usa gratuitamente em ${loc} e ajude outras famílias a poupar no Ambo Market!`,
     },
     home: {
-      intro: `Encontre móveis e artigos para a casa em ${loc} no Ambo Market. Sofás, camas, roupeiros, mesas de jantar, cozinhas equipadas, electrodomésticos (frigoríficos, máquinas de lavar, fogões, ar condicionado), iluminação e decoração — de segunda mão e novos, a preços imbatíveis.`,
-      body: `Em ${loc}, o Ambo Market é o sítio certo para mobilar a sua casa sem gastar muito. Encontre sofás em bom estado, electrodomésticos usados com garantia, mesas e cadeiras de qualidade, e artigos de decoração. Ideal para quem muda de casa ou quer renovar o espaço com um orçamento limitado.`,
-      cta: `Venda os seus móveis e electrodomésticos gratuitamente em ${loc} — publique no Ambo Market e venda depressa!`,
+      intro: `Encontre móveis e artigos para a casa em ${loc} no Ambo Market. Sofás, camas, roupeiros, mesas de jantar, ferramentas, iluminação e decoração — de segunda mão e novos, a preços imbatíveis.`,
+      body: `Em ${loc}, o Ambo Market é o sítio certo para mobilar a sua casa sem gastar muito. Encontre sofás em bom estado, mesas e cadeiras de qualidade, ferramentas e artigos de decoração. Ideal para quem muda de casa ou quer renovar o espaço com um orçamento limitado.`,
+      cta: `Venda os seus móveis e artigos de casa gratuitamente em ${loc} — publique no Ambo Market e venda depressa!`,
     },
   };
 

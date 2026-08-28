@@ -141,13 +141,13 @@ const CATEGORY_SEO: Record<string, { city: SeoEntry; everywhere: SeoEntry }> = {
   home: {
     city: {
       h1: 'Casa e jardim em {city}',
-      title: 'Móveis, Eletrodomésticos e Decoração em {city} | Ambo Market',
-      description: 'Renove a sua casa em {city}: sofás, camas, mesas, frigoríficos, fogões, ar condicionado, ferramentas e decoração. Novos e usados de particulares. Anuncie grátis.',
+      title: 'Móveis, Ferramentas e Decoração em {city} | Ambo Market',
+      description: 'Renove a sua casa em {city}: sofás, camas, mesas, ferramentas, iluminação e decoração. Novos e usados de particulares. Anuncie grátis.',
     },
     everywhere: {
       h1: 'Casa e jardim',
-      title: 'Móveis, Eletrodomésticos e Decoração para Casa em Angola | Ambo Market',
-      description: 'Artigos para casa em Angola: móveis novos e usados, eletrodomésticos, ferramentas, materiais de construção e decoração. Compre barato ou venda o que não usa. Anuncie grátis.',
+      title: 'Móveis, Ferramentas e Decoração para Casa em Angola | Ambo Market',
+      description: 'Artigos para casa em Angola: móveis novos e usados, ferramentas, materiais de construção e decoração. Compre barato ou venda o que não usa. Anuncie grátis.',
     },
   },
 };

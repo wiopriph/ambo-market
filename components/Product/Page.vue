@@ -456,7 +456,7 @@ const PRODUCT_SEO: Record<string, { city: ProductSeoEntry; everywhere: ProductSe
   home: {
     city: {
       title: 'Comprar {title} em {city} | Casa & Jardim | Ambo Market',
-      description: 'Encontre {title} em {city} – móveis, eletrodomésticos, decoração e mais. {description}',
+      description: 'Encontre {title} em {city} – móveis, decoração e mais. {description}',
     },
     everywhere: {
       title: 'Comprar {title} | Casa & Jardim | Ambo Market',
