@@ -541,18 +541,6 @@ const SUBCATEGORY_SEO: Record<string, Record<string, { city: SeoEntry; everywher
         description: 'Veja anúncios de móveis novos e usados em toda Angola. Camas, prateleiras e muito mais. Publique ou compre com facilidade.',
       },
     },
-    appliances: {
-      city: {
-        h1: 'Eletrodomésticos para Casa em {city}',
-        title: 'Compre Frigoríficos, Máquinas, Micro-ondas e Mais em {city} | Ambo Market',
-        description: 'Veja anúncios de eletrodomésticos para cozinha e casa em {city}. Compre novos ou usados. Anuncie gratuitamente.',
-      },
-      everywhere: {
-        h1: 'Eletrodomésticos para Casa',
-        title: 'Compre Frigoríficos, Máquinas, Micro-ondas e Mais em Angola | Ambo Market',
-        description: 'Eletrodomésticos acessíveis em toda Angola. Publique ou veja anúncios de forma fácil.',
-      },
-    },
     tools: {
       city: {
         h1: 'Ferramentas e Itens de Bricolagem em {city}',

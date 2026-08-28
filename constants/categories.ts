@@ -193,7 +193,6 @@ export const CATEGORIES: Category[] = [
     icon: 'i-lucide-house',
     subcategories: [
       { id: 'furniture', name: 'Móveis', icon: 'i-lucide-sofa' },
-      { id: 'appliances', name: 'Eletrodomésticos', icon: 'i-lucide-washing-machine' },
       { id: 'tools', name: 'Ferramentas', icon: 'i-lucide-hammer' },
       { id: 'decor', name: 'Decoração', icon: 'i-lucide-lamp' },
       { id: 'other-home', name: 'Outros para Casa', icon: 'i-lucide-boxes' },

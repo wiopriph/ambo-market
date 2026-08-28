@@ -479,23 +479,6 @@ export const PRODUCT_ATTRIBUTES: Record<string, AttributeField[]> = {
     conditionField(),
   ],
 
-  'home/appliances': [
-    {
-      key: 'applianceType',
-      label: 'Tipo de Electrodoméstico',
-      type: 'select',
-      options: [
-        { value: 'fridge', label: 'Frigorífico' },
-        { value: 'washer', label: 'Máquina de Lavar' },
-        { value: 'stove', label: 'Fogão' },
-        { value: 'microwave', label: 'Micro-ondas' },
-        { value: 'ac', label: 'Ar Condicionado' },
-        { value: 'other', label: 'Outro' },
-      ],
-    },
-    conditionField(CONDITION_3),
-  ],
-
   'home/tools': [
     { key: 'toolType', label: 'Tipo de Ferramenta', type: 'text', placeholder: 'Ex: Furadeira, Serra' },
     conditionField(),

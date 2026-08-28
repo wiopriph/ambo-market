@@ -4,6 +4,7 @@
 
 import type { BrandSeoText as SubcategorySeoText } from '~/constants/seoBrandTexts';
 
+
 export const SUBCATEGORY_SEO_TEXTS: Record<string, Record<string, (loc: string) => SubcategorySeoText>> = {
   vehicles: {
     cars: loc => ({
@@ -167,11 +168,6 @@ export const SUBCATEGORY_SEO_TEXTS: Record<string, Record<string, (loc: string) 
       intro: `Encontre móveis em ${loc} no Ambo Market. Sofás, camas, roupeiros, mesas de jantar, cadeiras e estantes — novos e usados em bom estado, com preços em kwanza (AOA).`,
       body: `Mobilar a casa em ${loc} fica muito mais barato em segunda mão: sofás quase novos de quem muda de casa, camas com colchão incluído e mesas de jantar completas. Veja as fotos com atenção, confirme medidas e combine o transporte com o vendedor.`,
       cta: `Vai mudar de casa? Venda os seus móveis gratuitamente em ${loc} — saem depressa no Ambo Market!`,
-    }),
-    appliances: loc => ({
-      intro: `Compre ou venda electrodomésticos em ${loc} no Ambo Market. Frigoríficos, máquinas de lavar, fogões, micro-ondas, arcas e ar condicionado — novos e usados a preços acessíveis, em kwanza (AOA).`,
-      body: `Equipar a cozinha e a casa sem rebentar o orçamento: em ${loc} há frigoríficos e arcas em óptimo estado, fogões a gás prontos a ligar e splits com instalação combinada. Teste o aparelho no acto da compra e poupe metade do preço de loja.`,
-      cta: `Venda os seus electrodomésticos gratuitamente em ${loc} no Ambo Market!`,
     }),
     tools: loc => ({
       intro: `Encontre ferramentas em ${loc} no Ambo Market. Berbequins, rebarbadoras, geradores, compressores, ferramenta manual e material de construção — novas e usadas, com preços em kwanza (AOA).`,
