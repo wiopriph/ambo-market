@@ -19,8 +19,8 @@ type CityContent = {
 const cityContent = computed(():    CityContent => {
   const map: Record<string, CityContent> = {
     luanda: {
-      intro: 'Luanda é a maior cidade de Angola e o principal centro económico do país. No Ambo Market encontrará milhares de anúncios em Luanda: carros novos e usados, apartamentos para alugar e comprar em Talatona, Miramar, Kilamba, Viana, Cacuaco e Benfica, telemóveis, emprego e serviços.',
-      body: 'Em Luanda, o mercado de classificados é muito activo. Compre um carro usado directamente de um particular, alugue um T2 ou T3 em Talatona sem pagar comissão a imobiliária, encontre emprego nas maiores empresas de petróleo, construção civil e tecnologia. Os melhores preços em kwanza (AOA) estão no Ambo Market.',
+      intro: 'Luanda é a maior cidade de Angola e o principal centro económico do país. No Ambo Market encontrará anúncios em Luanda: carros novos e usados, apartamentos para alugar e comprar em Talatona, Miramar, Kilamba, Viana, Cacuaco e Benfica, telemóveis, emprego e serviços.',
+      body: 'Em Luanda, o mercado de classificados é muito activo. Compre um carro usado directamente de um particular, alugue um T2 ou T3 em Talatona sem pagar comissão a imobiliária, encontre emprego nas maiores empresas de petróleo, construção civil e tecnologia. Preços em kwanza (AOA), negociados directamente com o vendedor.',
       categories: 'Categorias populares em Luanda: Carros e Motos, Imóveis, Telemóveis e Electrónicos, Emprego, Serviços, Roupas e Calçado, Móveis e Electrodomésticos.',
     },
     benguela: {
@@ -75,9 +75,9 @@ const cityContent = computed(():    CityContent => {
   }
 
   return {
-    intro: 'O Ambo Market é o maior marketplace de classificados grátis em Angola. Compre e venda carros, motos, imóveis, telemóveis, electrónicos, roupas, emprego, serviços e muito mais — directamente entre particulares e empresas, sem comissões e sem intermediários.',
-    body: 'Encontrará anúncios de todas as províncias de Angola: Luanda, Benguela, Huambo, Soyo, Malanje, Cabinda, Lobito, Lubango, Namibe e Kuito. Compre novo ou em segunda mão, com preços negociáveis em kwanza (AOA). A maior selecção de produtos e serviços num só lugar.',
-    categories: 'Categorias disponíveis: Veículos (carros, motos, caminhões), Imóveis (venda e arrendamento), Electrónicos (telemóveis, computadores, TV), Moda e Vestuário, Emprego, Serviços, Animais, Hobbies, Artigos para Crianças e Casa e Jardim.',
+    intro: 'O Ambo Market é um marketplace de classificados grátis em Angola. Compre e venda carros, motos, imóveis, telemóveis, electrónicos, roupas, emprego, serviços e muito mais — directamente entre particulares e empresas, sem comissões e sem intermediários.',
+    body: 'Encontrará anúncios de várias províncias de Angola: Luanda, Benguela, Huambo, Soyo, Malanje, Cabinda, Lobito, Lubango, Namibe e Kuito. Compre novo ou em segunda mão, com preços em kwanza (AOA).',
+    categories: 'Categorias disponíveis: Veículos (carros, motos, caminhões), Imóveis (venda e arrendamento), Electrónicos (telemóveis, computadores, TV), Moda e Vestuário, Emprego, Serviços, Animais, Passatempos, Artigos para Crianças e Casa.',
   };
 });
 </script>
@@ -111,19 +111,30 @@ const cityContent = computed(():    CityContent => {
         </p>
 
         <p>
-          Publique quantos anúncios quiser sem pagar nada. Adicione fotos, defina o preço em kwanza (AOA) e comece a
-          receber contactos directos de compradores reais.
+          Publique quantos anúncios quiser sem pagar nada. Adicione fotos, defina o preço em kwanza (AOA) e receba
+          contactos directos de compradores.
         </p>
       </li>
 
       <li>
         <p class="font-medium text-highlighted">
-          Maior Selecção de Anúncios em {{ location }}
+          O Seu Contacto Fica Protegido
         </p>
 
         <p>
-          Milhares de anúncios actualizados diariamente: carros usados, imóveis, smartphones novos e de segunda mão,
-          vagas de emprego, serviços e muito mais — tudo concentrado numa só plataforma.
+          O número de telefone não aparece na página do anúncio. É mostrado apenas quando o comprador clica em
+          "Mostrar contacto", o que dificulta a recolha automática de números por terceiros.
+        </p>
+      </li>
+
+      <li>
+        <p class="font-medium text-highlighted">
+          Anúncios com Denúncia em Um Clique
+        </p>
+
+        <p>
+          Todos os anúncios têm um botão "Denunciar". As nossas Regras definem o que pode e não pode ser publicado, e
+          removemos os anúncios que as violem.
         </p>
       </li>
 
@@ -133,8 +144,7 @@ const cityContent = computed(():    CityContent => {
         </p>
 
         <p>
-          Sem intermediários. Contacte directamente o vendedor, negocie o preço e feche o negócio. Simples, rápido e
-          seguro.
+          Sem intermediários e sem comissões. Contacte o vendedor, negoceie o preço e feche o negócio directamente.
         </p>
       </li>
 
@@ -145,7 +155,7 @@ const cityContent = computed(():    CityContent => {
 
         <p>
           Qualquer pessoa pode publicar um anúncio: particular, pequeno negócio, concessionária de carros, imobiliária,
-          loja de electrónicos ou empresa de serviços. Todos bem-vindos no Ambo Market.
+          loja de electrónicos ou empresa de serviços.
         </p>
       </li>
     </ol>
@@ -172,13 +182,13 @@ const cityContent = computed(():    CityContent => {
       </li>
 
       <li>
-        Publique e comece a receber contactos de compradores interessados hoje mesmo!
+        Publique e comece a receber contactos de compradores interessados.
       </li>
     </ol>
 
     <p>
-      O Ambo Market é o marketplace número 1 de classificados em Angola — rápido, gratuito e pensado para a realidade
-      angolana. Junte-se a milhares de angolanos que já compram e vendem online com segurança e confiança.
+      O Ambo Market é um marketplace de classificados em Angola — rápido, gratuito e pensado para a realidade
+      angolana. Antes de fechar qualquer negócio, leia as nossas dicas de Segurança.
     </p>
   </div>
 </template>

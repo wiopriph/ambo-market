@@ -23,7 +23,7 @@ export const BRAND_SEO_TEXTS: Record<string, Record<string, (loc: string) => Bra
     hyundai: loc => ({
       intro: `Compre ou venda carros Hyundai em ${loc} no Ambo Market. Tucson, Santa Fe, Creta, i10, Accent e Elantra — SUVs modernos e citadinos económicos, novos e usados, com preços em kwanza (AOA).`,
       body: `A Hyundai combina design moderno, equipamento completo e preço competitivo. O Tucson é dos SUVs mais vendidos em ${loc}, o Creta cresce entre as famílias e o i10 é perfeito para a cidade. Garantias longas e consumo contido tornam os Hyundai usados uma compra segura no mercado angolano.`,
-      cta: `Anuncie o seu Hyundai gratuitamente em ${loc} e chegue a milhares de compradores no Ambo Market!`,
+      cta: `Anuncie o seu Hyundai gratuitamente em ${loc} e chegue a compradores de todo o país no Ambo Market!`,
     }),
     kia: loc => ({
       intro: `Encontre carros Kia em ${loc} no Ambo Market. Sportage, Sorento, Picanto, Rio e Seltos — do citadino ao SUV familiar, novos e usados, com fotos reais e preços negociáveis em kwanza (AOA).`,

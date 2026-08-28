@@ -54,7 +54,7 @@ const seo = computed(() => {
   return {
     h1: 'Compre e Venda Online – Todos os Classificados',
     title: 'Classificados Grátis em Angola – Carros, Imóveis, Emprego | Ambo Market',
-    description: 'Compre e venda em Angola: carros, motos, imóveis, smartphones, emprego, roupas e serviços. Milhares de anúncios grátis de particulares e empresas. Negocie com segurança.',
+    description: 'Compre e venda em Angola: carros, motos, imóveis, smartphones, emprego, roupas e serviços. Anúncios grátis de particulares e empresas. Negocie com segurança.',
   };
 });
 

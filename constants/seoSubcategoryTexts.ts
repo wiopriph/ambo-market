@@ -100,7 +100,7 @@ export const SUBCATEGORY_SEO_TEXTS: Record<string, Record<string, (loc: string) 
     sale: loc => ({
       intro: `Encontre casas e apartamentos à venda em ${loc} no Ambo Market. Apartamentos T2 e T3, moradias, vivendas em condomínio e projectos — venda directa de proprietários, em kwanza (AOA) ou USD.`,
       body: `Comprar casa é a decisão de uma vida: em ${loc} há apartamentos no Kilamba e em Talatona, vivendas em condomínios fechados e casas nos bairros em crescimento. Verifique sempre a documentação do imóvel e negocie directamente com o proprietário.`,
-      cta: `Vende a sua casa? Anuncie gratuitamente em ${loc} e alcance milhares de compradores no Ambo Market!`,
+      cta: `Vende a sua casa? Anuncie gratuitamente em ${loc} e alcance compradores de todo o país no Ambo Market!`,
     }),
     'commercial-property': loc => ({
       intro: `Encontre imóveis comerciais em ${loc} no Ambo Market. Lojas, escritórios, armazéns, espaços para restauração e terrenos comerciais — para arrendar ou comprar, com preços em kwanza (AOA).`,

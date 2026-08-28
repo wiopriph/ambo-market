@@ -54,7 +54,7 @@ const categoryContent = computed((): CategoryContent => {
     'real-estate': {
       intro: `Encontre imóveis à venda e para alugar em ${loc} no Ambo Market. Apartamentos T1, T2 e T3, moradias, terrenos, escritórios comerciais e armazéns — tudo num só lugar. Imóveis em Luanda (Talatona, Miramar, Kilamba, Viana), Benguela, Huambo, Soyo e outras províncias de Angola.`,
       body: 'O mercado imobiliário angolano está em crescimento. No Ambo Market encontrará condomínios fechados, vivendas independentes, apartamentos mobilados e não mobilados, terrenos urbanizados e espaços comerciais. Preços negociáveis em kwanza (AOA) ou USD. Anúncios de proprietários directos e imobiliárias.',
-      cta: `Anuncie o seu imóvel gratuitamente em ${loc} e alcance milhares de potenciais compradores e inquilinos!`,
+      cta: `Anuncie o seu imóvel gratuitamente em ${loc} e alcance potenciais compradores e inquilinos em todo o país!`,
     },
     electronics: {
       intro: `Compre e venda electrónicos em ${loc} no Ambo Market. Smartphones novos e usados (iPhone, Samsung Galaxy, Xiaomi, Infinix, Tecno, Huawei), computadores portáteis, tablets, televisores, consolas de jogos PlayStation e Xbox, auscultadores, câmaras fotográficas e muito mais.`,
@@ -93,14 +93,14 @@ const categoryContent = computed((): CategoryContent => {
     },
     home: {
       intro: `Encontre móveis e artigos para a casa em ${loc} no Ambo Market. Sofás, camas, roupeiros, mesas de jantar, cozinhas equipadas, electrodomésticos (frigoríficos, máquinas de lavar, fogões, ar condicionado), iluminação e decoração — de segunda mão e novos, a preços imbatíveis.`,
-      body: `Em ${loc}, o Ambo Market é o melhor lugar para mobilar a sua casa sem gastar muito. Encontre sofás em bom estado, electrodomésticos usados com garantia, mesas e cadeiras de qualidade, e artigos de decoração. Ideal para quem muda de casa ou quer renovar o espaço com um orçamento limitado.`,
+      body: `Em ${loc}, o Ambo Market é o sítio certo para mobilar a sua casa sem gastar muito. Encontre sofás em bom estado, electrodomésticos usados com garantia, mesas e cadeiras de qualidade, e artigos de decoração. Ideal para quem muda de casa ou quer renovar o espaço com um orçamento limitado.`,
       cta: `Venda os seus móveis e electrodomésticos gratuitamente em ${loc} — publique no Ambo Market e venda depressa!`,
     },
   };
 
   return map[props.categoryId] ?? {
-    intro: `Encontre ${categoryName.value} em ${loc} no Ambo Market. Milhares de anúncios de particulares e empresas, com fotos reais e preços negociáveis em kwanza (AOA).`,
-    body: `No Ambo Market encontrará a maior selecção de ${categoryName.value} em Angola. Compre, venda ou troque — sem comissões, sem intermediários, directamente entre comprador e vendedor.`,
+    intro: `Encontre ${categoryName.value} em ${loc} no Ambo Market. Anúncios de particulares e empresas, com fotos reais e preços negociáveis em kwanza (AOA).`,
+    body: `No Ambo Market encontrará anúncios de ${categoryName.value} de toda a Angola. Compre, venda ou troque — sem comissões, sem intermediários, directamente entre comprador e vendedor.`,
     cta: `Publique o seu anúncio de ${categoryName.value} gratuitamente em ${loc} e comece a receber contactos hoje!`,
   };
 });
@@ -138,11 +138,11 @@ const categoryContent = computed((): CategoryContent => {
 
       <li>
         <p class="font-medium text-highlighted">
-          Milhares de Ofertas em {{ location }}
+          Ofertas de Particulares e Empresas em {{ location }}
         </p>
 
         <p>
-          A maior plataforma de classificados de Angola reúne anúncios de particulares e empresas de Luanda, Benguela,
+          O Ambo Market reúne anúncios de particulares e empresas de Luanda, Benguela,
           Huambo, Soyo, Malanje e todas as províncias.<span
             v-if="productList?.length"
           > Encontre {{ productList.join(', ') }} e muito mais.</span>
@@ -214,8 +214,8 @@ const categoryContent = computed((): CategoryContent => {
     </p>
 
     <p>
-      Navegue pelos anúncios, compare preços e fale directamente com os vendedores. O Ambo Market é o marketplace
-      número 1 de classificados em Angola — simples, gratuito e para todos.
+      Navegue pelos anúncios, compare preços e fale directamente com os vendedores. O Ambo Market é um marketplace
+      de classificados em Angola — simples, gratuito e para todos.
     </p>
   </div>
 </template>

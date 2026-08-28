@@ -63,11 +63,11 @@ const props = defineProps<{
 
       <li>
         <p class="font-medium text-highlighted">
-          Maior Selecção de {{ category }} em Angola
+          Mais Ofertas de {{ category }} em Angola
         </p>
 
         <p>
-          O Ambo Market reúne milhares de anúncios de {{ category }} em todo o país. Se este anúncio não for o ideal,
+          O Ambo Market reúne anúncios de {{ category }} de todo o país. Se este anúncio não for o ideal,
           navegue pelas outras ofertas disponíveis e encontre a opção perfeita.
         </p>
       </li>
@@ -88,7 +88,7 @@ const props = defineProps<{
     </h3>
 
     <p>
-      Junte-se a milhares de angolanos que vendem {{ category }} no Ambo Market todos os dias. Publicar um anúncio é
+      Junte-se aos angolanos que vendem {{ category }} no Ambo Market. Publicar um anúncio é
       rápido, gratuito e sem comissões.
     </p>
 
@@ -115,7 +115,7 @@ const props = defineProps<{
     </ol>
 
     <p>
-      O Ambo Market é o marketplace número 1 de classificados em Angola — compre e venda {{ category }} em {{ city }}
+      O Ambo Market é um marketplace de classificados em Angola — compre e venda {{ category }} em {{ city }}
       de forma simples, segura e completamente gratuita.
     </p>
   </div>
