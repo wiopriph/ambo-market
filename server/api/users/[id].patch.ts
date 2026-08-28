@@ -3,6 +3,7 @@ import { serverSupabaseServiceRole, serverSupabaseUser } from '#supabase/server'
 import { type ImageInput, uploadProfileImage } from '~~/server/utils/images';
 import { PHONE_REG_EXP } from '~/constants/reg-exps';
 import { checkBlocklist } from '~~/server/utils/blocklist';
+import { sendTelegramMessage } from '~~/server/utils/telegram';
 
 
 type DbProfile = {
@@ -54,11 +55,35 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 400, statusMessage: 'Número de telefone inválido' });
     }
 
-    // заблокированный номер нельзя привязать к аккаунту
+    // попытка привязать заблокированный номер = спамерский аккаунт.
     const blocked = await checkBlocklist(client, { phone: normalizedPhone });
 
     if (blocked) {
-      throw createError({ statusCode: 403, statusMessage: 'Este número está bloqueado' });
+      await client.auth.admin.updateUserById(userId, { 'ban_duration': '876000h' });
+
+      await sendTelegramMessage([
+        '🤖 Auto-ban: tentativa de usar número bloqueado',
+        `Número: ${normalizedPhone} (blocklist: ${blocked.value})`,
+        `User: ${userId}`,
+      ].join('\n'));
+
+      const { data: current } = await client
+        .from('profiles')
+        .select('id, display_name, avatar_url, email, phone, created_at')
+        .eq('id', userId)
+        .single();
+
+      // ответ неотличим от успешного — но без сохранения номера
+      return {
+        id: current?.id ?? userId,
+        name: current?.display_name ?? null,
+        creationTime: current?.created_at ?? null,
+        emailVerified: false,
+        photoURL: current?.avatar_url ?? null,
+        disabled: false,
+        email: current?.email ?? null,
+        phone: current?.phone ?? null,
+      };
     }
 
     updateData.phone = normalizedPhone;
