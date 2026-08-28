@@ -126,7 +126,7 @@ const saveSettings = handleSubmit.withControlled(async () => {
     await updateProfile(payload);
     photoFile.value = null;
   } catch (error: any) {
-    backendError.value = error?.message || 'Error';
+    backendError.value = error?.data?.statusMessage || error?.statusMessage || 'Não foi possível guardar. Tente novamente.';
   } finally {
     isLoading.value = false;
   }
