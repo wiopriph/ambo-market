@@ -35,7 +35,9 @@ export function useJsonLd() {
     '@id': `${base}/#organization`,
     name: 'Ambo Market',
     url: `${base}/`,
-    logo: `${base}/og-image.png`,
+    logo: `${base}/icon-logo.svg`,
+    description: 'Marketplace de classificados grátis em Angola.',
+    areaServed: { '@type': 'Country', name: 'Angola' },
     sameAs: [
       'https://www.facebook.com/ambo.market',
       'https://www.instagram.com/ambo.market',
@@ -48,6 +50,7 @@ export function useJsonLd() {
     '@id': `${base}/#website`,
     name: 'Ambo Market',
     url: `${base}/`,
+    inLanguage: 'pt-AO',
     publisher: { '@id': `${base}/#organization` },
     potentialAction: {
       '@type': 'SearchAction',

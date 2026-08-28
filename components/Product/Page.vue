@@ -640,6 +640,7 @@ const productSchema = computed(() => {
             'https://schema.org/InStock' :
             'https://schema.org/SoldOut',
           itemCondition: condition,
+          ...(postCityName.value ? { areaServed: { '@type': 'City', name: postCityName.value } } : {}),
           seller: {
             '@type': 'Person',
             name: seller.value?.name,
