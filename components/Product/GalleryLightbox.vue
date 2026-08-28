@@ -24,18 +24,11 @@ const isOpen = computed({
 
 const currentIndex = ref(0);
 
-// Зум одной ступенью (1×/2×) — надёжнее жестов: тап приближает, тап возвращает,
-// панорамирование через нативный скролл контейнера
-const ZOOM_SCALE = 2;
-const isZoomed = ref(false);
-const zoom = computed(() => isZoomed.value ? ZOOM_SCALE : 1);
-
 watch(
   () => props.open,
   (opened) => {
     if (opened) {
       currentIndex.value = Math.min(Math.max(props.startIndex, 0), props.images.length - 1);
-      isZoomed.value = false;
     }
   },
 );
@@ -46,12 +39,7 @@ const showImage = (index: number) => {
   const total = props.images.length;
 
   currentIndex.value = (index + total) % total;
-  isZoomed.value = false;
   emit('select', currentIndex.value);
-};
-
-const toggleZoom = () => {
-  isZoomed.value = !isZoomed.value;
 };
 </script>
 
@@ -73,50 +61,28 @@ const toggleZoom = () => {
 
           <span v-else />
 
-          <div class="flex items-center gap-2">
-            <UButton
-              :icon="isZoomed ? 'i-lucide-zoom-out' : 'i-lucide-zoom-in'"
-              :aria-label="isZoomed ? 'Reduzir' : 'Ampliar'"
-              color="neutral"
-              variant="soft"
-              class="rounded-full bg-black/40 text-white backdrop-blur hover:bg-black/55"
-              @click="toggleZoom"
-            />
-
-            <UButton
-              icon="i-lucide-x"
-              aria-label="Fechar"
-              color="neutral"
-              variant="soft"
-              class="rounded-full bg-black/40 text-white backdrop-blur hover:bg-black/55"
-              @click="isOpen = false"
-            />
-          </div>
+          <UButton
+            icon="i-lucide-x"
+            aria-label="Fechar"
+            color="neutral"
+            variant="soft"
+            class="rounded-full bg-black/40 text-white backdrop-blur hover:bg-black/55"
+            @click="isOpen = false"
+          />
         </div>
 
         <div
           v-if="currentImage"
-          class="min-h-0 flex-1 overflow-auto overscroll-contain"
+          class="min-h-0 flex-1"
         >
           <img
-            v-if="isZoomed"
             :src="currentImage.url"
             :alt="currentImage.alt"
-            :style="{ width: `${zoom * 100}%` }"
-            class="max-w-none cursor-zoom-out"
-            @click="toggleZoom"
-          >
-
-          <img
-            v-else
-            :src="currentImage.url"
-            :alt="currentImage.alt"
-            class="h-full w-full cursor-zoom-in object-contain"
-            @click="toggleZoom"
+            class="h-full w-full object-contain"
           >
         </div>
 
-        <template v-if="images.length > 1 && !isZoomed">
+        <template v-if="images.length > 1">
           <UButton
             icon="i-lucide-chevron-left"
             aria-label="Foto anterior"
