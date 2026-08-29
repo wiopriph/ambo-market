@@ -48,6 +48,11 @@ const profileTab = computed(() => isLoggedIn.value ?
   });
 
 const isActive = (name: string) => String(route.name ?? '').startsWith(name);
+
+const onProfileClick = () => {
+  pushEvent(profileTab.value.event);
+  navigateTo(profileTab.value.to);
+};
 </script>
 
 <template>
@@ -112,11 +117,11 @@ const isActive = (name: string) => String(route.name ?? '').startsWith(name);
           <span class="text-[10px] leading-none">Anúncios</span>
         </NuxtLink>
 
-        <NuxtLink
-          :to="profileTab.to"
+        <button
+          type="button"
           class="flex flex-col items-center justify-center gap-0.5"
           :class="isActive('my') && !isActive('my-ads') && !isActive('my-favorites') ? 'text-primary' : 'text-muted'"
-          @click="pushEvent(profileTab.event)"
+          @click="onProfileClick"
         >
           <UIcon
             :name="profileTab.icon"
@@ -127,7 +132,7 @@ const isActive = (name: string) => String(route.name ?? '').startsWith(name);
             class="text-[10px] leading-none"
             v-text="profileTab.label"
           />
-        </NuxtLink>
+        </button>
       </div>
     </nav>
   </template>
