@@ -8,4 +8,4 @@ Disallow: /*?*minPrice=
 Disallow: /*?*maxPrice=
 Disallow: /*?*attr_
 
-Sitemap: https://ambo.market/sitemap.xml
+Sitemap: https://ambo.market/sitemap_index.xml

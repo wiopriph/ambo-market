@@ -63,8 +63,6 @@ export default defineSitemapEventHandler(async (event) => {
       return {
         loc,
         lastmod: row.updated_at ?? undefined,
-        changefreq: 'daily',
-        priority: 0.8,
       };
     })
     .filter(Boolean) as SitemapUrlInput[];

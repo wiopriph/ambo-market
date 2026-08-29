@@ -68,11 +68,12 @@ export default defineNuxtConfig({
     xsl: false,
     excludeAppSources: true,
     cacheMaxAgeSeconds: 3600,
-    sources: [
-      '/api/sitemap',
-      '/api/sitemap-posts',
-      '/api/sitemap-blog',
-    ],
+    sitemaps: {
+      categories: { sources: ['/api/sitemap'] },
+      posts: { sources: ['/api/sitemap-posts'] },
+      blog: { sources: ['/api/sitemap-blog'] },
+      static: { sources: ['/api/sitemap-static'] },
+    },
   },
 
   css: [

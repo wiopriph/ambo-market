@@ -105,3 +105,4 @@ nuxt.env
 
 # Ignore nuxt/content
 .data
+backups/
