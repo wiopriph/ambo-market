@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { RouteLocationRaw } from 'vue-router';
+// h3-утилиты не автоимпортируются в компонентах — только в server/
+import { setResponseHeader, setResponseStatus } from 'h3';
 import formatCurrency from '~/utils/formatCurrency';
 import { POST_STATUSES } from '~/constants/post-statuses';
 import type { Post as ProductPost, ProductApiResponse, User } from '~/types/product';
@@ -116,6 +118,19 @@ const isCanonicalUrl = computed(() => route.name === canonicalRoute.value.name &
 
 if (post.value && !isCanonicalUrl.value) {
   await navigateTo(canonicalRoute.value, { redirectCode: 301 });
+}
+
+const isRemoved = computed(() => post.value?.status === POST_STATUSES.REMOVED);
+
+// удалённое объявление: HTTP 410 Gone + X-Robots-Tag — из индекса такой URL
+// вылетает быстрее, чем с 404; людям вместо ошибки — страница с похожими
+if (import.meta.server && isRemoved.value) {
+  const event = useRequestEvent();
+
+  if (event) {
+    setResponseStatus(event, 410);
+    setResponseHeader(event, 'X-Robots-Tag', 'noindex');
+  }
 }
 
 const formattedPrice = computed(() => formatCurrency(`${post.value?.price}`));
@@ -485,6 +500,12 @@ const meta = computed(() => {
     { key: 'twitter:description', property: 'twitter:description', content: seo.value.description },
   ];
 
+  // удалённые и hold-посты не индексируем; статусы необратимые/карантинные,
+  // мерцания index/noindex тут нет
+  if (isRemoved.value || post.value?.status === POST_STATUSES.HOLD) {
+    tags.push({ key: 'robots', name: 'robots', content: 'noindex, follow' });
+  }
+
   // без фото тег не ставим — сработает глобальный дефолт из plugins/seo.ts
   if (seo.value.image) {
     tags.push(
@@ -692,8 +713,12 @@ const realEstateListingSchema = computed(() => ({
 const isJobVacancy = computed(() => categoryId.value === 'jobs' && subcategoryId.value === 'vacancies');
 
 const script = computed(() => [jsonLdScript(
-  isJobVacancy.value ? jobPostingSchema.value : productSchema.value,
-  ...(categoryId.value === 'real-estate' ? [realEstateListingSchema.value] : []),
+  ...(isRemoved.value ?
+    [] :
+    [
+      isJobVacancy.value ? jobPostingSchema.value : productSchema.value,
+      ...(categoryId.value === 'real-estate' ? [realEstateListingSchema.value] : []),
+    ]),
   breadcrumbList(breadcrumbsList.value),
 )]);
 
@@ -753,7 +778,29 @@ const closePost = () => {
       class="overflow-x-auto"
     />
 
-    <section v-if="post && seller">
+    <section
+      v-if="isRemoved"
+      class="space-y-3 rounded-2xl border border-default bg-default p-8 text-center"
+    >
+      <h1 class="text-lg font-bold text-highlighted">
+        Este anúncio já não está disponível
+      </h1>
+
+      <p class="text-sm text-muted">
+        Foi removido ou expirou. Veja anúncios semelhantes abaixo ou explore a categoria.
+      </p>
+
+      <UButton
+        :to="{ name: 'cityId-categoryId', params: { cityId: postCityId, categoryId } }"
+        color="primary"
+        variant="soft"
+        class="justify-center"
+      >
+        Ver {{ postCategoryName }}
+      </UButton>
+    </section>
+
+    <section v-else-if="post && seller">
       <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_340px]">
         <!-- Left column -->
         <div class="space-y-4">
