@@ -10,7 +10,6 @@ useHead({
     { key: 'og:description', property: 'og:description', content: description },
     { key: 'twitter:title', property: 'twitter:title', content: title },
     { key: 'twitter:description', property: 'twitter:description', content: description },
-    { key: 'robots', name: 'robots', content: 'noindex, follow' },
   ],
 });
 </script>
