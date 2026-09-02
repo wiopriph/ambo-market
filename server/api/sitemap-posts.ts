@@ -41,18 +41,29 @@ function postPath(row: PostRow): string | null {
 export default defineSitemapEventHandler(async (event) => {
   const client = await serverSupabaseClient(event);
 
-  const { data, error } = await client
-    .from('posts')
-    .select('id, category_id, subcategory_id, brand_id, location_city, updated_at')
-    .eq('status', 'open')
-    .order('created_at', { ascending: false })
-    .limit(MAX_URLS);
+  // постранично: PostgREST молча режет ответ до Max Rows (по умолчанию
+  // 1000), одиночный .limit(45000) на большой базе отдал бы неполную карту
+  const PAGE = 1000;
+  const rows: PostRow[] = [];
 
-  if (error) {
-    throw createError({ statusCode: 500, statusMessage: error.message });
+  while (rows.length < MAX_URLS) {
+    const { data, error } = await client
+      .from('posts')
+      .select('id, category_id, subcategory_id, brand_id, location_city, updated_at')
+      .eq('status', 'open')
+      .order('created_at', { ascending: false })
+      .range(rows.length, rows.length + PAGE - 1);
+
+    if (error) {
+      throw createError({ statusCode: 500, statusMessage: error.message });
+    }
+
+    rows.push(...((data ?? []) as PostRow[]));
+
+    if (!data || data.length < PAGE) break;
   }
 
-  return ((data ?? []) as PostRow[])
+  return rows
     .map((row) => {
       const loc = postPath(row);
 
