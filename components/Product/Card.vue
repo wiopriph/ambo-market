@@ -19,6 +19,7 @@ const STATUS_LABELS: Record<string, string> = {
   [POST_STATUSES.OPEN]: 'Publicado',
   [POST_STATUSES.HOLD]: 'Reservado',
   [POST_STATUSES.CLOSED]: 'Vendido',
+  [POST_STATUSES.REMOVED]: 'Removido',
 };
 
 const formattedPrice = computed(() => formatCurrency(props.product?.price));
@@ -32,9 +33,10 @@ const statusColor = computed(() => {
   const map: Record<string, 'success' | 'info' | 'error'> = {
     [POST_STATUSES.HOLD]: 'info',
     [POST_STATUSES.CLOSED]: 'success',
+    [POST_STATUSES.REMOVED]: 'error',
   };
 
-  return map[props.product?.status] ?? 'error';
+  return map[props.product?.status] ?? 'neutral';
 });
 
 const link = computed(() => getPostRoute({

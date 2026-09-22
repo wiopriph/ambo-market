@@ -2,7 +2,9 @@ import { serverSupabaseClient } from '#supabase/server';
 import { getCityIdByName } from '~/constants/cities';
 
 
-const POST_STATUSES = ['open', 'hold', 'closed'] as const;
+// публично видимые статусы; hold (карантин по жалобам/блоклисту) и removed
+// (снято модерацией) наружу не отдаём — ни в чужом профиле, ни в «Моих объявлениях»
+const POST_STATUSES = ['open', 'closed'] as const;
 
 type PostStatus = typeof POST_STATUSES[number];
 
@@ -46,6 +48,8 @@ export default defineEventHandler(async (event) => {
 
   if (status && isStatus(status)) {
     s = s.eq('status', status);
+  } else {
+    s = s.in('status', [...POST_STATUSES]);
   }
 
   const { data, error } = await s;
