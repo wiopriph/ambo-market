@@ -187,27 +187,35 @@ export default defineEventHandler(async (event) => {
           .filter(Boolean)
           .join('\n');
 
-        try {
-          // link-post: превью (фото, заголовок) FB построит сам из og-тегов
-          const res = await $fetch<{ id: string }>(
-            `https://graph.facebook.com/v21.0/${facebook.pageId}/feed`,
-            {
-              method: 'POST',
-              body: { message, link, 'access_token': facebook.pageToken },
-              timeout: 15_000,
-            },
-          );
+        // FB создаёт link-post долго (скрапит og-теги, бывает >15 с), а Telegram
+        // ждёт ответ вебхука и при задержке шлёт апдейт повторно — получился бы
+        // дубль поста. Поэтому отвечаем сразу, кнопки убираем, публикуем в фоне
+        // и дописываем результат отдельным edit; при ошибке кнопки возвращаем.
+        await answerCallback(cb.id, 'Публикую в FB…');
+        await editTelegramMessage(chatId, messageId, `${baseText}\n\n📘 публикуется…`);
 
-          const fbUrl = `https://facebook.com/${res.id}`;
+        void $fetch<{ id: string }>(
+          `https://graph.facebook.com/v21.0/${facebook.pageId}/feed`,
+          {
+            method: 'POST',
+            // link-post: превью (фото, заголовок) FB построит сам из og-тегов
+            body: { message, link, 'access_token': facebook.pageToken },
+            timeout: 90_000,
+          },
+        )
+          .then((res) => finalize(`📘 опубликовано: https://facebook.com/${res.id}`))
+          .catch(async (error: any) => {
+            const message_ = String(error?.data?.error?.message || error?.message || 'ошибка');
 
-          await answerCallback(cb.id, 'Опубликовано в FB');
-          await finalize(`📘 опубликовано: ${fbUrl}`);
-        } catch (error: any) {
-          const message_ = error?.data?.error?.message || error?.message || 'ошибка';
+            console.error('FB publish failed:', message_);
 
-          console.error('FB publish failed:', message_);
-          await answerCallback(cb.id, `Ошибка FB: ${String(message_).slice(0, 50)}`, true);
-        }
+            await editTelegramMessage(
+              chatId,
+              messageId,
+              `${baseText}\n\n❌ FB: ${message_.slice(0, 120)}`,
+              moderationKeyboard(postId),
+            );
+          });
 
         return { ok: true };
       }
