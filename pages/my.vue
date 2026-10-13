@@ -7,6 +7,7 @@ useHead({
 
 const tabs = [
   { label: 'Meus anúncios', icon: 'i-lucide-list', to: { name: 'my-ads' } },
+  { label: 'Mensagens', icon: 'i-lucide-message-circle', to: { name: 'my-chats' } },
   { label: 'Favoritos', icon: 'i-lucide-heart', to: { name: 'my-favorites' } },
   { label: 'Configurações', icon: 'i-lucide-settings', to: { name: 'my-settings' } },
 ];

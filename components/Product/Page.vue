@@ -8,7 +8,7 @@ import type { Post as ProductPost, ProductApiResponse, User } from '~/types/prod
 import { formatFullDate } from '~/utils/formatDate';
 import { useUser } from '~/composables/useUser';
 import { getPostRoute } from '~/utils/getPostRoute';
-import { CLICK_AD_FAVORITE, CLICK_AD_PHOTO, CLICK_CALL, CLICK_REPORT_AD, CLICK_WHATSAPP, VIEW_CONTACT } from '~/constants/analytics-events';
+import { CLICK_AD_FAVORITE, CLICK_AD_PHOTO, CLICK_CALL, CLICK_CHAT, CLICK_REPORT_AD, CLICK_WHATSAPP, VIEW_CONTACT } from '~/constants/analytics-events';
 import { useFavorites } from '~/composables/useFavorites';
 import { getBrandName, getCategoryName, getSubcategoryName } from '~/constants/categories';
 import { formatAttributeValue, getProductAttributeFields } from '~/constants/productAttributes';
@@ -744,6 +744,38 @@ if (import.meta.client) {
 }
 
 
+// ── чат с продавцом ──
+const isChatLoading = ref(false);
+
+const openChat = async () => {
+  // eslint-disable-next-line camelcase
+  pushEvent(CLICK_CHAT, { product_id: postId.value });
+
+  if (!uid.value) {
+    navigateTo({ name: 'auth', query: { redirect: route.fullPath } });
+
+    return;
+  }
+
+  isChatLoading.value = true;
+
+  try {
+    const { id } = await $fetch<{ id: string }>('/api/chats', {
+      method: 'POST',
+      body: { postId: postId.value },
+    });
+
+    await navigateTo({ name: 'my-chats-chatId', params: { chatId: id } });
+  } catch (error: any) {
+    toast.add({
+      title: error?.data?.statusMessage || 'Não foi possível iniciar a conversa',
+      color: 'error',
+    });
+  } finally {
+    isChatLoading.value = false;
+  }
+};
+
 const isClosePostModalVisible = ref(false);
 
 // ── жалоба на объявление ──
@@ -1134,6 +1166,18 @@ const closePost = () => {
 
             <div class="hidden px-5 py-4 space-y-2 lg:block">
               <UButton
+                v-if="!isOwnerUser"
+                label="Conversar"
+                icon="i-lucide-message-circle"
+                color="primary"
+                variant="soft"
+                block
+                :loading="isChatLoading"
+                :disabled="isPostUnavailable"
+                @click="openChat"
+              />
+
+              <UButton
                 v-if="hasControlButtons && isOwnerUser"
                 label="Fechar anúncio"
                 icon="i-lucide-lock"
@@ -1254,6 +1298,17 @@ const closePost = () => {
           />
 
           <div class="flex gap-2">
+            <UButton
+              v-if="!isOwnerUser"
+              icon="i-lucide-message-circle"
+              aria-label="Conversar"
+              color="primary"
+              variant="soft"
+              :loading="isChatLoading"
+              :disabled="isPostUnavailable"
+              @click="openChat"
+            />
+
             <UButton
               v-if="hasControlButtons && isOwnerUser"
               label="Fechar anúncio"
