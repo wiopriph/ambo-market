@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {
+  CLICK_CHATS_BUTTON,
   CLICK_FAVORITES_BUTTON,
   CLICK_LOGIN_BUTTON,
   CLICK_MY_ADS_BUTTON,
@@ -9,6 +10,7 @@ import {
 } from '~/constants/analytics-events';
 import { usePosts } from '~/composables/usePosts';
 import { useUser } from '~/composables/useUser';
+import { useChatUnread } from '~/composables/useChatUnread';
 
 
 const route = useRoute();
@@ -98,6 +100,8 @@ const accountItems = computed(() => [
 const profileName = computed(() => currentUser.value?.name || 'Conta');
 const profileInitial = computed(() => profileName.value.charAt(0).toUpperCase());
 
+const { count: unreadCount } = useChatUnread();
+
 const onAccountClick = () => {
   pushEvent(CLICK_USER_BUTTON);
 };
@@ -130,6 +134,23 @@ const onAccountClick = () => {
             @click="goToCreatePage"
           >
             <span class="hidden md:inline">Publicar anúncio</span>
+          </UButton>
+
+          <UButton
+            v-if="isLoggedIn"
+            aria-label="Mensagens"
+            icon="i-lucide-message-circle"
+            color="neutral"
+            variant="ghost"
+            class="relative hidden md:inline-flex"
+            :to="{ name: 'my-chats' }"
+            @click="pushEvent(CLICK_CHATS_BUTTON)"
+          >
+            <span
+              v-if="unreadCount"
+              class="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[9px] font-bold leading-none text-inverted"
+              v-text="unreadCount > 99 ? '99+' : unreadCount"
+            />
           </UButton>
 
           <LazyUDropdownMenu

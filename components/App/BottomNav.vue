@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { usePosts } from '~/composables/usePosts';
 import { useUser } from '~/composables/useUser';
+import { useChatUnread } from '~/composables/useChatUnread';
 import {
+  CLICK_CHATS_BUTTON,
   CLICK_FAVORITES_BUTTON,
   CLICK_LOGIN_BUTTON,
   CLICK_MY_ADS_BUTTON,
@@ -12,8 +13,8 @@ import {
 
 const route = useRoute();
 const { pushEvent } = useAnalyticsEvent();
-const { cityId, isPriorityCity } = usePosts();
 const { isLoggedIn } = useUser();
+const { count: unreadCount } = useChatUnread();
 
 // у страницы товара свой закреплённый блок контактов — навигацию там не показываем
 const isProductPage = computed(() => String(route.name ?? '').includes('productId'));
@@ -27,11 +28,6 @@ const loginRoute = computed(() => {
 
   return { name: 'auth', query: { redirect: route.fullPath } };
 });
-
-const homeRoute = computed(() =>
-  isPriorityCity.value ? { name: 'cityId', params: { cityId: cityId.value } } : { name: 'index' });
-
-const isHomeActive = computed(() => route.name === 'index' || route.name === 'cityId');
 
 const profileTab = computed(() => isLoggedIn.value ?
   {
@@ -63,16 +59,25 @@ const onProfileClick = () => {
     <nav class="fixed inset-x-0 bottom-0 z-40 border-t border-default bg-default/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">
       <div class="grid h-14 grid-cols-5">
         <NuxtLink
-          :to="homeRoute"
+          :to="{ name: 'my-chats' }"
           class="flex flex-col items-center justify-center gap-0.5"
-          :class="isHomeActive ? 'text-primary' : 'text-muted'"
+          :class="isActive('my-chats') ? 'text-primary' : 'text-muted'"
+          @click="pushEvent(CLICK_CHATS_BUTTON)"
         >
-          <UIcon
-            name="i-lucide-house"
-            class="size-5"
-          />
+          <span class="relative">
+            <UIcon
+              name="i-lucide-message-circle"
+              class="size-5"
+            />
 
-          <span class="text-[10px] leading-none">Início</span>
+            <span
+              v-if="unreadCount"
+              class="absolute -right-2 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[9px] font-bold leading-none text-inverted"
+              v-text="unreadCount > 99 ? '99+' : unreadCount"
+            />
+          </span>
+
+          <span class="text-[10px] leading-none">Mensagens</span>
         </NuxtLink>
 
         <NuxtLink
@@ -120,7 +125,7 @@ const onProfileClick = () => {
         <button
           type="button"
           class="flex flex-col items-center justify-center gap-0.5"
-          :class="isActive('my') && !isActive('my-ads') && !isActive('my-favorites') ? 'text-primary' : 'text-muted'"
+          :class="isActive('my') && !isActive('my-ads') && !isActive('my-favorites') && !isActive('my-chats') ? 'text-primary' : 'text-muted'"
           @click="onProfileClick"
         >
           <UIcon

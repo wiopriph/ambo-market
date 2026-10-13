@@ -3,6 +3,7 @@ import type { RealtimeChannel } from '@supabase/supabase-js';
 import { getPostRoute } from '~/utils/getPostRoute';
 import { getCityIdByName } from '~/constants/cities';
 import { useUser } from '~/composables/useUser';
+import { useChatUnread } from '~/composables/useChatUnread';
 
 
 useHead({ title: 'Conversa - Ambo Market' });
@@ -35,6 +36,7 @@ type ChatDetail = {
 const route = useRoute();
 const toast = useToast();
 const { uid } = useUser();
+const { refresh: refreshUnread } = useChatUnread();
 
 const chatId = String(route.params.chatId);
 
@@ -82,7 +84,9 @@ const appendMessage = (message: ChatMessage) => {
 };
 
 const markRead = () => {
-  $fetch(`/api/chats/${chatId}/read`, { method: 'POST' }).catch(() => {});
+  $fetch(`/api/chats/${chatId}/read`, { method: 'POST' })
+    .then(() => refreshUnread())
+    .catch(() => {});
 };
 
 // ── realtime: новые сообщения приходят без перезагрузки ──
