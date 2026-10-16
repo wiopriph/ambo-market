@@ -1300,10 +1300,11 @@ const closePost = () => {
           <div class="flex gap-2">
             <UButton
               v-if="!isOwnerUser"
+              label="Conversar"
               icon="i-lucide-message-circle"
-              aria-label="Conversar"
               color="primary"
               variant="soft"
+              class="flex-1"
               :loading="isChatLoading"
               :disabled="isPostUnavailable"
               @click="openChat"
