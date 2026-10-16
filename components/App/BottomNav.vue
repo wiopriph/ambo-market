@@ -16,8 +16,10 @@ const { pushEvent } = useAnalyticsEvent();
 const { isLoggedIn } = useUser();
 const { count: unreadCount } = useChatUnread();
 
-// у страницы товара свой закреплённый блок контактов — навигацию там не показываем
+// у страницы товара свой закреплённый блок контактов, а переписка
+// на мобилке полноэкранная — навигацию там не показываем
 const isProductPage = computed(() => String(route.name ?? '').includes('productId'));
+const isChatDetailPage = computed(() => route.name === 'my-chats-chatId');
 
 // на страницах авторизации текущий URL в redirect не заворачиваем —
 // иначе каждый клик по «Entrar» вкладывает redirect в redirect
@@ -52,7 +54,7 @@ const onProfileClick = () => {
 </script>
 
 <template>
-  <template v-if="!isProductPage">
+  <template v-if="!isProductPage && !isChatDetailPage">
     <!-- распорка: не даёт фиксированной навигации перекрывать футер -->
     <div class="h-14 md:hidden" />
 

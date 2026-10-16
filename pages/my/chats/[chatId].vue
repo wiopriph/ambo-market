@@ -175,7 +175,7 @@ const formatTime = (iso: string) =>
 </script>
 
 <template>
-  <div class="flex h-[70vh] flex-col overflow-hidden rounded-2xl border border-default bg-default">
+  <div class="fixed inset-x-0 top-0 z-40 flex h-dvh flex-col bg-default md:static md:z-auto md:h-[70vh] md:overflow-hidden md:rounded-2xl md:border md:border-default">
     <!-- шапка: собеседник и объявление -->
     <div class="flex items-center gap-3 border-b border-default px-4 py-3">
       <UButton
@@ -225,7 +225,7 @@ const formatTime = (iso: string) =>
     <!-- сообщения -->
     <div
       ref="scrollArea"
-      class="flex-1 space-y-2 overflow-y-auto px-4 py-3"
+      class="flex-1 space-y-2 overflow-y-auto overscroll-contain px-4 py-3"
     >
       <p
         v-if="!messages.length"
@@ -261,7 +261,7 @@ const formatTime = (iso: string) =>
 
     <!-- ввод -->
     <form
-      class="flex items-end gap-2 border-t border-default px-4 py-3"
+      class="flex items-end gap-2 border-t border-default px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] md:pb-3"
       @submit.prevent="send"
     >
       <UTextarea

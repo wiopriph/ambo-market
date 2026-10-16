@@ -102,13 +102,19 @@ const profileInitial = computed(() => profileName.value.charAt(0).toUpperCase())
 
 const { count: unreadCount } = useChatUnread();
 
+// переписка на мобилке полноэкранная - хедер там не нужен
+const isChatDetailPage = computed(() => useRoute().name === 'my-chats-chatId');
+
 const onAccountClick = () => {
   pushEvent(CLICK_USER_BUTTON);
 };
 </script>
 
 <template>
-  <header class="sticky top-0 z-50 bg-default/80 backdrop-blur">
+  <header
+    class="sticky top-0 z-50 bg-default/80 backdrop-blur"
+    :class="isChatDetailPage ? 'hidden md:block' : ''"
+  >
     <div class="mx-auto max-w-[1280px] px-4 sm:px-6">
       <div class="flex flex-wrap items-center gap-x-4 gap-y-2 py-2 lg:h-12 lg:items-stretch lg:py-0">
         <ULink

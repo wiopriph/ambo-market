@@ -15,7 +15,7 @@ const tabs = [
 
 <template>
   <div class="space-y-4">
-    <nav class="flex gap-1 rounded-xl bg-elevated p-1">
+    <nav class="hidden gap-1 rounded-xl bg-elevated p-1 md:flex">
       <NuxtLink
         v-for="tab in tabs"
         :key="tab.label"
