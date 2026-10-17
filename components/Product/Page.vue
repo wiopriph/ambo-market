@@ -1008,7 +1008,7 @@ const closePost = () => {
 
             <div class="px-5 py-4">
               <p
-                class="whitespace-pre-line text-sm leading-relaxed text-toned"
+                class="whitespace-pre-line break-words text-sm leading-relaxed text-toned"
                 v-text="post.description"
               />
             </div>
@@ -1030,11 +1030,11 @@ const closePost = () => {
               <div
                 v-for="item in productDetails"
                 :key="item.label"
-                class="flex items-center gap-3 px-5 py-3"
+                class="flex items-start gap-3 px-5 py-3"
               >
                 <UIcon
                   :name="item.icon"
-                  class="size-4 shrink-0 text-muted"
+                  class="mt-0.5 size-4 shrink-0 text-muted"
                 />
 
                 <dt
@@ -1043,7 +1043,7 @@ const closePost = () => {
                 />
 
                 <dd
-                  class="truncate text-sm font-medium text-highlighted"
+                  class="min-w-0 flex-1 break-words text-sm font-medium text-highlighted"
                   v-text="item.value"
                 />
               </div>
