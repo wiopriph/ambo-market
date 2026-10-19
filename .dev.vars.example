@@ -1,0 +1,12 @@
+# Переменные для `wrangler dev`: скопировать в .dev.vars (он в .gitignore)
+# и заполнить значениями из .env. Только имена, без значений.
+NUXT_PUBLIC_APP_BASE_URL=
+NUXT_PUBLIC_SUPABASE_URL=
+NUXT_PUBLIC_SUPABASE_KEY=
+NUXT_SUPABASE_SERVICE_KEY=
+NUXT_TELEGRAM_BOT_TOKEN=
+NUXT_TELEGRAM_CHAT_ID=
+NUXT_TELEGRAM_WEBHOOK_SECRET=
+NUXT_FACEBOOK_PAGE_ID=
+NUXT_FACEBOOK_PAGE_TOKEN=
+NUXT_GOOGLE_ADSENSE_ID=

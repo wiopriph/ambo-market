@@ -99,6 +99,7 @@ sw.*
 .env
 nginx.env
 nuxt.env
+.dev.vars
 
 # Ignore custom npmrc
 .npmrc
@@ -106,3 +107,4 @@ nuxt.env
 # Ignore nuxt/content
 .data
 backups/
+.dev.vars
