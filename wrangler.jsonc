@@ -3,6 +3,8 @@
   "main": "./.output/server/index.mjs",
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat"],
-  "assets": { "directory": "./.output/public", "binding": "ASSETS" },
+  // drop-trailing-slash: канон сайта - URL без слэша (301 в middleware),
+  // дефолтный auto-trailing-slash редиректил пререндеренный блог на /blog/
+  "assets": { "directory": "./.output/public", "binding": "ASSETS", "html_handling": "drop-trailing-slash" },
   "observability": { "enabled": true }
 }

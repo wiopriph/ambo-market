@@ -4,7 +4,18 @@ import svgLoader from 'vite-svg-loader';
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   ssr: true,
-
+  nitro: {
+    preset: 'cloudflare_module',
+    // В Workers у @nuxt/content нет базы (SQLite) - без пререндера блог
+    // отдаёт пустой SSR, статьи 404, blog-sitemap пустой. Блог статичен,
+    // поэтому рендерим его при сборке: краулинг с /blog, всё остальное
+    // краулеру запрещено, чтобы не запечь весь сайт со stale-данными.
+    prerender: {
+      routes: ['/blog', '/__sitemap__/blog.xml'],
+      crawlLinks: true,
+      ignore: [route => !route.startsWith('/blog') && !route.startsWith('/__sitemap__')],
+    },
+  },
   app: {
     head: {
       htmlAttrs: {
