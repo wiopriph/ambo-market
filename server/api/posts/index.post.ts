@@ -128,6 +128,7 @@ export default defineEventHandler(async (event) => {
     price: number | string;
     location: LocationInput;
     images: ImageInput[];
+    preview?: ImageInput | null;
     attributes?: Record<string, unknown>;
   }>(event);
 
@@ -140,6 +141,7 @@ export default defineEventHandler(async (event) => {
     price,
     location,
     images,
+    preview: previewInput,
     attributes,
   } = body || {};
 
@@ -147,6 +149,13 @@ export default defineEventHandler(async (event) => {
     throw createError({
       statusCode: 400,
       statusMessage: 'Missing required fields',
+    });
+  }
+
+  if (images.length > 10) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Máximo de 10 fotos por anúncio',
     });
   }
 
@@ -200,11 +209,11 @@ export default defineEventHandler(async (event) => {
     images.map(img => uploadPostImage(client, img, postId, { bucketName })),
   );
 
-  const firstImage = images[0];
-  const preview = await uploadPostImage(client, firstImage, postId, {
-    small: true,
-    bucketName,
-  });
+  // превью (360px) жмёт клиент; без него (старый клиент из кеша)
+  // карточкам достанется первое фото в полном размере
+  const preview = previewInput ?
+    await uploadPostImage(client, previewInput, postId, { bucketName }) :
+    uploadedImages[0];
 
   const { error: insertError } = await client
     .from('posts')
