@@ -11,7 +11,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "lintfix": "eslint . --fix"
+    "lintfix": "eslint . --fix",
+    "test": "vitest run"
   },
   "dependencies": {
     "@nuxt/content": "3.14.0",
@@ -19,6 +20,7 @@
     "@nuxtjs/sitemap": "8.0.15",
     "@nuxtjs/supabase": "1.6.2",
     "better-sqlite3": "12.10.0",
+    "browser-image-compression": "^2.0.2",
     "lodash.debounce": "4.0.8",
     "maska": "3.2.0",
     "nuxt": "4.4.6",
@@ -32,7 +34,8 @@
     "@wiopriph/eslint-config": "github:wiopriph/nuxt4-eslint-config",
     "sass": "1.100.0",
     "vee-validate": "4.15.1",
-    "vite-svg-loader": "5.1.1"
+    "vite-svg-loader": "5.1.1",
+    "vitest": "^5.0.5"
   },
   "overrides": {
     "@rollup/plugin-replace": "6.0.2"

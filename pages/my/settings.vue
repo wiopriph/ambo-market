@@ -51,16 +51,10 @@ const formatPhone = (value: string) => {
   return ['+244', ...parts].join(' ');
 };
 
-const fileToImage = (file: File) => new Promise<ProfileImageInput>((resolve, reject) => {
-  const reader = new FileReader();
+const { compressOne } = useImageCompression();
 
-  reader.onload = (event_) => {
-    resolve({ base64: event_.target?.result as string, mimeType: file.type });
-  };
-
-  reader.onerror = () => reject(reader.error);
-  reader.readAsDataURL(file);
-});
+// аватар жмём на клиенте до 360px - сервер больше не перекодирует
+const fileToImage = (file: File): Promise<ProfileImageInput> => compressOne(file, 'avatar');
 
 watch(
   currentUser,

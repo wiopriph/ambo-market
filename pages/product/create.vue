@@ -283,28 +283,44 @@ const deletePhoto = (index: number) => {
 
 const fileInput = ref<HTMLInputElement | null>(null);
 
-const handleFileUpload = (event: Event) => {
+const { compressOne, compressMany } = useImageCompression();
+
+// сжатие на клиенте: телефонам на медленном интернете легче отдать
+// ~200КБ webp, чем 5МБ оригинал; сервер больше не перекодирует
+const isCompressing = ref(false);
+const compressProgress = ref('');
+
+const handleFileUpload = async (event: Event) => {
   const input = event.target as HTMLInputElement;
 
-  if (!input?.files) return;
+  if (!input?.files?.length) return;
 
   const files = Array.from(input.files);
 
-  files.forEach((file) => {
-    const reader = new FileReader();
-
-    reader.onload = (event_) => {
-      images.value.push({
-        base64: event_.target?.result as string,
-        mimeType: file?.type,
-      });
-    };
-
-    reader.readAsDataURL(file);
-  });
-
   input.value = '';
+  isCompressing.value = true;
+  compressProgress.value = `0 / ${files.length}`;
+
+  try {
+    const { done, failed } = await compressMany(files, 'photo', (processed, total) => {
+      compressProgress.value = `${processed} / ${total}`;
+    });
+
+    images.value.push(...done);
+
+    if (failed.length) {
+      compressError.value = failed.length === 1 ?
+        'Uma foto não pôde ser processada. Tente outro ficheiro.' :
+        `${failed.length} fotos não puderam ser processadas. Tente outros ficheiros.`;
+    } else {
+      compressError.value = '';
+    }
+  } finally {
+    isCompressing.value = false;
+  }
 };
+
+const compressError = ref('');
 
 const loadFile = () => fileInput.value?.click();
 
@@ -359,6 +375,11 @@ const createPost = handleSubmit.withControlled(async () => {
   apiErrorMessage.value = '';
 
   try {
+    const preview = await compressOne(
+      dataUrlToFile(images.value[0].base64, 'preview'),
+      'preview',
+    ).catch(() => null);
+
     const { id } = await $fetch<{ id: string }>('/api/posts', {
       method: 'POST',
       body: {
@@ -369,6 +390,7 @@ const createPost = handleSubmit.withControlled(async () => {
         subcategoryId: subcategory.value,
         brandId: brand.value,
         images: images.value,
+        preview,
         location: { cityId: cityId.value },
         attributes: attributes.value,
       },
@@ -696,11 +718,24 @@ watch(subcategory, () => {
         <input
           ref="fileInput"
           class="hidden"
-          accept="image/jpg,image/jpeg,image/png,image/bmp"
+          accept="image/jpeg,image/png,image/webp,image/bmp"
           type="file"
           multiple
           @change="handleFileUpload"
         >
+
+        <p
+          v-if="isCompressing"
+          class="text-sm text-muted"
+        >
+          A preparar fotos… {{ compressProgress }}
+        </p>
+
+        <p
+          v-else-if="compressError"
+          class="text-sm text-error"
+          v-text="compressError"
+        />
 
         <div
           v-if="images.length"
