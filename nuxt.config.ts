@@ -6,6 +6,8 @@ export default defineNuxtConfig({
   ssr: true,
   nitro: {
     preset: 'cloudflare_module',
+    // сборка воркера с sourcemap не влезает в 2ГБ кучи на билдере Cloudflare
+    sourceMap: false,
     // В Workers у @nuxt/content нет базы (SQLite) - без пререндера блог
     // отдаёт пустой SSR, статьи 404, blog-sitemap пустой. Блог статичен,
     // поэтому рендерим его при сборке: краулинг с /blog, всё остальное
