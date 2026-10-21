@@ -28,6 +28,8 @@
     "vue-router": "5.1.0"
   },
   "devDependencies": {
+    "@iconify-json/lucide": "^1.2.146",
+    "@iconify-json/simple-icons": "^1.2.100",
     "@types/lodash": "4.17.24",
     "@vee-validate/yup": "4.15.1",
     "@wiopriph/eslint-config": "github:wiopriph/nuxt4-eslint-config",

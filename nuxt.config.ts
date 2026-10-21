@@ -77,6 +77,14 @@ export default defineNuxtConfig({
     name: 'Ambo Market',
   },
 
+  // иконки в серверный бандл: без этого прод ходит за каждой иконкой
+  // в Iconify API по сети (warning "failed to load icon" в логах сборки)
+  icon: {
+    serverBundle: {
+      collections: ['lucide', 'simple-icons'],
+    },
+  },
+
   sitemap: {
     xsl: false,
     excludeAppSources: true,
