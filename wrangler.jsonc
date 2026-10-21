@@ -3,6 +3,9 @@
   "main": "./.output/server/index.mjs",
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat"],
+  // НЕ УДАЛЯТЬ: без keep_vars каждый деплой из git стирает Text-переменные,
+  // заведённые в дашборде, и сайт падает в 500 (нет ключей Supabase)
+  "keep_vars": true,
   // drop-trailing-slash: канон сайта - URL без слэша (301 в middleware),
   // дефолтный auto-trailing-slash редиректил пререндеренный блог на /blog/
   "assets": { "directory": "./.output/public", "binding": "ASSETS", "html_handling": "drop-trailing-slash" },
