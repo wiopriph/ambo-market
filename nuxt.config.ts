@@ -12,6 +12,12 @@ export default defineNuxtConfig({
     // отдаёт пустой SSR, статьи 404, blog-sitemap пустой. Блог статичен,
     // поэтому рендерим его при сборке: краулинг с /blog, всё остальное
     // краулеру запрещено, чтобы не запечь весь сайт со stale-данными.
+    //
+    // Если блогу понадобится динамика (драфты, живые данные в статьях):
+    // убрать этот prerender-блок и перейти на D1 -
+    // content: { database: { type: 'd1', bindingName: 'DB' } } в этом файле
+    // + "d1_databases" в wrangler.jsonc + npx wrangler d1 create.
+    // Цена: статьи со ~70мс эджа станут SSR с запросами в D1.
     prerender: {
       routes: ['/blog', '/__sitemap__/blog.xml'],
       crawlLinks: true,
