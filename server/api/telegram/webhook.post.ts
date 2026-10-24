@@ -194,13 +194,14 @@ export default defineEventHandler(async (event) => {
         await answerCallback(cb.id, 'Публикую в FB…');
         await editTelegramMessage(chatId, messageId, `${baseText}\n\n📘 публикуется…`);
 
-        void $fetch<{ id: string }>(
+        // Workers обрывает промисы после ответа; waitUntil даёт ~30 с, отсюда таймаут 25 с
+        event.waitUntil($fetch<{ id: string }>(
           `https://graph.facebook.com/v21.0/${facebook.pageId}/feed`,
           {
             method: 'POST',
             // link-post: превью (фото, заголовок) FB построит сам из og-тегов
             body: { message, link, 'access_token': facebook.pageToken },
-            timeout: 90_000,
+            timeout: 25_000,
           },
         )
           .then((res) => finalize(`📘 опубликовано: https://facebook.com/${res.id}`))
@@ -215,7 +216,7 @@ export default defineEventHandler(async (event) => {
               `${baseText}\n\n❌ FB: ${message_.slice(0, 120)}`,
               moderationKeyboard(postId),
             );
-          });
+          }));
 
         return { ok: true };
       }
