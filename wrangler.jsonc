@@ -7,7 +7,11 @@
   // заведённые в дашборде, и сайт падает в 500 (нет ключей Supabase)
   "keep_vars": true,
   // drop-trailing-slash: канон сайта - URL без слэша (301 в middleware),
-  // дефолтный auto-trailing-slash редиректил пререндеренный блог на /blog/
+  // дефолтный auto-trailing-slash редиректил бы статические html на /путь/
   "assets": { "directory": "./.output/public", "binding": "ASSETS", "html_handling": "drop-trailing-slash" },
+  // статьи блога (@nuxt/content): дамп заливается туда при первом запросе после деплоя
+  "d1_databases": [
+    { "binding": "DB", "database_name": "ambo-content", "database_id": "a053fe1a-8549-429a-8c08-9d50e9616cfb" }
+  ],
   "observability": { "enabled": true }
 }

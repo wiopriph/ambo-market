@@ -8,23 +8,14 @@ export default defineNuxtConfig({
     preset: 'cloudflare_module',
     // сборка воркера с sourcemap не влезает в 2ГБ кучи на билдере Cloudflare
     sourceMap: false,
-    // В Workers у @nuxt/content нет базы (SQLite) - без пререндера блог
-    // отдаёт пустой SSR, статьи 404, blog-sitemap пустой. Блог статичен,
-    // поэтому рендерим его при сборке: краулинг с /blog, всё остальное
-    // краулеру запрещено, чтобы не запечь весь сайт со stale-данными.
-    //
-    // Если блогу понадобится динамика (драфты, живые данные в статьях):
-    // убрать этот prerender-блок и перейти на D1 -
-    // content: { database: { type: 'd1', bindingName: 'DB' } } в этом файле
-    // + "d1_databases" в wrangler.jsonc + npx wrangler d1 create.
-    // Цена: статьи со ~70мс эджа станут SSR с запросами в D1.
-    prerender: {
-      // /__llms__/blog.json - список статей для /llms.txt, см. server/utils/blogArticles.ts
-      routes: ['/blog', '/__sitemap__/blog.xml', '/__llms__/blog.json'],
-      crawlLinks: true,
-      ignore: [route => !route.startsWith('/blog') && !route.startsWith('/__sitemap__') && !route.startsWith('/__llms__')],
-    },
   },
+
+  // статьи блога живут в D1 (binding DB в wrangler.jsonc): при первом
+  // запросе после деплоя @nuxt/content сам заливает в неё SQL-дамп сборки
+  content: {
+    database: { type: 'd1', bindingName: 'DB' },
+  },
+
   app: {
     head: {
       htmlAttrs: {

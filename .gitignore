@@ -108,3 +108,6 @@ nuxt.env
 .data
 backups/
 .dev.vars
+
+.wrangler
+.claude
