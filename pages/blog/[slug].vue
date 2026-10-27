@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { formatFullDate } from '~/utils/formatDate';
-
-
 const RELATED_COUNT = 3;
 
 const route = useRoute();
@@ -26,7 +23,7 @@ const { data: related } = await useAsyncData(
         .where('path', '<>', route.path)
         .where('tags', 'LIKE', `%${tag}%`)
         .order('date', 'DESC')
-        .select('path', 'title', 'description', 'image', 'date', 'dateModified')
+        .select('path', 'title', 'description', 'image')
         .limit(RELATED_COUNT)
         .all() :
       [];
@@ -38,7 +35,7 @@ const { data: related } = await useAsyncData(
     const latest = await queryCollection('blog')
       .where('path', 'NOT IN', [route.path, ...byTag.map(article => article.path)])
       .order('date', 'DESC')
-      .select('path', 'title', 'description', 'image', 'date', 'dateModified')
+      .select('path', 'title', 'description', 'image')
       .limit(RELATED_COUNT - byTag.length)
       .all();
 
@@ -87,7 +84,6 @@ const config = useRuntimeConfig();
 
 const datePublished = computed(() => doc.value?.date || '');
 const dateModified = computed(() => doc.value?.dateModified || datePublished.value);
-const isUpdated = computed(() => Boolean(doc.value?.dateModified) && dateModified.value !== datePublished.value);
 
 
 const script = computed(() => [
@@ -145,21 +141,6 @@ const breadcrumbs = computed(() => [
     />
 
     <div class="rounded-2xl border border-default bg-default px-5 py-6">
-      <p
-        v-if="datePublished"
-        class="mb-4 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted"
-      >
-        <span>
-          Publicado em
-          <time :datetime="String(datePublished)">{{ formatFullDate(datePublished, 'pt') }}</time>
-        </span>
-
-        <span v-if="isUpdated">
-          Atualizado em
-          <time :datetime="String(dateModified)">{{ formatFullDate(dateModified, 'pt') }}</time>
-        </span>
-      </p>
-
       <ContentRenderer
         :value="doc"
         class="prose prose-sm dark:prose-invert max-w-none"
@@ -213,14 +194,8 @@ const breadcrumbs = computed(() => [
             />
 
             <p
-              class="hidden text-xs leading-relaxed text-muted line-clamp-2 sm:block"
+              class="text-xs leading-relaxed text-muted line-clamp-2"
               v-text="article.description"
-            />
-
-            <time
-              class="text-xs text-muted"
-              :datetime="String(article.dateModified || article.date)"
-              v-text="formatFullDate(article.dateModified || article.date, 'pt')"
             />
           </div>
         </NuxtLink>

@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { formatFullDate } from '~/utils/formatDate';
-
-
 const route = useRoute();
 
 const PER_PAGE = 20;
@@ -203,21 +200,13 @@ const breadcrumbs = [
             v-text="post.description"
           />
 
-          <div class="mt-1 flex items-center justify-between gap-2 text-xs">
-            <time
-              class="text-muted"
-              :datetime="String(post.dateModified || post.date)"
-              v-text="formatFullDate(post.dateModified || post.date, 'pt')"
+          <div class="flex items-center gap-1 text-xs text-primary mt-1">
+            <span>Ler mais</span>
+
+            <UIcon
+              name="i-lucide-arrow-right"
+              class="size-3"
             />
-
-            <span class="flex items-center gap-1 text-primary">
-              <span>Ler mais</span>
-
-              <UIcon
-                name="i-lucide-arrow-right"
-                class="size-3"
-              />
-            </span>
           </div>
         </div>
       </NuxtLink>
