@@ -3,7 +3,7 @@ title: "Como Alugar uma Casa em Angola: 5 Dicas Essenciais"
 description: "Vai alugar uma casa em Angola? Veja 5 dicas práticas e seguras para encontrar o imóvel ideal usando o Ambo Market."
 image: "/images/blog/como-alugar-uma-casa-em-angola-5-dicas-essenciais.png"
 date: "2025-05-28T12:00:00+00:00"
-tags: ['Imóveis']
+tags: ['Imóveis', 'Comprar']
 ---
 
 # 🏠 Como Alugar uma Casa em Angola: 5 Dicas Essenciais

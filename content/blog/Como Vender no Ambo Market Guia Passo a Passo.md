@@ -3,7 +3,7 @@ title: "Como Vender no Ambo Market: Guia Passo a Passo"
 description: "Descubra como vender seus produtos com segurança e facilidade no Ambo Market. Veja o passo a passo para criar um anúncio e fechar bons negócios."
 image: "/images/background.png"
 date: "2025-05-05T12:00:00+00:00"
-tags: ['Guias']
+tags: ['Vender']
 ---
 
 # Como Vender no Ambo Market: Guia Passo a Passo
@@ -24,7 +24,7 @@ Vender algo que você não usa mais pode ser uma ótima forma de ganhar dinheiro
   - No telemóvel, toque no **ícone de perfil** (uma cabeça com ombros no canto superior direito)
 - Você pode entrar com seu **e-mail**, **Google** ou **Facebook**
 
-![Página inicial do Ambo Market](images/blog/como-vender-no-ambo-market-guia-passo-a-passo/login.png)
+![Página inicial do Ambo Market](/images/blog/como-vender-no-ambo-market-guia-passo-a-passo/login.png)
 *Página inicial do Ambo Market — clique em “Entrar” ou no ícone de perfil para começar.*
 
 ## Passo 2: Clique em “Publicar Anúncio”
@@ -34,7 +34,7 @@ Vender algo que você não usa mais pode ser uma ótima forma de ganhar dinheiro
 - Faça uma **descrição honesta**
   - Inclua: marca, modelo, condição, defeitos (se houver), forma de entrega
 
-![Formulário de anúncio](images/blog/como-vender-no-ambo-market-guia-passo-a-passo/create.png)
+![Formulário de anúncio](/images/blog/como-vender-no-ambo-market-guia-passo-a-passo/create.png)
 *Tela de criação de anúncio: escolha categoria, título e descrição.*
 
 ## Passo 3: Capriche nas fotos
@@ -55,7 +55,7 @@ Vender algo que você não usa mais pode ser uma ótima forma de ganhar dinheiro
 - O dinheiro só é liberado após confirmação da entrega
 - Proteção contra golpes e cancelamentos
 
-![Negócio seguro ativado](images/blog/como-vender-no-ambo-market-guia-passo-a-passo/safe-deal.png)
+![Negócio seguro ativado](/images/blog/como-vender-no-ambo-market-guia-passo-a-passo/safe-deal.png)
 *Ative a opção de “Negócio Seguro” para ter mais proteção na venda.*
 
 ## Passo 6: Responda rápido
@@ -64,7 +64,7 @@ Vender algo que você não usa mais pode ser uma ótima forma de ganhar dinheiro
 - Tire dúvidas, combine entrega
 - Isso aumenta suas chances de venda
 
-![Chat com comprador](images/blog/como-vender-no-ambo-market-guia-passo-a-passo/chat.png)
+![Chat com comprador](/images/blog/como-vender-no-ambo-market-guia-passo-a-passo/chat.png)
 *Converse com o comprador diretamente na plataforma de forma rápida.*
 
 ## Passo 7: Finalize a venda

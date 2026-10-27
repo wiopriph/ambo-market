@@ -104,6 +104,8 @@ const totalPages = computed(() => {
 
 const hasPagination = computed(() => totalPages.value > 1);
 
+const showBlogTeaser = computed(() => page.value === 1 && !getFilter('q'));
+
 const scrollToTopOnLoad = useScrollToTopOnLoad(isLoading);
 
 const setPage = (pageNumber: number) => {
@@ -123,6 +125,8 @@ const setPage = (pageNumber: number) => {
       :list="categories"
       class="mb-6"
     />
+
+    <BlogTeaser v-if="showBlogTeaser" />
 
     <ProductList
       :list="posts?.posts"

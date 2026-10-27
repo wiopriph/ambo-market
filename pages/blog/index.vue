@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { formatFullDate } from '~/utils/formatDate';
+
+
 const route = useRoute();
 
 const PER_PAGE = 20;
@@ -18,7 +21,7 @@ const selectedTag = computed(() => {
 });
 
 const createBlogQuery = () => {
-  const query = queryCollection('blog');
+  const query = queryCollection('blog').order('date', 'DESC');
 
   if (selectedTag.value) {
     query.where('tags', 'LIKE', `%${selectedTag.value}%`);
@@ -37,9 +40,12 @@ const { data: posts } = await useAsyncData(
 );
 
 const TAGS = [
-  'Guias',
+  'Novidades',
+  'Vender',
+  'Comprar',
+  'Segurança',
+  'Carros',
   'Imóveis',
-  'Transporte',
   'Eletrônicos',
   'Negócios',
 ];
@@ -197,13 +203,21 @@ const breadcrumbs = [
             v-text="post.description"
           />
 
-          <div class="flex items-center gap-1 text-xs text-primary mt-1">
-            <span>Ler mais</span>
-
-            <UIcon
-              name="i-lucide-arrow-right"
-              class="size-3"
+          <div class="mt-1 flex items-center justify-between gap-2 text-xs">
+            <time
+              class="text-muted"
+              :datetime="String(post.dateModified || post.date)"
+              v-text="formatFullDate(post.dateModified || post.date, 'pt')"
             />
+
+            <span class="flex items-center gap-1 text-primary">
+              <span>Ler mais</span>
+
+              <UIcon
+                name="i-lucide-arrow-right"
+                class="size-3"
+              />
+            </span>
           </div>
         </div>
       </NuxtLink>

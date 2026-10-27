@@ -3,7 +3,7 @@ title: "Alugar ou Comprar: O Que é Melhor para Você?"
 description: "Descubra as vantagens e desvantagens de alugar ou comprar e tome a melhor decisão com base no seu momento de vida."
 image: "/images/blog/alugar-ou-comprar-o-que-e-melhor-para-voce.png"
 date: "2025-05-08T12:00:00+00:00"
-tags: ['Imóveis', 'Guias']
+tags: ['Imóveis', 'Comprar']
 ---
 
 # Alugar ou Comprar: O Que é Melhor para Você?

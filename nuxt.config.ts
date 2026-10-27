@@ -146,6 +146,13 @@ export default defineNuxtConfig({
     '/product/create': { ssr: false },
     '/icon-logo.svg': { headers: { 'cache-control': 'public, max-age=31536000, immutable' } },
     '/favicon.ico': { headers: { 'cache-control': 'public, max-age=31536000, immutable' } },
+    // статьи, убранные в content/blog/drafts: ссылки на них остались в поиске и соцсетях
+    '/blog/entendendo-as-avaliacoes-de-compradores-e-vendedores': {
+      redirect: { to: '/blog/como-comprar-com-seguranca-produtos-de-segunda-mao-em-angola', statusCode: 301 },
+    },
+    '/blog/melhores-horarios-para-publicar-seu-anuncio': {
+      redirect: { to: '/blog/como-vender-no-ambo-market-guia-passo-a-passo', statusCode: 301 },
+    },
   },
 
   plugins: [

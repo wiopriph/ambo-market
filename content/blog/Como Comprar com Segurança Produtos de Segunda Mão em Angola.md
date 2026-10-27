@@ -2,7 +2,8 @@
 title: "Como Comprar com Segurança Produtos de Segunda Mão em Angola"
 description: "Veja dicas práticas para evitar golpes e garantir compras seguras no Ambo Market"
 image: "/images/blog/como-comprar-com-seguranca-produtos-de-segunda-mao-em-angola.png"
-tags: ['Guias']
+date: "2025-08-02T12:00:00+00:00"
+tags: ['Segurança', 'Comprar']
 ---
 
 
