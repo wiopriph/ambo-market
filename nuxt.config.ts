@@ -153,6 +153,10 @@ export default defineNuxtConfig({
     '/blog/melhores-horarios-para-publicar-seu-anuncio': {
       redirect: { to: '/blog/como-vender-no-ambo-market-guia-passo-a-passo', statusCode: 301 },
     },
+    // слита с гидом по безопасной покупке
+    '/blog/como-comprar-com-seguranca-dos-vendedores': {
+      redirect: { to: '/blog/como-comprar-com-seguranca-produtos-de-segunda-mao-em-angola', statusCode: 301 },
+    },
   },
 
   plugins: [
