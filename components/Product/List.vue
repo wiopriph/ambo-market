@@ -56,6 +56,7 @@ const emptyDescription = computed(() => props.emptyText || 'Não encontramos o q
       :key="index"
       :product="product"
       :priority="index < 5"
+      :highPriority="index < 2"
     />
   </div>
 

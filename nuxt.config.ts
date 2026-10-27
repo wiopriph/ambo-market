@@ -19,9 +19,10 @@ export default defineNuxtConfig({
     // + "d1_databases" в wrangler.jsonc + npx wrangler d1 create.
     // Цена: статьи со ~70мс эджа станут SSR с запросами в D1.
     prerender: {
-      routes: ['/blog', '/__sitemap__/blog.xml'],
+      // /__llms__/blog.json - список статей для /llms.txt, см. server/utils/blogArticles.ts
+      routes: ['/blog', '/__sitemap__/blog.xml', '/__llms__/blog.json'],
       crawlLinks: true,
-      ignore: [route => !route.startsWith('/blog') && !route.startsWith('/__sitemap__')],
+      ignore: [route => !route.startsWith('/blog') && !route.startsWith('/__sitemap__') && !route.startsWith('/__llms__')],
     },
   },
   app: {
@@ -141,10 +142,6 @@ export default defineNuxtConfig({
             if (id.includes('supabase-js') || id.includes('gotrue-js') || id.includes('realtime-js') || id.includes('storage-js') || id.includes('postgrest-js') || id.includes('functions-js')) {
               return 'supabase';
             }
-
-            if (id.includes('motion-v') || id.includes('framer-motion') || id.includes('motion-dom') || id.includes('motion-utils')) {
-              return 'motion';
-            }
           },
         },
       },
@@ -197,5 +194,14 @@ export default defineNuxtConfig({
 
   ui: {
     colorMode: false,
+    theme: {
+      // secondary нигде не используется: без него меньше CSS-переменных
+      // в инлайн-стиле и utility-классов в бандле
+      colors: ['primary', 'success', 'info', 'warning', 'error'],
+    },
+    experimental: {
+      // темы только для реально используемых компонентов (plus зависимости)
+      componentDetection: true,
+    },
   },
 });

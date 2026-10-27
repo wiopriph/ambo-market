@@ -9,7 +9,10 @@ import { useFavorites } from '~/composables/useFavorites';
 
 interface CardProps {
   product: Post;
+  /** превью в первом экране: грузить сразу, без lazy */
   priority?: boolean;
+  /** кандидат в LCP: повышенный сетевой приоритет, только первый ряд */
+  highPriority?: boolean;
 }
 
 
@@ -100,7 +103,7 @@ const onFavoriteClick = () => {
         width="360"
         height="360"
         :loading="priority ? 'eager' : 'lazy'"
-        :fetchpriority="priority ? 'high' : 'auto'"
+        :fetchpriority="highPriority ? 'high' : 'auto'"
         class="absolute inset-0 size-full object-cover transition group-hover:scale-105"
       >
     </div>

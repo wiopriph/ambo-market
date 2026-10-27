@@ -115,6 +115,7 @@ const isCityOpen = ref(false);
       <input
         :value="searchQuery"
         :placeholder="searchPlaceholder"
+        :aria-label="searchPlaceholder"
         class="w-full bg-transparent text-sm text-highlighted placeholder:text-muted outline-none"
         @input="searchQuery = ($event.target as HTMLInputElement).value"
       >

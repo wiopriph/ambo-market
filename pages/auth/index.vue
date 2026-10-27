@@ -214,6 +214,7 @@ const createAccount = () => {
             v-model="password"
             name="password"
             type="password"
+            aria-label="Senha"
             autocomplete="current-password"
             size="lg"
             class="w-full"

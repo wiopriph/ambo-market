@@ -31,8 +31,21 @@ export default defineNuxtPlugin(() => {
 
   const defaultImage = computed(() => `${base.value}/og-image.png`);
 
+  // превью объявлений лежат в Supabase Storage: preconnect из <head>
+  // снимает DNS + TLS с критического пути LCP-картинки
+  const supabaseOrigin = (() => {
+    try {
+      return new URL(config.public.supabase.url).origin;
+    } catch {
+      return '';
+    }
+  })();
+
   useHead({
-    link: [{ rel: 'canonical', href }],
+    link: [
+      { rel: 'canonical', href },
+      ...(supabaseOrigin ? [{ rel: 'preconnect', href: supabaseOrigin }] : []),
+    ],
     meta: [
       { key: 'og:url', property: 'og:url', content: href },
       { key: 'og:site_name', property: 'og:site_name', content: 'Ambo Market' },

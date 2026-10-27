@@ -1,4 +1,5 @@
-import { onNuxtReady, useHead, useRuntimeConfig } from '#imports';
+import { useRuntimeConfig } from '#imports';
+import { loadScriptOnce, runOnInteractionOrAfterLoad } from '~/utils/thirdPartyScripts';
 
 
 interface PublicConfig {
@@ -19,36 +20,15 @@ export default defineNuxtPlugin(() => {
     return;
   }
 
-  const gtmScript = `
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','${gtmId}');
-  `;
+  // очередь живёт с первого кадра: события, отправленные до загрузки
+  // контейнера, копятся в ней, GTM разбирает их при старте
+  window.dataLayer = window.dataLayer || [];
 
-  const gtmNoscript = `
-    <iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe>
-  `;
-
-  onNuxtReady(() => {
-    useHead({
-      script: [
-        {
-          id: 'gtm-script',
-          innerHTML: gtmScript,
-          async: true,
-          tagPosition: 'head',
-        },
-      ],
-      noscript: [
-        {
-          id: 'gtm-noscript',
-          innerHTML: gtmNoscript,
-          tagPosition: 'bodyOpen',
-        },
-      ],
-    });
+  // контейнер (gtm.js + gtag.js, ~300 KiB и ~250 мс главного потока)
+  // грузим после первого действия пользователя или через 4 с после load,
+  // чтобы он не попадал в окно измерения LCP/TBT
+  runOnInteractionOrAfterLoad(() => {
+    window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+    loadScriptOnce(`https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(gtmId)}`);
   });
 });
