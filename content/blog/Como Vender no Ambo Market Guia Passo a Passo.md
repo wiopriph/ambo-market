@@ -1,7 +1,7 @@
 ---
 title: "Como Vender no Ambo Market: Guia Passo a Passo"
 description: "Publique o seu anúncio grátis em três passos, fale com os compradores pelo chat ou WhatsApp, combine a entrega com segurança e marque o anúncio como vendido."
-image: "/images/background.png"
+image: "/images/blog/como-vender-no-ambo-market-guia-passo-a-passo.jpg"
 date: "2025-05-05T12:00:00+00:00"
 dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Vender']
@@ -60,7 +60,7 @@ No último passo indique:
 
 - **Preço em kwanzas.** Escreva o valor completo, sem pontos; o site formata por si. Se aceita negociar, diga-o na descrição.
 - **Cidade** onde o produto está. É por aqui que os compradores da sua zona o encontram.
-- **Descrição.** Estado do produto, tempo de uso, o que está incluído, motivo da venda e como entrega. Uma descrição honesta evita perguntas repetidas e visitas perdidas.
+- **Descrição.** Estado do produto, tempo de uso, o que está incluído, motivo da venda e como entrega. Uma descrição honesta evita perguntas repetidas e visitas perdidas. Use as palavras que o comprador escreve na pesquisa: marca, modelo, tamanho, bairro.
 - **Detalhes opcionais** da categoria: armazenamento e memória num telemóvel, ano, quilometragem e combustível num carro, área e número de quartos num imóvel. São estes campos que alimentam os filtros, por isso vale a pena preenchê-los.
 
 ![Passo 3 do formulário: preço, cidade e descrição](/images/blog/como-vender-no-ambo-market-guia-passo-a-passo/passo-detalhes.jpg){width="375" .mx-auto .rounded-xl .border .border-default}
@@ -107,6 +107,20 @@ Para carros e imóveis, há cuidados próprios: veja [Comprar e Vender Carros: U
 Vendeu? Abra o seu anúncio e toque em **Fechar anúncio**. Ele sai das pesquisas e passa a aparecer como **Vendido** em **Meus anúncios**. Assim deixa de receber mensagens sobre um produto que já não tem, e os compradores não perdem tempo.
 
 Atenção: fechar o anúncio é definitivo. Se quiser vender o mesmo produto outra vez, publique um anúncio novo.
+
+## O que fazer e o que evitar
+
+| Faça | Evite |
+|------|-------|
+| Fotos reais, com luz natural e de vários ângulos | Fotos escuras, desfocadas ou tiradas da internet |
+| Título com marca, modelo e estado | Título só com emojis, maiúsculas ou "vende-se" |
+| Preço dentro do que vê em anúncios semelhantes | Preço irreal, à espera de que o comprador "faça proposta" |
+| Descrição completa, com defeitos e forma de entrega | Esconder o estado do produto ou o motivo da venda |
+| Responder no mesmo dia, mesmo que seja para combinar depois | Deixar mensagens sem resposta durante dias |
+| Dizer se o preço é negociável e qual a margem | Mudar o preço ou as condições depois de combinado |
+| Marcar como vendido assim que fechar negócio | Deixar anúncios de produtos já vendidos no ar |
+
+Quer vender ainda mais depressa? Um pequeno desconto em relação aos anúncios semelhantes e uma resposta em menos de uma hora costumam fazer mais diferença do que qualquer outro truque.
 
 ## Perguntas frequentes
 
