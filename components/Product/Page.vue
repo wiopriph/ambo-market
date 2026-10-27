@@ -147,7 +147,7 @@ const productImages = computed(() => {
 
 const carousel = ref<CarouselInstance | null>(null);
 const activeImageIndex = ref(0);
-const fallbackImage = '/blog-placeholder.png';
+const fallbackImage = '/blog-placeholder.webp';
 const carouselSlides = computed(() => productImages.value.map((url, index) => ({
   url,
   index,

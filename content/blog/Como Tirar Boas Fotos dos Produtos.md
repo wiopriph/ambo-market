@@ -1,7 +1,7 @@
 ---
 title: "Como Tirar Boas Fotos dos Produtos"
 description: "Aprenda a tirar fotos de alta qualidade mesmo com equipamentos simples para vender mais no Ambo Market."
-image: "/images/blog/como-tirar-boas-fotos-dos-produtos.jpg"
+image: "/images/blog/como-tirar-boas-fotos-dos-produtos.webp"
 date: "2025-04-25T10:00:00+00:00"
 dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Vender']

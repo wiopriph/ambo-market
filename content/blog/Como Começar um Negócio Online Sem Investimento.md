@@ -1,7 +1,7 @@
 ---
 title: "Como Começar um Negócio Online Sem Investimento"
 description: "Descubra como lançar o seu primeiro negócio online em Angola sem gastar nada. Use o Ambo Market para testar, vender e crescer!"
-image: "/images/blog/como-comecar-um-negocio-online-sem-investimento.png"
+image: "/images/blog/como-comecar-um-negocio-online-sem-investimento.webp"
 date: "2025-07-03T12:00:00+00:00"
 dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Negócios', 'Vender']
@@ -9,7 +9,7 @@ tags: ['Negócios', 'Vender']
 
 # Como Começar um Negócio Online Sem Investimento
 
-![Como Começar um Negócio Online Sem Investimento](/images/blog/como-comecar-um-negocio-online-sem-investimento.png)
+![Como Começar um Negócio Online Sem Investimento](/images/blog/como-comecar-um-negocio-online-sem-investimento.webp)
 
 Iniciar um negócio não precisa de dinheiro. Com as ferramentas certas — como o [Ambo Market](https://ambo.market) — você pode lançar a sua ideia sem investir nada no início.
 

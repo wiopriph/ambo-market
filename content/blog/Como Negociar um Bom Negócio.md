@@ -1,7 +1,7 @@
 ---
 title: "Como Negociar um Bom Negócio"
 description: "Aprenda técnicas e estratégias para negociar melhor ao comprar ou vender no Ambo Market."
-image: "/images/blog/como-negociar-um-bom-negocio.png"
+image: "/images/blog/como-negociar-um-bom-negocio.webp"
 date: "2025-05-02T12:00:00+00:00"
 dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Comprar', 'Vender']
@@ -9,7 +9,7 @@ tags: ['Comprar', 'Vender']
 
 # Como Negociar um Bom Negócio
 
-![Como negociar um bom negócio](/images/blog/como-negociar-um-bom-negocio.png)
+![Como negociar um bom negócio](/images/blog/como-negociar-um-bom-negocio.webp)
 
 Negociar bem é uma habilidade essencial no mundo das compras e vendas, especialmente em plataformas como o Ambo Market. Saber como argumentar, propor valores e fechar acordos vantajosos pode ser a diferença entre vender rapidamente ou ficar com o produto parado por semanas.
 

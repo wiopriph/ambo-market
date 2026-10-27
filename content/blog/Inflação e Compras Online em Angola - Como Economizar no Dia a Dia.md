@@ -1,7 +1,7 @@
 ---
 title: "Inflação e Compras Online em Angola: Como Economizar no Dia a Dia"
 description: "Descubra como a inflação impacta o consumo em Angola e como o Ambo Market pode ajudar você a economizar, comprar com segurança e encontrar boas oportunidades online."
-image: "/images/blog/inflacao-e-compras-online-em-angola-como-economizar-no-dia-a-dia.png"
+image: "/images/blog/inflacao-e-compras-online-em-angola-como-economizar-no-dia-a-dia.webp"
 date: "2025-09-15T12:00:00+00:00"
 dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Comprar']
@@ -9,7 +9,7 @@ tags: ['Comprar']
 
 # Inflação e Compras Online em Angola: Como Economizar no Dia a Dia
 
-![Inflação e Compras Online em Angola: Como Economizar no Dia a Dia](/images/blog/inflacao-e-compras-online-em-angola-como-economizar-no-dia-a-dia.png)
+![Inflação e Compras Online em Angola: Como Economizar no Dia a Dia](/images/blog/inflacao-e-compras-online-em-angola-como-economizar-no-dia-a-dia.webp)
 
 A inflação tem impacto direto no bolso dos angolanos. Com preços em constante alta, muitos consumidores buscam alternativas para continuar comprando de forma inteligente. Nesse cenário, plataformas online como o [Ambo Market](https://ambo.market) se tornam cada vez mais relevantes para encontrar boas oportunidades.
 

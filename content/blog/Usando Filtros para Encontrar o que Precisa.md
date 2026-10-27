@@ -1,7 +1,7 @@
 ---
 title: "Usando Filtros para Encontrar o que Precisa"
 description: "Aprenda a usar os filtros do Ambo Market para encontrar rapidamente os produtos e serviços ideais para você."
-image: "/images/blog/usando-filtros-para-encontrar-o-que-precisa/preview.png"
+image: "/images/blog/usando-filtros-para-encontrar-o-que-precisa/preview.webp"
 date: "2025-05-02T12:00:00+00:00"
 dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Comprar']
@@ -49,7 +49,7 @@ Na página de uma categoria, as subcategorias e as marcas aparecem também como 
 
 ## Exemplo Prático
 
-![Painel de filtros com preço e ano preenchidos](/images/blog/usando-filtros-para-encontrar-o-que-precisa/filtros-carros.jpg){width="375" .mx-auto .rounded-xl .border .border-default}
+![Painel de filtros com preço e ano preenchidos](/images/blog/usando-filtros-para-encontrar-o-que-precisa/filtros-carros.webp){width="375" .mx-auto .rounded-xl .border .border-default}
 
 Se você está à procura de um **carro em Luanda com preço entre 2 e 4 milhões de kwanzas, de 2015 para cá**, use:
 

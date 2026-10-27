@@ -1,7 +1,7 @@
 ---
 title: "Como Vender no Ambo Market: Guia Passo a Passo"
 description: "Publique o seu anúncio grátis em três passos, fale com os compradores pelo chat ou WhatsApp, combine a entrega com segurança e marque o anúncio como vendido."
-image: "/images/blog/como-vender-no-ambo-market-guia-passo-a-passo.jpg"
+image: "/images/blog/como-vender-no-ambo-market-guia-passo-a-passo.webp"
 date: "2025-05-05T12:00:00+00:00"
 dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Vender']
@@ -32,7 +32,7 @@ Toque em **Publicar anúncio** no topo do site ou no botão **+** no menu inferi
 
 O formulário tem três passos: **Categoria**, **Fotos** e **Detalhes**. No primeiro, escolha o que está a vender. Em algumas categorias o site pede também a subcategoria e a marca, por exemplo Eletrônicos, Telemóveis, Samsung. Isso ajuda o seu anúncio a aparecer nos filtros certos.
 
-![Passo 1 do formulário: escolha da categoria](/images/blog/como-vender-no-ambo-market-guia-passo-a-passo/passo-categoria.jpg){width="375" .mx-auto .rounded-xl .border .border-default}
+![Passo 1 do formulário: escolha da categoria](/images/blog/como-vender-no-ambo-market-guia-passo-a-passo/passo-categoria.webp){width="375" .mx-auto .rounded-xl .border .border-default}
 *As dez categorias do Ambo Market. Escolha a mais próxima do seu produto.*
 
 ## Passo 2: Fotos e título
@@ -51,7 +51,7 @@ Bons exemplos, um por categoria:
 
 Evite títulos só com emojis ou em maiúsculas: chamam a atenção, mas escondem a informação que o comprador procura. Mais dicas em [Dicas para Criar um Título Atraente](/blog/dicas-para-criar-um-titulo-atraente).
 
-![Passo 2 do formulário: fotos e título](/images/blog/como-vender-no-ambo-market-guia-passo-a-passo/passo-fotos.jpg){width="375" .mx-auto .rounded-xl .border .border-default}
+![Passo 2 do formulário: fotos e título](/images/blog/como-vender-no-ambo-market-guia-passo-a-passo/passo-fotos.webp){width="375" .mx-auto .rounded-xl .border .border-default}
 *A primeira foto é a capa. O contador mostra quantos caracteres do título ainda tem.*
 
 ## Passo 3: Preço, cidade e descrição
@@ -63,7 +63,7 @@ No último passo indique:
 - **Descrição.** Estado do produto, tempo de uso, o que está incluído, motivo da venda e como entrega. Uma descrição honesta evita perguntas repetidas e visitas perdidas. Use as palavras que o comprador escreve na pesquisa: marca, modelo, tamanho, bairro.
 - **Detalhes opcionais** da categoria: armazenamento e memória num telemóvel, ano, quilometragem e combustível num carro, área e número de quartos num imóvel. São estes campos que alimentam os filtros, por isso vale a pena preenchê-los.
 
-![Passo 3 do formulário: preço, cidade e descrição](/images/blog/como-vender-no-ambo-market-guia-passo-a-passo/passo-detalhes.jpg){width="375" .mx-auto .rounded-xl .border .border-default}
+![Passo 3 do formulário: preço, cidade e descrição](/images/blog/como-vender-no-ambo-market-guia-passo-a-passo/passo-detalhes.webp){width="375" .mx-auto .rounded-xl .border .border-default}
 *Preço, cidade e descrição são obrigatórios. Os detalhes da categoria são opcionais, mas ajudam a vender mais rápido.*
 
 Se ainda não tiver um número de telefone no perfil, o site pede-o neste passo. É este número que aparece quando o comprador toca em **Mostrar contacto**. Sem telefone, os compradores continuam a poder falar consigo pelo chat.
@@ -72,7 +72,7 @@ Se ainda não tiver um número de telefone no perfil, o site pede-o neste passo.
 
 Ao tocar em **Publicar anúncio**, o site pede para entrar. Pode usar a conta **Google**, **Facebook** ou criar uma conta com e-mail e palavra-passe. Depois de entrar, volta ao formulário com tudo preenchido.
 
-![Página de entrada do Ambo Market](/images/blog/como-vender-no-ambo-market-guia-passo-a-passo/entrar.jpg){width="375" .mx-auto .rounded-xl .border .border-default}
+![Página de entrada do Ambo Market](/images/blog/como-vender-no-ambo-market-guia-passo-a-passo/entrar.webp){width="375" .mx-auto .rounded-xl .border .border-default}
 *Entrar com Google ou Facebook leva segundos. Com e-mail, confirme o endereço antes de publicar.*
 
 Publicado o anúncio, o site abre a página dele. A partir daí pode partilhar o link no WhatsApp ou no Facebook com o botão de partilha, e o anúncio já aparece nas pesquisas da sua cidade e categoria.
@@ -85,7 +85,7 @@ Os interessados chegam até si de três formas:
 - **Mostrar contacto**: revela o seu número para uma chamada directa.
 - **WhatsApp**: abre uma conversa consigo no WhatsApp com o link do anúncio já incluído.
 
-![Botões de contacto na página do anúncio](/images/blog/como-vender-no-ambo-market-guia-passo-a-passo/contactos.jpg){width="375" .mx-auto .rounded-xl .border .border-default}
+![Botões de contacto na página do anúncio](/images/blog/como-vender-no-ambo-market-guia-passo-a-passo/contactos.webp){width="375" .mx-auto .rounded-xl .border .border-default}
 *O que o comprador vê na página do seu anúncio: Conversar e Mostrar contacto.*
 
 Quem responde primeiro vende primeiro. Tente responder em menos de uma hora, mesmo que seja só para combinar quando pode falar. Se receber perguntas repetidas, acrescente a resposta na descrição do próximo anúncio.

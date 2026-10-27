@@ -1,7 +1,7 @@
 ---
 title: "Alugar ou Comprar: O Que é Melhor para Você?"
 description: "Descubra as vantagens e desvantagens de alugar ou comprar e tome a melhor decisão com base no seu momento de vida."
-image: "/images/blog/alugar-ou-comprar-o-que-e-melhor-para-voce.png"
+image: "/images/blog/alugar-ou-comprar-o-que-e-melhor-para-voce.webp"
 date: "2025-05-08T12:00:00+00:00"
 dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Imóveis', 'Comprar']
@@ -9,7 +9,7 @@ tags: ['Imóveis', 'Comprar']
 
 # Alugar ou Comprar: O Que é Melhor para Você?
 
-![Alugar ou Comprar](/images/blog/alugar-ou-comprar-o-que-e-melhor-para-voce.png)
+![Alugar ou Comprar](/images/blog/alugar-ou-comprar-o-que-e-melhor-para-voce.webp)
 
 Ao buscar um novo imóvel ou até mesmo um veículo, muitas pessoas se deparam com a mesma dúvida: **alugar ou comprar?** Ambas as opções têm vantagens e desvantagens, e a melhor escolha depende do seu momento de vida, objectivos financeiros e necessidades actuais.
 

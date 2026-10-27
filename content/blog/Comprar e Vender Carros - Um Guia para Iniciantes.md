@@ -1,7 +1,7 @@
 ---
 title: "Comprar e Vender Carros: Um Guia para Iniciantes"
 description: "Tudo o que você precisa saber para começar a comprar ou vender carros no Ambo Market com segurança e praticidade."
-image: "/images/blog/comprar-e-vender-carros-um-guia-para-iniciantes.png"
+image: "/images/blog/comprar-e-vender-carros-um-guia-para-iniciantes.webp"
 date: "2025-05-27T12:00:00+00:00"
 dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Carros', 'Comprar', 'Vender']
@@ -9,7 +9,7 @@ tags: ['Carros', 'Comprar', 'Vender']
 
 # Comprar e Vender Carros: Um Guia para Iniciantes
 
-![Comprar e Vender Carros](/images/blog/comprar-e-vender-carros-um-guia-para-iniciantes.png)
+![Comprar e Vender Carros](/images/blog/comprar-e-vender-carros-um-guia-para-iniciantes.webp)
 
 
 O mercado de veículos em Angola está em constante crescimento, e cada vez mais pessoas estão utilizando o **Ambo Market** para comprar ou vender carros de forma prática e direta. Se você está começando agora nesse universo, este guia vai te ajudar a entender como funciona o processo, quais cuidados tomar e como aproveitar ao máximo a plataforma.

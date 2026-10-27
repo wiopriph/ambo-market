@@ -1,7 +1,7 @@
 ---
 title: Como Salvar Seus Anúncios Favoritos
 description: Aprenda a salvar, acessar e organizar seus anúncios preferidos no Ambo Market com facilidade.
-image: "/images/blog/como-salvar-seus-anuncios-favoritos.png"
+image: "/images/blog/como-salvar-seus-anuncios-favoritos.webp"
 date: "2025-05-13T12:00:00+00:00"
 dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Comprar']
@@ -9,7 +9,7 @@ tags: ['Comprar']
 
 # Como Salvar Seus Anúncios Favoritos
 
-![Como Salvar Seus Anúncios Favoritos](/images/blog/como-salvar-seus-anuncios-favoritos.png)
+![Como Salvar Seus Anúncios Favoritos](/images/blog/como-salvar-seus-anuncios-favoritos.webp)
 
 Se está à procura de um produto ou serviço específico no **Ambo Market**, é muito comum encontrar vários anúncios interessantes. Para facilitar o seu processo de escolha, você pode **salvar os anúncios favoritos** e consultá-los mais tarde com facilidade.
 ## Por que Salvar Anúncios?

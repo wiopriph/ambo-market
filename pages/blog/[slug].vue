@@ -104,7 +104,7 @@ const script = computed(() => [
         name: 'Ambo Market',
         logo: {
           '@type': 'ImageObject',
-          url: `${config.public.appBaseUrl}/images/background.png`,
+          url: `${config.public.appBaseUrl}/images/background.webp`,
         },
       },
       mainEntityOfPage: {

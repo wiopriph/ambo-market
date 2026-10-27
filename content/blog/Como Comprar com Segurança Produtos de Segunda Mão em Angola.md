@@ -1,7 +1,7 @@
 ---
 title: "Como Comprar com Segurança Produtos de Segunda Mão em Angola"
 description: "Guia prático para comprar em segurança no Ambo Market: como avaliar o vendedor e o anúncio, falar pelo chat, combinar o encontro, pagar sem risco e denunciar burlas."
-image: "/images/blog/como-comprar-com-seguranca-produtos-de-segunda-mao-em-angola.png"
+image: "/images/blog/como-comprar-com-seguranca-produtos-de-segunda-mao-em-angola.webp"
 date: "2025-08-02T12:00:00+00:00"
 dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Segurança', 'Comprar']
@@ -9,7 +9,7 @@ tags: ['Segurança', 'Comprar']
 
 # Como Comprar com Segurança Produtos de Segunda Mão em Angola
 
-![Como Comprar com Segurança Produtos](/images/blog/como-comprar-com-seguranca-produtos-de-segunda-mao-em-angola.png)
+![Como Comprar com Segurança Produtos](/images/blog/como-comprar-com-seguranca-produtos-de-segunda-mao-em-angola.webp)
 
 Comprar em segunda mão é uma das formas mais inteligentes de poupar: um telemóvel seminovo, um sofá ou um carro usado custam uma fracção do preço de loja. O risco existe, mas é previsível. Quase todas as burlas seguem o mesmo guião, e quase todas se evitam com os mesmos hábitos.
 

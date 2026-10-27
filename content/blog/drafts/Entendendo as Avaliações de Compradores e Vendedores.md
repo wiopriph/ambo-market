@@ -1,14 +1,14 @@
 ---
 title: "Entendendo as Avaliações de Compradores e Vendedores"
 description: "Saiba como funcionam as avaliações no Ambo Market, como elas influenciam a reputação e como usá-las a seu favor."
-image: "/images/blog/entendendo-as-avaliacoes-de-compradores-e-vendedores.png"
+image: "/images/blog/entendendo-as-avaliacoes-de-compradores-e-vendedores.webp"
 date: "2025-05-10T12:00:00+00:00"
 tags: ['Segurança']
 ---
 
 # Entendendo as Avaliações de Compradores e Vendedores
 
-![Entendendo as Avaliações de Compradores e Vendedores](/images/blog/entendendo-as-avaliacoes-de-compradores-e-vendedores.png)
+![Entendendo as Avaliações de Compradores e Vendedores](/images/blog/entendendo-as-avaliacoes-de-compradores-e-vendedores.webp)
 
 As avaliações são um dos pilares mais importantes do comércio eletrônico moderno. Em plataformas como o **Ambo Market**, onde compradores e vendedores interagem diretamente, as avaliações ajudam a construir confiança, transparência e uma comunidade mais segura para todos.
 
