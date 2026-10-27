@@ -34,6 +34,7 @@ const cityLinks = computed(() =>
 
 const aboutLinks = [
   { label: 'Sobre', to: { name: 'about' } },
+  { label: 'Blog', to: { name: 'blog' } },
   { label: 'Termos de Uso', to: { name: 'terms' } },
   { label: 'Política de Privacidade', to: { name: 'privacy' } },
 ];
