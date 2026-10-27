@@ -3,6 +3,7 @@ title: "Comprar e Vender Carros: Um Guia para Iniciantes"
 description: "Tudo o que você precisa saber para começar a comprar ou vender carros no Ambo Market com segurança e praticidade."
 image: "/images/blog/comprar-e-vender-carros-um-guia-para-iniciantes.png"
 date: "2025-05-27T12:00:00+00:00"
+dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Carros', 'Comprar', 'Vender']
 ---
 
@@ -17,8 +18,8 @@ O mercado de veículos em Angola está em constante crescimento, e cada vez mais
 
 - Plataforma local focada em usuários reais em Angola
 - Grande variedade de carros novos e usados
-- Filtros por marca, modelo, preço e localização
-- Contato direto entre comprador e vendedor
+- Filtros por marca, preço, cidade, ano, quilometragem, combustível e caixa
+- Contacto directo entre comprador e vendedor: chat no site, chamada ou WhatsApp
 
 ➡️ Acesse agora a seção de [**Carros no Ambo Market**](https://ambo.market/all/vehicles/cars)
 
@@ -38,18 +39,20 @@ Antes de começar a busca, pense em:
 
 ### 2. Use os filtros de busca
 
-Acesse a categoria [**Carros**](https://ambo.market/all/vehicles/cars) e refine sua busca por:
+Acesse a categoria [**Carros**](https://ambo.market/all/vehicles/cars), toque em **Filtros** e refine sua busca por:
 
+- Cidade (ex: Luanda)
+- Marca (Toyota, Hyundai, Kia, etc.)
 - Preço (ex: 2.000.000 Kz a 4.000.000 Kz)
-- Localização (ex: Luanda)
-- Marca (Toyota, Hyundai, etc.)
+- Ano e quilometragem (ex: a partir de 2015, até 150.000 km)
+- Combustível (gasolina, diesel, híbrido, eléctrico) e caixa (manual ou automática)
 
 ### 3. Analise os anúncios com atenção
 
-- Leia a descrição completa
-- Verifique as fotos
-- Veja a reputação do vendedor
-- Entre em contato com dúvidas
+- Leia a descrição completa e os detalhes: ano, quilometragem, combustível, caixa, estado
+- Verifique as fotos: exterior, interior, painel com a quilometragem, motor
+- Abra o perfil do vendedor: há quanto tempo é membro e que outros anúncios tem
+- Tire as dúvidas pelo chat (botão **Conversar**) antes de marcar encontro; a conversa fica guardada em Mensagens
 
 ### 4. Combine um encontro seguro
 
@@ -58,7 +61,7 @@ Acesse a categoria [**Carros**](https://ambo.market/all/vehicles/cars) e refine 
 - Teste o veículo com calma
 - Confirme documentos e estado do carro
 
-> ⚠️ **Importante:** A **Compra Segura ainda não está disponível para veículos** no Ambo Market. Toda negociação deve ser feita diretamente entre comprador e vendedor.
+> ⚠️ **Importante:** o Ambo Market **não intermedeia pagamentos**. A negociação é directa entre comprador e vendedor, por isso só pague depois de ver o carro, testar e conferir os documentos. Nunca envie sinal para "reservar" um veículo que ainda não viu.
 
 ---
 
@@ -72,18 +75,20 @@ Para anunciar, é necessário estar logado com uma conta válida.
 
 Inclua:
 
-- Marca, modelo e ano
-- Quilometragem e tipo de combustível
+- Marca e modelo no título (ex: Toyota Corolla 2015 automático)
+- Ano, quilometragem, combustível e caixa nos campos próprios do formulário: é por eles que os compradores filtram
 - Preço e se aceita negociação
-- Fotos reais e em boa qualidade
+- Fotos reais e em boa qualidade, até 10
 - Cidade onde está o carro
-- Informações sobre o estado geral
+- Informações sobre o estado geral e os documentos
 
 ### 3. Responda rápido os interessados
 
+- As mensagens chegam pelo chat do site, em **Mensagens**; adicione o telefone no perfil para receber também chamadas e WhatsApp
 - Seja educado e direto
 - Combine encontros com segurança
 - Leve os documentos prontos para a venda
+- Vendeu? Toque em **Fechar anúncio** para o marcar como vendido
 
 ---
 

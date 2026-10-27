@@ -3,6 +3,7 @@ title: "Como Começar um Negócio Online Sem Investimento"
 description: "Descubra como lançar o seu primeiro negócio online em Angola sem gastar nada. Use o Ambo Market para testar, vender e crescer!"
 image: "/images/blog/como-comecar-um-negocio-online-sem-investimento.png"
 date: "2025-07-03T12:00:00+00:00"
+dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Negócios', 'Vender']
 ---
 
@@ -46,11 +47,11 @@ Sem ideias? Veja o que é popular no [Ambo Market](https://ambo.market):
 
 ### 2. Crie uma Conta Grátis
 
-Para anunciar, é necessário [entrar ou registar-se](https://ambo.market/auth). É rápido e gratuito.
+Para publicar, é necessário [entrar ou registar-se](https://ambo.market/auth). É rápido e gratuito.
 
-✔️ Sem burocracia  
-✔️ Apenas e-mail ou número de telefone  
-✔️ Indique a sua localização para mais visibilidade
+✔️ Entre com Google, Facebook ou e-mail  
+✔️ Pode preencher o anúncio antes de entrar: o rascunho fica guardado  
+✔️ Adicione o seu telefone no perfil para receber chamadas e WhatsApp
 
 ---
 
@@ -64,20 +65,21 @@ Para vender mais rápido:
 - Coloque um preço justo (pesquise antes)
 - Responda rapidamente às mensagens
 
-➡️ Leia também: [Como Criar um Anúncio Atraente](https://ambo.market/blog/como-vender-rapido-no-ambo-market)
+➡️ Leia também: [Como Vender no Ambo Market: Guia Passo a Passo](/blog/como-vender-no-ambo-market-guia-passo-a-passo)
 
 ---
 
 ### 4. Ganhe a Confiança dos Compradores
 
-Mesmo sem avaliações ainda, você pode passar confiança:
+Mesmo sem histórico na plataforma, você pode passar confiança:
 
 - Responda rápido e com educação
 - Ofereça entrega local se possível
 - Combine em locais públicos
 - Diga se o preço é negociável
+- Mantenha o perfil completo: nome real e foto
 
-💬 No Ambo Market você pode conversar diretamente com os interessados pelo **chat interno**.
+💬 Os compradores falam consigo pelo **chat do Ambo Market** (botão Conversar), por chamada ou por WhatsApp. As conversas ficam em **Mensagens**.
 
 ---
 
@@ -87,8 +89,8 @@ Depois das primeiras vendas:
 
 - Teste novos produtos
 - Reinvista os lucros
-- Melhore seus anúncios com base no feedback
-- Peça avaliações dos compradores
+- Melhore seus anúncios com base nas perguntas que recebe
+- Marque como vendido o que já saiu e publique novidades com regularidade
 
 ---
 
@@ -107,9 +109,9 @@ Depois das primeiras vendas:
 
 - Marque encontros em locais públicos
 - Não partilhe dados pessoais
-- Evite pagamentos adiantados
+- Receba o pagamento na entrega, nunca envie o produto antes
 - Use o bom senso
-- Utilize a **Compra Segura** no Ambo Market sempre que disponível
+- Prefira o chat do Ambo Market: a conversa fica registada e só partilha o número quando quiser
 
 ---
 

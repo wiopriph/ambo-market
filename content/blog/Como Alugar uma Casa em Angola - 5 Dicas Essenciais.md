@@ -3,6 +3,7 @@ title: "Como Alugar uma Casa em Angola: 5 Dicas Essenciais"
 description: "Vai alugar uma casa em Angola? Veja 5 dicas práticas e seguras para encontrar o imóvel ideal usando o Ambo Market."
 image: "/images/blog/como-alugar-uma-casa-em-angola-5-dicas-essenciais.png"
 date: "2025-05-28T12:00:00+00:00"
+dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Imóveis', 'Comprar']
 ---
 
@@ -34,12 +35,14 @@ Considere:
 
 ## 2. Use os filtros para agilizar sua busca
 
-O Ambo Market oferece diversos filtros para facilitar sua procura por um imóvel ideal:
+Abra a categoria **Imóveis**, escolha **Aluguel** e toque no botão **Filtros** ao lado da pesquisa. Pode combinar:
 
-- **Localização**: busque por província, cidade ou município (ex: Luanda, Talatona, Cazenga)
-- **Tipo de imóvel**: casa, apartamento, vivenda, quarto
-- **Faixa de preço**: defina o mínimo e máximo conforme seu orçamento
-- **Número de quartos**: escolha de acordo com o tamanho da família ou sua necessidade
+- **Cidade**: Luanda, Benguela, Huambo, Lobito, Lubango, Malanje, Cabinda, Namibe, Soyo ou Kuito
+- **Preço**: defina o mínimo e o máximo conforme o seu orçamento
+- **Quartos (T)** e **casas de banho**: escolha de acordo com o tamanho da família
+- **Área** e **mobilado**: para afinar ainda mais a lista
+
+Para o bairro (Talatona, Kilamba, Cazenga), escreva o nome na pesquisa: os anunciantes costumam indicá-lo no título ou na descrição.
 
 ➡️ Comece agora mesmo: [**Ver imóveis para alugar**](https://ambo.market/all/real-estate/rent)
 
@@ -54,6 +57,8 @@ Evite perder tempo com anúncios incompatíveis. Ao abrir um anúncio, analise:
 - Como são feitos os pagamentos (mensal, semestral, com caução, etc.)
 - Se é permitido visitar antes
 - Quem está anunciando: proprietário, imobiliária ou intermediário
+
+Ficou com dúvidas? Toque em **Conversar** e pergunte pelo chat do Ambo Market. A conversa fica guardada em **Mensagens**, o que ajuda se algo não bater certo mais tarde. Se preferir ligar, use **Mostrar contacto**.
 
 > ⚠️ **Nunca envie dinheiro antecipado sem informações claras e visitas confirmadas.**
 
@@ -96,15 +101,15 @@ Sim. Muitos proprietários aceitam propostas, principalmente se você pagar adia
 Sim, desde que você visite o imóvel, verifique documentos e formalize o acordo por contrato.
 
 **4. O Ambo Market garante as negociações?**  
-Ainda **não oferecemos Compra Segura para imóveis**. Toda negociação é direta entre as partes, então é essencial seguir as boas práticas de segurança.
+Não. O Ambo Market **não intermedeia pagamentos nem contratos**: toda a negociação é directa entre si e o anunciante. Por isso é essencial visitar, verificar documentos e formalizar por escrito. Veja também o guia [Como Comprar com Segurança em Angola](/blog/como-comprar-com-seguranca-produtos-de-segunda-mao-em-angola).
 
 **5. Posso denunciar um anúncio falso?**  
-Sim. Clique no botão "Denunciar" dentro do anúncio ou entre em contato com nossa equipe de suporte.
+Sim. Na página do anúncio, por baixo das dicas de segurança, toque em **Denuncie o anúncio** e escolha o motivo. A equipa do Ambo Market analisa e pode retirar o anúncio.
 
 ---
 
 ## Conclusão
 
-Alugar uma casa em Angola pode ser simples e seguro quando você segue os passos certos. Com o **Ambo Market**, você pode comparar imóveis, falar diretamente com os anunciantes e encontrar um lar com tranquilidade.
+Alugar uma casa em Angola pode ser simples e seguro quando você segue os passos certos. Com o **Ambo Market**, você pode comparar imóveis, guardá-los em **Favoritos**, falar directamente com os anunciantes pelo chat e encontrar um lar com tranquilidade.
 
 > 🏡 Pronto para começar? Acesse [**Imóveis para Alugar em Luanda**](https://ambo.market/luanda/real-estate/rent) e veja as melhores oportunidades perto de você.

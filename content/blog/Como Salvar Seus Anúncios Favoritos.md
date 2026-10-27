@@ -3,6 +3,7 @@ title: Como Salvar Seus Anúncios Favoritos
 description: Aprenda a salvar, acessar e organizar seus anúncios preferidos no Ambo Market com facilidade.
 image: "/images/blog/como-salvar-seus-anuncios-favoritos.png"
 date: "2025-05-13T12:00:00+00:00"
+dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Comprar']
 ---
 
@@ -36,9 +37,9 @@ Veja como é fácil guardar seus anúncios favoritos:
 
 Depois de guardar um ou mais anúncios:
 
-- Vá até o menu de usuário (no topo da página)
-- Clique em **"Favoritos"** ou **"Meus Anúncios Salvos"**
-- Lá encontrará todos os anúncios que marcou como favoritos
+- No telemóvel, toque em **Favoritos** no menu inferior
+- No computador, abra o menu da sua conta no topo da página e escolha **Favoritos**
+- Ou aceda directamente a [ambo.market/my/favorites](/my/favorites)
 
 ### 💡 Dica Útil
 
@@ -49,20 +50,18 @@ Você pode **remover** qualquer anúncio salvo a qualquer momento clicando novam
 Para aproveitar esse recurso, é essencial ter uma **conta registrada**. Além de salvar favoritos, você poderá:
 
 - Publicar seus próprios anúncios
-- Receber mensagens de compradores e vendedores
-- Utilizar a **compra segura**, com proteção para ambas as partes
-
-> ⚠️ No momento, ainda **não é possível editar anúncios ou acompanhar estatísticas de visualização**.
+- Conversar com vendedores e compradores pelo **chat do site**, com o histórico guardado em Mensagens
+- Marcar os seus anúncios como vendidos quando o negócio fechar
 
 ### Função vs Conta Necessária
 
 | Função                    | Conta Necessária? |
 |---------------------------|-------------------|
-| Salvar anúncios favoritos | ✅ Sim             |
 | Visualizar anúncios       | ❌ Não             |
+| Ver o contacto do vendedor | ❌ Não            |
+| Salvar anúncios favoritos | ✅ Sim             |
+| Conversar pelo chat       | ✅ Sim             |
 | Publicar um anúncio       | ✅ Sim             |
-| Enviar mensagens          | ✅ Sim             |
-| Usar compra segura        | ✅ Sim             |
 
 ## Conclusão
 
