@@ -3,6 +3,7 @@ title: "Como Negociar um Bom Negócio"
 description: "Aprenda técnicas e estratégias para negociar melhor ao comprar ou vender no Ambo Market."
 image: "/images/blog/como-negociar-um-bom-negocio.png"
 date: "2025-05-02T12:00:00+00:00"
+dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Comprar', 'Vender']
 ---
 
@@ -32,7 +33,7 @@ A negociação vai além do simples ato de baixar ou subir o preço. Ela envolve
 
 - Pesquise preços de itens semelhantes
 - Avalie o estado de conservação
-- Considere se é um modelo atual ou desatualizado
+- Considere se é um modelo actual ou desactualizado
 - Leve em conta os acessórios e condições adicionais
 
 ### 2. Defina um preço mínimo (ou máximo) aceitável
@@ -84,7 +85,7 @@ Urgência desvaloriza o produto. Mantenha postura firme.
 |-----------------------------|--------------------------------------------------------------|
 | Fazer uma contraoferta      | "O seu preço está um pouco abaixo do que eu esperava, posso fazer por X valor." |
 | Negar uma proposta          | "Agradeço a proposta, mas nesse valor não consigo fechar."  |
-| Criar valor para seu produto| "Está em ótimo estado, com acessórios originais. Vale cada Kz." |
+| Criar valor para seu produto| "Está em óptimo estado, com acessórios originais. Vale cada Kz." |
 | Mostrar abertura para diálogo| "Podemos chegar num meio-termo que funcione para os dois?" |
 | Finalizar com profissionalismo| "Foi um prazer negociar com você. Obrigado pela confiança!" |
 
@@ -92,7 +93,8 @@ Urgência desvaloriza o produto. Mantenha postura firme.
 
 ### Negociando online:
 
-- Use mensagens claras e objetivas
+- Use o chat do Ambo Market (botão **Conversar**): a conversa fica guardada em Mensagens e serve de registo do que foi combinado
+- Use mensagens claras e objectivas
 - Responda com rapidez
 - Peça fotos ou vídeos se for o comprador
 - Envie imagens reais e de qualidade se for o vendedor
@@ -136,7 +138,7 @@ Urgência desvaloriza o produto. Mantenha postura firme.
 
 ## Dicas extras para vendedores
 
-- Atualize o anúncio com o status do produto
+- Marque o anúncio como vendido (**Fechar anúncio**) assim que fechar negócio, para não receber mais propostas
 - Tenha paciência com perguntas repetitivas
 - Mostre que está disposto a negociar, mas sem desvalorizar seu produto
 

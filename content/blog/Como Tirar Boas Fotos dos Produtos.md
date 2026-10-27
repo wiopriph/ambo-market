@@ -3,6 +3,7 @@ title: "Como Tirar Boas Fotos dos Produtos"
 description: "Aprenda a tirar fotos de alta qualidade mesmo com equipamentos simples para vender mais no Ambo Market."
 image: "/images/blog/como-tirar-boas-fotos-dos-produtos.jpg"
 date: "2025-04-25T10:00:00+00:00"
+dateModified: "2026-10-27T12:00:00+00:00"
 tags: ['Vender']
 ---
 
@@ -17,15 +18,15 @@ Ao comprar online, o cliente não pode tocar ou experimentar o produto. Assim, a
 - Transmitem profissionalismo
 - Inspiram confiança
 - Destacam os detalhes do item
-- Influenciam diretamente na decisão de compra
+- Influenciam directamente na decisão de compra
 
 ## Equipamentos necessários
 
-Você não precisa de um estúdio profissional para tirar boas fotos. Com alguns itens básicos, é possível obter ótimos resultados.
+Você não precisa de um estúdio profissional para tirar boas fotos. Com alguns itens básicos, é possível obter óptimos resultados.
 
 **Equipamentos recomendados:**
 
-- 📱 **Câmera ou smartphone** com boa resolução
+- 📱 **Telemóvel ou câmara** com boa resolução
 - 📸 **Tripé**: evita fotos tremidas
 - 💡 **Iluminação adequada**: luz natural ou lâmpadas LED brancas
 - 🎨 **Fundo branco ou neutro**: evita distrações
@@ -39,7 +40,7 @@ Um ambiente bem preparado facilita o processo e melhora a qualidade das fotos.
 
 - Escolha um local bem iluminado
 - Use uma superfície limpa e plana
-- Remova objetos que possam distrair o foco do produto
+- Remova objectos que possam distrair o foco do produto
 
 ## Técnicas de fotografia
 
@@ -47,7 +48,7 @@ Aplicar técnicas simples pode melhorar muito o resultado das fotos.
 
 ### 1. Iluminação
 
-- Prefira luz natural (evite sol direto)
+- Prefira luz natural (evite sol directo)
 - Use difusores como cortinas brancas ou papel vegetal
 - Evite flash, pois pode causar reflexos
 
@@ -55,7 +56,7 @@ Aplicar técnicas simples pode melhorar muito o resultado das fotos.
 
 - Centralize o produto
 - Deixe espaço ao redor
-- Use o **modo retrato** para desfocar o fundo (em smartphones)
+- Use o **modo retrato** para desfocar o fundo (na maioria dos telemóveis)
 
 ### 3. Ângulos e detalhes
 
@@ -69,10 +70,10 @@ Após tirar as fotos, faça pequenos ajustes para deixá-las ainda melhores.
 
 **Passos para edição:**
 
-- ✂️ **Corte e enquadre** corretamente
+- ✂️ **Corte e enquadre** correctamente
 - ☀️ **Ajuste brilho e contraste**
 - 🎨 **Corrija cores** para se manter fiel ao real
-- 📏 **Redimensione as imagens** para carregarem rápido
+- 📏 Não precisa de redimensionar: o Ambo Market comprime as fotos ao publicar
 
 ### Tabela de comparação: Antes e Depois da Edição
 
@@ -82,13 +83,13 @@ Após tirar as fotos, faça pequenos ajustes para deixá-las ainda melhores.
 | Contraste          | Fraco           | Realçado         |
 | Cores              | Desbotadas      | Vibrantes        |
 | Enquadramento      | Descentralizado | Centralizado     |
-| Tamanho do arquivo | Grande          | Otimizado        |
 
 ## Dicas adicionais
 
 - Mantenha **consistência visual** entre os anúncios
 - Evite **filtros exagerados**
-- Use **JPEG** para fotos comuns e **PNG** para imagens com fundo transparente
+- Pode juntar **até 10 fotos** por anúncio; a primeira é a capa, por isso escolha a melhor
+- Mostre os defeitos com honestidade: evita visitas perdidas e discussões na entrega
 
 ## Conclusão
 
